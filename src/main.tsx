@@ -1,36 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
-import { loadAndSetMockContext } from "./utils/mockContextLoader";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { ErrorBoundary } from "react-error-boundary";
+import App from './App.tsx'
+import './index.css';
 
-declare global {
-  interface Window {
-    universal_login_context: any;
-  }
-}
+const rootElement = document.createElement("div");
+rootElement.id = "root";
 
-async function initializeApp() {
-  await loadAndSetMockContext();
+document.body.appendChild(rootElement);
 
-  /**
-   * ACUL Integration Note:
-   * The following lines handle the specific way this React application is integrated
-   * into Auth0's Universal Login page. Auth0 provides the base HTML DOM.
-   * This script then dynamically creates a 'div' (rootElement),
-   * appends it to Auth0's document.body, and then mounts the React application onto this div.
-   * This differs from typical setups where an index.html is bundled directly with the app.
-   */
-  const rootElement = document.createElement("div");
-  rootElement.id = "root";
-
-  document.body.appendChild(rootElement);
-
-  ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
       <App />
-    </React.StrictMode>,
-  );
-}
-
-initializeApp();
+    </ErrorBoundary>
+  </StrictMode>,
+)

@@ -4,34 +4,29 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "npm run lint:format && tsc -b && vite build --logLevel info",
-    "preview": "vite preview",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,html,css}\" --ignore-unknown",
-    "lint:format": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,html,css}\" --ignore-unknown",
-    "screen": "node ./scripts/dev-screen.js"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@auth0/auth0-acul-js": "^0.1.0-beta.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-error-boundary": "^6.0.0"
+    "@auth0/auth0-acul-js": "^0.1.0-beta.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-error-boundary": "^6.0.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.6",
-    "@types/node": "^22.15.16",
+    "@tailwindcss/vite": "^4.1.5",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
-    "chalk": "^5.3.0",
-    "execa": "^8.0.1",
-    "ora": "^8.0.1",
+    "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
-    "prettier": "3.5.3",
-    "tailwindcss": "^4.1.6",
+    "tailwindcss": "^4.1.5",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
-  },
-  "engines": {
-    "node": ">=22.0.0"
   }
 }
