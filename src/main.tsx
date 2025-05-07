@@ -1,19 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import { ErrorBoundary } from "react-error-boundary";
 import App from './App.tsx'
+import './index.css';
 
-/**
- * Adding root element to the DOM
- */
 const rootElement = document.createElement("div");
 rootElement.id = "root";
 
 document.body.appendChild(rootElement);
-document.body.style.overflow = "hidden";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <App />
+    </ErrorBoundary>
   </StrictMode>,
 )
