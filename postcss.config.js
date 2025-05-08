@@ -3,4 +3,4 @@ export default {
     // autoprefixer is generally still useful
     autoprefixer: {},
   },
-} 
+};

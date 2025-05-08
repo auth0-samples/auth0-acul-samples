@@ -3,9 +3,7 @@ import { getCurrentScreen } from "@auth0/auth0-acul-js";
 
 const Login = React.lazy(() => import("./screens/login"));
 const LoginId = React.lazy(() => import("./screens/login-id"));
-const LoginPassword = React.lazy(
-  () => import("./screens/login-password")
-);
+const LoginPassword = React.lazy(() => import("./screens/login-password"));
 
 const App: React.FC = () => {
   const [screen, setScreen] = React.useState("login");
