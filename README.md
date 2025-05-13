@@ -1,6 +1,6 @@
-# Auth0 ACUL Boilerplate
+# Auth0 Advanced Customizations for Universal Login Boilerplate
 
-This project provides a boilerplate setup for Auth0's Advanced Custom Universal Login (ACUL). ACUL allows you to build custom login screens using your own design systems and layouts. It includes a minimal React-based screen tester for initiating authentication flows and testing your screens in real-time.
+This project provides a boilerplate setup for Auth0's Advanced Custom Universal Login (ACUL). ACUL allows you to build custom login screens using your own design systems and layouts.
 
 ## 📑 Table of Contents
 
@@ -50,8 +50,6 @@ This project provides a boilerplate setup for Auth0's Advanced Custom Universal 
 - Install dependencies:
   ```bash
   npm install
-  cd screen-tester && npm install
-  cd ..
   ```
   </details>
 
@@ -95,13 +93,6 @@ This project provides a boilerplate setup for Auth0's Advanced Custom Universal 
    - Enable and configure a [custom domain](https://auth0.com/docs/customize/custom-domains) for your Auth0 tenant
    - Verify the custom domain is working properly before proceeding
 
-3. **Single Page Application Setup**
-   - Create a new [Single Page Application](https://auth0.com/docs/get-started/auth0-overview/create-applications) in Auth0
-   - Configure the following settings:
-     - Allowed Callback URLs: `http://localhost:4040/callback`
-     - Allowed Logout URLs: `http://localhost:4040`
-     - Allowed Web Origins: `http://localhost:4040`
-   - This application will be used by the Screen Tester for authentication testing
 </details>
 
 <a id="quick-start"></a>
@@ -150,10 +141,6 @@ This project provides a boilerplate setup for Auth0's Advanced Custom Universal 
    npm run screen:advanced login  # Examples: login, login-id, login-password
    ```
 
-4. Access in browser:
-   - Screen Tester: `http://localhost:4040/`
-   - After clicking "Log In" in the tester, you will be redirected to your custom login screen
-
 <a id="project-structure"></a>
 
 ## 📁 Project Structure
@@ -164,7 +151,6 @@ auth0-acul-react-boilerplate/
 │   └── actions/         # Custom GitHub Actions
 │       └── configure-auth0-screens/ # Action for configuring Auth0 screens
 ├── dist/                # Production build output
-├── screen-tester/       # React SPA for initiating auth flows
 ├── src/                 # Source files
 │   ├── common/          # Shared, reusable UI components (grouped by function)
 │   │   ├── Button/      # e.g., Button components
@@ -225,7 +211,7 @@ npm run screen:standard login
 This command:
 
 1. Configures your Auth0 tenant to use standard mode for the specified screen
-2. Launches the Screen Tester application for initiating the authentication flow
+2. Launches a browser window with the login flow screen (either login or login-id based on identifier profile)
 3. Any changes to the tenant configuration will be reflected in the login experience
 
 ### Advanced Mode Development *(Coming soon)*
@@ -240,7 +226,7 @@ This command:
 
 1. Builds your screen and serves it locally with Hot Module Replacement (HMR)
 2. Configures your Auth0 tenant to use advanced mode with your local assets
-3. Launches the Screen Tester application for initiating the authentication flow
+3. Launch browser with login flow screen (either login or login-id based on identifier profile)
 4. Any changes to your code will be immediately reflected without page reloads
 
 <a id="deployment"></a>
@@ -269,7 +255,7 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
 
 <a id="technical-details"></a>
 
-## 🔍 Technical Details
+## 🔍 Technical Details 
 
 <details>
 <summary>Standard Mode Process Flow *(Implementation coming soon)*</summary>
@@ -281,8 +267,8 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
 
 2. **Port Availability Check**
 
-   - Checks if ports 4040 (Screen Tester) and 3000 (Auth0 redirect) are available
-   - Fails if any port is in use
+   - Checks if port 3000 (Auth0 redirect) is available
+   - Fails if the port is in use
 
 3. **Screen Validation**
 
@@ -301,11 +287,6 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
    ```bash
    auth0 universal-login switch --tenant <tenant_name> --prompt <screen_name> --screen <screen_name> --rendering-mode standard
    ```
-
-6. **Screen Tester**
-   - Starts the Screen Tester SPA on port 4040
-   - The tester initiates authentication flows using `@auth0/auth0-react`
-   </details>
 
 <details>
 <summary>Advanced Mode Process Flow *(Implementation coming soon)*</summary>
@@ -343,9 +324,7 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
    - Starts a development server with Hot Module Replacement support
    - Any changes to source code automatically rebuild and update
    - No need to restart the server or refresh the browser
-7. **Screen Tester**
-   - Starts the Screen Tester SPA on port 4040
-   - The tester initiates authentication flows using `@auth0/auth0-react`
+
    </details>
 
 <a id="documentation"></a>
@@ -377,16 +356,17 @@ Learn more about the Auth0 CLI in the [official documentation](https://auth0.git
 ### Common Issues
 
 <details>
-<summary>Authentication Flow Not Starting</summary>
+<summary>White screen on loading a page</summary>
 
-- **Issue**: Clicking "Log In" in the Screen Tester doesn't start the authentication flow
+- **Issue**: White screen appears when loading a page
 - **Solution**:
-  1. Check your Auth0 application settings to ensure the correct callback URLs are set
-  2. Verify your `.env.local` file has the correct AUTH0_CLIENT_ID
-  3. Make sure your tenant is properly configured with the Auth0 CLI
+  1. Check browser console for errors related to loading CSS or JS files. You might need to switch particular screen to standard mode.
+  2. Ensure your Auth0 tenant has a custom domain configured
+  3. Verify the advanced mode configuration was properly applied
+  4. Try running `npm run build` manually to check for build errors
+
   </details>
 
-<details>
 <summary>Assets Not Loading in Advanced Mode</summary>
 
 - **Issue**: The screen loads but appears unstyled or with JavaScript errors
