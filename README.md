@@ -75,7 +75,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 ## 📁 Project Structure
 
 ```
-auth0-acul-react-boilerplate/
+auth0-acul-samples/
 ├── .github/             # GitHub Actions workflows for CI/CD
 │   └── actions/         # Custom GitHub Actions
 │       └── configure-auth0-screens/ # Action for configuring Auth0 screens
