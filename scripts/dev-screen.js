@@ -7,22 +7,17 @@ import VALID_SCREENS from "../src/constants/validScreens.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ANSI escape codes for console colors
-const ANSI_RED = "\x1b[31m";
-const ANSI_GREEN = "\x1b[32m";
-const ANSI_RESET = "\x1b[0m";
-
 const screenName = process.argv[2];
 
 if (!screenName) {
-  console.error(`${ANSI_RED}%s${ANSI_RESET}`, "Error: No screen name provided.");
+  console.error("\x1b[31m%s\x1b[0m", "Error: No screen name provided.");
   console.log("Usage: npm run screen <screen-name>");
   process.exit(1);
 }
 
 if (!VALID_SCREENS.includes(screenName)) {
   console.error(
-    `${ANSI_RED}%s${ANSI_RESET}`,
+    "\x1b[31m%s\x1b[0m",
     `Error: Invalid screen name: '${screenName}'.`,
   );
   console.log(
@@ -41,7 +36,7 @@ const mockDataPath = path.join(
 
 if (!fs.existsSync(mockDataPath)) {
   console.error(
-    `${ANSI_RED}%s${ANSI_RESET}`,
+    "\x1b[31m%s\x1b[0m",
     `Error: Mock data file not found for screen '${screenName}'.`,
   );
   console.log(
@@ -53,7 +48,7 @@ if (!fs.existsSync(mockDataPath)) {
 process.env.VITE_SCREEN_NAME = screenName;
 
 console.log(
-  `${ANSI_GREEN}%s${ANSI_RESET}`,
+  "\x1b[32m%s\x1b[0m",
   `Starting Vite dev server for screen: ${screenName}...`,
 );
 
@@ -61,7 +56,7 @@ try {
   execSync("vite", { stdio: "inherit" });
 } catch (error) {
   console.error(
-    `${ANSI_RED}%s${ANSI_RESET}`,
+    "\x1b[31m%s\x1b[0m",
     `Vite server failed to start or exited with an error for screen: ${screenName}.`,
   );
   process.exit(1);
