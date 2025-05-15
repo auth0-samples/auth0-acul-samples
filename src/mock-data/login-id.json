@@ -1,0 +1,222 @@
+{
+  "client": {
+    "id": "cl_mock_abc123xyz789",
+    "name": "my-mocked-app"
+  },
+  "organization": {
+    "branding": {
+      "logo_url": "https://cdn.example.com/logos/mock_org_logo_v1.png?token=mocked_token_value_for_logo",
+      "colors": {
+        "primary": "#420000",
+        "page_background": "#c34646"
+      }
+    },
+    "display_name": "MockedCorp Inc.",
+    "id": "org_mock_def456uvw012",
+    "name": "mockedcorp-internal-name",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "login-id"
+  },
+  "screen": {
+    "captcha": {
+      "provider": "auth0",
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iNTAiPjx0ZXh0IHg9IjEwIiB5PSI0MCI+TW9ja2VkIENBUFVDSEFENjwvdGV4dD48L3N2Zz4="
+    },
+    "data": {
+      "passkey": {
+        "public_key": {
+          "challenge": "MOCKED_CHALLENGE_STRING_rAnDoMChArAcTeRs12345AbCdEfG"
+        }
+      }
+    },
+    "links": {
+      "reset_password": "/u/login/password-reset-start/Username-Password-Authentication?state=mockedStateTokenForPasswordReset_cl_mock_abc123xyz789_org_org_mock_def456uvw012_randValue987",
+      "signup": "/u/signup/identifier?state=mockedStateTokenForSignup_cl_mock_abc123xyz789_org_org_mock_def456uvw012_randValue654"
+    },
+    "name": "login-id",
+    "texts": {
+      "pageTitle": "Log in | my-mocked-app",
+      "title": "Welcome",
+      "description": "Log in to MockedCorp Inc. to continue to my-mocked-app.",
+      "separatorText": "Or",
+      "buttonText": "Continue",
+      "footerLinkText": "Sign up",
+      "forgotPasswordText": "Can't log in to your account?",
+      "signupActionLinkText": "Sign up",
+      "footerText": "Don't have an account?",
+      "signupActionText": "Don't have an account?",
+      "passwordPlaceholder": "Password",
+      "usernamePlaceholder": "Username or email address",
+      "emailPlaceholder": "Email address",
+      "phonePlaceholder": "Phone number",
+      "usernameOnlyPlaceholder": "Username",
+      "phoneOrUsernameOrEmailPlaceholder": "Phone or Username or Email",
+      "phoneOrEmailPlaceholder": "Phone number or Email address",
+      "phoneOrUsernamePlaceholder": "Phone Number or Username",
+      "usernameOrEmailPlaceholder": "Username or Email address",
+      "editEmailText": "Edit",
+      "alertListTitle": "Alerts",
+      "devKeysAlertTitle": "Dev Keys",
+      "devKeysAlertMessage": "One or more of your connections are currently using Auth0 development keys and should not be used in production.",
+      "devKeysAlertUrl": "https://auth0.com/docs/connections/social/devkeys",
+      "devKeysAlertLinkText": "Learn More",
+      "logoAltText": "MockedCorp Inc.",
+      "passkeyButtonText": "Continue with a passkey",
+      "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+      "badgeAltText": "Link to the Auth0 website",
+      "error": "Error",
+      "captchaCodePlaceholder": "Enter the code shown above",
+      "qrCode": "QR Code",
+      "spinner_push_notification_label": "Waiting for push notification to be accepted"
+    }
+  },
+  "tenant": {
+    "mfa_options": {
+      "pick_authenticator_enabled": true
+    }
+  },
+  "transaction": {
+    "country_code": {
+      "code": "IN",
+      "prefix": "91"
+    },
+    "alternate_connections": [
+      {
+        "name": "twitter",
+        "strategy": "twitter"
+      },
+      {
+        "name": "google-oauth2",
+        "strategy": "google"
+      }
+    ],
+    "connection": {
+      "name": "Username-Password-Authentication",
+      "strategy": "auth0",
+      "options": {
+        "signup_enabled": true,
+        "forgot_password_enabled": true,
+        "attributes": {
+          "email": {
+            "signup_status": "required",
+            "identifier_active": true
+          },
+          "phone": {
+            "signup_status": "required",
+            "identifier_active": true
+          },
+          "username": {
+            "signup_status": "required",
+            "identifier_active": true,
+            "validation": {
+              "max_length": 15,
+              "min_length": 1,
+              "allowed_types": {
+                "email": false,
+                "phone_number": false
+              }
+            }
+          }
+        },
+        "authentication_methods": {
+          "password": {
+            "enabled": true,
+            "policy": "good",
+            "min_length": 8
+          },
+          "passkey": {
+            "enabled": true
+          }
+        }
+      }
+    },
+    "locale": "en",
+    "state": "mockedUniversalLoginState_longStringWithPotentiallySensitiveInfo_client_cl_mock_abc123xyz789_org_org_mock_def456uvw012_transaction_xyz789abc_moreRandomness"
+  },
+  "branding": {
+    "settings": {
+      "colors": {
+        "page_background": "#000000",
+        "primary": "#635dff"
+      }
+    },
+    "themes": {
+      "default": {
+        "borders": {
+          "buttons_style": "rounded",
+          "inputs_style": "rounded",
+          "button_border_weight": 1,
+          "button_border_radius": 3,
+          "input_border_weight": 1,
+          "input_border_radius": 3,
+          "widget_corner_radius": 5,
+          "widget_border_weight": 0,
+          "show_widget_shadow": true
+        },
+        "colors": {
+          "base_focus_color": "#635dff",
+          "base_hover_color": "#000000",
+          "body_text": "#1e212a",
+          "captcha_widget_theme": "light",
+          "error": "#d03c38",
+          "header": "#1e212a",
+          "icons": "#65676e",
+          "input_background": "#ffffff",
+          "input_border": "#c9cace",
+          "input_filled_text": "#000000",
+          "input_labels_placeholders": "#65676e",
+          "links_focused_components": "#635dff",
+          "primary_button": "#420000",
+          "primary_button_label": "#ffffff",
+          "secondary_button_border": "#c9cace",
+          "secondary_button_label": "#1e212a",
+          "success": "#13a688",
+          "widget_background": "#ffffff",
+          "widget_border": "#c9cace"
+        },
+        "fonts": {
+          "reference_text_size": 16,
+          "links_style": "normal",
+          "title": {
+            "bold": false,
+            "size": 150
+          },
+          "subtitle": {
+            "bold": false,
+            "size": 87.5
+          },
+          "body_text": {
+            "bold": false,
+            "size": 87.5
+          },
+          "buttons_text": {
+            "bold": false,
+            "size": 100
+          },
+          "input_labels": {
+            "bold": false,
+            "size": 100
+          },
+          "links": {
+            "bold": true,
+            "size": 87.5
+          }
+        },
+        "page_background": {
+          "page_layout": "center",
+          "background_color": "#c34646"
+        },
+        "widget": {
+          "logo_position": "center",
+          "logo_url": "https://cdn.example.com/logos/mock_widget_logo_v2.png?token=mocked_token_value_for_widget_logo",
+          "logo_height": 52,
+          "header_text_alignment": "center",
+          "social_buttons_layout": "bottom"
+        },
+        "displayName": "Unnamed Theme"
+      }
+    }
+  }
+}

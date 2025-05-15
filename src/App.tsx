@@ -6,7 +6,7 @@ const LoginId = React.lazy(() => import("./screens/login-id"));
 const LoginPassword = React.lazy(() => import("./screens/login-password"));
 
 const App: React.FC = () => {
-  const [screen, setScreen] = React.useState("login");
+  const [screen, setScreen] = React.useState("login-id");
   useEffect(() => {
     const current = getCurrentScreen();
     setScreen(current!);

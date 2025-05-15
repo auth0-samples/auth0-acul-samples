@@ -1,6 +1,6 @@
-# Auth0 Advanced Customizations for Universal Login Boilerplate
+# Auth0 Advanced Customizations for Universal Login Template
 
-This project provides a boilerplate setup for Auth0's Advanced Custom Universal Login (ACUL). ACUL allows you to build custom login screens using your own design systems and layouts.
+This project provides a template for creating custom Auth0 Advanced Customizations for Universal Login (ACUL) screens using React, TypeScript, and Tailwind CSS. It's designed to help you build screens that match Auth0's Universal Login design language.
 
 ## 📑 Table of Contents
 
@@ -9,7 +9,6 @@ This project provides a boilerplate setup for Auth0's Advanced Custom Universal 
 - [Project Structure](#project-structure)
 - [Screens](#screens)
 - [Development Workflow](#development-workflow)
-- [Deployment](#deployment)
 - [Technical Details](#technical-details)
 - [Documentation](#documentation)
 - [Troubleshooting](#troubleshooting)
@@ -53,93 +52,23 @@ This project provides a boilerplate setup for Auth0's Advanced Custom Universal 
   ```
   </details>
 
-<details>
-<summary>🔨 Auth0 CLI Installation (Important)</summary>
-
-- This project requires the Auth0 CLI to configure your tenant:
-  - For macOS/Linux using Homebrew:
-    ```bash
-    brew tap auth0/auth0-cli && brew install auth0
-    ```
-  - For Windows using Scoop:
-    ```bash
-    scoop bucket add auth0 https://github.com/auth0/scoop-auth0-cli.git
-    scoop install auth0
-    ```
-  - Or download from [Auth0 CLI GitHub repository](https://github.com/auth0/auth0-cli)
-- Verify installation with:
-  ```bash
-  auth0 --version
-  ```
-- Log in to your Auth0 account:
-  ```bash
-  auth0 login
-  ```
-- **Important**: You must be logged in to the Auth0 CLI before running this project
-</details>
-
-<details>
-<summary>🔐 Auth0 Tenant Setup (Important)</summary>
-
-1. **Auth0 Tenant**
-
-   - Create or use an existing Auth0 tenant. Remember to work in Development tenants before making changes to Production tenants.
-   - You can sign up for a free Auth0 account at [https://auth0.com/signup](https://auth0.com/signup)
-   - See [Create Tenants](https://auth0.com/docs/get-started/auth0-overview/create-tenants) in the Auth0 docs if you need help
-
-2. **Custom Domain Setup (REQUIRED)**
-
-   - **IMPORTANT**: A custom domain is required for ACUL to work in advanced mode
-   - Enable and configure a [custom domain](https://auth0.com/docs/customize/custom-domains) for your Auth0 tenant
-   - Verify the custom domain is working properly before proceeding
-
-</details>
-
 <a id="quick-start"></a>
 
 ## 🚀 Quick Start
 
-1. Auth0 CLI login:
+1. Start local development for a specific screen:
 
    ```bash
-   auth0 login
+   # View a specific screen component
+   # Replace <screen_name> with the desired screen (e.g., login-id, login-password, signup-id)
+   npm run screen <screen_name>
+
+   # Examples:
+   npm run screen login-id
+   npm run screen login-password
    ```
 
-   - This will open a browser window for you to log in to your Auth0 account
-   - ⚠️ **IMPORTANT**: Select a **Development tenant** that has a **custom domain configured**
-   - You can verify your selected tenant with `auth0 tenants list`
-
-2. Set up your environment variables:
-
-   ```bash
-   # Copy the example env file
-   cp .env.example .env.local
-   ```
-
-   Then edit `.env.local` with your Auth0 configuration:
-   ```env
-   # Auth0 Configuration
-   AUTH0_CUSTOM_DOMAIN='https://your-custom-domain.com'
-   AUTH0_CLIENT_ID='your-client-id'
-   AUTH0_AUDIENCE='your-audience'
-
-   # Optional
-   AUTH0_ORGANIZATION='optional_org_id'
-   ```
-
-3. Start development: *(Script functionality coming soon)*
-
-   ```bash
-   # Standard mode (single screen)
-   # This uses Universal Login mode to see the screen configured in your tenant
-   npm run screen:standard <screen_name>
-   npm run screen:standard login  # Examples: login, login-id, login-password
-
-   # Advanced mode with Hot Module Replacement (single screen)
-   # This uses ACUL (advanced mode) to see the screen being developed locally
-   npm run screen:advanced <screen_name>
-   npm run screen:advanced login  # Examples: login, login-id, login-password
-   ```
+   This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/mockContextLoader.ts` uses to inject the correct mock context.
 
 <a id="project-structure"></a>
 
@@ -151,6 +80,8 @@ auth0-acul-react-boilerplate/
 │   └── actions/         # Custom GitHub Actions
 │       └── configure-auth0-screens/ # Action for configuring Auth0 screens
 ├── dist/                # Production build output
+├── scripts/             # Node.js helper scripts for development
+│   └── dev-screen.js    # Script to run a specific screen with mock data
 ├── src/                 # Source files
 │   ├── common/          # Shared, reusable UI components (grouped by function)
 │   │   ├── Button/      # e.g., Button components
@@ -159,173 +90,90 @@ auth0-acul-react-boilerplate/
 │   │   ├── Link/        # e.g., Link components like SignupLink
 │   │   ├── Alert/       # e.g., ErrorMessages
 │   │   └── ...          # etc. (other functional groups)
+│   ├── constants/       # Project-wide constant values
+│   │   └── validScreens.js # List of valid screen names for the dev script
 │   ├── screens/         # Login flow screens
 │   │   └── [screen-name]/
 │   │       ├── components/ # Components specific ONLY to this screen
 │   │       │   └── ...
 │   │       ├── hooks/      # Hooks specific ONLY to this screen
 │   │       └── index.tsx   # Main screen component
-│   ├── styles/          # Contains variables.css for dynamic theming via CSS variables
+│   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
 │   └── utils/           # Shared utility functions
-├── scripts/             # Build and development scripts *(Coming soon)*
-│   ├── utils/           # Utility functions and helpers
-│   ├── advanced-mode.js # Advanced mode entry point
-│   ├── standard-mode.js # Standard mode entry point
-│   └── server.js        # Development server
+│       └── mockContextLoader.ts # Utility to load mock universal_login_context in dev
+└── ...                  # Build and configuration files
 ```
 
 <a id="screens"></a>
 
 ## 🖥️ Screens
 
-This boilerplate includes implementations for several Universal Login screens:
+This template includes implementations for several Universal Login screens that match Auth0's design language:
 
-- **[Login Screen](src/screens/login/README.md)** *(Coming soon)*
+- **Login Screen** (`src/screens/login/`)
 
   - Main login screen with username/email and password
-  - Customizable with your design system
+  - Matches the standard Auth0 Universal Login design
 
-- **[Login ID Screen](src/screens/login-id/README.md)** *(Coming soon)*
+- **Login ID Screen** (`src/screens/login-id/`)
 
   - Username/email input step in a multi-step login flow
-  - Follows modern authentication patterns
+  - Follows Auth0's Identifier First authentication pattern
 
-- **[Login Password Screen](src/screens/login-password/README.md)** *(Coming soon)*
+- **Login Password Screen** (`src/screens/login-password/`)
   - Password entry step in a multi-step login flow
-  - Secure password entry with validation
+  - Matches Auth0's password screen design
 
-Each screen will have its own detailed documentation. Check the README.md file in each screen directory for more information once available.
+Each screen component is designed to be used with the Auth0 ACUL JavaScript SDK in production, but uses mock data for local development.
 
 <a id="development-workflow"></a>
 
 ## 🔄 Development Workflow
 
-### Standard Mode Development *(Coming soon)*
+### Local Development with Mock Data
 
-Use standard mode when you want to test your screen with the configuration already set up in your Auth0 tenant:
-
-```bash
-npm run screen:standard login
-```
-
-This command:
-
-1. Configures your Auth0 tenant to use standard mode for the specified screen
-2. Launches a browser window with the login flow screen (either login or login-id based on identifier profile)
-3. Any changes to the tenant configuration will be reflected in the login experience
-
-### Advanced Mode Development *(Coming soon)*
-
-Use advanced mode when actively developing your custom screen:
+For local development, each screen component is provided with mock data that simulates the `universal_login_context` object that Auth0 provides in production. To work on a specific screen:
 
 ```bash
-npm run screen:advanced login
+npm run screen <screen_name>
 ```
 
-This command:
+This command, managed by `scripts/dev-screen.js`:
 
-1. Builds your screen and serves it locally with Hot Module Replacement (HMR)
-2. Configures your Auth0 tenant to use advanced mode with your local assets
-3. Launch browser with login flow screen (either login or login-id based on identifier profile)
-4. Any changes to your code will be immediately reflected without page reloads
+1. Validates the `<screen_name>` and checks for a corresponding `src/mock-data/<screen_name>.json` file.
+2. Sets the `VITE_SCREEN_NAME` environment variable.
+3. Starts the Vite development server.
+4. The application (`src/main.tsx` via `src/utils/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen into `window.universal_login_context`.
+5. This allows you to see and interact with the UI of the specific screen component locally.
 
-<a id="deployment"></a>
-
-## 📤 Deployment
-
-### Automated Deployment with GitHub Actions
-
-This boilerplate includes a GitHub Actions workflow to automate the process of:
-
-1. Building your customized ACUL screens
-2. Uploading the assets to an AWS S3 bucket
-3. Configuring your Auth0 tenant to use these assets in Advanced mode
-4. Serving the assets through a CDN for optimal performance
-
-**For detailed setup instructions including AWS S3, CloudFront, IAM roles, Auth0 M2M applications, and GitHub secrets, please refer to the comprehensive deployment guide:**
-
-➡️ **[DEPLOYMENT.md](./DEPLOYMENT.md)** *(Coming soon)*
-
-### Key Deployment Features
-
-- **Content-Based Asset Hashing**: All assets include content hashes for proper cache invalidation
-- **CDN Integration**: Assets are served through CloudFront or your preferred CDN
-- **Partial Deployments**: The workflow succeeds even if some screens fail to deploy
-- **Automatic Screen Discovery**: No need to manually update configuration when adding new screens
+The screen components include proper integration with Auth0 ACUL SDK methods (like `handleLogin`, `handleSocialLogin`, etc.), but these methods won't perform actual authentication in this local mock data development environment.
 
 <a id="technical-details"></a>
 
-## 🔍 Technical Details 
+## 🔍 Technical Details
 
-<details>
-<summary>Standard Mode Process Flow *(Implementation coming soon)*</summary>
+### Auth0 ACUL SDK Integration
 
-1. **Environment Check**
+This template demonstrates how to integrate screen components with the Auth0 ACUL JavaScript SDK. Each screen follows these patterns:
 
-   - Validates all required environment variables
-   - Checks for Auth0 CLI installation and login status
+- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`)
+- Set up proper form handling with the SDK methods
+- Handle errors and loading states appropriately
+- Follow Auth0's Universal Login design language
 
-2. **Port Availability Check**
+### Styling with Tailwind CSS
 
-   - Checks if port 3000 (Auth0 redirect) is available
-   - Fails if the port is in use
+The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language. Here's how theming is approached:
 
-3. **Screen Validation**
+- **Core Theme Colors**: Defined as CSS custom properties (e.g., `--color-primary`, `--color-link`) within an `@theme` block in `src/index.css`. This method, aligned with Tailwind CSS v4.x, allows Tailwind to automatically generate utility classes like `bg-primary` or `text-link` from these variables.
+- **Global Base Styles**: General styles like the base `font-family` and `line-height` for the application are set in a `:root` block within `src/index.css`.
+- **Tailwind Configuration (`tailwind.config.js`)**: 
+    - This file extends Tailwind's default theme.
+    - For colors, it references the CSS variables defined in `src/index.css` (e.g., `theme.extend.colors.primary = 'var(--color-primary)'`).
+    - Other theme aspects like `spacing`, `fontSize`, `fontWeight`, `lineHeight`, and `borderRadius` are configured directly in this file, as the `src/tokens` directory (which previously held JavaScript-based tokens) has been removed.
+- **Component Styling**: Individual components and screens currently use inline Tailwind utility classes for styling (e.g., `className="bg-primary text-white ..."`).
 
-   - Checks if the specified screen exists in `src/screens` directory
-   - Fails if screen directory is not found
-
-4. **Tenant Selection**
-
-   - Shows the current tenant with visual highlighting for clarity
-   - Provides a simple yes/no option to switch tenants
-
-5. **Auth0 CLI Configuration**
-
-   - Uses Auth0 CLI to configure the screen in standard mode:
-
-   ```bash
-   auth0 universal-login switch --tenant <tenant_name> --prompt <screen_name> --screen <screen_name> --rendering-mode standard
-   ```
-
-<details>
-<summary>Advanced Mode Process Flow *(Implementation coming soon)*</summary>
-
-1. **Same Environment and Validation Checks**
-
-   - Same as standard mode
-
-2. **Build Process**
-
-   - Runs a production build of your screen
-   - Outputs to the `dist` directory
-
-3. **Asset Discovery**
-
-   - Finds all compiled assets for the screen
-   - Includes JavaScript bundles and CSS files
-
-4. **Tenant Selection**
-
-   - Shows the current tenant with visual highlighting for clarity
-   - Provides a simple yes/no option to switch tenants
-
-5. **Auth0 CLI Configuration**
-
-   - Generates a configuration JSON file
-   - Saves it to settings/<screen_name>\_advanced.json
-   - Uses Auth0 CLI to apply the configuration:
-
-   ```bash
-   auth0 ul customize --tenant <tenant_name> --rendering-mode advanced --prompt <screen_name> --screen <screen_name> --settings-file settings.json
-   ```
-
-6. **Development Server with HMR**
-   - Starts a development server with Hot Module Replacement support
-   - Any changes to source code automatically rebuild and update
-   - No need to restart the server or refresh the browser
-
-   </details>
+Refer to `src/index.css` for the core color definitions and `tailwind.config.js` for how these and other theme aspects are integrated into Tailwind.
 
 <a id="documentation"></a>
 
@@ -335,19 +183,13 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
 
 Auth0's Advanced Custom Universal Login (ACUL) allows you to create highly customized authentication experiences using your own design system and components. ACUL gives you complete control over the UI while Auth0 handles the security aspects of authentication.
 
-Learn more about ACUL in the [Auth0 Advanced Customizations documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations).
+Learn more about ACUL in the [Auth0 ACUL Documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations).
 
 ### ACUL JavaScript Library
 
 The ACUL JavaScript library provides a set of components, hooks, and utilities for building advanced custom login experiences with Auth0. It includes utilities for form handling, state management, and integration with Auth0's authentication APIs.
 
 Explore the [ACUL API documentation](https://auth0.github.io/universal-login/modules/Classes.html) to learn about all available modules and classes.
-
-### Auth0 CLI
-
-The Auth0 CLI is a command-line tool for managing Auth0 tenants, applications, and Universal Login configurations. This boilerplate project uses the Auth0 CLI to switch between standard and advanced modes for Universal Login screens.
-
-Learn more about the Auth0 CLI in the [official documentation](https://auth0.github.io/auth0-cli/).
 
 <a id="troubleshooting"></a>
 
@@ -356,39 +198,17 @@ Learn more about the Auth0 CLI in the [official documentation](https://auth0.git
 ### Common Issues
 
 <details>
-<summary>White screen on loading a page</summary>
+<summary>Components not displaying properly in local development</summary>
 
-- **Issue**: White screen appears when loading a page
+- **Issue**: Screen components don't display or display incorrectly
 - **Solution**:
-  1. Check browser console for errors related to loading CSS or JS files. You might need to switch particular screen to standard mode.
-  2. Ensure your Auth0 tenant has a custom domain configured
-  3. Verify the advanced mode configuration was properly applied
-  4. Try running `npm run build` manually to check for build errors
-
-  </details>
-
-<summary>Assets Not Loading in Advanced Mode</summary>
-
-- **Issue**: The screen loads but appears unstyled or with JavaScript errors
-- **Solution**:
-  1. Check browser console for errors related to loading CSS or JS files
-  2. Ensure your Auth0 tenant has a custom domain configured
-  3. Verify the advanced mode configuration was properly applied
-  4. Try running `npm run build` manually to check for build errors
-  </details>
-
-<details>
-<summary>Screen Not Found Error</summary>
-
-- **Issue**: Getting "Screen not found" error when starting development
-- **Solution**:
-  1. Make sure the screen name matches a directory in `src/screens/`
-  2. Screen names are case-sensitive, so use the exact name as the directory
-  3. If creating a new screen, ensure it has the required files structure
+  1. Check the browser console for errors related to missing mock data
+  2. Verify that the screen name is correct and matches a directory in `src/screens/`
+  3. Ensure all dependencies are installed correctly
   </details>
 
 ### Getting Help
 
-- **GitHub Issues**: Report issues or request features through [GitHub Issues](https://github.com/auth0/universal-login/issues)
+- **GitHub Issues**: Report issues or request features through [GitHub Issues](https://github.com/auth0/auth0-acul-react-boilerplate/issues)
 - **Auth0 Community**: Ask questions in the [Auth0 Community](https://community.auth0.com/)
-- **Support**: Contact [Auth0 Support](https://support.auth0.com/) for assistance with tenant-specific issues
+- **Auth0 Documentation**: Visit the [Auth0 ACUL Documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations) for more information

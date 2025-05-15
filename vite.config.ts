@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
-import tailwindcss from "@tailwindcss/vite";
 import fs from "fs";
 
 // Dynamically discover screen directories
@@ -26,19 +25,12 @@ if (fs.existsSync(screensDir)) {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
   server: {
-    port: 3032,
+    port: 3000,
     strictPort: true,
-    host: "localhost",
-    watch: { usePolling: true },
-    hmr: {
-      protocol: "ws",
-      host: "localhost",
-      port: 3032,
-      clientPort: 3032,
-    },
   },
+  clearScreen: false,
   resolve: {
     alias: { "@": resolve(__dirname, "./src") },
   },
@@ -110,5 +102,5 @@ export default defineConfig({
     cssCodeSplit: false, // Keep CSS in a single file
     sourcemap: true,
   },
-  logLevel: "error",
+  logLevel: "info",
 });

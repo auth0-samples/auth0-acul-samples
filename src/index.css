@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #0059d6;
+  --color-link: #007bad;
+  --color-error: #d00e17;
+  --color-success: #0a8852;
+  --color-warning: #ffdb5f;
+  --color-text-default: #2d333a;
+  --color-text-secondary: #6f7780;
+  --color-background-page: #f9fafb;
+  --color-background-widget: #fff;
+  --color-gray-mid: #c2c8d0;
+  --color-gray-darkest: #2d333a;
+}
+
+:root {
+  /* Global base styles not directly tied to Tailwind utility names */
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background-page);
+  color: var(--color-text-default);
+}
