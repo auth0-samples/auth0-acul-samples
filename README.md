@@ -182,17 +182,52 @@ This template demonstrates how to integrate screen components with the Auth0 ACU
 
 ### Styling with Tailwind CSS
 
-The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language. Here's how theming is approached:
+The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language and support dynamic theming based on tenant/organization branding.
 
-- **Core Theme Colors**: Defined as CSS custom properties (e.g., `--color-primary`, `--color-link`) within an `@theme` block in `src/index.css`. This method, aligned with Tailwind CSS v4.x, allows Tailwind to automatically generate utility classes like `bg-primary` or `text-link` from these variables.
-- **Global Base Styles**: General styles like the base `font-family` and `line-height` for the application are set in a `:root` block within `src/index.css`.
-- **Tailwind Configuration (`tailwind.config.js`)**:
-  - This file extends Tailwind's default theme.
-  - For colors, it references the CSS variables defined in `src/index.css` (e.g., `theme.extend.colors.primary = 'var(--color-primary)'`).
-  - Other theme aspects like `spacing`, `fontSize`, `fontWeight`, `lineHeight`, and `borderRadius` are configured directly in this file, as the `src/tokens` directory (which previously held JavaScript-based tokens) has been removed.
-- **Component Styling**: Individual components and screens currently use inline Tailwind utility classes for styling (e.g., `className="bg-primary text-white ..."`).
+**1. Default Theme Variables (`src/index.css`)**
 
-Refer to `src/index.css` for the core color definitions and `tailwind.config.js` for how these and other theme aspects are integrated into Tailwind.
+Base theme colors and other CSS custom properties are defined with default values in `src/index.css`:
+
+```css
+/* src/index.css */
+@theme {
+  --color-primary: #0059d6; /* Default primary color */
+  --color-link: #007bad;
+  --color-background-page: #f9fafb;
+  --color-background-widget: #ffffff;
+  --logo-url-string: "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg";
+  /* ... other variables ... */
+}
+
+:root {
+  /* You can also define variables here */
+}
+```
+
+**2. Dynamic Theming (`src/context/BrandingProvider.tsx`)**
+
+A `BrandingProvider` component dynamically adjusts the theme:
+
+- It consumes the `universal_login_context` (from Auth0 tenant settings in production, or `src/mock-data/*.json` locally).
+- Using a helper (`getThemeValue`), it selects the appropriate branding values (e.g., organization's primary color, logo URL) based on a defined precedence.
+- It then updates the CSS custom properties on the HTML root element in real-time (e.g., `document.documentElement.style.setProperty('--color-primary', resolvedPrimaryColor);`).
+
+**3. Component Styling**
+
+Components use standard Tailwind utility classes. These classes automatically reflect the dynamic theme because they are mapped to the CSS variables that `BrandingProvider` updates.
+
+```tsx
+// Example in a screen component
+// This div will use the dynamically set --color-background-widget
+<div className="bg-background-widget p-4">
+  {/* This button will use the dynamically set --color-primary */}
+  <button className="bg-primary text-white">Continue</button>
+</div>
+```
+
+For direct JavaScript access to resolved theme values (e.g., a logo URL for an `<img>` tag), components can use the `useBranding` hook provided by `BrandingProvider`.
+
+This setup ensures that UI elements adapt to specific tenant or organization branding, providing a consistent user experience.
 
 <a id="documentation"></a>
 
