@@ -43,8 +43,8 @@
         "strategy": "google"
       },
       {
-        "name": "linkedin",
-        "strategy": "linkedin"
+        "name": "twitter",
+        "strategy": "twitter"
       }
     ],
     "connection": {
