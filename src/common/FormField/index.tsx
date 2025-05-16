@@ -1,0 +1,73 @@
+import React from "react";
+import Label from "@/common/Label";
+import type { LabelProps } from "@/common/Label";
+import Input from "@/common/Input";
+import type { InputProps } from "@/common/Input";
+import Icon from "@/common/Icon";
+import { ExclamationCircleIcon } from "@/assets/icons";
+
+export interface FormFieldProps {
+  labelProps: LabelProps;
+  inputProps: InputProps;
+  error?: string;
+  className?: string;
+  inputIcon?: React.ReactNode;
+  isParentFocused?: boolean;
+  inputWrapperClassName?: string;
+  errorTextClassName?: string;
+}
+
+const FormField: React.FC<FormFieldProps> = ({
+  labelProps,
+  inputProps,
+  error,
+  className,
+  inputIcon,
+  isParentFocused,
+  inputWrapperClassName,
+  errorTextClassName,
+}) => {
+  const { id: inputId } = inputProps;
+
+  let inputCombinedClassName = inputProps.className || "";
+  const errorRingStyles = "border-error focus:ring-error focus:border-error";
+
+  let finalInputProps = { ...inputProps };
+
+  if (error) {
+    inputCombinedClassName += ` ${errorRingStyles}`;
+  } else if (isParentFocused) {
+    finalInputProps.forceFocusStyle = true;
+  }
+
+  return (
+    <div className={`${className || ""}`}>
+      <div className={`relative ${inputWrapperClassName || ""}`}>
+        <Input
+          {...finalInputProps}
+          className={inputCombinedClassName}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${inputId}-error` : undefined}
+        />
+        <Label {...labelProps} htmlFor={inputId} />
+        {inputIcon && (
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+            {inputIcon}
+          </div>
+        )}
+      </div>
+      {error && (
+        <div
+          id={`${inputId}-error`}
+          className={`flex items-center ${errorTextClassName || ""}`}
+          role="alert"
+        >
+          <Icon As={ExclamationCircleIcon} className="h-4 w-4 mr-1" />
+          {error}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FormField;
