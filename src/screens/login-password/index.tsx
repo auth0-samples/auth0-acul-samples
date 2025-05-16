@@ -2,7 +2,7 @@ import Button from "@/common/Button";
 
 const LoginPasswordScreen = () => {
   return (
-    <div className="p-6 mx-auto my-4 max-w-md bg-backgroundWidget rounded-lg shadow-md border">
+    <div className="p-6 mx-auto my-4 max-w-md bg-background-widget rounded-lg shadow-md border">
       <h1 className="text-2xl font-bold mb-4">Enter Your Password</h1>
       {/* Add password input field here later */}
       <p className="mb-6 text-sm text-textSecondary dark:text-gray-400">
