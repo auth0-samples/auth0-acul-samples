@@ -41,10 +41,5 @@ body {
   margin: 0;
   background-color: var(--color-background-page);
   color: var(--color-text-default);
-  padding-top: 3rem;
-  padding-bottom: 3rem;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

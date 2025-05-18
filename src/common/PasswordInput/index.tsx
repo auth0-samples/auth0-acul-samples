@@ -51,6 +51,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
     children: label,
     htmlFor: generatedId,
     className: labelClassName,
+    forceApplyFocusStyle: isIconButtonFocused,
   };
 
   const formFieldInputProps: InputProps = {
