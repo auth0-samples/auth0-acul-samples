@@ -25,12 +25,12 @@ const Tooltip: React.FC<TooltipProps> = ({
   };
 
   const arrowClasses = {
-    top: "left-1/2 -translate-x-1/2 bottom-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-gray-darkest",
+    top: "left-1/2 -translate-x-1/2 bottom-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-black",
     bottom:
-      "left-1/2 -translate-x-1/2 top-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[4px] border-b-gray-darkest",
-    left: "right-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[4px] border-l-gray-darkest",
+      "left-1/2 -translate-x-1/2 top-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[4px] border-b-black",
+    left: "right-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[4px] border-l-black",
     right:
-      "left-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-r-[4px] border-r-gray-darkest",
+      "left-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-r-[4px] border-r-black",
   };
 
   return (
@@ -45,7 +45,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       {isVisible && text && (
         <div
           role="tooltip"
-          className={`absolute z-10 px-2 py-1 text-xs font-medium text-white bg-gray-darkest rounded shadow-sm ${positionClasses[position]} ${tooltipClassName || ""}`}
+          className={`absolute z-10 px-2 py-1 text-xs font-medium text-white bg-black rounded shadow-sm text-center ${positionClasses[position]} ${tooltipClassName || ""}`}
         >
           {text}
           <div className={`absolute ${arrowClasses[position]}`} />

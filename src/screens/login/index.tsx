@@ -9,8 +9,8 @@ import { useLoginManager } from "./hooks/useLoginManager";
 import { useLoginForm } from "./hooks/useLoginForm";
 import SocialProviderButton from "@/common/SocialProviderButton";
 import { getIcon } from "@/utils/iconUtils";
-import { BrandingProvider } from "@/context/BrandingProvider";
 import Alert from "@/common/Alert";
+import { BrandingProvider } from "@/context/BrandingProvider";
 
 const LoginScreen: React.FC = () => {
   const { handleLogin, handleSocialLogin, loginInstance } = useLoginManager();
@@ -49,7 +49,7 @@ const LoginScreen: React.FC = () => {
   return (
     <BrandingProvider screenInstance={loginInstance}>
       <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="w-full max-w-[400px] bg-background-widget rounded shadow-md px-10 py-10">
+        <Card className="w-full max-w-[400px]">
           <Logo imageClassName="h-13" />
           <h1 className="text-2xl font-normal text-center text-text-default mt-6 mb-4">
             {loginInstance?.screen?.texts?.title || "Welcome"}
@@ -85,10 +85,8 @@ const LoginScreen: React.FC = () => {
                 ref: usernameRef,
                 placeholder: "\u00A0",
                 autoComplete: "email",
-                className: "border-gray-mid focus:ring-link focus:border-link",
               }}
-              inputWrapperClassName="mt-1 rounded-md shadow-sm"
-              errorTextClassName="mt-2 text-sm text-error"
+              error="this is a dummy error message for testing"
             />
 
             <PasswordInput
@@ -99,29 +97,22 @@ const LoginScreen: React.FC = () => {
                 ref: passwordRef,
                 autoComplete: "current-password",
               }}
-              inputClassName="border-gray-mid focus:ring-link focus:border-link"
-              inputWrapperClassName="mt-1 rounded-md shadow-sm"
-              errorTextClassName="mt-2 text-sm text-error"
             />
 
             {isCaptchaAvailable && captchaImage && (
               <CaptchaBox
-                className="mb-4 space-y-2"
+                className="mb-4"
                 id="captcha-input-login"
                 label={captchaLabelText}
                 imageUrl={captchaImage}
                 inputProps={{
                   ref: captchaRef,
                 }}
-                inputClassName="border-gray-mid focus:ring-link focus:border-link"
-                imageWrapperClassName="flex justify-center border border-gray-mid rounded p-8 bg-background-widget"
-                imageClassName="h-16 object-contain"
-                inputWrapperClassName="mt-1 rounded-md shadow-sm"
-                errorTextClassName="mt-2 text-sm text-error"
+                imageClassName="h-16"
               />
             )}
-            <div className="mt-6 text-left font-bold">
-              <Button variant="link" size="lg" className="font-bold text-sm">
+            <div className="mt-6 text-left">
+              <Button variant="link" size="sm" className="p-1 font-bold">
                 {loginInstance?.screen?.texts?.forgotPasswordText ||
                   "Forgot password?"}
               </Button>
@@ -136,7 +127,7 @@ const LoginScreen: React.FC = () => {
               {loginInstance?.screen?.texts?.dontHaveAccountText ||
                 "Don't have an account?"}
             </span>{" "}
-            <Button variant="link" size="sm" className="px-1 font-bold">
+            <Button variant="link" size="sm" className="px-1">
               {loginInstance?.screen?.texts?.signUpText || "Sign up"}
             </Button>
           </div>
