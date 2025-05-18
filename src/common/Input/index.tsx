@@ -46,7 +46,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     } else if (forceFocusStyle) {
       borderAndFocusStyles = "border-link ring-1 ring-link";
     } else {
-      borderAndFocusStyles = "border-gray-mid focus:ring-1 focus:ring-link focus:border-link";
+      borderAndFocusStyles =
+        "border-gray-mid focus:ring-1 focus:ring-link focus:border-link";
     }
 
     return (
