@@ -16,13 +16,13 @@ const SocialProviderButton: React.FC<SocialProviderButtonProps> = ({
   className = "",
 }) => {
   const baseStyles =
-    "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border rounded gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out";
+    "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border rounded gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out focus:ring-3 focus:ring-primary/15";
 
   const enabledStyles =
-    "bg-white border-gray-mid text-gray-800 hover:bg-gray-100 focus:border-link focus:ring-1 focus:ring-link focus:ring-opacity-50 cursor-pointer";
+    "bg-white border-gray-mid text-text-default hover:bg-gray-mid/20 focus:bg-primary/15 cursor-pointer";
 
   const disabledStyles =
-    "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed";
+    "bg-gray-mid/10 border-gray-mid/50 text-text-secondary cursor-not-allowed";
 
   return (
     <button

@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
   ...rest
 }) => {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-background-widget)] transition-colors duration-150 ease-in-out";
+    "inline-flex items-center justify-center font-medium focus:outline-none transition-colors duration-150 ease-in-out";
 
   let cursorStyles =
     disabled || isLoading ? "cursor-not-allowed" : "cursor-pointer";
@@ -38,23 +38,23 @@ const Button: React.FC<ButtonProps> = ({
   switch (variant) {
     case "primary":
       variantStyles =
-        "bg-primary text-white hover:bg-primary/90 focus-visible:ring-primary disabled:opacity-70 disabled:bg-primary/70 px-4 py-4 text-md rounded";
+        "bg-primary text-white hover:bg-primary/90 focus:ring-3 focus:ring-primary/15 disabled:opacity-70 disabled:bg-primary/70 px-4 py-4 text-md rounded";
       break;
     case "secondary":
       variantStyles =
-        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus-visible:ring-primary disabled:opacity-70";
+        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring-3 focus:ring-primary/15 disabled:opacity-70";
       break;
     case "link":
       variantStyles =
-        "font-bold text-link hover:text-link/80 focus-visible:ring-link disabled:text-link/70";
+        "font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded disabled:text-link/70";
       break;
     case "social":
       variantStyles =
-        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus-visible:ring-primary disabled:opacity-70";
+        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring3 focus:ring-primary/15 disabled:opacity-70";
       break;
     case "icon":
       variantStyles =
-        "hover:text-text-default focus:outline-none disabled:opacity-50 p-1 rounded";
+        "h-full flex items-center justify-center px-3 focus:outline-none hover:text-text-default disabled:opacity-50";
       break;
     default:
       variantStyles = "";

@@ -42,16 +42,20 @@ const FormField: React.FC<FormFieldProps> = ({
 
   return (
     <div className={`${className || ""}`}>
-      <div className={`relative ${inputWrapperClassName || ""}`}>
+      <div
+        className={`relative mt-1 rounded-md shadow-sm ${inputWrapperClassName || ""}`}
+      >
         <Input
           {...finalInputProps}
           className={inputCombinedClassName}
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : undefined}
         />
-        <Label {...labelProps} htmlFor={inputId} />
+        <Label {...labelProps} htmlFor={inputId} isError={!!error} />
         {inputIcon && (
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+          <div
+            className={`absolute inset-y-0 right-0 flex items-center rounded-r-md mt-px mt-3 ${isParentFocused ? "bg-primary/15" : ""}`}
+          >
             {inputIcon}
           </div>
         )}
@@ -59,7 +63,7 @@ const FormField: React.FC<FormFieldProps> = ({
       {error && (
         <div
           id={`${inputId}-error`}
-          className={`flex items-center ${errorTextClassName || ""}`}
+          className={`flex items-center mt-2 text-sm text-error ${errorTextClassName || ""}`}
           role="alert"
         >
           <Icon As={ExclamationCircleIcon} className="h-4 w-4 mr-1" />

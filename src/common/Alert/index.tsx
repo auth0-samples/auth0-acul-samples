@@ -24,7 +24,7 @@ const Alert: React.FC<AlertProps> = ({ type, message, className, title }) => {
       IconComponent = ExclamationCircleIcon;
       break;
     case "warning":
-      typeStyles = "bg-warning/20 border border-yellow-500 text-yellow-700"; // Ensure --color-warning is effective here or use specific Tailwind yellow
+      typeStyles = "bg-warning/20 border border-warning text-warning"; // Ensure --color-warning is effective here or use specific Tailwind yellow
       // IconComponent = WarningIcon; // TODO: Create WarningIcon and import
       break;
     case "success":
@@ -36,7 +36,7 @@ const Alert: React.FC<AlertProps> = ({ type, message, className, title }) => {
       // IconComponent = InfoIcon; // TODO: Create InfoIcon and import
       break;
     default:
-      typeStyles = "bg-gray-100 border border-gray-300 text-text-default"; // Tailwind gray, not from theme
+      typeStyles = "bg-gray-mid/10 border border-gray-mid text-text-default"; // Tailwind gray, not from theme
   }
 
   const messages = Array.isArray(message) ? message : [message];

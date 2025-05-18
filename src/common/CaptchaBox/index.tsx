@@ -56,13 +56,15 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
   const currentImageUrl = imageUrl;
 
   return (
-    <div className={`${className || ""}`}>
+    <div className={`space-y-2 ${className || ""}`.trim()}>
       {currentImageUrl && (
-        <div className={`${imageWrapperClassName || ""}`}>
+        <div
+          className={`flex justify-center border border-gray-mid rounded p-8 bg-background-widget ${imageWrapperClassName || ""}`.trim()}
+        >
           <img
             src={currentImageUrl}
             alt="CAPTCHA challenge"
-            className={`${imageClassName || ""}`}
+            className={`object-contain ${imageClassName || ""}`.trim()}
           />
         </div>
       )}

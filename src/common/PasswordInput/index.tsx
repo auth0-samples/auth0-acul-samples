@@ -33,7 +33,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   inputProps: additionalInputProps,
   value,
   onChange,
-  placeholder,
   inputWrapperClassName,
   errorTextClassName,
 }) => {

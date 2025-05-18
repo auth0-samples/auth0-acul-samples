@@ -35,17 +35,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
-    let baseInputStyles =
+    const baseInputStyles =
       "block w-full px-3 py-4 h-14 border rounded focus:outline-none peer box-border";
 
-    const standardFocusClasses = "ring-1 ring-link border-link";
-    let forcedFocusClass = "";
+    let borderAndFocusStyles = "";
+    const hasError = className?.includes("border-error");
 
-    if (forceFocusStyle) {
-      baseInputStyles += ` ${standardFocusClasses}`;
-      forcedFocusClass = "is-forced-focus";
+    if (hasError) {
+      borderAndFocusStyles = "ring-1 ring-error";
+    } else if (forceFocusStyle) {
+      borderAndFocusStyles = "border-link ring-1 ring-link";
     } else {
-      baseInputStyles += ` focus:ring-1`;
+      borderAndFocusStyles = "border-gray-mid focus:ring-1 focus:ring-link focus:border-link";
     }
 
     return (
@@ -55,7 +56,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         name={name}
         ref={ref}
         placeholder={placeholder || "\u00A0"}
-        className={`${baseInputStyles} ${forcedFocusClass} ${className || ""}`.trim()}
+        className={`${baseInputStyles} ${borderAndFocusStyles} ${className || ""}`.trim()}
         {...rest}
       />
     );
