@@ -96,8 +96,8 @@ auth0-acul-samples/
 │   │   └── [screen-name]/
 │   │       ├── components/ # Components specific ONLY to this screen
 │   │       │   └── ...
-│   │       ├── hooks/      # Hooks specific ONLY to this screen
-│   │       └── index.tsx   # Main screen component
+│   │       ├── hooks/      # Hooks specific ONLY to this screen (e.g., use<ScreenName>Manager, use<ScreenName>Form)
+│   │       └── index.tsx   # Main screen component, orchestrates components from its ./components/ folder.
 │   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
 │   └── utils/           # Shared utility functions
 │       └── mockContextLoader.ts # Utility to load mock sdk values to render screen in dev
@@ -148,37 +148,18 @@ This command, managed by `scripts/dev-screen.js`:
 
 The screen components include proper integration with Auth0 ACUL SDK methods (like `handleLogin`, `handleSocialLogin`, etc.), but these methods won't perform actual authentication in this local mock data development environment.
 
-<a id="technical-details"></a>
-
-## 🔍 Technical Details
-
-### Application Mounting in ACUL
-
-In an Auth0 Advanced Customization for Universal Login (ACUL) environment, Auth0 provides the main HTML page. Your custom application, built with this template, doesn't bundle its own `index.html`. Instead, it needs to be dynamically injected into the DOM provided by Auth0.
-
-The `src/main.tsx` file handles this by:
-
-1. Creating a new `div` element.
-2. Assigning it an `id` (e.g., `root`).
-3. Appending this `div` to the `document.body`.
-4. Mounting the React application into this newly created `div`.
-
-This ensures your custom UI is correctly rendered within the Auth0-hosted page. Here's a conceptual overview of how this is done in `src/main.tsx`:
-
-```typescript
-const rootElement = document.createElement("div");
-rootElement.id = "root";
-document.body.appendChild(rootElement);
-```
-
 ### Auth0 ACUL SDK Integration
 
 This template demonstrates how to integrate screen components with the Auth0 ACUL JavaScript SDK. Each screen follows these patterns:
 
-- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`)
-- Set up proper form handling with the SDK methods
-- Handle errors and loading states appropriately
-- Follow Auth0's Universal Login design language
+- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`) typically within a custom hook in `src/screens/[screen-name]/hooks/use<ScreenName>Manager.ts`.
+- Screen-specific UI logic and form handling are often encapsulated in sub-components within `src/screens/[screen-name]/components/`, which utilize the screen's custom hooks (manager and form hooks) for data and actions.
+- Set up proper form handling with the SDK methods.
+- Handle errors and loading states appropriately.
+
+<a id="technical-details"></a>
+
+## 🔍 Technical Details
 
 ### Styling with Tailwind CSS
 

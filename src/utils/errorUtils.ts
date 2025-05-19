@@ -14,7 +14,7 @@ export interface SdkError {
  * @param sdkErrors An array of SDK error objects.
  * @returns The error message string if found, otherwise undefined.
  */
-export const getSdkErrorForField = (
+export const getFieldError = (
   fieldName: string,
   sdkErrors: SdkError[] = [],
 ): string | undefined => {
