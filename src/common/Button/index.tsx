@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
   switch (variant) {
     case "primary":
       variantStyles =
-        "bg-primary text-white hover:bg-primary/90 focus:ring-3 focus:ring-primary/15 disabled:opacity-70 disabled:bg-primary/70 px-4 py-4 text-md rounded";
+        "bg-primary text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/15 disabled:opacity-70 disabled:bg-primary/70 px-4 py-4 text-md rounded";
       break;
     case "secondary":
       variantStyles =
@@ -50,7 +50,7 @@ const Button: React.FC<ButtonProps> = ({
       break;
     case "social":
       variantStyles =
-        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring3 focus:ring-primary/15 disabled:opacity-70";
+        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring-4 focus:ring-primary/15 disabled:opacity-70";
       break;
     case "icon":
       variantStyles =
