@@ -100,7 +100,7 @@ auth0-acul-samples/
 │   │       └── index.tsx   # Main screen component
 │   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
 │   └── utils/           # Shared utility functions
-│       └── mockContextLoader.ts # Utility to load mock universal_login_context in dev
+│       └── mockContextLoader.ts # Utility to load mock sdk values to render screen in dev
 └── ...                  # Build and configuration files
 ```
 
@@ -132,7 +132,7 @@ Each screen component is designed to be used with the Auth0 ACUL JavaScript SDK 
 
 ### Local Development with Mock Data
 
-For local development, each screen component is provided with mock data that simulates the `universal_login_context` object that Auth0 provides in production. To work on a specific screen:
+For local development, each screen component is provided with mock data in folder `mock-data` for sdk to render screens. To work on a specific screen:
 
 ```bash
 npm run screen <screen_name>
@@ -143,7 +143,7 @@ This command, managed by `scripts/dev-screen.js`:
 1. Validates the `<screen_name>` and checks for a corresponding `src/mock-data/<screen_name>.json` file.
 2. Sets the `VITE_SCREEN_NAME` environment variable.
 3. Starts the Vite development server.
-4. The application (`src/main.tsx` via `src/utils/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen into `window.universal_login_context`.
+4. The application (`src/main.tsx` via `src/utils/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen.
 5. This allows you to see and interact with the UI of the specific screen component locally.
 
 The screen components include proper integration with Auth0 ACUL SDK methods (like `handleLogin`, `handleSocialLogin`, etc.), but these methods won't perform actual authentication in this local mock data development environment.
@@ -151,6 +151,25 @@ The screen components include proper integration with Auth0 ACUL SDK methods (li
 <a id="technical-details"></a>
 
 ## 🔍 Technical Details
+
+### Application Mounting in ACUL
+
+In an Auth0 Advanced Customization for Universal Login (ACUL) environment, Auth0 provides the main HTML page. Your custom application, built with this template, doesn't bundle its own `index.html`. Instead, it needs to be dynamically injected into the DOM provided by Auth0.
+
+The `src/main.tsx` file handles this by:
+
+1. Creating a new `div` element.
+2. Assigning it an `id` (e.g., `root`).
+3. Appending this `div` to the `document.body`.
+4. Mounting the React application into this newly created `div`.
+
+This ensures your custom UI is correctly rendered within the Auth0-hosted page. Here's a conceptual overview of how this is done in `src/main.tsx`:
+
+```typescript
+const rootElement = document.createElement("div");
+rootElement.id = "root";
+document.body.appendChild(rootElement);
+```
 
 ### Auth0 ACUL SDK Integration
 
@@ -167,10 +186,10 @@ The project uses Tailwind CSS for styling, with a configuration designed to matc
 
 - **Core Theme Colors**: Defined as CSS custom properties (e.g., `--color-primary`, `--color-link`) within an `@theme` block in `src/index.css`. This method, aligned with Tailwind CSS v4.x, allows Tailwind to automatically generate utility classes like `bg-primary` or `text-link` from these variables.
 - **Global Base Styles**: General styles like the base `font-family` and `line-height` for the application are set in a `:root` block within `src/index.css`.
-- **Tailwind Configuration (`tailwind.config.js`)**: 
-    - This file extends Tailwind's default theme.
-    - For colors, it references the CSS variables defined in `src/index.css` (e.g., `theme.extend.colors.primary = 'var(--color-primary)'`).
-    - Other theme aspects like `spacing`, `fontSize`, `fontWeight`, `lineHeight`, and `borderRadius` are configured directly in this file, as the `src/tokens` directory (which previously held JavaScript-based tokens) has been removed.
+- **Tailwind Configuration (`tailwind.config.js`)**:
+  - This file extends Tailwind's default theme.
+  - For colors, it references the CSS variables defined in `src/index.css` (e.g., `theme.extend.colors.primary = 'var(--color-primary)'`).
+  - Other theme aspects like `spacing`, `fontSize`, `fontWeight`, `lineHeight`, and `borderRadius` are configured directly in this file, as the `src/tokens` directory (which previously held JavaScript-based tokens) has been removed.
 - **Component Styling**: Individual components and screens currently use inline Tailwind utility classes for styling (e.g., `className="bg-primary text-white ..."`).
 
 Refer to `src/index.css` for the core color definitions and `tailwind.config.js` for how these and other theme aspects are integrated into Tailwind.

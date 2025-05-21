@@ -1,7 +1,6 @@
-import React from "react";
 import Button from "@/common/Button";
 
-const LoginScreen: React.FC = () => {
+const LoginScreen = () => {
   return (
     <div className="p-6 mx-auto my-4 max-w-md bg-backgroundWidget rounded-lg shadow-md border">
       <h1 className="text-2xl font-bold mb-4">Login</h1>
