@@ -35,11 +35,11 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <div
-      className={`relative inline-block ${className || ""}`}
+      className={`relative ${className || ""}`}
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
-      onFocusCapture={() => setIsVisible(true)} // Show on focus as well for accessibility
-      onBlurCapture={() => setIsVisible(false)} // Hide on blur
+      onFocusCapture={() => setIsVisible(true)}
+      onBlurCapture={() => setIsVisible(false)}
     >
       {children}
       {isVisible && text && (

@@ -36,7 +36,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const baseInputStyles =
-      "block w-full px-3 py-4 h-14 border rounded focus:outline-none peer box-border";
+      "block w-full px-3 py-4 h-14 border rounded focus:outline-none peer box-border overflow-hidden text-ellipsis whitespace-nowrap";
 
     let borderAndFocusStyles = "";
     const hasError = className?.includes("border-error");
