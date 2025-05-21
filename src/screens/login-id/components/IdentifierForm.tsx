@@ -40,6 +40,7 @@ const IdentifierForm: React.FC = () => {
           autoComplete: "username",
           required: true,
           maxLength: 100,
+          autoFocus: true,
         }}
         error={
           getFieldError("identifier", sdkErrors) ||

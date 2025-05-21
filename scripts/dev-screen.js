@@ -15,7 +15,10 @@ const ANSI_RESET = "\x1b[0m";
 const screenName = process.argv[2];
 
 if (!screenName) {
-  console.error(`${ANSI_RED}%s${ANSI_RESET}`, "Error: No screen name provided.");
+  console.error(
+    `${ANSI_RED}%s${ANSI_RESET}`,
+    "Error: No screen name provided.",
+  );
   console.log("Usage: npm run screen <screen-name>");
   process.exit(1);
 }

@@ -6,7 +6,7 @@
 default_screen_deployment_status:
   "email-identifier-challenge": false
   "interstitial-captcha": false
-  "login-id": false
+  "login-id": true
   "login-password": false
   "login-passwordless-email-code": false
   "login-passwordless-sms-otp": false
