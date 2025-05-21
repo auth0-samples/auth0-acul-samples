@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node ./scripts/dev-screen.js",
     "build": "npm run lint:format && tsc -b && vite build --logLevel info",
     "preview": "vite preview",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,html,css}\" --ignore-unknown",
