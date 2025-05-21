@@ -11,7 +11,7 @@ interface BrandingContextValues {
 const defaultBrandingValues: BrandingContextValues = {
   primaryColor: "#635dff",
   linkColor: "#635dff",
-  pageBackground: "#ffffff",
+  pageBackground: "#000000",
   logoUrl:
     "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg",
 };

@@ -9,6 +9,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 - [Project Structure](#project-structure)
 - [Screens](#screens)
 - [Development Workflow](#development-workflow)
+- [Deployment](#deployment)
 - [Technical Details](#technical-details)
 - [Documentation](#documentation)
 - [Troubleshooting](#troubleshooting)
@@ -156,6 +157,44 @@ This template demonstrates how to integrate screen components with the Auth0 ACU
 - Screen-specific UI logic and form handling are often encapsulated in sub-components within `src/screens/[screen-name]/components/`, which utilize the screen's custom hooks (manager and form hooks) for data and actions.
 - Set up proper form handling with the SDK methods.
 - Handle errors and loading states appropriately.
+
+<a id="deployment"></a>
+
+## 📤 Deployment
+
+### Automated Deployment with GitHub Actions
+
+This boilerplate includes a GitHub Actions workflow to automate the process of:
+
+1. Building your customized ACUL screens
+2. Uploading the assets to an AWS S3 bucket
+3. Configuring your Auth0 tenant to use these assets in Advanced mode
+4. Serving the assets through a CDN for optimal performance
+
+**For detailed setup instructions including AWS S3, CloudFront, IAM roles, Auth0 M2M applications, and GitHub secrets, please refer to the comprehensive deployment guide:**
+
+➡️ **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+### Enabling Screens for Advanced Mode Deployment
+
+To control which screens are deployed and configured for Advanced Mode in your Auth0 tenant, you need to modify the `.github/deploy_config.yml` file.
+
+This YAML file contains a list of all available ACUL screens. To enable a specific screen for deployment in Advanced Mode, find its entry in the `default_screen_deployment_status` map and change its value from `false` to `true`.
+
+For example, to enable the `login-id` and `signup` screens:
+
+```yaml
+# .github/deploy_config.yml
+default_screen_deployment_status:
+  "email-identifier-challenge": false
+  # ... other screens ...
+  "login-id": true # Was false, now true to enable deployment
+  # ... other screens ...
+  "signup": true # Was false, now true to enable deployment
+  # ... other screens ...
+```
+
+Only screens set to `true` in this configuration file will be processed by the deployment workflow for Advanced Mode. This allows you to selectively roll out your custom screens.
 
 <a id="technical-details"></a>
 

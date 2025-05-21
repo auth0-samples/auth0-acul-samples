@@ -42,14 +42,6 @@ const Button: React.FC<ButtonProps> = ({
       break;
     case "secondary":
       variantStyles =
-        "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring-3 focus:ring-primary/15 disabled:opacity-70";
-      break;
-    case "link":
-      variantStyles =
-        "font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded disabled:text-link/70";
-      break;
-    case "social":
-      variantStyles =
         "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring-4 focus:ring-primary/15 disabled:opacity-70";
       break;
     case "icon":
