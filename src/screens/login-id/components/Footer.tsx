@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
       {signupLink && (
         <a
           href={signupLink}
-          className="text-sm font-bold text-link hover:text-link/60 focus:bg-link/15 focus:rounded p-1"
+          className="text-sm font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
         >
           Sign up
         </a>

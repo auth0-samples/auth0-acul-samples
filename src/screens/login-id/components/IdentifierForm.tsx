@@ -39,6 +39,7 @@ const IdentifierForm: React.FC = () => {
           ref: identifierRef,
           autoComplete: "username",
           required: true,
+          maxLength: 100,
         }}
         error={
           getFieldError("identifier", sdkErrors) ||
@@ -57,6 +58,7 @@ const IdentifierForm: React.FC = () => {
           inputProps={{
             ref: captchaRef,
             required: isCaptchaAvailable,
+            maxLength: 15,
           }}
           error={getFieldError("captcha", sdkErrors)}
         />
@@ -65,7 +67,7 @@ const IdentifierForm: React.FC = () => {
         {loginIdInstance?.screen?.links?.reset_password && (
           <a
             href={loginIdInstance?.screen?.links?.reset_password}
-            className="text-sm text-link font-bold hover:text-link/60 focus:bg-link/15 focus:rounded p-1"
+            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
           >
             Forgot Password?
           </a>

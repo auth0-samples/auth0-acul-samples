@@ -69,6 +69,7 @@ const LoginForm: React.FC = () => {
           inputProps={{
             ref: captchaRef,
             required: isCaptchaAvailable,
+            maxLength: 15,
           }}
           error={getFieldError("captcha", sdkErrors)}
         />
@@ -77,7 +78,7 @@ const LoginForm: React.FC = () => {
         {loginInstance?.screen?.links?.reset_password && (
           <a
             href={loginInstance.screen.links.reset_password}
-            className="text-sm text-link font-bold hover:text-link/60 focus:bg-link/15 focus:rounded p-1"
+            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
           >
             Forgot password?
           </a>

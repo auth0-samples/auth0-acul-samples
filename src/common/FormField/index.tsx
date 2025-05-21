@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Label from "@/common/Label";
 import type { LabelProps } from "@/common/Label";
 import Input from "@/common/Input";
@@ -27,12 +27,18 @@ const FormField: React.FC<FormFieldProps> = ({
   inputWrapperClassName,
   errorTextClassName,
 }) => {
-  const { id: inputId } = inputProps;
+  const { id: inputId, className: inputSpecificClassName } = inputProps;
+  const internalInputRef = useRef<HTMLInputElement>(null);
 
-  let inputCombinedClassName = inputProps.className || "";
+  let inputCombinedClassName = inputSpecificClassName || "";
   const errorRingStyles = "border-error focus:ring-error focus:border-error";
 
   let finalInputProps = { ...inputProps };
+  delete finalInputProps.className;
+
+  if (inputIcon) {
+    inputCombinedClassName += " pr-16";
+  }
 
   if (error) {
     inputCombinedClassName += ` ${errorRingStyles}`;
@@ -45,20 +51,23 @@ const FormField: React.FC<FormFieldProps> = ({
       <div
         className={`relative mt-1 rounded-md shadow-sm ${inputWrapperClassName || ""}`}
       >
-        <Input
-          {...finalInputProps}
-          className={inputCombinedClassName}
-          aria-invalid={!!error}
-          aria-describedby={error ? `${inputId}-error` : undefined}
-        />
-        <Label {...labelProps} htmlFor={inputId} isError={!!error} />
-        {inputIcon && (
-          <div
-            className={`absolute inset-y-0 right-0 flex items-center rounded-r-md mt-px mt-3 ${isParentFocused ? "bg-primary/15" : ""}`}
-          >
-            {inputIcon}
-          </div>
-        )}
+        <div className="relative w-full">
+          <Input
+            {...finalInputProps}
+            ref={internalInputRef}
+            className={inputCombinedClassName}
+            aria-invalid={!!error}
+            aria-describedby={error ? `${inputId}-error` : undefined}
+          />
+          <Label {...labelProps} htmlFor={inputId} isError={!!error} />
+          {inputIcon && (
+            <div
+              className={`absolute inset-y-0 right-0 flex items-center rounded-r-md mt-px mt-3 ${isParentFocused ? "bg-primary/15" : ""}`}
+            >
+              {inputIcon}
+            </div>
+          )}
+        </div>
       </div>
       {error && (
         <div

@@ -1,9 +1,9 @@
 import React from "react";
-import { useLoginManager } from "../hooks/useLoginManager";
+import { useLoginPasswordManager } from "../hooks/userLoginPasswordManager";
 
 const Footer: React.FC = () => {
-  const { loginInstance } = useLoginManager();
-  const signupLink = loginInstance?.screen?.links?.signup;
+  const { loginPasswordInstance } = useLoginPasswordManager();
+  const signupLink = loginPasswordInstance?.screen?.links?.signup;
 
   return (
     <div className="mt-4 text-left">
