@@ -3,6 +3,7 @@ import Button from "@/common/Button";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
 import { getFieldError } from "@/utils/errorUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 import { useLoginIdForm } from "../hooks/useLoginIdForm";
 import type { SdkError } from "@/utils/errorUtils";
@@ -23,6 +24,12 @@ const IdentifierForm: React.FC = () => {
     const { identifier, captcha } = getFormValues();
     handleLoginId(identifier, captcha);
   };
+
+  const originalResetPasswordLink =
+    loginIdInstance?.screen?.links?.reset_password;
+  const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
+    originalResetPasswordLink,
+  );
 
   return (
     <form onSubmit={onLoginIdSubmit} className="space-y-4">
@@ -65,9 +72,9 @@ const IdentifierForm: React.FC = () => {
         />
       )}
       <div className="text-left">
-        {loginIdInstance?.screen?.links?.reset_password && (
+        {localizedResetPasswordLink && (
           <a
-            href={loginIdInstance?.screen?.links?.reset_password}
+            href={localizedResetPasswordLink}
             className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
           >
             Forgot Password?

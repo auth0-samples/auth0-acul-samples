@@ -3,23 +3,40 @@ import Button from "@/common/Button";
 import PasswordInput from "@/common/PasswordInput";
 import type { SdkError } from "@/utils/errorUtils";
 import { getFieldError } from "@/utils/errorUtils";
-import { useLoginPasswordManager } from "../hooks/userLoginPasswordManager";
+import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
+import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 import { useLoginPasswordForm } from "../hooks/useLoginPasswordForm";
 import FormField from "@/common/FormField";
+import CaptchaBox from "@/common/CaptchaBox";
 
 const LoginForm: React.FC = () => {
   const { loginPasswordInstance, username, editIdentifierLink, handleLogin } =
     useLoginPasswordManager();
-  const { passwordRef, getFormValues } = useLoginPasswordForm();
+  const { passwordRef, captchaRef, getFormValues } = useLoginPasswordForm();
+
+  const captchaImage = loginPasswordInstance?.screen?.captchaImage;
+  const isCaptchaAvailable = loginPasswordInstance?.screen?.isCaptchaAvailable;
 
   const sdkErrors: SdkError[] = (loginPasswordInstance?.transaction?.errors ||
     []) as SdkError[];
 
   const onLoginClick = (e: React.FormEvent) => {
     e.preventDefault();
-    const { password } = getFormValues();
-    handleLogin({ username: username || "", password });
+    const { password, captcha } = getFormValues();
+    handleLogin({
+      username: username || "",
+      password,
+      captcha: isCaptchaAvailable ? captcha : undefined,
+    });
   };
+
+  const localizedEditIdentifierLink =
+    rebaseLinkToCurrentOrigin(editIdentifierLink);
+  const originalResetPasswordLink =
+    loginPasswordInstance?.screen?.links?.reset_password;
+  const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
+    originalResetPasswordLink,
+  );
 
   return (
     <form onSubmit={onLoginClick} className="space-y-4">
@@ -27,10 +44,10 @@ const LoginForm: React.FC = () => {
         className="mb-4 w-full"
         labelProps={{
           children: `Username or Email address*`,
-          htmlFor: "email-login",
+          htmlFor: "email-login-lp",
         }}
         inputProps={{
-          id: "email-login",
+          id: "email-login-lp",
           name: "email",
           type: "email",
           value: username,
@@ -39,12 +56,15 @@ const LoginForm: React.FC = () => {
           disabled: true,
         }}
         inputIcon={
-          <a
-            href={editIdentifierLink}
-            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1 px-3"
-          >
-            Edit
-          </a>
+          localizedEditIdentifierLink && (
+            <a
+              href={localizedEditIdentifierLink}
+              className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1 px-3"
+              data-testid="edit-identifier"
+            >
+              Edit
+            </a>
+          )
         }
       />
 
@@ -62,11 +82,27 @@ const LoginForm: React.FC = () => {
         error={getFieldError("password", sdkErrors)}
       />
 
+      {isCaptchaAvailable && captchaImage && (
+        <CaptchaBox
+          className="mb-4"
+          id="captcha-input-login-password"
+          label="Enter the code shown above"
+          imageUrl={captchaImage}
+          inputProps={{
+            ref: captchaRef,
+            required: isCaptchaAvailable,
+            maxLength: 15,
+          }}
+          error={getFieldError("captcha", sdkErrors)}
+        />
+      )}
+
       <div className="mt-6 text-left">
-        {loginPasswordInstance?.screen?.links?.reset_password && (
+        {localizedResetPasswordLink && (
           <a
-            href={loginPasswordInstance.screen.links.reset_password}
+            href={localizedResetPasswordLink}
             className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
+            data-testid="forgot-password"
           >
             Forgot password?
           </a>

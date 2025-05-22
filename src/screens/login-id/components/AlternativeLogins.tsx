@@ -1,6 +1,8 @@
 import React from "react";
 import Separator from "@/common/Separator";
 import SocialProviderButton from "@/common/SocialProviderButton";
+import { getSocialProviderDetails } from "@/utils/socialUtils";
+import type { SocialConnection } from "@/utils/socialUtils";
 import { getIcon } from "@/utils/iconUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
@@ -9,8 +11,8 @@ const AlternativeLogins: React.FC = () => {
   const { loginIdInstance, handleSocialLogin, handlePasskeyLogin } =
     useLoginIdManager();
 
-  const alternateConnections =
-    loginIdInstance?.transaction?.alternateConnections;
+  const alternateConnections = loginIdInstance?.transaction
+    ?.alternateConnections as SocialConnection[] | undefined;
   const isPasskeyAvailable = !!loginIdInstance?.screen?.data?.passkey;
 
   const showSeparator =
@@ -25,24 +27,23 @@ const AlternativeLogins: React.FC = () => {
         {isPasskeyAvailable && (
           <SocialProviderButton
             key="passkey"
-            providerName={"Passkey"}
-            icon={getIcon("passkey")}
+            displayName={"Passkey"}
+            iconComponent={getIcon("passkey")}
             onClick={() => handlePasskeyLogin()}
           />
         )}
-        {alternateConnections?.map((connection: any) => (
-          <SocialProviderButton
-            key={connection.name}
-            providerName={
-              connection.strategy
-                ? connection.strategy?.charAt(0)?.toUpperCase() +
-                  connection.strategy?.slice(1)
-                : connection.name
-            }
-            icon={getIcon(connection.name)}
-            onClick={() => handleSocialLogin(connection.name)}
-          />
-        ))}
+        {alternateConnections?.map((connection) => {
+          const { displayName, iconComponent } =
+            getSocialProviderDetails(connection);
+          return (
+            <SocialProviderButton
+              key={connection.name}
+              displayName={displayName}
+              iconComponent={iconComponent}
+              onClick={() => handleSocialLogin(connection.name)}
+            />
+          );
+        })}
       </div>
     </>
   );

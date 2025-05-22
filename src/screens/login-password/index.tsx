@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "@/common/Card";
 import { BrandingProvider } from "@/context/BrandingProvider";
-import { useLoginPasswordManager } from "./hooks/userLoginPasswordManager";
+import { useLoginPasswordManager } from "./hooks/useLoginPasswordManager";
 
 import Header from "./components/Header";
 import LoginPasswordForm from "./components/LoginPasswordForm";

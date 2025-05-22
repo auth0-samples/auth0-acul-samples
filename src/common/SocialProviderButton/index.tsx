@@ -1,20 +1,22 @@
 import React from "react";
 
-export interface SocialProviderButtonProps {
-  providerName: string;
-  icon: React.ReactNode;
+interface SocialProviderButtonProps {
   onClick: () => void;
+  displayName: string;
+  iconComponent: React.ReactNode | null;
   disabled?: boolean;
   className?: string;
 }
 
 const SocialProviderButton: React.FC<SocialProviderButtonProps> = ({
-  providerName,
-  icon,
   onClick,
+  displayName,
+  iconComponent,
   disabled = false,
   className = "",
 }) => {
+  const dataTestId = `social-provider-button-${displayName.toLowerCase().replace(/\s+/g, "-")}`;
+
   const baseStyles =
     "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border rounded gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out focus:ring-4 focus:ring-primary/15";
 
@@ -28,13 +30,18 @@ const SocialProviderButton: React.FC<SocialProviderButtonProps> = ({
     <button
       type="button"
       onClick={onClick}
-      disabled={disabled}
-      className={`${baseStyles} ${disabled ? disabledStyles : enabledStyles}
-      ${className}`}
-      aria-label={`Continue with ${providerName}`}
+      className={`${baseStyles} ${disabled ? disabledStyles : enabledStyles} ${className}`}
+      data-testid={dataTestId}
+      title={`Continue with ${displayName}`}
     >
-      {icon}
-      <span className="font-normal text-base">{`Continue with ${providerName}`}</span>
+      {iconComponent && (
+        <span className="mr-3 w-5 h-5 flex items-center justify-center flex-shrink-0">
+          {iconComponent}
+        </span>
+      )}
+      <span className="overflow-hidden whitespace-nowrap text-ellipsis font-normal text-base">
+        Continue with {displayName}
+      </span>
     </button>
   );
 };
