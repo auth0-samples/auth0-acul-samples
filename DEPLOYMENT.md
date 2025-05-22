@@ -162,6 +162,8 @@ CloudFront acts as a secure gateway to your S3 assets. It allows end users to ac
 5. Under **Default Cache Behavior**:
    - For **Viewer Protocol Policy**, select "Redirect HTTP to HTTPS"
    - For **Cache Policy**, select "CachingOptimized"
+   - For **Origin request Policy**, select CORS-S3Origin
+   - For **Response headers policy**, SimpleCORS (or create custom with CORS headers)
 6. Under **Settings**:
    - Set **Default Root Object** to `index.html`
    - Choose your desired **Price Class**
@@ -258,7 +260,7 @@ Go to your repository, then:
 | `S3_BUCKET_NAME`      | `your-acul-assets-bucket`                                                             | Your S3 bucket name                                  |
 | `AWS_REGION`          | `us-east-1`                                                                           | Region where your bucket is located                  |
 | `S3_CDN_URL`          | `https://d1234abcdef.cloudfront.net` or `https://your-bucket.s3.region.amazonaws.com` | Base URL for assets (no trailing slash)              |
-| `AUTH0_DOMAIN`        | `your-domain.auth0.com`                                                               | Your Auth0 domain which has custom domain configured |
+| `AUTH0_DOMAIN`        | `dev-domain.auth0.com`                                                                | Your Auth0 domain which has custom domain configured |
 | `AUTH0_CLIENT_ID`     | `abcdef123456789`                                                                     | M2M application client ID                            |
 | `AUTH0_CLIENT_SECRET` | `your-secret-here`                                                                    | M2M application client secret                        |
 

@@ -5,6 +5,7 @@ import FormField from "@/common/FormField";
 import PasswordInput from "@/common/PasswordInput";
 import type { SdkError } from "@/utils/errorUtils";
 import { getFieldError } from "@/utils/errorUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
 import { useLoginManager } from "../hooks/useLoginManager";
 import { useLoginForm } from "../hooks/useLoginForm";
 
@@ -24,6 +25,12 @@ const LoginForm: React.FC = () => {
     const { username, password, captcha } = getFormValues();
     handleLogin(username, password, captcha);
   };
+
+  const originalResetPasswordLink =
+    loginInstance?.screen?.links?.reset_password;
+  const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
+    originalResetPasswordLink,
+  );
 
   return (
     <form onSubmit={onLoginClick} className="space-y-4">
@@ -74,11 +81,12 @@ const LoginForm: React.FC = () => {
           error={getFieldError("captcha", sdkErrors)}
         />
       )}
-      <div className="mt-6 text-left">
-        {loginInstance?.screen?.links?.reset_password && (
+      <div className="mt-6 text-left flex items-center justify-between">
+        {localizedResetPasswordLink && (
           <a
-            href={loginInstance.screen.links.reset_password}
+            href={localizedResetPasswordLink}
             className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
+            data-testid="forgot-password"
           >
             Forgot password?
           </a>

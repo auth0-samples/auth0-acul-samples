@@ -1,12 +1,14 @@
 import React from "react";
 import Separator from "@/common/Separator";
 import SocialProviderButton from "@/common/SocialProviderButton";
-import { getIcon } from "@/utils/iconUtils";
+import { getSocialProviderDetails } from "@/utils/socialUtils";
+import type { SocialConnection } from "@/utils/socialUtils";
 import { useLoginManager } from "../hooks/useLoginManager";
 
 const AlternativeConnections: React.FC = () => {
   const { loginInstance, handleSocialLogin } = useLoginManager();
-  const alternateConnections = loginInstance?.transaction?.alternateConnections;
+  const alternateConnections = loginInstance?.transaction
+    ?.alternateConnections as SocialConnection[] | undefined;
 
   if (!alternateConnections || alternateConnections.length === 0) {
     return null;
@@ -15,20 +17,19 @@ const AlternativeConnections: React.FC = () => {
   return (
     <>
       <Separator text="OR" />
-      <div className="space-y-3">
-        {alternateConnections.map((connection: any) => (
-          <SocialProviderButton
-            key={connection.name}
-            providerName={
-              connection.strategy
-                ? connection.strategy?.charAt(0)?.toUpperCase() +
-                  connection.strategy?.slice(1)
-                : connection.name
-            }
-            icon={getIcon(connection.name)}
-            onClick={() => handleSocialLogin(connection.name)}
-          />
-        ))}
+      <div className="space-y-3 mt-4">
+        {alternateConnections.map((connection) => {
+          const { displayName, iconComponent } =
+            getSocialProviderDetails(connection);
+          return (
+            <SocialProviderButton
+              key={connection.name}
+              displayName={displayName}
+              iconComponent={iconComponent}
+              onClick={() => handleSocialLogin(connection.name)}
+            />
+          );
+        })}
       </div>
     </>
   );

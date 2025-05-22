@@ -85,7 +85,7 @@ jobs:
 
       - name: Discover available screens
         id: discover-screens
-        uses: ./.github/actions/discover-acul-screens
+        uses: ./.github/actions/discover-screens
         with:
           working-directory: ${{ env.WORKING_DIR }}
 
@@ -112,7 +112,7 @@ jobs:
 
       - name: Deployment Summary
         if: always()
-        uses: ./.github/actions/acul-deployment-summary
+        uses: ./.github/actions/deployment-summary
         with:
           job-status: ${{ job.status }}
           deployed_screens: ${{ steps.configure-auth0.outputs.deployed_screens }}

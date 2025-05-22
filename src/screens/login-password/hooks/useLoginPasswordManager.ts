@@ -9,10 +9,15 @@ export const useLoginPasswordManager = () => {
     loginPasswordInstance.screen.editIdentifierLink || "";
   const username = loginPasswordInstance.screen.data?.username || "";
 
-  const handleLogin = (options: { username: string; password: string }) => {
+  const handleLogin = (options: {
+    username: string;
+    password: string;
+    captcha?: string;
+  }) => {
     const payload = {
       username: options.username,
       password: options.password,
+      captcha: options.captcha,
     };
     executeSafely(
       `Login password with options: ${JSON.stringify(payload)}`,

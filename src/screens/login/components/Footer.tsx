@@ -1,16 +1,17 @@
 import React from "react";
 import { useLoginManager } from "../hooks/useLoginManager";
-
+import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
 const Footer: React.FC = () => {
   const { loginInstance } = useLoginManager();
   const signupLink = loginInstance?.screen?.links?.signup;
+  const localizedSignupLink = rebaseLinkToCurrentOrigin(signupLink);
 
   return (
     <div className="mt-4 text-left">
       <span className="text-sm pr-1">Don't have an account?</span>
-      {signupLink && (
+      {localizedSignupLink && (
         <a
-          href={signupLink}
+          href={localizedSignupLink}
           className="text-sm font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
         >
           Sign up

@@ -14,8 +14,8 @@ import {
   DuolingoIcon,
 } from "@/assets/icons";
 
-export const getIcon = (name: string): React.ReactNode => {
-  switch (name.toLowerCase()) {
+export const getIcon = (strategy: string): React.ReactNode => {
+  switch (strategy.toLowerCase()) {
     case "google-oauth2":
       return <GoogleIcon />;
     case "twitter":
