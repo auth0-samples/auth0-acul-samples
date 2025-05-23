@@ -206,7 +206,7 @@ Learn more about ACUL in the [Auth0 ACUL Documentation](https://auth0.com/docs/c
 
 ### ACUL JavaScript SDK
 
-The ACUL JavaScript SDK provides a set of components, hooks, and utilities for building advanced custom login experiences with Auth0. It includes utilities for form handling, state management, and integration with Auth0's authentication APIs.
+The ACUL JavaScript SDK provides screen classes and authentication methods for building advanced custom login experiences with Auth0. It enables you to integrate authentication screens (login, signup, passwordless, passkey enrollment, etc.) into your web applications by providing the necessary screen managers and authentication APIs.
 
 Explore the [ACUL API documentation](https://auth0.github.io/universal-login/modules/Classes.html) to learn about all available modules and classes.
 
