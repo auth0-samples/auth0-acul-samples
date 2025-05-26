@@ -4,7 +4,7 @@ import { getScreenComponent } from "@/utils/screenLoader";
 
 const App = () => {
   const [screen, setScreen] = React.useState("login-id");
-  
+
   useEffect(() => {
     const current = getCurrentScreen();
     setScreen(current!);
