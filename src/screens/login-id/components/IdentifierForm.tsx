@@ -6,17 +6,14 @@ import { getFieldError } from "@/utils/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 import { useLoginIdForm } from "../hooks/useLoginIdForm";
-import type { SdkError } from "@/utils/errorUtils";
 
 // No props needed as it uses hooks internally for data and actions
 const IdentifierForm: React.FC = () => {
-  const { handleLoginId, loginIdInstance } = useLoginIdManager();
+  const { handleLoginId, errors, captcha, links } = useLoginIdManager();
   const { identifierRef, captchaRef, getFormValues } = useLoginIdForm();
 
-  const sdkErrors: SdkError[] = (loginIdInstance?.transaction?.errors ||
-    []) as SdkError[];
-  const isCaptchaAvailable = !!loginIdInstance?.screen?.captcha;
-  const captchaImage = loginIdInstance?.screen?.captcha?.image || "";
+  const isCaptchaAvailable = !!captcha;
+  const captchaImage = captcha?.image || "";
   const captchaLabelText = "Enter the code shown above" + "*";
 
   const onLoginIdSubmit = (e: React.FormEvent) => {
@@ -25,8 +22,7 @@ const IdentifierForm: React.FC = () => {
     handleLoginId(identifier, captcha);
   };
 
-  const originalResetPasswordLink =
-    loginIdInstance?.screen?.links?.reset_password;
+  const originalResetPasswordLink = links?.reset_password;
   const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
     originalResetPasswordLink,
   );
@@ -50,10 +46,10 @@ const IdentifierForm: React.FC = () => {
           autoFocus: true,
         }}
         error={
-          getFieldError("identifier", sdkErrors) ||
-          getFieldError("email", sdkErrors) ||
-          getFieldError("phone", sdkErrors) ||
-          getFieldError("username", sdkErrors)
+          getFieldError("identifier", errors) ||
+          getFieldError("email", errors) ||
+          getFieldError("phone", errors) ||
+          getFieldError("username", errors)
         }
       />
 
@@ -68,7 +64,7 @@ const IdentifierForm: React.FC = () => {
             required: isCaptchaAvailable,
             maxLength: 15,
           }}
-          error={getFieldError("captcha", sdkErrors)}
+          error={getFieldError("captcha", errors)}
         />
       )}
       <div className="text-left">

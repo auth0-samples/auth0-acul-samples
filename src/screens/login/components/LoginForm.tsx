@@ -3,21 +3,18 @@ import Button from "@/common/Button";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
 import PasswordInput from "@/common/PasswordInput";
-import type { SdkError } from "@/utils/errorUtils";
 import { getFieldError } from "@/utils/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
 import { useLoginManager } from "../hooks/useLoginManager";
 import { useLoginForm } from "../hooks/useLoginForm";
 
 const LoginForm: React.FC = () => {
-  const { loginInstance, handleLogin } = useLoginManager();
+  const { handleLogin, errors, captcha, links } = useLoginManager();
   const { usernameRef, passwordRef, captchaRef, getFormValues } =
     useLoginForm();
 
-  const sdkErrors: SdkError[] = (loginInstance?.transaction?.errors ||
-    []) as SdkError[];
-  const isCaptchaAvailable = !!loginInstance?.screen?.captcha;
-  const captchaImage = loginInstance?.screen?.captcha?.image || "";
+  const isCaptchaAvailable = !!captcha;
+  const captchaImage = captcha?.image || "";
   const captchaLabelText = "Enter the code shown above" + "*";
 
   const onLoginClick = (e: React.FormEvent) => {
@@ -26,8 +23,7 @@ const LoginForm: React.FC = () => {
     handleLogin(username, password, captcha);
   };
 
-  const originalResetPasswordLink =
-    loginInstance?.screen?.links?.reset_password;
+  const originalResetPasswordLink = links?.reset_password;
   const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
     originalResetPasswordLink,
   );
@@ -50,8 +46,7 @@ const LoginForm: React.FC = () => {
           required: true,
         }}
         error={
-          getFieldError("username", sdkErrors) ||
-          getFieldError("email", sdkErrors)
+          getFieldError("username", errors) || getFieldError("email", errors)
         }
       />
 
@@ -64,7 +59,7 @@ const LoginForm: React.FC = () => {
           autoComplete: "current-password",
           required: true,
         }}
-        error={getFieldError("password", sdkErrors)}
+        error={getFieldError("password", errors)}
       />
 
       {isCaptchaAvailable && captchaImage && (
@@ -78,7 +73,7 @@ const LoginForm: React.FC = () => {
             required: isCaptchaAvailable,
             maxLength: 15,
           }}
-          error={getFieldError("captcha", sdkErrors)}
+          error={getFieldError("captcha", errors)}
         />
       )}
       <div className="mt-6 text-left flex items-center justify-between">

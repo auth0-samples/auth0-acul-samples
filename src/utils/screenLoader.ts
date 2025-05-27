@@ -4,6 +4,7 @@ const SCREEN_COMPONENTS: Record<string, any> = {
   login: lazy(() => import("../screens/login")),
   "login-id": lazy(() => import("../screens/login-id")),
   "login-password": lazy(() => import("../screens/login-password")),
+  "signup-id": lazy(() => import("../screens/signup-id")),
 };
 
 export const getScreenComponent = (screenName: string) => {

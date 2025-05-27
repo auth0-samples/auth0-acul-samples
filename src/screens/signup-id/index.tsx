@@ -1,30 +1,32 @@
 import React from "react";
-import Card from "@/common/Card";
-import { BrandingProvider } from "@/context/BrandingProvider";
-import { useLoginIdManager } from "./hooks/useLoginIdManager";
 
+import Card from "@/common/Card";
+
+import { BrandingProvider } from "@/context/BrandingProvider";
+
+import { useSignupIdManager } from "./hooks/useSignupIdManager";
 import Header from "./components/Header";
-import IdentifierForm from "./components/IdentifierForm";
-import AlternativeLogins from "./components/AlternativeLogins";
+import SignupForm from "./components/SignupForm";
+import AlternativeConnections from "./components/AlternativeConnections";
 import Footer from "./components/Footer";
 
-const LoginIdScreen: React.FC = () => {
-  const { loginIdInstance, pageTitle } = useLoginIdManager();
+const SignupIdScreen: React.FC = () => {
+  const { signupIdInstance, pageTitle } = useSignupIdManager();
 
   document.title = pageTitle;
 
   return (
-    <BrandingProvider screenInstance={loginIdInstance}>
+    <BrandingProvider screenInstance={signupIdInstance}>
       <div className="min-h-screen flex items-center justify-center px-10 py-20">
         <Card className="w-full max-w-[400px]">
           <Header />
-          <IdentifierForm />
+          <SignupForm />
           <Footer />
-          <AlternativeLogins />
+          <AlternativeConnections />
         </Card>
       </div>
     </BrandingProvider>
   );
 };
 
-export default LoginIdScreen;
+export default SignupIdScreen;

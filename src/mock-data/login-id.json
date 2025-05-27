@@ -43,18 +43,6 @@
         "strategy": "google"
       },
       {
-        "name": "hugging-face",
-        "strategy": "oauth2"
-      },
-      {
-        "name": "klarna-social-connection",
-        "strategy": "oauth2"
-      },
-      {
-        "name": "digitalocean",
-        "strategy": "oauth2"
-      },
-      {
         "name": "linkedin",
         "strategy": "linkedin"
       }

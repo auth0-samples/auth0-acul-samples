@@ -1,9 +1,9 @@
 import React from "react";
 import Logo from "@/common/Logo";
-import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
+import { useSignupIdManager } from "../hooks/useSignupIdManager";
 
 const Header: React.FC = () => {
-  const { title, description } = useLoginPasswordManager();
+  const { title, description } = useSignupIdManager();
 
   return (
     <>
