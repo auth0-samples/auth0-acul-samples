@@ -7,3 +7,4 @@ default_screen_deployment_status:
   "login-id": true
   "login-password": true
   "login": true
+  "signup-id": true

@@ -11,9 +11,8 @@ import Footer from "./components/Footer";
 import AlternativeConnections from "./components/AlternativeConnections";
 
 const LoginScreen: React.FC = () => {
-  const { loginInstance } = useLoginManager();
+  const { loginInstance, pageTitle } = useLoginManager();
 
-  const pageTitle = "Login";
   document.title = pageTitle;
 
   return (

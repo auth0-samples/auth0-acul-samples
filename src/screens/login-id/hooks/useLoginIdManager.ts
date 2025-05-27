@@ -5,10 +5,23 @@ import { executeSafely } from "@/utils/executeSafely";
 export const useLoginIdManager = () => {
   const [loginIdInstance] = useState(() => new LoginIdInstance());
 
+  // Extract text data
+  const texts = loginIdInstance?.screen?.texts || {};
+  const pageTitle = texts?.pageTitle || "Login ID";
+  const title = texts?.title || "Welcome";
+  const description =
+    texts?.description ||
+    "Please enter your username or email address to continue.";
+
+  // Extract screen data
+  const errors = loginIdInstance?.transaction?.errors || [];
+  const captcha = loginIdInstance?.screen?.captcha;
+  const links = loginIdInstance?.screen?.links || {};
+
   const handleLoginId = (loginId: string, captcha?: string): void => {
     const options = {
-      username: loginId,
-      captcha: loginIdInstance.screen?.captcha ? captcha : undefined,
+      username: loginId?.trim() || "",
+      captcha: loginIdInstance.screen?.captcha ? captcha?.trim() : undefined,
     };
     executeSafely(`LoginId with options: ${JSON.stringify(options)}`, () =>
       loginIdInstance.login(options),
@@ -33,5 +46,12 @@ export const useLoginIdManager = () => {
     handleLoginId,
     handleSocialLogin,
     handlePasskeyLogin,
+    // Provide processed data
+    pageTitle,
+    title,
+    description,
+    errors,
+    captcha,
+    links,
   };
 };
