@@ -1,0 +1,12 @@
+# Ignore build artifacts and dependencies
+node_modules/
+dist/
+coverage/
+
+# Ignore package lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore specific files if necessary
+# .env 
