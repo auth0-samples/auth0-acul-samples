@@ -1,7 +1,8 @@
-import React from "react";
+import { forwardRef } from "react";
+import { cn } from "@/utils/cn";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
   /**
    * The unique id of the input field.
    */
@@ -15,49 +16,66 @@ export interface InputProps
    */
   className?: string;
   /**
-   * Ref for the input element.
+   * Force focus styling (used by FormField for complex interactions)
    */
-  ref?: React.Ref<HTMLInputElement>;
   forceFocusStyle?: boolean;
-  placeholder?: string;
+  /**
+   * Input size variant
+   */
+  size?: "sm" | "md" | "lg";
+  /**
+   * Input variant for different contexts
+   */
+  variant?: "default" | "error" | "success";
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       type = "text",
       className,
       id,
       name,
-      forceFocusStyle,
-      placeholder,
+      forceFocusStyle = false,
+      placeholder = "\u00A0",
+      size = "md",
+      variant = "default",
       ...rest
     },
     ref,
   ) => {
-    const baseInputStyles =
-      "block w-full px-3 py-4 h-14 border rounded focus:outline-none peer box-border overflow-hidden text-ellipsis whitespace-nowrap";
+    const baseStyles = [
+      "block w-full border rounded transition-all duration-200",
+      "focus:outline-none focus:ring-1 peer box-border",
+      "overflow-hidden text-ellipsis whitespace-nowrap",
+      "disabled:opacity-50 disabled:cursor-not-allowed",
+    ];
 
-    let borderAndFocusStyles = "";
-    const hasError = className?.includes("border-error");
+    const sizeStyles = {
+      sm: "px-2 py-2 h-10 text-sm",
+      md: "px-3 py-4 h-14 text-base",
+      lg: "px-4 py-5 h-16 text-lg",
+    };
 
-    if (hasError) {
-      borderAndFocusStyles = "ring-1 ring-error";
-    } else if (forceFocusStyle) {
-      borderAndFocusStyles = "border-link ring-1 ring-link";
-    } else {
-      borderAndFocusStyles =
-        "border-gray-mid focus:ring-1 focus:ring-link focus:border-link";
-    }
+    const variantStyles = {
+      default: "border-gray-mid focus:border-link focus:ring-link",
+      error:
+        "border-error ring-1 ring-error focus:border-error focus:ring-error",
+      success: "border-success focus:border-success focus:ring-success",
+    };
+
+    const focusStyles = forceFocusStyle
+      ? "border-link ring-1 ring-link"
+      : variantStyles[variant];
 
     return (
       <input
+        ref={ref}
         type={type}
         id={id}
         name={name}
-        ref={ref}
-        placeholder={placeholder || "\u00A0"}
-        className={`${baseInputStyles} ${borderAndFocusStyles} ${className || ""}`.trim()}
+        placeholder={placeholder}
+        className={cn(baseStyles, sizeStyles[size], focusStyles, className)}
         {...rest}
       />
     );

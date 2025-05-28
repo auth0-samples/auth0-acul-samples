@@ -20,7 +20,7 @@ export interface IconProps {
   [key: string]: any;
 }
 
-const Icon: React.FC<IconProps> = ({ As, className, title, ...rest }) => {
+const Icon = ({ As, className, title, ...rest }: IconProps) => {
   // The 'As' component (e.g., EyeIcon) should handle the title prop
   // to render an SVG <title> element for accessibility.
   return <As className={className} title={title} {...rest} />;

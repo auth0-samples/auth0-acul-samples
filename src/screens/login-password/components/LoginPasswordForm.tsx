@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "@/common/Button";
 import PasswordInput from "@/common/PasswordInput";
-import type { SdkError } from "@/utils/errorUtils";
 import { getFieldError } from "@/utils/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
@@ -10,15 +9,12 @@ import FormField from "@/common/FormField";
 import CaptchaBox from "@/common/CaptchaBox";
 
 const LoginForm: React.FC = () => {
-  const { loginPasswordInstance, username, editIdentifierLink, handleLogin } =
+  const { username, editIdentifierLink, handleLogin, errors, captcha, links } =
     useLoginPasswordManager();
   const { passwordRef, captchaRef, getFormValues } = useLoginPasswordForm();
 
-  const captchaImage = loginPasswordInstance?.screen?.captchaImage;
-  const isCaptchaAvailable = loginPasswordInstance?.screen?.isCaptchaAvailable;
-
-  const sdkErrors: SdkError[] = (loginPasswordInstance?.transaction?.errors ||
-    []) as SdkError[];
+  const captchaImage = captcha?.image;
+  const isCaptchaAvailable = !!captcha;
 
   const onLoginClick = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,8 +28,7 @@ const LoginForm: React.FC = () => {
 
   const localizedEditIdentifierLink =
     rebaseLinkToCurrentOrigin(editIdentifierLink);
-  const originalResetPasswordLink =
-    loginPasswordInstance?.screen?.links?.reset_password;
+  const originalResetPasswordLink = links?.reset_password;
   const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
     originalResetPasswordLink,
   );
@@ -69,31 +64,31 @@ const LoginForm: React.FC = () => {
       />
 
       <PasswordInput
+        ref={passwordRef}
         className="mb-4 w-full"
         label={`Password*`}
         name="password"
         inputProps={{
-          ref: passwordRef,
           autoComplete: "current-password",
           required: true,
           autoFocus: true,
           maxLength: 25,
         }}
-        error={getFieldError("password", sdkErrors)}
+        error={getFieldError("password", errors)}
       />
 
       {isCaptchaAvailable && captchaImage && (
         <CaptchaBox
+          ref={captchaRef}
           className="mb-4"
           id="captcha-input-login-password"
           label="Enter the code shown above"
           imageUrl={captchaImage}
           inputProps={{
-            ref: captchaRef,
             required: isCaptchaAvailable,
             maxLength: 15,
           }}
-          error={getFieldError("captcha", sdkErrors)}
+          error={getFieldError("captcha", errors)}
         />
       )}
 

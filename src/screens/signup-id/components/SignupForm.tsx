@@ -50,6 +50,7 @@ const SignupForm: React.FC = () => {
     <form onSubmit={handleSubmit} className="space-y-4">
       {allIdentifiers.includes("email") && (
         <FormField
+          ref={emailRef}
           className="mb-4"
           labelProps={{
             children: `Email address${requiredIdentifiers?.includes("email") ? "*" : ""}`,
@@ -59,7 +60,6 @@ const SignupForm: React.FC = () => {
             id: "email-signup-id",
             name: "email",
             type: "email",
-            ref: emailRef,
             autoComplete: "email",
             required: requiredIdentifiers?.includes("email"),
             autoFocus: requiredIdentifiers?.[0] === "email",
@@ -71,6 +71,7 @@ const SignupForm: React.FC = () => {
 
       {allIdentifiers.includes("username") && (
         <FormField
+          ref={usernameRef}
           className="mb-4"
           labelProps={{
             children: `Username${requiredIdentifiers?.includes("username") ? "*" : ""}`,
@@ -80,7 +81,6 @@ const SignupForm: React.FC = () => {
             id: "username-signup-id",
             name: "username",
             type: "text",
-            ref: usernameRef,
             autoComplete: "username",
             required: requiredIdentifiers?.includes("username"),
             autoFocus: requiredIdentifiers?.[0] === "username",
@@ -92,6 +92,7 @@ const SignupForm: React.FC = () => {
 
       {allIdentifiers.includes("phone") && (
         <FormField
+          ref={phoneNumberRef}
           className="mb-4"
           labelProps={{
             children: `Phone number${requiredIdentifiers?.includes("phone") ? "*" : ""}`,
@@ -101,7 +102,6 @@ const SignupForm: React.FC = () => {
             id: "phone-signup-id",
             name: "phone",
             type: "tel",
-            ref: phoneNumberRef,
             autoComplete: "tel",
             required: requiredIdentifiers?.includes("phone"),
             autoFocus: requiredIdentifiers?.[0] === "phone",
@@ -113,12 +113,12 @@ const SignupForm: React.FC = () => {
 
       {isCaptchaAvailable && captchaImage && (
         <CaptchaBox
+          ref={captchaRef}
           className="mb-4"
           id="captcha-input-signup-id"
           label="Enter the code shown above*"
           imageUrl={captchaImage}
           inputProps={{
-            ref: captchaRef,
             required: isCaptchaAvailable,
             maxLength: 15,
           }}

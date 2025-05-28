@@ -30,6 +30,7 @@ const IdentifierForm: React.FC = () => {
   return (
     <form onSubmit={onLoginIdSubmit} className="space-y-4">
       <FormField
+        ref={identifierRef}
         className="mb-4"
         labelProps={{
           children: "Username or Email Address*",
@@ -39,7 +40,6 @@ const IdentifierForm: React.FC = () => {
           id: "identifier-login-id",
           name: "identifier",
           type: "text",
-          ref: identifierRef,
           autoComplete: "username",
           required: true,
           maxLength: 100,
@@ -55,12 +55,12 @@ const IdentifierForm: React.FC = () => {
 
       {isCaptchaAvailable && captchaImage && (
         <CaptchaBox
+          ref={captchaRef}
           className="mb-4"
           id="captcha-input-login-id"
           label={captchaLabelText}
           imageUrl={captchaImage}
           inputProps={{
-            ref: captchaRef,
             required: isCaptchaAvailable,
             maxLength: 15,
           }}

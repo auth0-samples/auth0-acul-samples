@@ -1,18 +1,10 @@
 import { useRef } from "react";
 
 export const useSignupIdForm = () => {
-  const emailRef = useRef<HTMLInputElement>(
-    null,
-  ) as React.RefObject<HTMLInputElement>;
-  const usernameRef = useRef<HTMLInputElement>(
-    null,
-  ) as React.RefObject<HTMLInputElement>;
-  const phoneNumberRef = useRef<HTMLInputElement>(
-    null,
-  ) as React.RefObject<HTMLInputElement>;
-  const captchaRef = useRef<HTMLInputElement>(
-    null,
-  ) as React.RefObject<HTMLInputElement>;
+  const emailRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const phoneNumberRef = useRef<HTMLInputElement>(null);
+  const captchaRef = useRef<HTMLInputElement>(null);
 
   const getFormValues = () => ({
     email: emailRef.current?.value ?? "",

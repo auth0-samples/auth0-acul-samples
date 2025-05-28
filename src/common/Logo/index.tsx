@@ -1,4 +1,4 @@
-import React from "react";
+import { cn } from "@/utils/cn";
 
 export interface LogoProps {
   className?: string; // For the container div
@@ -7,12 +7,12 @@ export interface LogoProps {
   imageClassName?: string; // For the img tag itself
 }
 
-const Logo: React.FC<LogoProps> = ({
+const Logo = ({
   className,
   altText = "Application Logo",
   src, // Default to Auth0 CDN logo if no src provided and SDK doesn't override
   imageClassName, // Destructure the new prop
-}) => {
+}: LogoProps) => {
   // In a real scenario, you might fetch this from a context or SDK instance
   const defaultLogoUrl =
     "https://cdn.auth0.com/blog/auth0_by_okta_logo_black.png";
@@ -23,11 +23,11 @@ const Logo: React.FC<LogoProps> = ({
   }
 
   return (
-    <div className={`flex justify-center items-center mb-6 ${className || ""}`}>
+    <div className={cn("flex justify-center items-center mb-6", className)}>
       <img
         src={logoSrc}
         alt={altText}
-        className={`object-contain ${imageClassName || ""}`.trim()} // Apply imageClassName, keep object-contain
+        className={cn("object-contain", imageClassName)}
       />
     </div>
   );

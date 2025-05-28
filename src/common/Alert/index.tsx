@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "@/common/Icon";
 import { ExclamationCircleIcon } from "@/assets/icons";
+import { cn } from "@/utils/cn";
 
 export interface ErrorMessage {
   message: string;
@@ -13,7 +14,7 @@ export interface AlertProps {
   title?: string;
 }
 
-const Alert: React.FC<AlertProps> = ({ type, message, className, title }) => {
+const Alert = ({ type, message, className, title }: AlertProps) => {
   const baseStyles = "p-4 rounded-md my-4";
   let typeStyles = "";
   let IconComponent: React.ElementType | null = null;
@@ -39,19 +40,16 @@ const Alert: React.FC<AlertProps> = ({ type, message, className, title }) => {
   const messages = Array.isArray(message) ? message : [message];
 
   return (
-    <div
-      className={`${baseStyles} ${typeStyles} ${className || ""}`}
-      role="alert"
-    >
+    <div className={cn(baseStyles, typeStyles, className)} role="alert">
       <div className="flex">
         {IconComponent && (
           <div className="flex-shrink-0">
             <Icon As={IconComponent} className="h-5 w-5" title={type} />
           </div>
         )}
-        <div className={`ml-3 flex-1 ${IconComponent ? "" : "ml-0"}`}>
+        <div className={cn("ml-3 flex-1", !IconComponent && "ml-0")}>
           {title && <h3 className="text-sm font-medium">{title}</h3>}
-          <div className={`text-sm ${title ? "mt-2" : ""}`}>
+          <div className={cn("text-sm", title && "mt-2")}>
             {messages.length === 1 ? (
               <p>
                 {typeof messages[0] === "string"
