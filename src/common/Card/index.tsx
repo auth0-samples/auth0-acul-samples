@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/utils/cn";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -11,10 +12,10 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-const Card: React.FC<CardProps> = ({ children, className, ...rest }) => {
+const Card = ({ children, className, ...rest }: CardProps) => {
   const defaultStyles = "bg-background-widget rounded shadow-md px-10 py-10";
   return (
-    <div className={`${defaultStyles} ${className || ""}`.trim()} {...rest}>
+    <div className={cn(defaultStyles, className)} {...rest}>
       {children}
     </div>
   );

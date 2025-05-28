@@ -1,7 +1,8 @@
-import React from "react";
+import { forwardRef } from "react";
 import FormField from "@/common/FormField";
 import type { InputProps } from "@/common/Input";
 import type { LabelProps } from "@/common/Label";
+import { cn } from "@/utils/cn";
 
 export interface CaptchaBoxProps {
   label?: string;
@@ -11,7 +12,14 @@ export interface CaptchaBoxProps {
   imageUrl: string;
   onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue?: string;
-  inputProps?: Omit<InputProps, "id" | "name" | "type" | "value" | "onChange">;
+  /**
+   * Additional props to pass to the input element
+   * Note: id, name, type, value, onChange, size are controlled by this component
+   */
+  inputProps?: Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "id" | "name" | "type" | "value" | "onChange" | "size"
+  >;
   className?: string;
   imageWrapperClassName?: string;
   imageClassName?: string;
@@ -20,63 +28,74 @@ export interface CaptchaBoxProps {
   inputClassName?: string;
 }
 
-const CaptchaBox: React.FC<CaptchaBoxProps> = ({
-  label,
-  name = "captcha",
-  id = "captcha-input",
-  error,
-  imageUrl,
-  onInputChange,
-  inputValue,
-  inputProps,
-  className,
-  imageWrapperClassName,
-  imageClassName,
-  inputWrapperClassName,
-  errorTextClassName,
-  inputClassName,
-}) => {
-  const formFieldLabelProps: LabelProps = {
-    children: label || "CAPTCHA",
-    htmlFor: id,
-  };
+const CaptchaBox = forwardRef<HTMLInputElement, CaptchaBoxProps>(
+  (
+    {
+      label,
+      name = "captcha",
+      id = "captcha-input",
+      error,
+      imageUrl,
+      onInputChange,
+      inputValue,
+      inputProps,
+      className,
+      imageWrapperClassName,
+      imageClassName,
+      inputWrapperClassName,
+      errorTextClassName,
+      inputClassName,
+    },
+    ref,
+  ) => {
+    const formFieldLabelProps: LabelProps = {
+      children: label || "CAPTCHA",
+      htmlFor: id,
+    };
 
-  const formFieldInputProps: InputProps = {
-    id: id,
-    name: name,
-    type: "text",
-    className: inputClassName,
-    value: inputValue,
-    onChange: onInputChange,
-    placeholder: "\u00A0",
-    autoComplete: "off",
-    ...inputProps,
-  };
+    const formFieldInputProps: InputProps = {
+      id: id,
+      name: name,
+      type: "text",
+      className: inputClassName,
+      value: inputValue,
+      onChange: onInputChange,
+      placeholder: "\u00A0",
+      autoComplete: "off",
+      ...inputProps,
+    };
 
-  const currentImageUrl = imageUrl;
+    const currentImageUrl = imageUrl;
 
-  return (
-    <div className={`space-y-2 ${className || ""}`.trim()}>
-      {currentImageUrl && (
-        <div
-          className={`flex justify-center border border-gray-mid rounded p-8 bg-background-widget ${imageWrapperClassName || ""}`.trim()}
-        >
-          <img
-            src={currentImageUrl}
-            alt="CAPTCHA challenge"
-            className={`object-contain ${imageClassName || ""}`.trim()}
-          />
-        </div>
-      )}
-      <FormField
-        labelProps={formFieldLabelProps}
-        inputProps={formFieldInputProps}
-        error={error}
-        inputWrapperClassName={inputWrapperClassName}
-        errorTextClassName={errorTextClassName}
-      />
-    </div>
-  );
-};
+    return (
+      <div className={cn("space-y-2", className)}>
+        {currentImageUrl && (
+          <div
+            className={cn(
+              "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
+              imageWrapperClassName,
+            )}
+          >
+            <img
+              src={currentImageUrl}
+              alt="CAPTCHA challenge"
+              className={cn("object-contain", imageClassName)}
+            />
+          </div>
+        )}
+        <FormField
+          ref={ref}
+          labelProps={formFieldLabelProps}
+          inputProps={formFieldInputProps}
+          error={error}
+          inputWrapperClassName={inputWrapperClassName}
+          errorTextClassName={errorTextClassName}
+        />
+      </div>
+    );
+  },
+);
+
+CaptchaBox.displayName = "CaptchaBox";
 
 export default CaptchaBox;

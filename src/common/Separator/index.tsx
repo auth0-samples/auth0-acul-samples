@@ -1,4 +1,4 @@
-import React from "react";
+import { cn } from "@/utils/cn";
 
 export interface SeparatorProps {
   text?: string; // Optional text to display in the middle of the separator
@@ -7,23 +7,23 @@ export interface SeparatorProps {
   lineClassName?: string;
 }
 
-const Separator: React.FC<SeparatorProps> = ({
+const Separator = ({
   text,
-  className = "my-6", // Default margin
+  className = "my-6",
   textClassName = "px-2 text-xs text-text-default uppercase",
   lineClassName = "border-gray-mid",
-}) => {
+}: SeparatorProps) => {
   if (text) {
     return (
-      <div className={`relative flex items-center ${className}`}>
-        <div className={`flex-grow border-t ${lineClassName}`} />
-        <span className={`flex-shrink ${textClassName}`}>{text}</span>
-        <div className={`flex-grow border-t ${lineClassName}`} />
+      <div className={cn("relative flex items-center", className)}>
+        <div className={cn("flex-grow border-t", lineClassName)} />
+        <span className={cn("flex-shrink", textClassName)}>{text}</span>
+        <div className={cn("flex-grow border-t", lineClassName)} />
       </div>
     );
   }
 
-  return <hr className={`${className} ${lineClassName}`} />;
+  return <hr className={cn(className, lineClassName)} />;
 };
 
 export default Separator;

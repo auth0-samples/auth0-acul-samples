@@ -1,12 +1,8 @@
 import { useRef } from "react";
 
 export const useLoginIdForm = () => {
-  const identifierRef = useRef<HTMLInputElement>(
-    null,
-  ) as React.RefObject<HTMLInputElement>;
-  const captchaRef = useRef<HTMLInputElement>(
-    null,
-  ) as React.RefObject<HTMLInputElement>;
+  const identifierRef = useRef<HTMLInputElement>(null);
+  const captchaRef = useRef<HTMLInputElement>(null);
 
   const getFormValues = () => ({
     identifier: identifierRef.current?.value ?? "",

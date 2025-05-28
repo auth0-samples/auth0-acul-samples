@@ -31,6 +31,7 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={onLoginClick} className="space-y-4">
       <FormField
+        ref={usernameRef}
         className="mb-4"
         labelProps={{
           children: `Username or Email address*`,
@@ -40,7 +41,6 @@ const LoginForm: React.FC = () => {
           id: "email-login",
           name: "email",
           type: "email",
-          ref: usernameRef,
           placeholder: "\u00A0",
           autoComplete: "email",
           required: true,
@@ -51,11 +51,11 @@ const LoginForm: React.FC = () => {
       />
 
       <PasswordInput
+        ref={passwordRef}
         className="mb-4"
         label={`Password*`}
         name="password"
         inputProps={{
-          ref: passwordRef,
           autoComplete: "current-password",
           required: true,
         }}
@@ -64,12 +64,12 @@ const LoginForm: React.FC = () => {
 
       {isCaptchaAvailable && captchaImage && (
         <CaptchaBox
+          ref={captchaRef}
           className="mb-4"
           id="captcha-input-login"
           label={captchaLabelText}
           imageUrl={captchaImage}
           inputProps={{
-            ref: captchaRef,
             required: isCaptchaAvailable,
             maxLength: 15,
           }}
