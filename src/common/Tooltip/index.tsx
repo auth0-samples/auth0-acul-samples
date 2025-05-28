@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { cn } from "@/utils/cn";
 
 export interface TooltipProps {
   children: React.ReactElement;
@@ -8,13 +9,13 @@ export interface TooltipProps {
   position?: "top" | "bottom" | "left" | "right";
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
+const Tooltip = ({
   children,
   text,
   className,
   tooltipClassName,
   position = "top",
-}) => {
+}: TooltipProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const positionClasses = {
@@ -35,7 +36,7 @@ const Tooltip: React.FC<TooltipProps> = ({
 
   return (
     <div
-      className={`relative ${className || ""}`}
+      className={cn("relative", className)}
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
       onFocusCapture={() => setIsVisible(true)}
@@ -45,10 +46,14 @@ const Tooltip: React.FC<TooltipProps> = ({
       {isVisible && text && (
         <div
           role="tooltip"
-          className={`absolute z-10 px-2 py-1 text-xs font-medium text-white bg-black rounded shadow-sm text-center ${positionClasses[position]} ${tooltipClassName || ""}`}
+          className={cn(
+            "absolute z-10 px-2 py-1 text-xs font-medium text-white bg-black rounded shadow-sm text-center",
+            positionClasses[position],
+            tooltipClassName,
+          )}
         >
           {text}
-          <div className={`absolute ${arrowClasses[position]}`} />
+          <div className={cn("absolute", arrowClasses[position])} />
         </div>
       )}
     </div>
