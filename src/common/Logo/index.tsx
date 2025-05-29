@@ -1,10 +1,11 @@
 import { cn } from "@/utils/cn";
+import { useBranding } from "@/context/BrandingProvider";
 
 export interface LogoProps {
-  className?: string; // For the container div
+  className?: string;
   altText?: string;
-  src?: string; // Make src optional, can attempt to get from SDK or use fallback
-  imageClassName?: string; // For the img tag itself
+  src?: string;
+  imageClassName?: string;
   width?: string | number;
   height?: string | number;
 }
@@ -12,18 +13,19 @@ export interface LogoProps {
 const Logo = ({
   className,
   altText = "Application Logo",
-  width = "auto",
-  height = "auto",
-  src, // Default to Auth0 CDN logo if no src provided and SDK doesn't override
-  imageClassName, // Destructure the new prop
+  width = 80,
+  height = 80,
+  src,
+  imageClassName,
 }: LogoProps) => {
-  // In a real scenario, you might fetch this from a context or SDK instance
+  const { logoUrl } = useBranding();
+
   const defaultLogoUrl =
-    "https://cdn.auth0.com/blog/auth0_by_okta_logo_black.png";
-  const logoSrc = src || defaultLogoUrl;
+    "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg";
+  const logoSrc = src || logoUrl || defaultLogoUrl;
 
   if (!logoSrc) {
-    return null; // Or a placeholder text/icon if no logo URL is available at all
+    return null;
   }
 
   return (
@@ -33,7 +35,13 @@ const Logo = ({
         height={height}
         src={logoSrc}
         alt={altText}
-        className={cn("object-contain", imageClassName)}
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+        className={cn(
+          "object-contain max-w-full max-h-full aspect-square",
+          imageClassName,
+        )}
       />
     </div>
   );

@@ -93,10 +93,6 @@ export const BrandingProvider: React.FC<BrandingProviderProps> = ({
       "--logo-url-dynamic",
       `url("${brandingValues.logoUrl}")`,
     );
-    document.documentElement.style.setProperty(
-      "--logo-url-string",
-      brandingValues.logoUrl,
-    );
   }, [brandingValues]);
 
   return (
