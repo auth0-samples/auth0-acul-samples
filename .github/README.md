@@ -9,8 +9,8 @@ This directory contains the complete GitHub Actions deployment pipeline for Auth
 ├── README.md                    # This file
 ├── config/                      # Configuration files
 │   ├── deploy_config.yml        # Controls which screens to deploy
-│   ├── screen-to-prompt-mapping.json  # Maps screens to Auth0 prompts
-│   └── context-configuration.json     # Auth0 context data configuration
+│   ├── screen-to-prompt-mapping.js   # Maps screens to Auth0 prompts
+│   └── context-configuration.js      # Auth0 context data configuration
 ├── actions/                     # Custom GitHub Actions
 │   ├── configure-auth0-screens/
 │   ├── discover-screens/
@@ -43,24 +43,28 @@ default_screen_deployment_status:
   # ... other screens
 ```
 
-### `config/screen-to-prompt-mapping.json`
+### `config/screen-to-prompt-mapping.js`
 
 Maps individual screens to Auth0 prompt categories:
 
-```json
-{
+```javascript
+export const screenToPromptMap = {
   "login-id": "login-id",
   "mfa-sms-challenge": "mfa-sms",
-  "passkey-enrollment": "passkeys"
-}
+  "passkey-enrollment": "passkeys",
+};
 ```
 
-### `config/context-configuration.json`
+### `config/context-configuration.js`
 
 Defines which Auth0 context data is available to screens:
 
-```json
-["branding.settings", "screen.texts", "user.app_metadata.[keyName]"]
+```javascript
+export const contextConfig = [
+  "branding.settings",
+  "screen.texts",
+  "user.app_metadata.[keyName]",
+];
 ```
 
 ## GitHub Actions

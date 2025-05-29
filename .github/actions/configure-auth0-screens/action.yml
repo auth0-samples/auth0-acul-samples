@@ -39,14 +39,21 @@ runs:
         # SCREEN TO PROMPT MAPPING
         #############################################
         
-        # Read the screen-to-prompt mapping from external file
-        MAPPING_FILE=".github/config/screen-to-prompt-mapping.json"
+        # Read the screen-to-prompt mapping from external file (ES module)
+        MAPPING_FILE=".github/config/screen-to-prompt-mapping.js"
         if [ ! -f "$MAPPING_FILE" ]; then
           echo "::error::Screen-to-prompt mapping file not found: $MAPPING_FILE"
           exit 1
         fi
         
-        SCREEN_TO_PROMPT_MAP=$(cat "$MAPPING_FILE")
+        SCREEN_TO_PROMPT_MAP=$(node -e "
+          import('$(pwd)/$MAPPING_FILE').then(module => {
+            console.log(JSON.stringify(module.default || module.screenToPromptMap));
+          }).catch(err => {
+            console.error('Error loading mapping file:', err.message);
+            process.exit(1);
+          });
+        ")
         if [ $? -ne 0 ] || [ -z "$SCREEN_TO_PROMPT_MAP" ]; then
           echo "::error::Failed to read screen-to-prompt mapping from $MAPPING_FILE"
           exit 1
@@ -54,14 +61,21 @@ runs:
         
         echo "✅ Loaded screen-to-prompt mapping from $MAPPING_FILE"
         
-        # Read the context configuration from external file
-        CONTEXT_CONFIG_FILE=".github/config/context-configuration.json"
+        # Read the context configuration from external file (ES module)
+        CONTEXT_CONFIG_FILE=".github/config/context-configuration.js"
         if [ ! -f "$CONTEXT_CONFIG_FILE" ]; then
           echo "::error::Context configuration file not found: $CONTEXT_CONFIG_FILE"
           exit 1
         fi
         
-        CONTEXT_CONFIG=$(cat "$CONTEXT_CONFIG_FILE")
+        CONTEXT_CONFIG=$(node -e "
+          import('$(pwd)/$CONTEXT_CONFIG_FILE').then(module => {
+            console.log(JSON.stringify(module.default || module.contextConfig));
+          }).catch(err => {
+            console.error('Error loading context config file:', err.message);
+            process.exit(1);
+          });
+        ")
         if [ $? -ne 0 ] || [ -z "$CONTEXT_CONFIG" ]; then
           echo "::error::Failed to read context configuration from $CONTEXT_CONFIG_FILE"
           exit 1
