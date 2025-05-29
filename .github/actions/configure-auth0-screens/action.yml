@@ -14,7 +14,7 @@ inputs:
   deploy_config_path:
     description: 'Path to the deploy_config.yml file'
     required: false
-    default: '.github/deploy_config.yml'
+    default: '.github/config/deploy_config.yml'
 outputs:
   deployed_screens:
     description: 'Comma-separated list of successfully deployed screens'
@@ -34,6 +34,40 @@ runs:
         DEPLOY_CONFIG_PATH: ${{ inputs.deploy_config_path }}
       run: |
         set -euo pipefail # Exit immediately if a command exits with non-zero status or unset variables are used
+
+        #############################################
+        # SCREEN TO PROMPT MAPPING
+        #############################################
+        
+        # Read the screen-to-prompt mapping from external file
+        MAPPING_FILE=".github/config/screen-to-prompt-mapping.json"
+        if [ ! -f "$MAPPING_FILE" ]; then
+          echo "::error::Screen-to-prompt mapping file not found: $MAPPING_FILE"
+          exit 1
+        fi
+        
+        SCREEN_TO_PROMPT_MAP=$(cat "$MAPPING_FILE")
+        if [ $? -ne 0 ] || [ -z "$SCREEN_TO_PROMPT_MAP" ]; then
+          echo "::error::Failed to read screen-to-prompt mapping from $MAPPING_FILE"
+          exit 1
+        fi
+        
+        echo "✅ Loaded screen-to-prompt mapping from $MAPPING_FILE"
+        
+        # Read the context configuration from external file
+        CONTEXT_CONFIG_FILE=".github/config/context-configuration.json"
+        if [ ! -f "$CONTEXT_CONFIG_FILE" ]; then
+          echo "::error::Context configuration file not found: $CONTEXT_CONFIG_FILE"
+          exit 1
+        fi
+        
+        CONTEXT_CONFIG=$(cat "$CONTEXT_CONFIG_FILE")
+        if [ $? -ne 0 ] || [ -z "$CONTEXT_CONFIG" ]; then
+          echo "::error::Failed to read context configuration from $CONTEXT_CONFIG_FILE"
+          exit 1
+        fi
+        
+        echo "✅ Loaded context configuration from $CONTEXT_CONFIG_FILE"
 
         #############################################
         # INITIAL SETUP & VALIDATION
@@ -109,6 +143,17 @@ runs:
             echo "⚙️ Processing screen (targeted for deployment): $screen_from_build"
             
             screen="$screen_from_build"
+            
+            # Look up the prompt name for this screen
+            PROMPT_NAME=$(echo "$SCREEN_TO_PROMPT_MAP" | jq -r --arg screen "$screen" '.[$screen] // $screen')
+            
+            if [ "$PROMPT_NAME" == "null" ] || [ -z "$PROMPT_NAME" ]; then
+              echo "::warning::No prompt mapping found for screen '$screen', using screen name as prompt"
+              PROMPT_NAME="$screen"
+            fi
+            
+            echo "📋 Screen: $screen → Prompt: $PROMPT_NAME"
+            
             SCREEN_ASSETS_DIR="dist/assets/$screen"
             SHARED_ASSETS_DIR="dist/assets/shared"
             ROOT_ASSETS_DIR="dist/assets"
@@ -164,7 +209,6 @@ runs:
             fi
             
             echo "📝 Building configuration for $screen"
-            CONTEXT_CONFIG='[]'
             JSON_CONTENT=$(jq -n --arg base_href "${CDN_BASE_URL}/" --argjson cfg "$CONTEXT_CONFIG" '{ rendering_mode: "advanced", context_configuration: $cfg, default_head_tags_disabled: false, head_tags: [ { tag: "base", attributes: { href: $base_href } }, { tag: "meta", attributes: { name: "viewport", content: "width=device-width, initial-scale=1" } } ] }')
             if [ $? -ne 0 ]; then echo "::error::Failed to create base JSON content for $screen"; FAILED_SCREENS+=("$screen"); rm -f "$SETTINGS_FILE"; trap - ERR; continue; fi
 
@@ -178,21 +222,21 @@ runs:
             cat "$SETTINGS_FILE"
             echo "--- End of SETTINGS_FILE content ---"
 
-            echo "🔄 Configuring Auth0 prompt: $screen"
+            echo "🔄 Configuring Auth0 prompt: $PROMPT_NAME (screen: $screen)"
             if ! command -v auth0 &> /dev/null; then echo "::error::auth0 CLI not found"; FAILED_SCREENS+=("$screen"); rm -f "$SETTINGS_FILE"; trap - ERR; continue; fi
             
             AUTH0_OUTPUT="" 
             AUTH0_EXIT_CODE=0
             set +e 
-            AUTH0_OUTPUT=$(auth0 ul customize --rendering-mode advanced --prompt "$screen" --screen "$screen" --settings-file "$SETTINGS_FILE" 2>&1)
+            AUTH0_OUTPUT=$(auth0 ul customize --rendering-mode advanced --prompt "$PROMPT_NAME" --screen "$screen" --settings-file "$SETTINGS_FILE" 2>&1)
             AUTH0_EXIT_CODE=$?
             set -e 
 
             if [ $AUTH0_EXIT_CODE -eq 0 ]; then
-              echo "✅ Successfully configured: $screen"
+              echo "✅ Successfully configured: $screen (prompt: $PROMPT_NAME)"
               SUCCESS_SCREENS+=("$screen")
             else
-              echo "::error::Failed to configure prompt: $screen (Exit Code: $AUTH0_EXIT_CODE)"
+              echo "::error::Failed to configure prompt: $PROMPT_NAME for screen: $screen (Exit Code: $AUTH0_EXIT_CODE)"
               echo "$AUTH0_OUTPUT"
               FAILED_SCREENS+=("$screen")
             fi

@@ -5,11 +5,15 @@ export interface LogoProps {
   altText?: string;
   src?: string; // Make src optional, can attempt to get from SDK or use fallback
   imageClassName?: string; // For the img tag itself
+  width?: string | number;
+  height?: string | number;
 }
 
 const Logo = ({
   className,
   altText = "Application Logo",
+  width = "auto",
+  height = "auto",
   src, // Default to Auth0 CDN logo if no src provided and SDK doesn't override
   imageClassName, // Destructure the new prop
 }: LogoProps) => {
@@ -25,6 +29,8 @@ const Logo = ({
   return (
     <div className={cn("flex justify-center items-center mb-6", className)}>
       <img
+        width={width}
+        height={height}
         src={logoSrc}
         alt={altText}
         className={cn("object-contain", imageClassName)}

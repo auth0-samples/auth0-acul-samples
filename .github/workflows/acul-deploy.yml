@@ -3,7 +3,7 @@ name: ACUL Screens - Build and Deploy
 # This workflow file is provided as an example template for Auth0 ACUL deployments.
 # It is intentionally included in the boilerplate example to demonstrate how to set up
 # CI/CD for your own Auth0 ACUL implementation.
-# 
+#
 # When implementing in your own project:
 # 1. Update paths and settings as needed
 # 2. Configure the required GitHub secrets
@@ -16,20 +16,20 @@ on:
     branches: [main, master]
     # Only trigger if files within the boilerplate example change.
     paths:
-      - '**/*'
-      - '.github/deploy_config.yml' # This file is used to determine which screens to deploy
-      - '!.github/workflows/acul-deploy.yml'
-      - '!DEPLOYMENT.md'
-      - '!README.md'
+      - "**/*"
+      - ".github/config/deploy_config.yml" # This file is used to determine which screens to deploy
+      - "!.github/workflows/acul-deploy.yml"
+      - "!DEPLOYMENT.md"
+      - "!README.md"
   pull_request:
     branches: [main, master]
     # Only trigger if files within the boilerplate example change.
     paths:
-      - '**/*'
-      - '.github/deploy_config.yml' # This file is used to determine which screens to deploy
-      - '!.github/workflows/acul-deploy.yml'
-      - '!DEPLOYMENT.md'
-      - '!README.md'
+      - "**/*"
+      - ".github/config/deploy_config.yml" # This file is used to determine which screens to deploy
+      - "!.github/workflows/acul-deploy.yml"
+      - "!DEPLOYMENT.md"
+      - "!README.md"
   workflow_dispatch: # Kept for manual triggering, but inputs removed
 
 env:
@@ -44,10 +44,6 @@ jobs:
       id-token: write
       contents: read
 
-    outputs:
-      deployed_screens: ${{ steps.configure-auth0.outputs.deployed_screens }}
-      failed_screens: ${{ steps.configure-auth0.outputs.failed_screens }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -57,14 +53,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
           cache-dependency-path: ${{ env.WORKING_DIR }}/package-lock.json
 
       - name: Install dependencies
         shell: bash
         working-directory: ${{ env.WORKING_DIR }}
         env:
-          NPM_CONFIG_REGISTRY: 'https://registry.npmjs.org'
+          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org"
         run: |
           npm config set registry https://registry.npmjs.org/
           npm ci
@@ -109,11 +105,3 @@ jobs:
           working-directory: ${{ env.WORKING_DIR }}
           cdn-url: ${{ secrets.S3_CDN_URL }}
           screens-json: ${{ steps.discover-screens.outputs.screens }}
-
-      - name: Deployment Summary
-        if: always()
-        uses: ./.github/actions/deployment-summary
-        with:
-          job-status: ${{ job.status }}
-          deployed_screens: ${{ steps.configure-auth0.outputs.deployed_screens }}
-          failed_screens: ${{ steps.configure-auth0.outputs.failed_screens }}

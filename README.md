@@ -21,10 +21,10 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 <details>
 <summary>📂 Repository Setup</summary>
 
-- Clone the auth0-acul-react-boilerplate repository:
+- Clone the auth0-acul-samples repository:
   ```bash
-  git clone https://github.com/auth0-samples/auth0-acul-react-boilerplate.git
-  cd auth0-acul-react-boilerplate
+  git clone https://github.com/auth0-samples/auth0-acul-samples.git
+  cd auth0-acul-samples
   ```
   </details>
 
@@ -78,8 +78,13 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 ```
 auth0-acul-samples/
 ├── .github/             # GitHub Actions workflows for CI/CD
-│   └── actions/         # Custom GitHub Actions
-│       └── configure-auth0-screens/ # Action for configuring Auth0 screens
+│   ├── config/          # Deployment configuration files
+│   │   ├── deploy_config.yml        # Controls which screens to deploy
+│   │   ├── screen-to-prompt-mapping.json  # Maps screens to Auth0 prompts
+│   │   └── context-configuration.json     # Auth0 context data configuration
+│   ├── actions/         # Custom GitHub Actions
+│   │   └── configure-auth0-screens/ # Action for configuring Auth0 screens
+│   └── workflows/       # GitHub workflow definitions
 ├── dist/                # Production build output
 ├── scripts/             # Node.js helper scripts for development
 │   └── dev-screen.js    # Script to run a specific screen with mock data
@@ -175,16 +180,18 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
 
 ➡️ **[DEPLOYMENT.md](./DEPLOYMENT.md)**
 
+➡️ **[GitHub Actions Configuration](./.github/README.md)** - For quick reference on secrets and configuration
+
 ### Enabling Screens for Advanced Mode Deployment
 
-To control which screens are deployed and configured for Advanced Mode in your Auth0 tenant, you need to modify the `.github/deploy_config.yml` file.
+To control which screens are deployed and configured for Advanced Mode in your Auth0 tenant, you need to modify the `.github/config/deploy_config.yml` file.
 
 This YAML file contains a list of all available ACUL screens. To enable a specific screen for deployment in Advanced Mode, find its entry in the `default_screen_deployment_status` map and change its value from `false` to `true`.
 
 For example, to enable the `login-id` and `signup` screens:
 
 ```yaml
-# .github/deploy_config.yml
+# .github/config/deploy_config.yml
 default_screen_deployment_status:
   "email-identifier-challenge": false
   # ... other screens ...
