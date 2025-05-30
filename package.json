@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "node ./scripts/dev-screen.js",
+    "screen": "node ./scripts/dev-screen.js",
     "build": "npm run lint:format && tsc -b && vite build --logLevel info",
+    "build:screen": "npm run lint:format && tsc -b && vite build --logLevel info",
     "preview": "vite preview",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,html,css}\" --ignore-unknown",
     "lint:format": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,html,css}\" --ignore-unknown",
-    "screen": "node ./scripts/dev-screen.js"
+    "validate:mock-file": "node ./scripts/validate-mock-filenames.js"
   },
   "dependencies": {
     "@auth0/auth0-acul-js": "^0.1.0-beta.4",

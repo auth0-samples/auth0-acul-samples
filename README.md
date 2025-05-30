@@ -9,6 +9,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 - [Project Structure](#project-structure)
 - [Screens](#screens)
 - [Development Workflow](#development-workflow)
+- [Deployment](#deployment)
 - [Technical Details](#technical-details)
 - [Documentation](#documentation)
 - [Troubleshooting](#troubleshooting)
@@ -20,10 +21,10 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 <details>
 <summary>📂 Repository Setup</summary>
 
-- Clone the auth0-acul-react-boilerplate repository:
+- Clone the auth0-acul-samples repository:
   ```bash
-  git clone https://github.com/auth0-samples/auth0-acul-react-boilerplate.git
-  cd auth0-acul-react-boilerplate
+  git clone https://github.com/auth0-samples/auth0-acul-samples.git
+  cd auth0-acul-samples
   ```
   </details>
 
@@ -77,8 +78,13 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 ```
 auth0-acul-samples/
 ├── .github/             # GitHub Actions workflows for CI/CD
-│   └── actions/         # Custom GitHub Actions
-│       └── configure-auth0-screens/ # Action for configuring Auth0 screens
+│   ├── config/          # Deployment configuration files
+│   │   ├── deploy_config.yml        # Controls which screens to deploy
+│   │   ├── screen-to-prompt-mapping.json  # Maps screens to Auth0 prompts
+│   │   └── context-configuration.json     # Auth0 context data configuration
+│   ├── actions/         # Custom GitHub Actions
+│   │   └── configure-auth0-screens/ # Action for configuring Auth0 screens
+│   └── workflows/       # GitHub workflow definitions
 ├── dist/                # Production build output
 ├── scripts/             # Node.js helper scripts for development
 │   └── dev-screen.js    # Script to run a specific screen with mock data
@@ -96,8 +102,8 @@ auth0-acul-samples/
 │   │   └── [screen-name]/
 │   │       ├── components/ # Components specific ONLY to this screen
 │   │       │   └── ...
-│   │       ├── hooks/      # Hooks specific ONLY to this screen
-│   │       └── index.tsx   # Main screen component
+│   │       ├── hooks/      # Hooks specific ONLY to this screen (e.g., use<ScreenName>Manager, use<ScreenName>Form)
+│   │       └── index.tsx   # Main screen component, orchestrates components from its ./components/ folder.
 │   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
 │   └── utils/           # Shared utility functions
 │       └── mockContextLoader.ts # Utility to load mock sdk values to render screen in dev
@@ -110,19 +116,10 @@ auth0-acul-samples/
 
 This template includes implementations for several Universal Login screens that match Auth0's design language:
 
-- **Login Screen** (`src/screens/login/`)
-
-  - Main login screen with username/email and password
-  - Matches the standard Auth0 Universal Login design
-
 - **Login ID Screen** (`src/screens/login-id/`)
 
   - Username/email input step in a multi-step login flow
   - Follows Auth0's Identifier First authentication pattern
-
-- **Login Password Screen** (`src/screens/login-password/`)
-  - Password entry step in a multi-step login flow
-  - Matches Auth0's password screen design
 
 Each screen component is designed to be used with the Auth0 ACUL JavaScript SDK in production, but uses mock data for local development.
 
@@ -148,51 +145,107 @@ This command, managed by `scripts/dev-screen.js`:
 
 The screen components include proper integration with Auth0 ACUL SDK methods (like `handleLogin`, `handleSocialLogin`, etc.), but these methods won't perform actual authentication in this local mock data development environment.
 
-<a id="technical-details"></a>
-
-## 🔍 Technical Details
-
-### Application Mounting in ACUL
-
-In an Auth0 Advanced Customization for Universal Login (ACUL) environment, Auth0 provides the main HTML page. Your custom application, built with this template, doesn't bundle its own `index.html`. Instead, it needs to be dynamically injected into the DOM provided by Auth0.
-
-The `src/main.tsx` file handles this by:
-
-1. Creating a new `div` element.
-2. Assigning it an `id` (e.g., `root`).
-3. Appending this `div` to the `document.body`.
-4. Mounting the React application into this newly created `div`.
-
-This ensures your custom UI is correctly rendered within the Auth0-hosted page. Here's a conceptual overview of how this is done in `src/main.tsx`:
-
-```typescript
-const rootElement = document.createElement("div");
-rootElement.id = "root";
-document.body.appendChild(rootElement);
-```
-
 ### Auth0 ACUL SDK Integration
 
 This template demonstrates how to integrate screen components with the Auth0 ACUL JavaScript SDK. Each screen follows these patterns:
 
-- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`)
-- Set up proper form handling with the SDK methods
-- Handle errors and loading states appropriately
-- Follow Auth0's Universal Login design language
+- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`) typically within a custom hook in `src/screens/[screen-name]/hooks/use<ScreenName>Manager.ts`.
+- Screen-specific UI logic and form handling are often encapsulated in sub-components within `src/screens/[screen-name]/components/`, which utilize the screen's custom hooks (manager and form hooks) for data and actions.
+- Set up proper form handling with the SDK methods.
+- Handle errors and loading states appropriately.
+
+<a id="deployment"></a>
+
+## 📤 Deployment
+
+### Automated Deployment with GitHub Actions
+
+This boilerplate includes a GitHub Actions workflow to automate the process of:
+
+1. Building your customized ACUL screens
+2. Uploading the assets to an AWS S3 bucket
+3. Configuring your Auth0 tenant to use these assets in Advanced mode
+4. Serving the assets through a CDN for optimal performance
+
+**For detailed setup instructions including AWS S3, CloudFront, IAM roles, Auth0 M2M applications, and GitHub secrets, please refer to the comprehensive deployment guide:**
+
+➡️ **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+➡️ **[GitHub Actions Configuration](./.github/README.md)** - For quick reference on secrets and configuration
+
+### Enabling Screens for Advanced Mode Deployment
+
+To control which screens are deployed and configured for Advanced Mode in your Auth0 tenant, you need to modify the `.github/config/deploy_config.yml` file.
+
+This YAML file contains a list of all available ACUL screens. To enable a specific screen for deployment in Advanced Mode, find its entry in the `default_screen_deployment_status` map and change its value from `false` to `true`.
+
+For example, to enable the `login-id` and `signup` screens:
+
+```yaml
+# .github/config/deploy_config.yml
+default_screen_deployment_status:
+  "email-identifier-challenge": false
+  # ... other screens ...
+  "login-id": true # Was false, now true to enable deployment
+  # ... other screens ...
+  "signup": true # Was false, now true to enable deployment
+  # ... other screens ...
+```
+
+Only screens set to `true` in this configuration file will be processed by the deployment workflow for Advanced Mode. This allows you to selectively roll out your custom screens.
+
+<a id="technical-details"></a>
+
+## 🔍 Technical Details
 
 ### Styling with Tailwind CSS
 
-The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language. Here's how theming is approached:
+The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language and support dynamic theming based on tenant/organization branding.
 
-- **Core Theme Colors**: Defined as CSS custom properties (e.g., `--color-primary`, `--color-link`) within an `@theme` block in `src/index.css`. This method, aligned with Tailwind CSS v4.x, allows Tailwind to automatically generate utility classes like `bg-primary` or `text-link` from these variables.
-- **Global Base Styles**: General styles like the base `font-family` and `line-height` for the application are set in a `:root` block within `src/index.css`.
-- **Tailwind Configuration (`tailwind.config.js`)**:
-  - This file extends Tailwind's default theme.
-  - For colors, it references the CSS variables defined in `src/index.css` (e.g., `theme.extend.colors.primary = 'var(--color-primary)'`).
-  - Other theme aspects like `spacing`, `fontSize`, `fontWeight`, `lineHeight`, and `borderRadius` are configured directly in this file, as the `src/tokens` directory (which previously held JavaScript-based tokens) has been removed.
-- **Component Styling**: Individual components and screens currently use inline Tailwind utility classes for styling (e.g., `className="bg-primary text-white ..."`).
+**1. Default Theme Variables (`src/index.css`)**
 
-Refer to `src/index.css` for the core color definitions and `tailwind.config.js` for how these and other theme aspects are integrated into Tailwind.
+Base theme colors and other CSS custom properties are defined with default values in `src/index.css`:
+
+```css
+/* src/index.css */
+@theme {
+  --color-primary: #0059d6; /* Default primary color */
+  --color-link: #007bad;
+  --color-background-page: #f9fafb;
+  --color-background-widget: #ffffff;
+  --logo-url-string: "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg";
+  /* ... other variables ... */
+}
+
+:root {
+  /* You can also define variables here */
+}
+```
+
+**2. Dynamic Theming (`src/context/BrandingProvider.tsx`)**
+
+A `BrandingProvider` component dynamically adjusts the theme:
+
+- It consumes the `universal_login_context` (from Auth0 tenant settings in production, or `src/mock-data/*.json` locally).
+- Using a helper (`getThemeValue`), it selects the appropriate branding values (e.g., organization's primary color, logo URL) based on a defined precedence.
+- It then updates the CSS custom properties on the HTML root element in real-time (e.g., `document.documentElement.style.setProperty('--color-primary', resolvedPrimaryColor);`).
+
+**3. Component Styling**
+
+Components use standard Tailwind utility classes. These classes automatically reflect the dynamic theme because they are mapped to the CSS variables that `BrandingProvider` updates.
+
+```tsx
+// Example in a screen component
+// This div will use the dynamically set --color-background-widget
+<div className="bg-background-widget p-4">
+  {/* This button will use the dynamically set --color-primary */}
+  <button className="bg-primary text-white">Continue</button>
+</div>
+```
+
+For direct JavaScript access to resolved theme values (e.g., a logo URL for an `<img>` tag), components can use the `useBranding` hook provided by `BrandingProvider`.
+
+This setup ensures that UI elements adapt to specific tenant or organization branding, providing a consistent user experience.
 
 <a id="documentation"></a>
 
