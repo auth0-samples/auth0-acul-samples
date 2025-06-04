@@ -80,8 +80,8 @@ auth0-acul-samples/
 ├── .github/             # GitHub Actions workflows for CI/CD
 │   ├── config/          # Deployment configuration files
 │   │   ├── deploy_config.yml        # Controls which screens to deploy
-│   │   ├── screen-to-prompt-mapping.json  # Maps screens to Auth0 prompts
-│   │   └── context-configuration.json     # Auth0 context data configuration
+│   │   ├── screen-to-prompt-mapping.js  # Maps screens to Auth0 prompts
+│   │   └── context-configuration.js     # Auth0 context data configuration
 │   ├── actions/         # Custom GitHub Actions
 │   │   └── configure-auth0-screens/ # Action for configuring Auth0 screens
 │   └── workflows/       # GitHub workflow definitions

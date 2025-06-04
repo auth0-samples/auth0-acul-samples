@@ -1,5 +1,5 @@
 name: 'Configure Auth0 Screens'
-description: 'Configures Auth0 Universal Login screens using the discovered assets and a deployment config file'
+description: 'Configures Auth0 Universal Login screens using targeted screens from deployment config'
 inputs:
   working-directory:
     description: 'Working directory relative to repository root'
@@ -9,7 +9,7 @@ inputs:
     description: 'Base URL of the CDN (without trailing slash)'
     required: true
   screens-json:
-    description: 'JSON array of ALL BUILT screens to consider for configuration'
+    description: 'JSON array of targeted screens to configure'
     required: true
   deploy_config_path:
     description: 'Path to the deploy_config.yml file'
@@ -30,309 +30,49 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       env:
         CDN_URL: ${{ inputs.cdn-url }}
-        SCREENS_JSON: ${{ inputs.screens-json }}
+        TARGETED_SCREENS_JSON: ${{ inputs.screens-json }}
         DEPLOY_CONFIG_PATH: ${{ inputs.deploy_config_path }}
       run: |
-        set -euo pipefail # Exit immediately if a command exits with non-zero status or unset variables are used
-
-        #############################################
-        # SCREEN TO PROMPT MAPPING
-        #############################################
+        set -euo pipefail
         
-        # Read the screen-to-prompt mapping from external file (ES module)
-        MAPPING_FILE=".github/config/screen-to-prompt-mapping.js"
-        if [ ! -f "$MAPPING_FILE" ]; then
-          echo "::error::Screen-to-prompt mapping file not found: $MAPPING_FILE"
-          exit 1
-        fi
-        
-        SCREEN_TO_PROMPT_MAP=$(node -e "
-          import('$(pwd)/$MAPPING_FILE').then(module => {
-            console.log(JSON.stringify(module.default || module.screenToPromptMap));
-          }).catch(err => {
-            console.error('Error loading mapping file:', err.message);
-            process.exit(1);
-          });
-        ")
-        if [ $? -ne 0 ] || [ -z "$SCREEN_TO_PROMPT_MAP" ]; then
-          echo "::error::Failed to read screen-to-prompt mapping from $MAPPING_FILE"
-          exit 1
-        fi
-        
-        echo "✅ Loaded screen-to-prompt mapping from $MAPPING_FILE"
-        
-        # Read the context configuration from external file (ES module)
-        CONTEXT_CONFIG_FILE=".github/config/context-configuration.js"
-        if [ ! -f "$CONTEXT_CONFIG_FILE" ]; then
-          echo "::error::Context configuration file not found: $CONTEXT_CONFIG_FILE"
-          exit 1
-        fi
-        
-        CONTEXT_CONFIG=$(node -e "
-          import('$(pwd)/$CONTEXT_CONFIG_FILE').then(module => {
-            console.log(JSON.stringify(module.default || module.contextConfig));
-          }).catch(err => {
-            console.error('Error loading context config file:', err.message);
-            process.exit(1);
-          });
-        ")
-        if [ $? -ne 0 ] || [ -z "$CONTEXT_CONFIG" ]; then
-          echo "::error::Failed to read context configuration from $CONTEXT_CONFIG_FILE"
-          exit 1
-        fi
-        
-        echo "✅ Loaded context configuration from $CONTEXT_CONFIG_FILE"
-
-        #############################################
-        # INITIAL SETUP & VALIDATION
-        #############################################
-        
-        echo "### Starting Auth0 screen configuration..."
-        
-        CDN_BASE_URL="${CDN_URL}"
-        if [ -z "$CDN_BASE_URL" ]; then
-          echo "::error::CDN_URL input is not set."
-          exit 1
-        fi
-        
-        if [[ "$CDN_BASE_URL" == */ ]]; then
-           echo "::warning::CDN_URL ends with a slash. Removing it: $CDN_BASE_URL"
-           CDN_BASE_URL=${CDN_BASE_URL%/}
-        fi
-        
-        if [ ! -d "dist" ] || [ ! -d "dist/assets" ]; then
-          echo "::error::Required dist/assets directory does not exist!"
-          exit 1
-        fi
-
         SUCCESS_SCREENS=()
         FAILED_SCREENS=()
-
-        #############################################
-        # READ DEPLOYMENT CONFIGURATION
-        #############################################
-        echo "### Reading deployment configuration from $DEPLOY_CONFIG_PATH"
-        TARGET_SCREENS_FROM_CONFIG_JSON="[]" 
-        if [[ -f "$DEPLOY_CONFIG_PATH" ]]; then
-          TEMP_CONFIG_JSON=$(yq eval '.default_screen_deployment_status | to_entries | map(select(.value == true) | .key)' "$DEPLOY_CONFIG_PATH" -o json | jq -c '.' || echo "[]")
-          if [[ -n "$TEMP_CONFIG_JSON" && "$TEMP_CONFIG_JSON" != "null" && "$TEMP_CONFIG_JSON" != "[]" ]]; then
-            TARGET_SCREENS_FROM_CONFIG_JSON="$TEMP_CONFIG_JSON"
-            echo "Screens targeted for deployment based on $DEPLOY_CONFIG_PATH: $TARGET_SCREENS_FROM_CONFIG_JSON"
-          else
-            echo "No screens marked true for deployment in $DEPLOY_CONFIG_PATH, or the file is empty/invalid."
-          fi
-        else
-          echo "::warning::$DEPLOY_CONFIG_PATH not found. No screens will be deployed based on config file."
-        fi
-
-        if [[ "$TARGET_SCREENS_FROM_CONFIG_JSON" == "[]" ]]; then
-          echo "No screens are targeted for deployment based on the configuration. Exiting configuration process."
-          echo "deployed_screens=None (No targets in config)" >> $GITHUB_OUTPUT
-          echo "failed_screens=None (No targets in config)" >> $GITHUB_OUTPUT
+        
+        # Make scripts executable
+        chmod +x .github/actions/configure-auth0-screens/scripts/*.sh
+        
+        # Step 1: Setup and Configuration  
+        source .github/actions/configure-auth0-screens/scripts/setup-and-config.sh
+        
+        # Step 2: Process each targeted screen
+        echo "Processing targeted screens: $TARGETED_SCREENS_JSON"
+        
+        if [[ "$TARGETED_SCREENS_JSON" == "[]" || "$TARGETED_SCREENS_JSON" == "null" ]]; then
+          echo "deployed_screens=None (No targets provided)" >> $GITHUB_OUTPUT
+          echo "failed_screens=None (No targets provided)" >> $GITHUB_OUTPUT
           exit 0 
         fi
-
-        #############################################
-        # PROCESS SCREENS
-        #############################################
         
-        SCREEN_LIST_FOR_LOOP=$(echo "$SCREENS_JSON" | jq -r '.[]')
-        jq_exit_code=$?
-
-        if [ $jq_exit_code -ne 0 ]; then
-          echo "::error::jq command failed with exit code $jq_exit_code while parsing SCREENS_JSON: $SCREENS_JSON"
-          exit $jq_exit_code 
-        fi
-
-        if [ -z "$SCREEN_LIST_FOR_LOOP" ]; then
-          echo "Debug: SCREENS_JSON parsed by jq resulted in an empty list. Content of SCREENS_JSON: $SCREENS_JSON"
-        else
-          echo "$SCREEN_LIST_FOR_LOOP"
-        fi
-
-        # Main loop using process substitution
-        while IFS= read -r screen_from_build; do
-          if echo "$TARGET_SCREENS_FROM_CONFIG_JSON" | jq -e --arg screen "$screen_from_build" '.[] | select(. == $screen)' > /dev/null; then
+        # Process each targeted screen
+        while IFS= read -r screen_to_deploy; do
+          if [[ -n "$screen_to_deploy" ]]; then
             echo "----------------------------------------------"
-            echo "⚙️ Processing screen (targeted for deployment): $screen_from_build"
+            echo "Processing targeted screen: $screen_to_deploy"
             
-            screen="$screen_from_build"
-            
-            # Look up the prompt name for this screen
-            PROMPT_NAME=$(echo "$SCREEN_TO_PROMPT_MAP" | jq -r --arg screen "$screen" '.[$screen] // $screen')
-            
-            if [ "$PROMPT_NAME" == "null" ] || [ -z "$PROMPT_NAME" ]; then
-              echo "::warning::No prompt mapping found for screen '$screen', using screen name as prompt"
-              PROMPT_NAME="$screen"
-            fi
-            
-            echo "📋 Screen: $screen → Prompt: $PROMPT_NAME"
-            
-            SCREEN_ASSETS_DIR="dist/assets/$screen"
-            SHARED_ASSETS_DIR="dist/assets/shared"
-            ROOT_ASSETS_DIR="dist/assets"
-            
-            if [ ! -d "$SCREEN_ASSETS_DIR" ]; then
-              echo "::error::Screen directory not found: $SCREEN_ASSETS_DIR"
-              FAILED_SCREENS+=("$screen")
-              continue 
-            fi
-            
-            echo "🔍 Finding assets for screen: $screen"
-            
-            SETTINGS_FILE=$(mktemp settings_XXXXXX.json)
-            trap 'echo "ERR TRAP: Removing $SETTINGS_FILE due to error processing $screen"; rm -f "$SETTINGS_FILE"; trap - ERR' ERR
-            
-            ALL_ASSETS=$(find "dist/assets" -type f \( -name "*.js" -o -name "*.css" \) ! -name "*.map.js" 2>/dev/null | sort)
-            SCREEN_JS_FILES=(); SHARED_JS_FILES=(); ROOT_JS_FILES=(); SCREEN_CSS_FILES=(); SHARED_CSS_FILES=()
-            
-            while IFS= read -r file_asset; do 
-              if [[ -z "$file_asset" ]]; then continue; fi
-              if [[ "$file_asset" == *".js" ]]; then
-                if [[ "$file_asset" == "$SCREEN_ASSETS_DIR/"* ]]; then SCREEN_JS_FILES+=("$file_asset")
-                elif [[ "$file_asset" == "$SHARED_ASSETS_DIR/"* ]]; then SHARED_JS_FILES+=("$file_asset")
-                elif [[ "$file_asset" == "$ROOT_ASSETS_DIR/main."*".js" ]]; then ROOT_JS_FILES+=("$file_asset")
-                fi
-              elif [[ "$file_asset" == *".css" ]]; then
-                if [[ "$file_asset" == "$SCREEN_ASSETS_DIR/"* ]]; then SCREEN_CSS_FILES+=("$file_asset")
-                elif [[ "$file_asset" == "$SHARED_ASSETS_DIR/"* ]]; then SHARED_CSS_FILES+=("$file_asset")
-                fi
-              fi
-            done <<< "$ALL_ASSETS"
-            
-            if [ ${#SCREEN_JS_FILES[@]} -eq 0 ]; then
-              echo "::error::No JavaScript files found for screen: $screen"
-              FAILED_SCREENS+=("$screen")
-              rm -f "$SETTINGS_FILE"; trap - ERR
-              continue 
-            fi
-            
-            SCREEN_ENTRY_FILE=""
-            for file_js_entry in "${SCREEN_JS_FILES[@]}"; do 
-              base_name=$(basename "$file_js_entry")
-              if [[ "$base_name" == "index.js" || "$base_name" == "main.js" || "$base_name" == index.*.js || "$base_name" == main.*.js ]]; then
-                SCREEN_ENTRY_FILE="$file_js_entry"; break
-              fi
-            done
-            
-            if [ -z "$SCREEN_ENTRY_FILE" ]; then
-              SCREEN_ENTRY_FILE="${SCREEN_JS_FILES[0]}"
-              echo "⚠️ No explicit entry point found, using: $(basename "$SCREEN_ENTRY_FILE")"
+            if .github/actions/configure-auth0-screens/scripts/process-screen.sh "$screen_to_deploy"; then
+              SUCCESS_SCREENS+=("$screen_to_deploy")
             else
-              echo "✅ Found entry point: $(basename "$SCREEN_ENTRY_FILE")"
+              FAILED_SCREENS+=("$screen_to_deploy")
             fi
-            
-            echo "📝 Building configuration for $screen"
-            JSON_CONTENT=$(jq -n --arg base_href "${CDN_BASE_URL}/" --argjson cfg "$CONTEXT_CONFIG" '{ rendering_mode: "advanced", context_configuration: $cfg, default_head_tags_disabled: false, head_tags: [ { tag: "base", attributes: { href: $base_href } }, { tag: "meta", attributes: { name: "viewport", content: "width=device-width, initial-scale=1" } } ] }')
-            if [ $? -ne 0 ]; then echo "::error::Failed to create base JSON content for $screen"; FAILED_SCREENS+=("$screen"); rm -f "$SETTINGS_FILE"; trap - ERR; continue; fi
-
-            for css_file in "${SHARED_CSS_FILES[@]}" "${SCREEN_CSS_FILES[@]}"; do css_basename=$(basename "$css_file"); if [[ ! "$css_basename" =~ ^[^a-zA-Z0-9] ]]; then relative_path="${css_file#dist/}"; JSON_CONTENT=$(echo "$JSON_CONTENT" | jq --arg url "${CDN_BASE_URL}/${relative_path}" '.head_tags += [{ tag: "link", attributes: { rel: "stylesheet", href: $url } }]'); fi; done
-            NON_ENTRY_JS_FILES=()
-            for js_file in "${SCREEN_JS_FILES[@]}"; do if [ "$js_file" != "$SCREEN_ENTRY_FILE" ]; then NON_ENTRY_JS_FILES+=("$js_file"); fi; done
-            for js_file in "${ROOT_JS_FILES[@]}" "${SHARED_JS_FILES[@]}" "${NON_ENTRY_JS_FILES[@]}" "$SCREEN_ENTRY_FILE"; do js_basename=$(basename "$js_file"); if [[ ! "$js_basename" =~ ^[^a-zA-Z0-9] ]]; then relative_path="${js_file#dist/}"; JSON_CONTENT=$(echo "$JSON_CONTENT" | jq --arg url "${CDN_BASE_URL}/${relative_path}" '.head_tags += [{ tag: "script", attributes: { src: $url, type: "module" } }]'); fi; done
-            
-            echo "$JSON_CONTENT" > "$SETTINGS_FILE" || { echo "::error::Failed to write settings file for $screen"; FAILED_SCREENS+=("$screen"); rm -f "$SETTINGS_FILE"; trap - ERR; continue; }
-            
-            cat "$SETTINGS_FILE"
-            echo "--- End of SETTINGS_FILE content ---"
-
-            echo "🔄 Configuring Auth0 prompt: $PROMPT_NAME (screen: $screen)"
-            if ! command -v auth0 &> /dev/null; then echo "::error::auth0 CLI not found"; FAILED_SCREENS+=("$screen"); rm -f "$SETTINGS_FILE"; trap - ERR; continue; fi
-            
-            AUTH0_OUTPUT="" 
-            AUTH0_EXIT_CODE=0
-            set +e 
-            AUTH0_OUTPUT=$(auth0 ul customize --rendering-mode advanced --prompt "$PROMPT_NAME" --screen "$screen" --settings-file "$SETTINGS_FILE" 2>&1)
-            AUTH0_EXIT_CODE=$?
-            set -e 
-
-            if [ $AUTH0_EXIT_CODE -eq 0 ]; then
-              echo "✅ Successfully configured: $screen (prompt: $PROMPT_NAME)"
-              SUCCESS_SCREENS+=("$screen")
-            else
-              echo "::error::Failed to configure prompt: $PROMPT_NAME for screen: $screen (Exit Code: $AUTH0_EXIT_CODE)"
-              echo "$AUTH0_OUTPUT"
-              FAILED_SCREENS+=("$screen")
-            fi
-            
-            rm -f "$SETTINGS_FILE"; trap - ERR 
-          else
-            echo "----------------------------------------------"
-            echo "Skipping screen (not targeted in deploy config): $screen_from_build"
           fi
-        done < <(echo "$SCREEN_LIST_FOR_LOOP") 
-
-        #############################################
-        # FINAL REPORTING
-        #############################################
+        done < <(echo "$TARGETED_SCREENS_JSON" | jq -r '.[]?' 2>/dev/null || true)
         
+        # Step 3: Generate final report
         echo "----------------------------------------------"
-        echo "### Configuration Summary"
         
-        if [ ${#SUCCESS_SCREENS[@]} -eq 0 ]; then
-          deployed_screens_output="None"
-        else
-          deployed_screens_output=$(IFS=,; echo "${SUCCESS_SCREENS[*]}")
-        fi
+        # Convert arrays to JSON for passing to script
+        SUCCESS_SCREENS_JSON=$(printf '%s\n' "${SUCCESS_SCREENS[@]}" | jq -R . | jq -s .)
+        FAILED_SCREENS_JSON=$(printf '%s\n' "${FAILED_SCREENS[@]}" | jq -R . | jq -s .)
         
-        if [ ${#FAILED_SCREENS[@]} -eq 0 ]; then
-          failed_screens_output="None"
-        else
-          failed_screens_output=$(IFS=,; echo "${FAILED_SCREENS[*]}")
-        fi
-
-        echo "📈 Auth0 ACUL Screens Deployment Summary"
-        echo "┌────────────────┬────────────┐"
-        echo "│ Screen         │ Status     │"
-        echo "├────────────────┼────────────┤"
-        
-        ALL_BUILT_SCREENS_ARRAY=()
-        mapfile -t ALL_BUILT_SCREENS_ARRAY < <(echo "$SCREENS_JSON" | jq -r '.[]')
-
-        for screen_item in "${ALL_BUILT_SCREENS_ARRAY[@]}"; do
-          status_string="⚪ Skipped" 
-          is_targeted_flag=false 
-          if echo "$TARGET_SCREENS_FROM_CONFIG_JSON" | jq -e --arg screen "$screen_item" '.[] | select(. == $screen)' > /dev/null; then
-            is_targeted_flag=true
-          fi
-
-          if [[ "$is_targeted_flag" == true ]]; then
-            is_success=false
-            for s_screen in "${SUCCESS_SCREENS[@]}"; do if [[ "$s_screen" == "$screen_item" ]]; then is_success=true; break; fi; done
-            
-            is_failed=false
-            for f_screen in "${FAILED_SCREENS[@]}"; do if [[ "$f_screen" == "$screen_item" ]]; then is_failed=true; break; fi; done
-
-            if [[ "$is_success" == true ]]; then
-              status_string="✅ Success"
-            elif [[ "$is_failed" == true ]]; then
-              status_string="❌ Failed"
-            else
-              status_string="❓ Unknown" 
-            fi
-          fi
-          printf "│ %-14s │ %-7s │\n" "$screen_item" "$status_string"
-        done
-        
-        echo "└────────────────┴────────────┘"
-        
-        echo "- Successfully configured: $deployed_screens_output"
-        echo "- Failed to configure: $failed_screens_output"
-
-        echo "deployed_screens=${deployed_screens_output}" >> $GITHUB_OUTPUT
-        echo "failed_screens=${failed_screens_output}" >> $GITHUB_OUTPUT
-
-        if [ ${#FAILED_SCREENS[@]} -ne 0 ]; then
-          if [ ${#SUCCESS_SCREENS[@]} -eq 0 ]; then
-            echo "::error::All targeted screens failed to configure. Aborting with error status."
-            exit 1
-          else
-            echo "::warning::Some targeted screens failed to configure, but at least one was successful."
-            exit 1 
-          fi
-        elif [ ${#SUCCESS_SCREENS[@]} -eq 0 ] && [[ "$TARGET_SCREENS_FROM_CONFIG_JSON" != "[]" ]]; then
-          echo "::error::No screens were successfully configured out of the targeted screens. Aborting with error status."
-          exit 1
-        else
-          echo "✅ All targeted screens configured successfully."
-        fi
+        export SUCCESS_SCREENS_JSON FAILED_SCREENS_JSON TARGETED_SCREENS_JSON
+        .github/actions/configure-auth0-screens/scripts/generate-report.sh

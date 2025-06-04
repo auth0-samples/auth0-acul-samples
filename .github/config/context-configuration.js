@@ -3,7 +3,7 @@
  * Defines which Auth0 context data is available to custom screens via universal_login_context.
  */
 
-export const contextConfig = [
+const contextConfig = [
   // Branding and theming
   "branding.settings",
   "branding.themes.default",

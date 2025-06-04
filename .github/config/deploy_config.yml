@@ -5,3 +5,8 @@
 
 default_screen_deployment_status:
   "login-id": true
+
+  # Add other screens and their default deployment status here.
+  # Complete list of valid screens available in: src/constants/validScreens.js
+  # e.g., "signup-id": true
+  # e.g., "mfa-sms-challenge": true
