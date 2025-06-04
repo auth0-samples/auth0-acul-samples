@@ -9,6 +9,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 - [Project Structure](#project-structure)
 - [Screens](#screens)
 - [Development Workflow](#development-workflow)
+- [Testing](#testing)
 - [Deployment](#deployment)
 - [Technical Details](#technical-details)
 - [Documentation](#documentation)
@@ -153,6 +154,17 @@ This template demonstrates how to integrate screen components with the Auth0 ACU
 - Screen-specific UI logic and form handling are often encapsulated in sub-components within `src/screens/[screen-name]/components/`, which utilize the screen's custom hooks (manager and form hooks) for data and actions.
 - Set up proper form handling with the SDK methods.
 - Handle errors and loading states appropriately.
+
+## 🧪 Testing
+
+This project includes comprehensive unit testing for components using Jest and React Testing Library.
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+```
 
 <a id="deployment"></a>
 
