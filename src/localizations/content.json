@@ -1,0 +1,17 @@
+{
+  "screens": {
+    "login-id": {
+      "pageTitle": "Login ID",
+      "welcomeText": "Welcome",
+      "pageDescription": "Please enter your username or email address to continue.",
+      "orText": "OR",
+      "passkeyText": "Passkey",
+      "dontHaveAccountText": "Don't have an account?",
+      "signUpText": "Sign up",
+      "captchaLabelText": "Enter the code shown above*",
+      "usernameEmailFieldLabel": "Username or Email Address*",
+      "forgotPasswordText": "Forgot Password?",
+      "continueCtaText": "Continue"
+    }
+  }
+}
