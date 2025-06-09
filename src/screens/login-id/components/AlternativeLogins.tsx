@@ -1,9 +1,9 @@
 import React from "react";
 import Separator from "@/common/Separator";
 import SocialProviderButton from "@/common/SocialProviderButton";
-import { getSocialProviderDetails } from "@/utils/socialUtils";
-import type { SocialConnection } from "@/utils/socialUtils";
-import { getIcon } from "@/utils/iconUtils";
+import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
+import type { SocialConnection } from "@/utils/helpers/socialUtils";
+import { getIcon } from "@/utils/helpers/iconUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 // No props needed as it uses hooks internally

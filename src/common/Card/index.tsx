@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/helpers/cn";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**

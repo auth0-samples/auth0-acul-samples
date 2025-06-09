@@ -200,52 +200,55 @@ Only screens set to `true` in this configuration file will be processed by the d
 
 ### Styling with Tailwind CSS
 
-The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language and support dynamic theming based on tenant/organization branding.
+The project uses Tailwind CSS with a semantic Auth0 theme token system that automatically applies tenant branding.
 
-**1. Default Theme Variables (`src/index.css`)**
+**1. Auth0 Theme System (`src/utils/theme/`)**
 
-Base theme colors and other CSS custom properties are defined with default values in `src/index.css`:
+The theme system converts Auth0 branding data into CSS variables with semantic naming:
 
-```css
-/* src/index.css */
-@theme {
-  --color-primary: #0059d6; /* Default primary color */
-  --color-link: #007bad;
-  --color-background-page: #f9fafb;
-  --color-background-widget: #ffffff;
-  --logo-url-string: "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg";
-  /* ... other variables ... */
-}
+```tsx
+// In any screen component
+import { applyAuth0Theme } from "@/utils/theme";
 
-:root {
-  /* You can also define variables here */
+function LoginScreen() {
+  const { loginIdInstance } = useLoginIdManager();
+
+  // Apply Auth0 theme automatically
+  applyAuth0Theme(loginIdInstance);
+
+  return <div>...</div>;
 }
 ```
 
-**2. Dynamic Theming (`src/context/BrandingProvider.tsx`)**
+**2. CSS Variables (`src/index.css`)**
 
-A `BrandingProvider` component dynamically adjusts the theme:
+Default theme tokens are defined with Auth0 design system values:
 
-- It consumes the `universal_login_context` (from Auth0 tenant settings in production, or `src/mock-data/*.json` locally).
-- Using a helper (`getThemeValue`), it selects the appropriate branding values (e.g., organization's primary color, logo URL) based on a defined precedence.
-- It then updates the CSS custom properties on the HTML root element in real-time (e.g., `document.documentElement.style.setProperty('--color-primary', resolvedPrimaryColor);`).
+```css
+@theme {
+  --ul-theme-color-primary-button: #635dff;
+  --ul-theme-color-widget-background: #ffffff;
+  --ul-theme-border-button-border-radius: 3px;
+  --ul-theme-font-title-size: 1.5rem;
+  /* ... 50+ semantic tokens */
+}
+```
 
 **3. Component Styling**
 
-Components use standard Tailwind utility classes. These classes automatically reflect the dynamic theme because they are mapped to the CSS variables that `BrandingProvider` updates.
+Components use semantic Tailwind classes that map to theme tokens:
 
 ```tsx
-// Example in a screen component
-// This div will use the dynamically set --color-background-widget
-<div className="bg-background-widget p-4">
-  {/* This button will use the dynamically set --color-primary */}
-  <button className="bg-primary text-white">Continue</button>
+// Automatically reflects tenant branding
+<button className="bg-primary-button text-primary-button-label rounded-button">
+  Continue
+</button>
+<div className="bg-widget-background border-widget rounded-widget">
+  Content
 </div>
 ```
 
-For direct JavaScript access to resolved theme values (e.g., a logo URL for an `<img>` tag), components can use the `useBranding` hook provided by `BrandingProvider`.
-
-This setup ensures that UI elements adapt to specific tenant or organization branding, providing a consistent user experience.
+The system supports **Organization > Settings > Theme Default** precedence and scales to 80+ screen types without modification.
 
 <a id="documentation"></a>
 

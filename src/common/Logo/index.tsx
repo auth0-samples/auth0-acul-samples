@@ -1,5 +1,4 @@
-import { cn } from "@/utils/cn";
-import { useBranding } from "@/context/BrandingProvider";
+import { cn } from "@/utils/helpers/cn";
 
 export interface LogoProps {
   className?: string;
@@ -18,11 +17,9 @@ const Logo = ({
   src,
   imageClassName,
 }: LogoProps) => {
-  const { logoUrl } = useBranding();
-
   const defaultLogoUrl =
     "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg";
-  const logoSrc = src || logoUrl || defaultLogoUrl;
+  const logoSrc = src || defaultLogoUrl;
 
   if (!logoSrc) {
     return null;

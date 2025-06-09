@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import FormField from "@/common/FormField";
 import type { InputProps } from "@/common/Input";
 import type { LabelProps } from "@/common/Label";
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/helpers/cn";
 
 export interface CaptchaBoxProps {
   label?: string;

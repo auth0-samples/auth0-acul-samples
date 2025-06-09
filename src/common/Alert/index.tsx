@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from "@/common/Icon";
 import { ExclamationCircleIcon } from "@/assets/icons";
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/helpers/cn";
 
 export interface ErrorMessage {
   message: string;

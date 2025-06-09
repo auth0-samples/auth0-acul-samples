@@ -1,6 +1,6 @@
 import { useEffect, Suspense, useState } from "react";
 import { getCurrentScreen } from "@auth0/auth0-acul-js";
-import { getScreenComponent } from "@/utils/screenLoader";
+import { getScreenComponent } from "@/utils/screen/screenLoader";
 
 const App = () => {
   const [screen, setScreen] = useState("login-id");

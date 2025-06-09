@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "@/common/Card";
-import { BrandingProvider } from "@/context/BrandingProvider";
 import { useLoginIdManager } from "./hooks/useLoginIdManager";
+import { applyAuth0Theme } from "@/utils/theme";
 
 import Header from "./components/Header";
 import IdentifierForm from "./components/IdentifierForm";
@@ -13,17 +13,18 @@ const LoginIdScreen: React.FC = () => {
 
   document.title = pageTitle;
 
+  // Apply theme from SDK instance when screen loads
+  applyAuth0Theme(loginIdInstance);
+
   return (
-    <BrandingProvider screenInstance={loginIdInstance}>
-      <div className="min-h-screen flex items-center justify-center px-10 py-20">
-        <Card className="w-full max-w-[400px]">
-          <Header />
-          <IdentifierForm />
-          <Footer />
-          <AlternativeLogins />
-        </Card>
-      </div>
-    </BrandingProvider>
+    <div className="min-h-screen flex items-center justify-center px-10 py-20">
+      <Card className="w-full max-w-[400px]">
+        <Header />
+        <IdentifierForm />
+        <Footer />
+        <AlternativeLogins />
+      </Card>
+    </div>
   );
 };
 

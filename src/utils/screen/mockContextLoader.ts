@@ -22,7 +22,7 @@ export async function loadAndSetMockContext(): Promise<void> {
   }
 
   try {
-    const mockDataModule = await import(`../mock-data/${screenName}.json`);
+    const mockDataModule = await import(`../../mock-data/${screenName}.json`);
     window.universal_login_context = mockDataModule.default;
   } catch (error) {
     console.error(

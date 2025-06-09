@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
-import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 const Footer: React.FC = () => {
   const { loginIdInstance } = useLoginIdManager();

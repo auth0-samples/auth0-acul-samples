@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/helpers/cn";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {

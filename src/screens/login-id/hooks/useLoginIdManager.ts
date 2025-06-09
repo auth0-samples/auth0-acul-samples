@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginIdInstance from "@auth0/auth0-acul-js/login-id";
-import { executeSafely } from "@/utils/executeSafely";
+import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useLoginIdManager = () => {
   const [loginIdInstance] = useState(() => new LoginIdInstance());

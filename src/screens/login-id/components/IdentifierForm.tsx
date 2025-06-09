@@ -2,8 +2,8 @@ import React from "react";
 import Button from "@/common/Button";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
-import { getFieldError } from "@/utils/errorUtils";
-import { rebaseLinkToCurrentOrigin } from "@/utils/urlUtils";
+import { getFieldError } from "@/utils/helpers/errorUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 import { useLoginIdForm } from "../hooks/useLoginIdForm";
 

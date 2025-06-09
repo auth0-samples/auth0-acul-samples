@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/utils/helpers/cn";
 
 interface SocialProviderButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -2,13 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { loadAndSetMockContext } from "./utils/mockContextLoader";
-
-declare global {
-  interface Window {
-    universal_login_context: any;
-  }
-}
+import { loadAndSetMockContext } from "@/utils/screen/mockContextLoader";
 
 async function initializeApp() {
   await loadAndSetMockContext();
