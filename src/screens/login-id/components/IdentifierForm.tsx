@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "@/common/Button";
+import Alert from "@/common/Alert";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
 import { getFieldError } from "@/utils/helpers/errorUtils";
@@ -24,24 +25,23 @@ const IdentifierForm: React.FC = () => {
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
   const loadingText = "Processing..."; // Default fallback
-  const captchaLabel = texts?.captchaCodePlaceholder || "CAPTCHA";
+  const captchaLabel = texts?.captchaCodePlaceholder.concat("*") || "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
-  // Get dynamic identifier details based on connection attributes
-  const connectionAttributes = (loginIdInstance?.transaction as any)?.connection
-    ?.options?.attributes;
-  const identifierRequiredTypes = connectionAttributes
-    ? Object.keys(connectionAttributes).filter(
-        (key) => connectionAttributes[key]?.identifier_active === true,
-      )
-    : [];
+  // Get general errors (not field-specific)
+  const generalErrors =
+    errors?.filter((error: any) => !error.field || error.field === null) || [];
+
+  // Get allowed identifiers directly from SDK
+  const allowedIdentifiers =
+    loginIdInstance?.transaction?.allowedIdentifiers || [];
 
   const {
     label: identifierLabel,
     type: identifierType,
     autoComplete: identifierAutoComplete,
-  } = getIdentifierDetails(identifierRequiredTypes as any, texts);
+  } = getIdentifierDetails(allowedIdentifiers, texts);
 
   // React Hook Form setup
   const {
@@ -62,6 +62,15 @@ const IdentifierForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* General alerts at the top */}
+      {generalErrors.length > 0 && (
+        <div className="space-y-3 mb-4">
+          {generalErrors.map((error: any, index: number) => (
+            <Alert key={index} type="error" message={error.message} />
+          ))}
+        </div>
+      )}
+
       <FormField
         className="mb-4"
         labelProps={{

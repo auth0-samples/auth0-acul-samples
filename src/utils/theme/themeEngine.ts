@@ -9,7 +9,7 @@ import {
 let currentThemeCache: Record<string, string> = {};
 
 export function applyAuth0Theme(screenInstance: any): void {
-  if (!screenInstance?.branding?.themes?.default) {
+  if (!screenInstance?.branding) {
     return;
   }
 
@@ -19,7 +19,7 @@ export function applyAuth0Theme(screenInstance: any): void {
 }
 
 function extractThemeData(screenInstance: any): Record<string, string> {
-  const theme = screenInstance.branding.themes.default;
+  const theme = screenInstance.branding?.themes?.default || {};
 
   // Precedence order: Settings (lowest) -> Theme (middle) -> Organization (highest)
   const settingsVars = extractSettingsOverrides(screenInstance);
@@ -127,12 +127,10 @@ function findChangedVariables(
 }
 
 function updateDOMVariables(variables: Record<string, string>): void {
-  requestAnimationFrame(() => {
-    const documentStyle = document.documentElement.style;
+  const documentStyle = document.documentElement.style;
 
-    Object.entries(variables).forEach(([varName, value]) => {
-      documentStyle.setProperty(varName, value);
-    });
+  Object.entries(variables).forEach(([varName, value]) => {
+    documentStyle.setProperty(varName, value);
   });
 }
 

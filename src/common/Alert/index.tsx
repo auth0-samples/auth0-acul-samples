@@ -1,6 +1,5 @@
 import React from "react";
 import Icon from "@/common/Icon";
-import { ExclamationCircleIcon } from "@/assets/icons";
 import { cn } from "@/utils/helpers/cn";
 
 export interface ErrorMessage {
@@ -15,20 +14,19 @@ export interface AlertProps {
 }
 
 const Alert = ({ type, message, className, title }: AlertProps) => {
-  const baseStyles = "p-4 rounded-md my-4";
+  const baseStyles = "p-4 rounded-sm my-4";
   let typeStyles = "";
   let IconComponent: React.ElementType | null = null;
 
   switch (type) {
     case "error":
-      typeStyles = "bg-error/10 border border-error text-error";
-      IconComponent = ExclamationCircleIcon;
+      typeStyles = "bg-error border border-error text-white";
       break;
     case "warning":
-      typeStyles = "bg-warning/20 border border-warning text-warning";
+      typeStyles = "bg-warning border border-warning text-white";
       break;
     case "success":
-      typeStyles = "bg-success/10 border border-success text-success";
+      typeStyles = "bg-success border border-success text-white";
       break;
     case "info":
       typeStyles = "bg-primary/10 border border-primary text-primary";

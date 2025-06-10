@@ -51,7 +51,7 @@ const Label = ({
       className={cn(
         baseLabelStyles,
         floatedLabelStyles,
-        "overflow-hidden whitespace-nowrap text-ellipsis max-w-full box-border px-3",
+        "overflow-hidden whitespace-nowrap text-ellipsis max-w-[calc(100%-1rem)] box-border px-3",
         className,
       )}
       {...rest}
