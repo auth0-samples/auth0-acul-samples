@@ -1,17 +1,78 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0059d6;
-  --color-link: #007bad;
-  --color-error: #d00e17;
-  --color-success: #0a8852;
+  /* Colors */
+  --ul-theme-color-primary-button: #635dff;
+  --ul-theme-color-primary-button-label: #ffffff;
+  --ul-theme-color-secondary-button-border: #c9cace;
+  --ul-theme-color-secondary-button-label: #1e212a;
+  --ul-theme-color-base-focus-color: #635dff;
+  --ul-theme-color-base-hover-color: #000000;
+  --ul-theme-color-links-focused-components: #635dff;
+  --ul-theme-color-header: #1e212a;
+  --ul-theme-color-body-text: #1e212a;
+  --ul-theme-color-widget-background: #ffffff;
+  --ul-theme-color-widget-border: #c9cace;
+  --ul-theme-color-input-labels-placeholders: #65676e;
+  --ul-theme-color-input-filled-text: #000000;
+  --ul-theme-color-input-border: #c9cace;
+  --ul-theme-color-input-background: #ffffff;
+  --ul-theme-color-icons: #65676e;
+  --ul-theme-color-error: #d03c38;
+  --ul-theme-color-success: #13a688;
+  --ul-theme-color-captcha-widget-theme: dark;
+
+  /* Borders */
+  --ul-theme-border-buttons-style: rounded;
+  --ul-theme-border-inputs-style: rounded;
+  --ul-theme-border-button-border-weight: 1px;
+  --ul-theme-border-button-border-radius: 3px;
+  --ul-theme-border-input-border-weight: 1px;
+  --ul-theme-border-input-border-radius: 3px;
+  --ul-theme-border-widget-corner-radius: 5px;
+  --ul-theme-border-widget-border-weight: 0px;
+  --ul-theme-border-show-widget-shadow: 1;
+
+  /* Fonts */
+  --ul-theme-font-reference-text-size: 16px;
+  --ul-theme-font-links-style: normal;
+  --ul-theme-font-title-size: 1.5rem;
+  --ul-theme-font-title-weight: 400;
+  --ul-theme-font-subtitle-size: 0.875rem;
+  --ul-theme-font-subtitle-weight: 400;
+  --ul-theme-font-body-text-size: 0.875rem;
+  --ul-theme-font-body-text-weight: 400;
+  --ul-theme-font-buttons-text-size: 1rem;
+  --ul-theme-font-buttons-text-weight: 400;
+  --ul-theme-font-input-labels-size: 1rem;
+  --ul-theme-font-input-labels-weight: 400;
+  --ul-theme-font-links-size: 0.875rem;
+  --ul-theme-font-links-weight: 700;
+
+  /* Page Background */
+  --ul-theme-page-bg-page-layout: center;
+  --ul-theme-page-bg-background-color: #bababa;
+
+  /* Widget */
+  --ul-theme-widget-logo-position: center;
+  --ul-theme-widget-logo-url: "https://cdn.auth0.com/blog/auth0_by_okta_logo_black.png";
+  --ul-theme-widget-logo-height: 52px;
+  --ul-theme-widget-header-text-alignment: center;
+  --ul-theme-widget-social-buttons-layout: bottom;
+
+  /* Legacy variables for backward compatibility */
+  --color-primary: var(--ul-theme-color-primary-button);
+  --color-link: var(--ul-theme-color-links-focused-components);
+  --color-error: var(--ul-theme-color-error);
+  --color-success: var(--ul-theme-color-success);
   --color-warning: #ffdb5f;
-  --color-text-default: #2d333a;
-  --color-text-secondary: #6f7780;
-  --color-background-page: #f9fafb;
-  --color-background-widget: #fff;
-  --color-gray-mid: #c2c8d0;
+  --color-text-default: var(--ul-theme-color-body-text);
+  --color-text-secondary: var(--ul-theme-color-input-labels-placeholders);
+  --color-background-page: var(--ul-theme-page-bg-background-color);
+  --color-background-widget: var(--ul-theme-color-widget-background);
+  --color-gray-mid: var(--ul-theme-color-widget-border);
   --color-gray-darkest: #2d333a;
+  --height-13: 3.25rem;
 }
 
 :root {
@@ -38,6 +99,7 @@
 
 body {
   margin: 0;
-  background-color: var(--color-background-page);
-  color: var(--color-text-default);
+  background-color: var(--ul-theme-page-bg-background-color);
+  color: var(--ul-theme-color-body-text);
+  min-height: 100vh;
 }

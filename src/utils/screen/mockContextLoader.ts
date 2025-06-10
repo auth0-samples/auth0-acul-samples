@@ -7,12 +7,10 @@
  * and the existence of the corresponding mock JSON file.
  */
 export async function loadAndSetMockContext(): Promise<void> {
-  // This utility is only for development. In production, Auth0 provides the context.
   if (!import.meta.env.DEV) {
-    return; // Do nothing in production builds
+    return;
   }
 
-  // --- Development-only logic below ---
   const screenName = import.meta.env.VITE_SCREEN_NAME;
 
   if (!screenName) {
@@ -25,9 +23,9 @@ export async function loadAndSetMockContext(): Promise<void> {
 
   try {
     console.log(`[DEV] Loading mock data for screen: ${screenName}...`);
-    const mockDataModule = await import(`../mock-data/${screenName}.json`);
-    window.universal_login_context = mockDataModule.default;
+    const mockDataModule = await import(`../../mock-data/${screenName}.json`);
     console.log(`[DEV] Successfully loaded mock data for: ${screenName}`);
+    window.universal_login_context = mockDataModule.default;
   } catch (error) {
     console.error(
       `DEV_ERROR: Failed to load mock data for '${screenName}.json'. ` +

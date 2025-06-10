@@ -1,31 +1,26 @@
-import React, { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { getCurrentScreen } from "@auth0/auth0-acul-js";
-
-const Login = React.lazy(() => import("./screens/login"));
-const LoginId = React.lazy(() => import("./screens/login-id"));
-const LoginPassword = React.lazy(() => import("./screens/login-password"));
+import { getScreenComponent } from "@/utils/screen/screenLoader";
 
 const App = () => {
-  const [screen, setScreen] = React.useState("login-id");
+  const [screen, setScreen] = useState("login-id");
+
   useEffect(() => {
     const current = getCurrentScreen();
-    setScreen(current!);
+    setScreen(current || "login-id");
   }, []);
 
-  const renderScreen = () => {
-    switch (screen) {
-      case "login":
-        return <Login />;
-      case "login-id":
-        return <LoginId />;
-      case "login-password":
-        return <LoginPassword />;
-      default:
-        return <>No screen rendered</>;
-    }
-  };
+  const ScreenComponent = getScreenComponent(screen);
 
-  return <Suspense fallback={<div>Loading...</div>}>{renderScreen()}</Suspense>;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {ScreenComponent ? (
+        <ScreenComponent />
+      ) : (
+        <div>Screen "{screen}" not implemented yet</div>
+      )}
+    </Suspense>
+  );
 };
 
 export default App;

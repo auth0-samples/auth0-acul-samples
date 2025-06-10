@@ -9,6 +9,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 - [Project Structure](#project-structure)
 - [Screens](#screens)
 - [Development Workflow](#development-workflow)
+- [Deployment](#deployment)
 - [Technical Details](#technical-details)
 - [Documentation](#documentation)
 - [Troubleshooting](#troubleshooting)
@@ -20,10 +21,10 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 <details>
 <summary>📂 Repository Setup</summary>
 
-- Clone the auth0-acul-react-boilerplate repository:
+- Clone the auth0-acul-samples repository:
   ```bash
-  git clone https://github.com/auth0-samples/auth0-acul-react-boilerplate.git
-  cd auth0-acul-react-boilerplate
+  git clone https://github.com/auth0-samples/auth0-acul-samples.git
+  cd auth0-acul-samples
   ```
   </details>
 
@@ -68,7 +69,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
    npm run screen login-password
    ```
 
-   This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/mockContextLoader.ts` uses to inject the correct mock context.
+   This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/screen/mockContextLoader.ts` uses to inject the correct mock context.
 
 <a id="project-structure"></a>
 
@@ -77,8 +78,13 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 ```
 auth0-acul-samples/
 ├── .github/             # GitHub Actions workflows for CI/CD
-│   └── actions/         # Custom GitHub Actions
-│       └── configure-auth0-screens/ # Action for configuring Auth0 screens
+│   ├── config/          # Deployment configuration files
+│   │   ├── deploy_config.yml        # Controls which screens to deploy
+│   │   ├── screen-to-prompt-mapping.js  # Maps screens to Auth0 prompts
+│   │   └── context-configuration.js     # Auth0 context data configuration
+│   ├── actions/         # Custom GitHub Actions
+│   │   └── configure-auth0-screens/ # Action for configuring Auth0 screens
+│   └── workflows/       # GitHub workflow definitions
 ├── dist/                # Production build output
 ├── scripts/             # Node.js helper scripts for development
 │   └── dev-screen.js    # Script to run a specific screen with mock data
@@ -96,11 +102,12 @@ auth0-acul-samples/
 │   │   └── [screen-name]/
 │   │       ├── components/ # Components specific ONLY to this screen
 │   │       │   └── ...
-│   │       ├── hooks/      # Hooks specific ONLY to this screen
-│   │       └── index.tsx   # Main screen component
+│   │       ├── hooks/      # Hooks specific ONLY to this screen (e.g., use<ScreenName>Manager, use<ScreenName>Form)
+│   │       └── index.tsx   # Main screen component, orchestrates components from its ./components/ folder.
 │   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
 │   └── utils/           # Shared utility functions
-│       └── mockContextLoader.ts # Utility to load mock sdk values to render screen in dev
+│       ├── theme/       # Auth0 theming system
+│       └── screen/      # Screen utilities including mockContextLoader.ts
 └── ...                  # Build and configuration files
 ```
 
@@ -110,19 +117,10 @@ auth0-acul-samples/
 
 This template includes implementations for several Universal Login screens that match Auth0's design language:
 
-- **Login Screen** (`src/screens/login/`)
-
-  - Main login screen with username/email and password
-  - Matches the standard Auth0 Universal Login design
-
 - **Login ID Screen** (`src/screens/login-id/`)
 
   - Username/email input step in a multi-step login flow
   - Follows Auth0's Identifier First authentication pattern
-
-- **Login Password Screen** (`src/screens/login-password/`)
-  - Password entry step in a multi-step login flow
-  - Matches Auth0's password screen design
 
 Each screen component is designed to be used with the Auth0 ACUL JavaScript SDK in production, but uses mock data for local development.
 
@@ -143,56 +141,115 @@ This command, managed by `scripts/dev-screen.js`:
 1. Validates the `<screen_name>` and checks for a corresponding `src/mock-data/<screen_name>.json` file.
 2. Sets the `VITE_SCREEN_NAME` environment variable.
 3. Starts the Vite development server.
-4. The application (`src/main.tsx` via `src/utils/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen.
+4. The application (`src/main.tsx` via `src/utils/screen/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen.
 5. This allows you to see and interact with the UI of the specific screen component locally.
 
 The screen components include proper integration with Auth0 ACUL SDK methods (like `handleLogin`, `handleSocialLogin`, etc.), but these methods won't perform actual authentication in this local mock data development environment.
-
-<a id="technical-details"></a>
-
-## 🔍 Technical Details
-
-### Application Mounting in ACUL
-
-In an Auth0 Advanced Customization for Universal Login (ACUL) environment, Auth0 provides the main HTML page. Your custom application, built with this template, doesn't bundle its own `index.html`. Instead, it needs to be dynamically injected into the DOM provided by Auth0.
-
-The `src/main.tsx` file handles this by:
-
-1. Creating a new `div` element.
-2. Assigning it an `id` (e.g., `root`).
-3. Appending this `div` to the `document.body`.
-4. Mounting the React application into this newly created `div`.
-
-This ensures your custom UI is correctly rendered within the Auth0-hosted page. Here's a conceptual overview of how this is done in `src/main.tsx`:
-
-```typescript
-const rootElement = document.createElement("div");
-rootElement.id = "root";
-document.body.appendChild(rootElement);
-```
 
 ### Auth0 ACUL SDK Integration
 
 This template demonstrates how to integrate screen components with the Auth0 ACUL JavaScript SDK. Each screen follows these patterns:
 
-- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`)
-- Set up proper form handling with the SDK methods
-- Handle errors and loading states appropriately
-- Follow Auth0's Universal Login design language
+- Initialize the appropriate SDK class for the screen (e.g., `LoginId`, `Login`, `LoginPassword`) typically within a custom hook in `src/screens/[screen-name]/hooks/use<ScreenName>Manager.ts`.
+- Screen-specific UI logic and form handling are often encapsulated in sub-components within `src/screens/[screen-name]/components/`, which utilize the screen's custom hooks (manager and form hooks) for data and actions.
+- Set up proper form handling with the SDK methods.
+- Handle errors and loading states appropriately.
+
+<a id="deployment"></a>
+
+## 📤 Deployment
+
+### Automated Deployment with GitHub Actions
+
+This boilerplate includes a GitHub Actions workflow to automate the process of:
+
+1. Building your customized ACUL screens
+2. Uploading the assets to an AWS S3 bucket
+3. Configuring your Auth0 tenant to use these assets in Advanced mode
+4. Serving the assets through a CDN for optimal performance
+
+**For detailed setup instructions including AWS S3, CloudFront, IAM roles, Auth0 M2M applications, and GitHub secrets, please refer to the comprehensive deployment guide:**
+
+➡️ **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+➡️ **[GitHub Actions Configuration](./.github/README.md)** - For quick reference on secrets and configuration
+
+### Enabling Screens for Advanced Mode Deployment
+
+To control which screens are deployed and configured for Advanced Mode in your Auth0 tenant, you need to modify the `.github/config/deploy_config.yml` file.
+
+This YAML file contains a list of all available ACUL screens. To enable a specific screen for deployment in Advanced Mode, find its entry in the `default_screen_deployment_status` map and change its value from `false` to `true`.
+
+For example, to enable the `login-id` and `signup` screens:
+
+```yaml
+# .github/config/deploy_config.yml
+default_screen_deployment_status:
+  "email-identifier-challenge": false
+  # ... other screens ...
+  "login-id": true # Was false, now true to enable deployment
+  # ... other screens ...
+  "signup": true # Was false, now true to enable deployment
+  # ... other screens ...
+```
+
+Only screens set to `true` in this configuration file will be processed by the deployment workflow for Advanced Mode. This allows you to selectively roll out your custom screens.
+
+<a id="technical-details"></a>
+
+## 🔍 Technical Details
 
 ### Styling with Tailwind CSS
 
-The project uses Tailwind CSS for styling, with a configuration designed to match Auth0's Universal Login design language. Here's how theming is approached:
+The project uses Tailwind CSS with a semantic Auth0 theme token system that automatically applies tenant branding.
 
-- **Core Theme Colors**: Defined as CSS custom properties (e.g., `--color-primary`, `--color-link`) within an `@theme` block in `src/index.css`. This method, aligned with Tailwind CSS v4.x, allows Tailwind to automatically generate utility classes like `bg-primary` or `text-link` from these variables.
-- **Global Base Styles**: General styles like the base `font-family` and `line-height` for the application are set in a `:root` block within `src/index.css`.
-- **Tailwind Configuration (`tailwind.config.js`)**:
-  - This file extends Tailwind's default theme.
-  - For colors, it references the CSS variables defined in `src/index.css` (e.g., `theme.extend.colors.primary = 'var(--color-primary)'`).
-  - Other theme aspects like `spacing`, `fontSize`, `fontWeight`, `lineHeight`, and `borderRadius` are configured directly in this file, as the `src/tokens` directory (which previously held JavaScript-based tokens) has been removed.
-- **Component Styling**: Individual components and screens currently use inline Tailwind utility classes for styling (e.g., `className="bg-primary text-white ..."`).
+**1. Auth0 Theme System (`src/utils/theme/`)**
 
-Refer to `src/index.css` for the core color definitions and `tailwind.config.js` for how these and other theme aspects are integrated into Tailwind.
+The theme system converts Auth0 branding data into CSS variables with semantic naming:
+
+```tsx
+// In any screen component
+import { applyAuth0Theme } from "@/utils/theme";
+
+function LoginScreen() {
+  const { loginIdInstance } = useLoginIdManager();
+
+  // Apply Auth0 theme automatically
+  applyAuth0Theme(loginIdInstance);
+
+  return <div>...</div>;
+}
+```
+
+**2. CSS Variables (`src/index.css`)**
+
+Default theme tokens are defined with Auth0 design system values:
+
+```css
+@theme {
+  --ul-theme-color-primary-button: #635dff;
+  --ul-theme-color-widget-background: #ffffff;
+  --ul-theme-border-button-border-radius: 3px;
+  --ul-theme-font-title-size: 1.5rem;
+  /* ... 49+ semantic tokens */
+}
+```
+
+**3. Component Styling**
+
+Components use semantic Tailwind classes that map to theme tokens:
+
+```tsx
+// Automatically reflects tenant branding
+<button className="bg-primary-button text-primary-button-label rounded-button">
+  Continue
+</button>
+<div className="bg-widget-background border-widget rounded-widget">
+  Content
+</div>
+```
+
+The system supports **Organization > Theme > Settings** precedence and scales to 80+ screen types without modification.
 
 <a id="documentation"></a>
 
@@ -228,6 +285,6 @@ Explore the [ACUL API documentation](https://auth0.github.io/universal-login/mod
 
 ### Getting Help
 
-- **GitHub Issues**: Report issues or request features through [GitHub Issues](https://github.com/auth0/auth0-acul-react-boilerplate/issues)
+- **GitHub Issues**: Report issues or request features through [GitHub Issues](https://github.com/auth0-samples/auth0-acul-samples/issues)
 - **Auth0 Community**: Ask questions in the [Auth0 Community](https://community.auth0.com/)
 - **Auth0 Documentation**: Visit the [Auth0 ACUL Documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations) for more information

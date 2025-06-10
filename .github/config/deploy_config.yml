@@ -1,0 +1,87 @@
+# .github/deploy_config.yml
+# This file defines the default deployment status for each screen.
+# Set the value to 'true' for screens you want to deploy by default
+# when the workflow is run without specific overriding inputs.
+
+default_screen_deployment_status:
+  "login-id": true
+
+  # All other valid screens (commented out by default):
+  # "email-identifier-challenge": true
+  # "interstitial-captcha": true
+  # "login-password": true
+  # "login-passwordless-email-code": true
+  # "login-passwordless-sms-otp": true
+  # "passkey-enrollment": true
+  # "passkey-enrollment-local": true
+  # "phone-identifier-challenge": true
+  # "phone-identifier-enrollment": true
+  # "signup-id": true
+  # "signup-password": true
+  # "login": true
+  # "reset-password": true
+  # "reset-password-email": true
+  # "reset-password-error": true
+  # "reset-password-request": true
+  # "reset-password-success": true
+  # "signup": true
+  # "mfa-begin-enroll-options": true
+  # "mfa-country-codes": true
+  # "mfa-detect-browser-capabilities": true
+  # "mfa-email-challenge": true
+  # "mfa-email-list": true
+  # "mfa-enroll-result": true
+  # "mfa-login-options": true
+  # "mfa-push-challenge-push": true
+  # "mfa-push-enrollment-qr": true
+  # "mfa-push-list": true
+  # "mfa-push-welcome": true
+  # "mfa-sms-challenge": true
+  # "mfa-sms-enrollment": true
+  # "mfa-sms-list": true
+  # "accept-invitation": true
+  # "mfa-otp-challenge": true
+  # "mfa-otp-enrollment-code": true
+  # "mfa-otp-enrollment-qr": true
+  # "organization-picker": true
+  # "organization-selection": true
+  # "reset-password-mfa-email-challenge": true
+  # "reset-password-mfa-otp-challenge": true
+  # "reset-password-mfa-push-challenge-push": true
+  # "reset-password-mfa-sms-challenge": true
+  # "device-code-activation": true
+  # "device-code-activation-allowed": true
+  # "device-code-activation-denied": true
+  # "device-code-confirmation": true
+  # "mfa-phone-challenge": true
+  # "mfa-phone-enrollment": true
+  # "mfa-voice-challenge": true
+  # "mfa-voice-enrollment": true
+  # "reset-password-mfa-phone-challenge": true
+  # "reset-password-mfa-voice-challenge": true
+  # "mfa-recovery-code-challenge": true
+  # "mfa-recovery-code-enrollment": true
+  # "reset-password-mfa-recovery-code-challenge": true
+  # "redeem-ticket": true
+  # "mfa-recovery-code-challenge-new-code": true
+  # "consent": true
+  # "customized-consent": true
+  # "email-otp-challenge": true
+  # "email-verification-result": true
+  # "login-email-verification": true
+  # "logout": true
+  # "logout-aborted": true
+  # "logout-complete": true
+  # "mfa-webauthn-change-key-nickname": true
+  # "mfa-webauthn-enrollment-success": true
+  # "mfa-webauthn-error": true
+  # "mfa-webauthn-not-available-error": true
+  # "mfa-webauthn-platform-challenge": true
+  # "mfa-webauthn-platform-enrollment": true
+  # "mfa-webauthn-roaming-challenge": true
+  # "mfa-webauthn-roaming-enrollment": true
+  # "reset-password-mfa-webauthn-platform-challenge": true
+  # "reset-password-mfa-webauthn-roaming-challenge": true
+  # "brute-force-protection-unblock": true
+  # "brute-force-protection-unblock-failure": true
+  # "brute-force-protection-unblock-success": true
