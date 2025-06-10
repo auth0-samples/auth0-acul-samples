@@ -6,26 +6,18 @@ import {
   flattenWidget,
 } from "./themeFlatteners";
 
-// Cache to avoid unnecessary DOM updates
 let currentThemeCache: Record<string, string> = {};
 
-/**
- * Apply Auth0 theme from SDK screen instance
- * Main entry point for theme application
- */
 export function applyAuth0Theme(screenInstance: any): void {
   if (!screenInstance?.branding?.themes?.default) {
-    console.warn("Auth0 theme data not found in screen instance");
     return;
   }
 
+  clearThemeCache();
   const themeData = extractThemeData(screenInstance);
   applyThemeVariables(themeData);
 }
 
-/**
- * Extract theme data from the screen instance
- */
 function extractThemeData(screenInstance: any): Record<string, string> {
   const theme = screenInstance.branding.themes.default;
 
@@ -33,13 +25,13 @@ function extractThemeData(screenInstance: any): Record<string, string> {
     ...flattenColors(theme.colors || {}),
     ...flattenBorders(theme.borders || {}),
     ...flattenFonts(theme.fonts || {}),
-    ...flattenPageBackground(theme.page_background || {}),
+    ...flattenPageBackground(
+      theme.pageBackground || theme.page_background || {},
+    ),
     ...flattenWidget(theme.widget || {}),
   };
 
-  // Apply precedence overrides (Organization > Settings > Theme)
   const overrideVars = extractPrecedenceOverrides(screenInstance);
-
   return { ...baseThemeVars, ...overrideVars };
 }
 
@@ -54,13 +46,11 @@ function extractPrecedenceOverrides(
     logoUrl: "--ul-theme-widget-logo-url",
   };
 
-  // Apply settings level (medium precedence)
   const settings = screenInstance?.branding?.settings;
   if (settings) {
     applyMappedOverrides(settings, variableMapping, overrides);
   }
 
-  // Apply organization level (highest precedence)
   const org = screenInstance?.organization?.branding;
   if (org) {
     applyMappedOverrides(org, variableMapping, overrides);
@@ -69,9 +59,6 @@ function extractPrecedenceOverrides(
   return overrides;
 }
 
-/**
- * Apply the mapped overrides to the overrides object
- */
 function applyMappedOverrides(
   source: any,
   mapping: Record<string, string>,
@@ -80,21 +67,19 @@ function applyMappedOverrides(
   Object.entries(mapping).forEach(([authPath, cssVar]) => {
     const value = getNestedValue(source, authPath);
     if (value) {
-      overrides[cssVar] = value;
+      if (cssVar === "--ul-theme-widget-logo-url") {
+        overrides[cssVar] = `"${value}"`;
+      } else {
+        overrides[cssVar] = value;
+      }
     }
   });
 }
 
-/**
- * Get a nested value from an object using a dot-separated path
- */
 function getNestedValue(obj: any, path: string): any {
   return path.split(".").reduce((current, key) => current?.[key], obj);
 }
 
-/**
- * Apply the theme variables to the DOM
- */
 function applyThemeVariables(newTheme: Record<string, string>): void {
   const changedVars = findChangedVariables(newTheme);
 
@@ -106,9 +91,6 @@ function applyThemeVariables(newTheme: Record<string, string>): void {
   updateThemeCache(changedVars);
 }
 
-/**
- * Find variables that actually changed compared to cache
- */
 function findChangedVariables(
   newTheme: Record<string, string>,
 ): Record<string, string> {
@@ -123,9 +105,6 @@ function findChangedVariables(
   return changed;
 }
 
-/**
- * Update DOM with CSS variables using batched operations
- */
 function updateDOMVariables(variables: Record<string, string>): void {
   requestAnimationFrame(() => {
     const documentStyle = document.documentElement.style;
@@ -136,16 +115,10 @@ function updateDOMVariables(variables: Record<string, string>): void {
   });
 }
 
-/**
- * Update the theme cache with the new variables
- */
 function updateThemeCache(changedVars: Record<string, string>): void {
   currentThemeCache = { ...currentThemeCache, ...changedVars };
 }
 
-/**
- * Clear the theme cache
- */
 export function clearThemeCache(): void {
   currentThemeCache = {};
 }

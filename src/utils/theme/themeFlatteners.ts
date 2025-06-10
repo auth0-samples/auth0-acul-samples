@@ -48,73 +48,132 @@ export function flattenColors(colors: any): Record<string, string> {
 }
 
 /**
- * Flatten border data to CSS variables
+ * Flatten border data to CSS variables with proper unit conversions
  */
 export function flattenBorders(borders: any): Record<string, string> {
   const result: Record<string, string> = {};
 
+  // Border radius values need px units
   if (borders.button_border_radius)
     result["--ul-theme-border-button-border-radius"] =
-      borders.button_border_radius;
-  if (borders.button_border_weight)
-    result["--ul-theme-border-button-border-weight"] =
-      borders.button_border_weight;
-  if (borders.buttons_style)
-    result["--ul-theme-border-buttons-style"] = borders.buttons_style;
+      `${borders.button_border_radius}px`;
   if (borders.input_border_radius)
     result["--ul-theme-border-input-border-radius"] =
-      borders.input_border_radius;
-  if (borders.input_border_weight)
-    result["--ul-theme-border-input-border-weight"] =
-      borders.input_border_weight;
-  if (borders.inputs_style)
-    result["--ul-theme-border-inputs-style"] = borders.inputs_style;
-  if (borders.show_widget_shadow)
-    result["--ul-theme-border-show-widget-shadow"] = borders.show_widget_shadow;
-  if (borders.widget_border_weight)
-    result["--ul-theme-border-widget-border-weight"] =
-      borders.widget_border_weight;
+      `${borders.input_border_radius}px`;
   if (borders.widget_corner_radius)
     result["--ul-theme-border-widget-corner-radius"] =
-      borders.widget_corner_radius;
+      `${borders.widget_corner_radius}px`;
+
+  // Border weight values need px units
+  if (borders.button_border_weight !== undefined)
+    result["--ul-theme-border-button-border-weight"] =
+      `${borders.button_border_weight}px`;
+  if (borders.input_border_weight !== undefined)
+    result["--ul-theme-border-input-border-weight"] =
+      `${borders.input_border_weight}px`;
+  if (borders.widget_border_weight !== undefined)
+    result["--ul-theme-border-widget-border-weight"] =
+      `${borders.widget_border_weight}px`;
+
+  // Style values are already strings
+  if (borders.buttons_style)
+    result["--ul-theme-border-buttons-style"] = borders.buttons_style;
+  if (borders.inputs_style)
+    result["--ul-theme-border-inputs-style"] = borders.inputs_style;
+
+  // Boolean/numeric values for shadow - convert boolean to numeric for CSS
+  if (borders.show_widget_shadow !== undefined)
+    result["--ul-theme-border-show-widget-shadow"] = borders.show_widget_shadow
+      ? "1"
+      : "0";
 
   return result;
 }
 
 /**
- * Flatten font data to CSS variables
+ * Flatten font data to CSS variables with proper unit conversions
  */
 export function flattenFonts(fonts: any): Record<string, string> {
   const result: Record<string, string> = {};
 
+  // Reference text size is in pixels
   if (fonts.reference_text_size)
-    result["--ul-theme-font-reference-text-size"] = fonts.reference_text_size;
-  if (fonts.title?.size)
-    result["--ul-theme-font-title-size"] = fonts.title.size;
-  if (fonts.title?.weight)
-    result["--ul-theme-font-title-weight"] = fonts.title.weight;
-  if (fonts.subtitle?.size)
-    result["--ul-theme-font-subtitle-size"] = fonts.subtitle.size;
-  if (fonts.subtitle?.weight)
-    result["--ul-theme-font-subtitle-weight"] = fonts.subtitle.weight;
-  if (fonts.body_text?.size)
-    result["--ul-theme-font-body-text-size"] = fonts.body_text.size;
-  if (fonts.body_text?.weight)
-    result["--ul-theme-font-body-text-weight"] = fonts.body_text.weight;
-  if (fonts.buttons_text?.size)
-    result["--ul-theme-font-buttons-text-size"] = fonts.buttons_text.size;
-  if (fonts.buttons_text?.weight)
-    result["--ul-theme-font-buttons-text-weight"] = fonts.buttons_text.weight;
-  if (fonts.input_labels?.size)
-    result["--ul-theme-font-input-labels-size"] = fonts.input_labels.size;
-  if (fonts.input_labels?.weight)
-    result["--ul-theme-font-input-labels-weight"] = fonts.input_labels.weight;
-  if (fonts.links?.size)
-    result["--ul-theme-font-links-size"] = fonts.links.size;
-  if (fonts.links?.weight)
-    result["--ul-theme-font-links-weight"] = fonts.links.weight;
-  if (fonts.font_family)
-    result["--ul-theme-font-font-family"] = fonts.font_family;
+    result["--ul-theme-font-reference-text-size"] =
+      `${fonts.reference_text_size}px`;
+
+  // Font sizes are percentages that need to be converted to rem
+  if (fonts.title?.size) {
+    const sizePercent = fonts.title.size as number;
+    const remValue = sizePercent / 100;
+    result["--ul-theme-font-title-size"] = `${remValue}rem`;
+  }
+
+  if (fonts.subtitle?.size) {
+    const sizePercent = fonts.subtitle.size as number;
+    const remValue = sizePercent / 100;
+    result["--ul-theme-font-subtitle-size"] = `${remValue}rem`;
+  }
+
+  if (fonts.body_text?.size) {
+    const sizePercent = fonts.body_text.size as number;
+    const remValue = sizePercent / 100;
+    result["--ul-theme-font-body-text-size"] = `${remValue}rem`;
+  }
+
+  if (fonts.buttons_text?.size) {
+    const sizePercent = fonts.buttons_text.size as number;
+    const remValue = sizePercent / 100;
+    result["--ul-theme-font-buttons-text-size"] = `${remValue}rem`;
+  }
+
+  if (fonts.input_labels?.size) {
+    const sizePercent = fonts.input_labels.size as number;
+    const remValue = sizePercent / 100;
+    result["--ul-theme-font-input-labels-size"] = `${remValue}rem`;
+  }
+
+  if (fonts.links?.size) {
+    const sizePercent = fonts.links.size as number;
+    const remValue = sizePercent / 100;
+    result["--ul-theme-font-links-size"] = `${remValue}rem`;
+  }
+
+  // Font weights: convert boolean bold to numeric weights
+  if (fonts.title?.bold !== undefined) {
+    result["--ul-theme-font-title-weight"] = fonts.title.bold ? "700" : "400";
+  }
+
+  if (fonts.subtitle?.bold !== undefined) {
+    result["--ul-theme-font-subtitle-weight"] = fonts.subtitle.bold
+      ? "700"
+      : "400";
+  }
+
+  if (fonts.body_text?.bold !== undefined) {
+    result["--ul-theme-font-body-text-weight"] = fonts.body_text.bold
+      ? "700"
+      : "400";
+  }
+
+  if (fonts.buttons_text?.bold !== undefined) {
+    result["--ul-theme-font-buttons-text-weight"] = fonts.buttons_text.bold
+      ? "700"
+      : "400";
+  }
+
+  if (fonts.input_labels?.bold !== undefined) {
+    result["--ul-theme-font-input-labels-weight"] = fonts.input_labels.bold
+      ? "700"
+      : "400";
+  }
+
+  if (fonts.links?.bold !== undefined) {
+    result["--ul-theme-font-links-weight"] = fonts.links.bold ? "700" : "400";
+  }
+
+  // Links style (normal/italic)
+  if (fonts.links_style)
+    result["--ul-theme-font-links-style"] = fonts.links_style;
 
   return result;
 }
@@ -137,16 +196,20 @@ export function flattenPageBackground(
 }
 
 /**
- * Flatten widget data to CSS variables
+ * Flatten widget data to CSS variables with proper unit conversions
  */
 export function flattenWidget(widget: any): Record<string, string> {
   const result: Record<string, string> = {};
 
   if (widget.logo_position)
     result["--ul-theme-widget-logo-position"] = widget.logo_position;
-  if (widget.logo_url) result["--ul-theme-widget-logo-url"] = widget.logo_url;
+  if (widget.logo_url)
+    result["--ul-theme-widget-logo-url"] = `"${widget.logo_url}"`;
+
+  // Logo height needs px units
   if (widget.logo_height)
-    result["--ul-theme-widget-logo-height"] = widget.logo_height;
+    result["--ul-theme-widget-logo-height"] = `${widget.logo_height}px`;
+
   if (widget.header_text_alignment)
     result["--ul-theme-widget-header-text-alignment"] =
       widget.header_text_alignment;

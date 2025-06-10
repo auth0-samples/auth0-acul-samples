@@ -69,7 +69,7 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
    npm run screen login-password
    ```
 
-   This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/mockContextLoader.ts` uses to inject the correct mock context.
+   This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/screen/mockContextLoader.ts` uses to inject the correct mock context.
 
 <a id="project-structure"></a>
 
@@ -106,7 +106,8 @@ auth0-acul-samples/
 │   │       └── index.tsx   # Main screen component, orchestrates components from its ./components/ folder.
 │   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
 │   └── utils/           # Shared utility functions
-│       └── mockContextLoader.ts # Utility to load mock sdk values to render screen in dev
+│       ├── theme/       # Auth0 theming system
+│       └── screen/      # Screen utilities including mockContextLoader.ts
 └── ...                  # Build and configuration files
 ```
 
@@ -140,7 +141,7 @@ This command, managed by `scripts/dev-screen.js`:
 1. Validates the `<screen_name>` and checks for a corresponding `src/mock-data/<screen_name>.json` file.
 2. Sets the `VITE_SCREEN_NAME` environment variable.
 3. Starts the Vite development server.
-4. The application (`src/main.tsx` via `src/utils/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen.
+4. The application (`src/main.tsx` via `src/utils/screen/mockContextLoader.ts`) then uses `VITE_SCREEN_NAME` to dynamically load and inject the appropriate mock data for that screen.
 5. This allows you to see and interact with the UI of the specific screen component locally.
 
 The screen components include proper integration with Auth0 ACUL SDK methods (like `handleLogin`, `handleSocialLogin`, etc.), but these methods won't perform actual authentication in this local mock data development environment.
@@ -230,7 +231,7 @@ Default theme tokens are defined with Auth0 design system values:
   --ul-theme-color-widget-background: #ffffff;
   --ul-theme-border-button-border-radius: 3px;
   --ul-theme-font-title-size: 1.5rem;
-  /* ... 50+ semantic tokens */
+  /* ... 49+ semantic tokens */
 }
 ```
 
@@ -284,6 +285,6 @@ Explore the [ACUL API documentation](https://auth0.github.io/universal-login/mod
 
 ### Getting Help
 
-- **GitHub Issues**: Report issues or request features through [GitHub Issues](https://github.com/auth0/auth0-acul-react-boilerplate/issues)
+- **GitHub Issues**: Report issues or request features through [GitHub Issues](https://github.com/auth0-samples/auth0-acul-samples/issues)
 - **Auth0 Community**: Ask questions in the [Auth0 Community](https://community.auth0.com/)
 - **Auth0 Documentation**: Visit the [Auth0 ACUL Documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations) for more information
