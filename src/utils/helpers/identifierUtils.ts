@@ -28,13 +28,16 @@ interface IdentifierConfig {
  * for an identifier field based on active connection attributes and screen texts.
  *
  * @param connectionAttributes - The connection attributes from the transaction object.
+ * @param screenTexts - The screen.texts object from Auth0 SDK instance.
  * @returns An object containing the label, type, and autoComplete string for the identifier field.
  */
 export const getIdentifierDetails = (
   connectionAttributes?: IdentifierType[],
+  screenTexts?: any, // Auth0 screen.texts object
 ): IdentifierDetails => {
   // Initialize with the most common / general defaults
-  let finalLabel = "Username or Email Address";
+  let finalLabel =
+    screenTexts?.usernameOrEmailPlaceholder || "Username or Email Address";
   let finalType = "text";
   let finalAutoComplete: IdentifierType | string = "username";
 
@@ -50,45 +53,52 @@ export const getIdentifierDetails = (
       "100": {
         // Email only
         labelKey: "emailPlaceholder",
-        labelFallback: "Email Address",
+        labelFallback: screenTexts?.emailPlaceholder || "Email Address",
         type: "email",
         autoComplete: "email",
       },
       "010": {
         // Phone only
         labelKey: "phonePlaceholder",
-        labelFallback: "Phone Number",
+        labelFallback: screenTexts?.phonePlaceholder || "Phone Number",
         type: "tel",
         autoComplete: "tel",
       },
       "001": {
         // Username only
         labelKey: "usernameOnlyPlaceholder",
-        labelFallback: "Username",
+        labelFallback: screenTexts?.usernameOnlyPlaceholder || "Username",
         autoComplete: "username", // type is default "text"
       },
       "110": {
         // Email and Phone
         labelKey: "phoneOrEmailPlaceholder",
-        labelFallback: "Phone Number or Email Address",
+        labelFallback:
+          screenTexts?.phoneOrEmailPlaceholder ||
+          "Phone Number or Email Address",
         autoComplete: "username", // Default for mixed input
       },
       "101": {
         // Email and Username
         labelKey: "usernameOrEmailPlaceholder",
-        labelFallback: "Username or Email Address",
+        labelFallback:
+          screenTexts?.usernameOrEmailPlaceholder ||
+          "Username or Email Address",
         autoComplete: "username", // Default for mixed input
       },
       "011": {
         // Phone and Username
         labelKey: "phoneOrUsernamePlaceholder",
-        labelFallback: "Phone Number or Username",
+        labelFallback:
+          screenTexts?.phoneOrUsernamePlaceholder || "Phone Number or Username",
         autoComplete: "username", // Default for mixed input
       },
       "111": {
         // All three
         labelKey: "phoneOrUsernameOrEmailPlaceholder",
-        labelFallback: "Phone, Username, or Email",
+        labelFallback:
+          screenTexts?.phoneOrUsernameOrEmailPlaceholder ||
+          "Phone, Username, or Email",
         autoComplete: "username", // Default for mixed input
       },
     };
@@ -96,7 +106,7 @@ export const getIdentifierDetails = (
     const config = configMap[key];
 
     if (config) {
-      finalLabel = config.labelFallback;
+      finalLabel = config.labelFallback; // Now dynamic from screenTexts!
       if (config.type) {
         finalType = config.type;
       }

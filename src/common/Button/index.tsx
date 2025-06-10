@@ -14,7 +14,7 @@ export interface ButtonProps
   iconLeft?: React.ReactElement<IconProps>;
   iconRight?: React.ReactElement<IconProps>;
   /**
-   * Loading text to display when isLoading is true
+   * Loading text to display when isLoading is true - REQUIRED when isLoading is true
    */
   loadingText?: string;
 }
@@ -32,7 +32,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       disabled,
       type = "button",
-      loadingText = "Processing...",
+      loadingText,
       "aria-label": ariaLabel,
       ...rest
     },
@@ -103,7 +103,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={combinedClassName}
         {...rest}
       >
-        {isLoading && <span className="mr-2">{loadingText}</span>}
+        {isLoading && loadingText && (
+          <span className="mr-2">{loadingText}</span>
+        )}
         {!isLoading && iconLeft && (
           <span className="mr-2 flex items-center">{iconLeft}</span>
         )}

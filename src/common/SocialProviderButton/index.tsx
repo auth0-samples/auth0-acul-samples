@@ -5,6 +5,7 @@ interface SocialProviderButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   displayName: string;
   iconComponent: React.ReactNode | null;
+  buttonText: string;
 }
 
 const SocialProviderButton = forwardRef<
@@ -16,6 +17,7 @@ const SocialProviderButton = forwardRef<
       onClick,
       displayName,
       iconComponent,
+      buttonText,
       disabled = false,
       className,
       ...rest
@@ -44,7 +46,7 @@ const SocialProviderButton = forwardRef<
           className,
         )}
         data-testid={dataTestId}
-        title={`Continue with ${displayName}`}
+        title={buttonText}
         disabled={disabled}
         {...rest}
       >
@@ -54,7 +56,7 @@ const SocialProviderButton = forwardRef<
           </span>
         )}
         <span className="overflow-hidden whitespace-nowrap text-ellipsis font-normal text-base">
-          Continue with {displayName}
+          {buttonText}
         </span>
       </button>
     );

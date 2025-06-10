@@ -1,36 +1,27 @@
 import { cn } from "@/utils/helpers/cn";
 
-export interface LogoProps {
+interface LogoProps {
+  imageUrl?: string;
+  altText: string;
   className?: string;
-  altText?: string;
-  src?: string;
   imageClassName?: string;
-  width?: string | number;
-  height?: string | number;
 }
 
-const Logo = ({
+const Logo: React.FC<LogoProps> = ({
+  imageUrl,
+  altText,
   className,
-  altText = "Application Logo",
-  width = 80,
-  height = 80,
-  src,
   imageClassName,
-}: LogoProps) => {
-  const defaultLogoUrl =
+}) => {
+  const defaultImageUrl =
     "https://cdn.auth0.com/ulp/react-components/1.59/img/theme-generic/logo-generic.svg";
-  const logoSrc = src || defaultLogoUrl;
 
-  if (!logoSrc) {
-    return null;
-  }
+  const finalImageUrl = imageUrl || defaultImageUrl;
 
   return (
     <div className={cn("flex justify-center items-center mb-6", className)}>
       <img
-        width={width}
-        height={height}
-        src={logoSrc}
+        src={finalImageUrl}
         alt={altText}
         loading="eager"
         decoding="async"

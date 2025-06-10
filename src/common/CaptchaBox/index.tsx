@@ -5,11 +5,12 @@ import type { LabelProps } from "@/common/Label";
 import { cn } from "@/utils/helpers/cn";
 
 export interface CaptchaBoxProps {
-  label?: string;
+  label: string;
   name?: string;
   id?: string;
   error?: string;
   imageUrl: string;
+  imageAltText: string;
   onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue?: string;
   /**
@@ -36,6 +37,7 @@ const CaptchaBox = forwardRef<HTMLInputElement, CaptchaBoxProps>(
       id = "captcha-input",
       error,
       imageUrl,
+      imageAltText,
       onInputChange,
       inputValue,
       inputProps,
@@ -49,7 +51,7 @@ const CaptchaBox = forwardRef<HTMLInputElement, CaptchaBoxProps>(
     ref,
   ) => {
     const formFieldLabelProps: LabelProps = {
-      children: label || "CAPTCHA",
+      children: label,
       htmlFor: id,
     };
 
@@ -78,7 +80,7 @@ const CaptchaBox = forwardRef<HTMLInputElement, CaptchaBoxProps>(
           >
             <img
               src={currentImageUrl}
-              alt="CAPTCHA challenge"
+              alt={imageAltText}
               className={cn("object-contain", imageClassName)}
             />
           </div>

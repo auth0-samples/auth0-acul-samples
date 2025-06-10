@@ -5,7 +5,7 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
 export const useLoginIdManager = () => {
   const [loginIdInstance] = useState(() => new LoginIdInstance());
 
-  // Extract text data
+  // Extract core data only
   const texts = loginIdInstance?.screen?.texts || {};
   const pageTitle = texts?.pageTitle || "Login ID";
   const title = texts?.title || "Welcome";
@@ -46,12 +46,14 @@ export const useLoginIdManager = () => {
     handleLoginId,
     handleSocialLogin,
     handlePasskeyLogin,
-    // Provide processed data
+    // Core screen data
     pageTitle,
     title,
     description,
     errors,
     captcha,
     links,
+    // Raw texts object - let components handle their own fallbacks
+    texts,
   };
 };

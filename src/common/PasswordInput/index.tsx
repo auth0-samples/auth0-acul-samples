@@ -1,19 +1,23 @@
 import { forwardRef, useId, useState, useCallback } from "react";
-import FormField from "@/common/FormField";
-import Icon from "@/common/Icon";
+import { cn } from "@/utils/helpers/cn";
+import Button from "@/common/Button";
 import { EyeIcon, EyeSlashIcon } from "@/assets/icons";
+import Icon from "@/common/Icon";
+import Tooltip from "@/common/Tooltip";
+import FormField from "@/common/FormField";
 import type { InputProps } from "@/common/Input";
 import type { LabelProps } from "@/common/Label";
-import Tooltip from "@/common/Tooltip";
-import Button from "@/common/Button";
 
-export interface PasswordInputProps {
-  label: string;
-  name: string;
-  error?: string;
+export interface PasswordInputProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "id" | "name" | "type" | "size"
+  > {
+  id?: string;
+  name?: string;
   className?: string;
-  inputClassName?: string;
-  labelClassName?: string;
+  showPasswordText?: string;
+  hidePasswordText?: string;
   /**
    * Additional props to pass to the input element
    * Note: id, name, type, size are controlled by this component
@@ -22,50 +26,42 @@ export interface PasswordInputProps {
     React.InputHTMLAttributes<HTMLInputElement>,
     "id" | "name" | "type" | "size"
   >;
+  label: string;
+  error?: string;
+  inputClassName?: string;
+  labelClassName?: string;
   inputWrapperClassName?: string;
   errorTextClassName?: string;
   /**
    * Help text to display below the input
    */
   helpText?: string;
-  /**
-   * Whether to show the visibility toggle button
-   */
-  showToggle?: boolean;
-  /**
-   * Custom toggle button labels
-   */
-  toggleLabels?: {
-    show: string;
-    hide: string;
-  };
 }
 
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   (
     {
-      label,
-      name,
-      error,
+      id,
+      name = "password",
       className,
+      showPasswordText = "Show password",
+      hidePasswordText = "Hide password",
+      inputProps,
+      label,
+      error,
       inputClassName,
       labelClassName,
-      inputProps: additionalInputProps,
       inputWrapperClassName,
       errorTextClassName,
       helpText,
-      showToggle = true,
-      toggleLabels = {
-        show: "Show password",
-        hide: "Hide password",
-      },
       ...rest
     },
     ref,
   ) => {
+    const generatedId = useId();
+    const inputId = id || generatedId;
     const [showPassword, setShowPassword] = useState(false);
     const [isIconButtonFocused, setIsIconButtonFocused] = useState(false);
-    const generatedId = useId();
 
     const togglePasswordVisibility = useCallback(() => {
       setShowPassword((prev) => !prev);
@@ -79,32 +75,32 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       setIsIconButtonFocused(false);
     }, []);
 
+    // Use proper icons and text based on state
     const currentIcon = showPassword ? EyeSlashIcon : EyeIcon;
-    const iconTitle = showPassword ? toggleLabels.hide : toggleLabels.show;
+    const iconTitle = showPassword ? hidePasswordText : showPasswordText;
 
     const formFieldLabelProps: LabelProps = {
       children: label,
-      htmlFor: generatedId,
+      htmlFor: inputId,
       className: labelClassName,
       forceApplyFocusStyle: isIconButtonFocused,
     };
 
-    // Simple: just merge the props directly
     const formFieldInputProps: InputProps & {
       ref?: React.Ref<HTMLInputElement>;
     } = {
-      id: generatedId,
+      id: inputId,
       name: name,
       type: showPassword ? "text" : "password",
       className: inputClassName,
       placeholder: "\u00A0",
       autoComplete: "current-password",
       ref,
-      ...additionalInputProps,
+      ...inputProps,
       ...rest,
     };
 
-    const toggleButton = showToggle ? (
+    const toggleButton = (
       <Tooltip text={iconTitle} position="top">
         <Button
           variant="icon"
@@ -115,14 +111,18 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           onBlur={handleIconBlur}
           tabIndex={0}
         >
-          <Icon As={currentIcon} />
+          <Icon
+            As={currentIcon}
+            className="h-5 w-5 text-icons"
+            title={iconTitle}
+          />
         </Button>
       </Tooltip>
-    ) : undefined;
+    );
 
     return (
       <FormField
-        className={className}
+        className={cn(className)}
         labelProps={formFieldLabelProps}
         inputProps={formFieldInputProps}
         error={error}
