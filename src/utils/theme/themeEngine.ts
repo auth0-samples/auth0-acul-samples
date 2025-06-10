@@ -21,7 +21,9 @@ export function applyAuth0Theme(screenInstance: any): void {
 function extractThemeData(screenInstance: any): Record<string, string> {
   const theme = screenInstance.branding.themes.default;
 
-  const baseThemeVars = {
+  // Precedence order: Settings (lowest) -> Theme (middle) -> Organization (highest)
+  const settingsVars = extractSettingsOverrides(screenInstance);
+  const themeVars = {
     ...flattenColors(theme.colors || {}),
     ...flattenBorders(theme.borders || {}),
     ...flattenFonts(theme.fonts || {}),
@@ -30,16 +32,16 @@ function extractThemeData(screenInstance: any): Record<string, string> {
     ),
     ...flattenWidget(theme.widget || {}),
   };
+  const organizationVars = extractOrganizationOverrides(screenInstance);
 
-  const overrideVars = extractPrecedenceOverrides(screenInstance);
-  return { ...baseThemeVars, ...overrideVars };
+  // Apply in precedence order: Settings -> Theme -> Organization
+  return { ...settingsVars, ...themeVars, ...organizationVars };
 }
 
-function extractPrecedenceOverrides(
-  screenInstance: any,
-): Record<string, string> {
+function extractSettingsOverrides(screenInstance: any): Record<string, string> {
   const overrides: Record<string, string> = {};
 
+  // Essential variable mappings for precedence overrides
   const variableMapping = {
     "colors.primary": "--ul-theme-color-primary-button",
     "colors.pageBackground": "--ul-theme-page-bg-background-color",
@@ -50,6 +52,21 @@ function extractPrecedenceOverrides(
   if (settings) {
     applyMappedOverrides(settings, variableMapping, overrides);
   }
+
+  return overrides;
+}
+
+function extractOrganizationOverrides(
+  screenInstance: any,
+): Record<string, string> {
+  const overrides: Record<string, string> = {};
+
+  // Essential variable mappings for precedence overrides
+  const variableMapping = {
+    "colors.primary": "--ul-theme-color-primary-button",
+    "colors.pageBackground": "--ul-theme-page-bg-background-color",
+    logoUrl: "--ul-theme-widget-logo-url",
+  };
 
   const org = screenInstance?.organization?.branding;
   if (org) {
@@ -67,8 +84,12 @@ function applyMappedOverrides(
   Object.entries(mapping).forEach(([authPath, cssVar]) => {
     const value = getNestedValue(source, authPath);
     if (value) {
+      // Handle special formatting for specific variables
       if (cssVar === "--ul-theme-widget-logo-url") {
         overrides[cssVar] = `"${value}"`;
+      } else if (cssVar === "--ul-theme-widget-logo-height") {
+        // Logo height needs px units
+        overrides[cssVar] = typeof value === "number" ? `${value}px` : value;
       } else {
         overrides[cssVar] = value;
       }

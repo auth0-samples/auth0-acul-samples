@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { cn } from "@/utils/helpers/cn";
 import type { IconProps } from "@/common/Icon";
 
 export interface ButtonProps
@@ -48,7 +49,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     switch (variant) {
       case "primary":
         variantStyles =
-          "bg-primary text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/15 disabled:opacity-70 disabled:bg-primary/70 px-4 py-4 text-md rounded";
+          "bg-primary text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/15 disabled:opacity-70 disabled:bg-primary/70 px-4";
         break;
       case "secondary":
         variantStyles =
@@ -69,27 +70,15 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         sizeStyles = variant === "icon" ? "" : "py-1 text-sm rounded-sm";
         break;
       case "md":
-        sizeStyles = variant === "icon" ? "" : "py-1 text-md rounded";
+        sizeStyles = variant === "icon" ? "" : "py-4 text-md rounded";
         break;
       case "lg":
-        sizeStyles = variant === "icon" ? "" : "py-1 text-lg rounded-lg";
+        sizeStyles = variant === "icon" ? "" : "py-5 text-lg rounded-lg";
         break;
     }
 
     const widthStyles = fullWidth ? "w-full" : "";
     const loadingStyles = isLoading ? "opacity-75" : "";
-
-    const combinedClassName = [
-      baseStyles,
-      variantStyles,
-      sizeStyles,
-      widthStyles,
-      loadingStyles,
-      cursorStyles,
-      className,
-    ]
-      .filter(Boolean)
-      .join(" ");
 
     const isDisabled = disabled || isLoading;
 
@@ -100,7 +89,15 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isDisabled}
         aria-disabled={isDisabled}
         aria-label={ariaLabel}
-        className={combinedClassName}
+        className={cn(
+          baseStyles,
+          variantStyles,
+          sizeStyles,
+          widthStyles,
+          loadingStyles,
+          cursorStyles,
+          className,
+        )}
         {...rest}
       >
         {isLoading && loadingText && (

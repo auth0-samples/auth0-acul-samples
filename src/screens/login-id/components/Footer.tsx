@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       {localizedSignupLink && (
         <a
           href={localizedSignupLink}
-          className="text-sm font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
+          className="text-sm font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded"
         >
           {footerLinkText}
         </a>

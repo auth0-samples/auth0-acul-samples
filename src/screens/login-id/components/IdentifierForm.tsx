@@ -1,4 +1,5 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import Button from "@/common/Button";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
@@ -6,13 +7,16 @@ import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
-import { useLoginIdForm } from "../hooks/useLoginIdForm";
+
+interface LoginIdFormData {
+  identifier: string;
+  captcha?: string;
+}
 
 // No props needed as it uses hooks internally for data and actions
 const IdentifierForm: React.FC = () => {
   const { handleLoginId, errors, captcha, links, loginIdInstance, texts } =
     useLoginIdManager();
-  const { identifierRef, captchaRef, getFormValues } = useLoginIdForm();
 
   const isCaptchaAvailable = !!captcha;
   const captchaImage = captcha?.image || "";
@@ -39,10 +43,16 @@ const IdentifierForm: React.FC = () => {
     autoComplete: identifierAutoComplete,
   } = getIdentifierDetails(identifierRequiredTypes as any, texts);
 
-  const onLoginIdSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const { identifier, captcha } = getFormValues();
-    handleLoginId(identifier, captcha);
+  // React Hook Form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: formErrors, isSubmitting },
+  } = useForm<LoginIdFormData>();
+
+  // Proper submit handler with form data
+  const onSubmit = (data: LoginIdFormData) => {
+    handleLoginId(data.identifier, data.captcha);
   };
 
   const originalResetPasswordLink = links?.reset_password;
@@ -51,24 +61,28 @@ const IdentifierForm: React.FC = () => {
   );
 
   return (
-    <form onSubmit={onLoginIdSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <FormField
-        ref={identifierRef}
         className="mb-4"
         labelProps={{
           children: identifierLabel,
           htmlFor: "identifier-login-id",
         }}
         inputProps={{
+          ...register("identifier", {
+            required: "This field is required",
+            maxLength: {
+              value: 100,
+              message: "Maximum 100 characters allowed",
+            },
+          }),
           id: "identifier-login-id",
-          name: "identifier",
           type: identifierType,
           autoComplete: identifierAutoComplete,
-          required: true,
-          maxLength: 100,
           autoFocus: true,
         }}
         error={
+          formErrors.identifier?.message ||
           getFieldError("identifier", errors) ||
           getFieldError("email", errors) ||
           getFieldError("phone", errors) ||
@@ -78,31 +92,43 @@ const IdentifierForm: React.FC = () => {
 
       {isCaptchaAvailable && captchaImage && (
         <CaptchaBox
-          ref={captchaRef}
           className="mb-4"
           id="captcha-input-login-id"
+          name="captcha"
           label={captchaLabel}
           imageUrl={captchaImage}
           imageAltText={captchaImageAlt}
           inputProps={{
-            required: isCaptchaAvailable,
-            maxLength: 15,
+            ...register("captcha", {
+              required: "Please complete the CAPTCHA",
+              maxLength: {
+                value: 15,
+                message: "CAPTCHA too long",
+              },
+            }),
           }}
-          error={getFieldError("captcha", errors)}
+          error={
+            formErrors.captcha?.message || getFieldError("captcha", errors)
+          }
         />
       )}
       <div className="text-left">
         {localizedResetPasswordLink && (
           <a
             href={localizedResetPasswordLink}
-            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded p-1"
+            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
           >
             {forgotPasswordText}
           </a>
         )}
       </div>
 
-      <Button type="submit" fullWidth loadingText={loadingText}>
+      <Button
+        type="submit"
+        fullWidth
+        loadingText={loadingText}
+        isLoading={isSubmitting}
+      >
         {buttonText}
       </Button>
     </form>

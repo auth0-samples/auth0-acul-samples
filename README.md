@@ -249,7 +249,7 @@ Components use semantic Tailwind classes that map to theme tokens:
 </div>
 ```
 
-The system supports **Organization > Settings > Theme Default** precedence and scales to 80+ screen types without modification.
+The system supports **Organization > Theme > Settings** precedence and scales to 80+ screen types without modification.
 
 <a id="documentation"></a>
 

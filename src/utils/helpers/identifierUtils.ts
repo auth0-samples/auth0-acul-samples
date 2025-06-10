@@ -24,6 +24,21 @@ interface IdentifierConfig {
 }
 
 /**
+ * Helper function to create a descriptive key for identifier combinations
+ */
+const createIdentifierKey = (
+  hasEmail: boolean,
+  hasPhone: boolean,
+  hasUsername: boolean,
+): string => {
+  const identifiers = [];
+  if (hasEmail) identifiers.push("email");
+  if (hasPhone) identifiers.push("phone");
+  if (hasUsername) identifiers.push("username");
+  return identifiers.join("-");
+};
+
+/**
  * Determines the appropriate label, input type, and autocomplete attribute
  * for an identifier field based on active connection attributes and screen texts.
  *
@@ -42,71 +57,64 @@ export const getIdentifierDetails = (
   let finalAutoComplete: IdentifierType | string = "username";
 
   if (connectionAttributes) {
-    const e = !!connectionAttributes.includes("email");
-    const p = !!connectionAttributes.includes("phone");
-    const u = !!connectionAttributes.includes("username");
+    const hasEmail = connectionAttributes.includes("email");
+    const hasPhone = connectionAttributes.includes("phone");
+    const hasUsername = connectionAttributes.includes("username");
 
-    // Create a key based on active identifiers (e.g., "101" for email & username)
-    const key = `${Number(e)}${Number(p)}${Number(u)}`;
+    // Create a descriptive key based on active identifiers
+    const identifierKey = createIdentifierKey(hasEmail, hasPhone, hasUsername);
 
     const configMap: Record<string, IdentifierConfig> = {
-      "100": {
-        // Email only
+      email: {
         labelKey: "emailPlaceholder",
         labelFallback: screenTexts?.emailPlaceholder || "Email Address",
         type: "email",
         autoComplete: "email",
       },
-      "010": {
-        // Phone only
+      phone: {
         labelKey: "phonePlaceholder",
         labelFallback: screenTexts?.phonePlaceholder || "Phone Number",
         type: "tel",
         autoComplete: "tel",
       },
-      "001": {
-        // Username only
+      username: {
         labelKey: "usernameOnlyPlaceholder",
         labelFallback: screenTexts?.usernameOnlyPlaceholder || "Username",
-        autoComplete: "username", // type is default "text"
+        autoComplete: "username",
       },
-      "110": {
-        // Email and Phone
+      "email-phone": {
         labelKey: "phoneOrEmailPlaceholder",
         labelFallback:
           screenTexts?.phoneOrEmailPlaceholder ||
           "Phone Number or Email Address",
-        autoComplete: "username", // Default for mixed input
+        autoComplete: "username",
       },
-      "101": {
-        // Email and Username
+      "email-username": {
         labelKey: "usernameOrEmailPlaceholder",
         labelFallback:
           screenTexts?.usernameOrEmailPlaceholder ||
           "Username or Email Address",
-        autoComplete: "username", // Default for mixed input
+        autoComplete: "username",
       },
-      "011": {
-        // Phone and Username
+      "phone-username": {
         labelKey: "phoneOrUsernamePlaceholder",
         labelFallback:
           screenTexts?.phoneOrUsernamePlaceholder || "Phone Number or Username",
-        autoComplete: "username", // Default for mixed input
+        autoComplete: "username",
       },
-      "111": {
-        // All three
+      "email-phone-username": {
         labelKey: "phoneOrUsernameOrEmailPlaceholder",
         labelFallback:
           screenTexts?.phoneOrUsernameOrEmailPlaceholder ||
           "Phone, Username, or Email",
-        autoComplete: "username", // Default for mixed input
+        autoComplete: "username",
       },
     };
 
-    const config = configMap[key];
+    const config = configMap[identifierKey];
 
     if (config) {
-      finalLabel = config.labelFallback; // Now dynamic from screenTexts!
+      finalLabel = config.labelFallback;
       if (config.type) {
         finalType = config.type;
       }

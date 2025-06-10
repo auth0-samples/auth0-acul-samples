@@ -86,16 +86,13 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       forceApplyFocusStyle: isIconButtonFocused,
     };
 
-    const formFieldInputProps: InputProps & {
-      ref?: React.Ref<HTMLInputElement>;
-    } = {
+    const formFieldInputProps: InputProps = {
       id: inputId,
       name: name,
       type: showPassword ? "text" : "password",
       className: inputClassName,
       placeholder: "\u00A0",
       autoComplete: "current-password",
-      ref,
       ...inputProps,
       ...rest,
     };
@@ -122,6 +119,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     return (
       <FormField
+        ref={ref}
         className={cn(className)}
         labelProps={formFieldLabelProps}
         inputProps={formFieldInputProps}
