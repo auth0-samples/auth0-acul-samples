@@ -32,7 +32,8 @@ const Auth0CaptchaWidget: React.FC<CaptchaWidgetProps> = ({
     const response: CaptchaResponse = {
       provider: config.provider,
       answer: value,
-      ...(isV2 && siteKey && { token: `${siteKey}:${value}` }),
+      // For auth0_v2, we can optionally include additional metadata
+      ...(isV2 && siteKey && { token: siteKey }),
     };
     onCaptchaResponse(response);
   };
