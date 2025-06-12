@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@/common/Button";
 import Alert from "@/common/Alert";
-import CaptchaBox from "@/common/CaptchaBox";
+import UniversalCaptchaWidget, {
+  createCaptchaConfig,
+} from "@/common/CaptchaWidget";
+import type { CaptchaResponse } from "@/common/CaptchaWidget";
 import FormField from "@/common/FormField";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
@@ -19,14 +22,17 @@ const IdentifierForm: React.FC = () => {
   const { handleLoginId, errors, captcha, links, loginIdInstance, texts } =
     useLoginIdManager();
 
+  // State for CAPTCHA response
+  const [captchaResponse, setCaptchaResponse] =
+    useState<CaptchaResponse | null>(null);
+
   const isCaptchaAvailable = !!captcha;
-  const captchaImage = captcha?.image || "";
+  const captchaConfig = createCaptchaConfig(captcha);
 
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
   const loadingText = "Processing..."; // Default fallback
-  const captchaLabel = texts?.captchaCodePlaceholder.concat("*") || "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
+  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
   // Get general errors (not field-specific)
@@ -52,7 +58,24 @@ const IdentifierForm: React.FC = () => {
 
   // Proper submit handler with form data
   const onSubmit = (data: LoginIdFormData) => {
-    handleLoginId(data.identifier, data.captcha);
+    // Use the captcha response from the widget if available
+    const captchaValue = captchaResponse
+      ? captchaResponse.token ||
+        captchaResponse.answer ||
+        captchaResponse.arkoseToken
+      : data.captcha;
+
+    handleLoginId(data.identifier, captchaValue);
+  };
+
+  // Handle CAPTCHA response from the universal widget
+  const handleCaptchaResponse = (response: CaptchaResponse | null) => {
+    setCaptchaResponse(response);
+  };
+
+  // Handle CAPTCHA errors
+  const handleCaptchaError = (error: string) => {
+    console.error("CAPTCHA Error:", error);
   };
 
   const originalResetPasswordLink = links?.reset_password;
@@ -99,23 +122,13 @@ const IdentifierForm: React.FC = () => {
         }
       />
 
-      {isCaptchaAvailable && captchaImage && (
-        <CaptchaBox
+      {isCaptchaAvailable && captchaConfig && (
+        <UniversalCaptchaWidget
           className="mb-4"
-          id="captcha-input-login-id"
-          name="captcha"
+          config={captchaConfig}
+          onCaptchaResponse={handleCaptchaResponse}
+          onError={handleCaptchaError}
           label={captchaLabel}
-          imageUrl={captchaImage}
-          imageAltText={captchaImageAlt}
-          inputProps={{
-            ...register("captcha", {
-              required: "Please complete the CAPTCHA",
-              maxLength: {
-                value: 15,
-                message: "CAPTCHA too long",
-              },
-            }),
-          }}
           error={
             formErrors.captcha?.message || getFieldError("captcha", errors)
           }
