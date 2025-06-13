@@ -6,7 +6,6 @@ This directory contains the complete GitHub Actions deployment pipeline for Auth
 
 ```
 .github/
-├── README.md                    # This file
 ├── config/                      # Configuration files
 │   ├── deploy_config.yml        # Controls which screens to deploy
 │   ├── screen-to-prompt-mapping.js   # Maps screens to Auth0 prompts
