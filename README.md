@@ -172,7 +172,7 @@ This boilerplate includes a GitHub Actions workflow to automate the process of:
 
 ➡️ **[DEPLOYMENT.md](./DEPLOYMENT.md)**
 
-➡️ **[GitHub Actions Configuration](./.github/README.md)** - For quick reference on secrets and configuration
+➡️ **[GitHub Actions Configuration](./.github/GITHUB_ACTIONS.md)** - For quick reference on secrets and configuration
 
 ### Enabling Screens for Advanced Mode Deployment
 
