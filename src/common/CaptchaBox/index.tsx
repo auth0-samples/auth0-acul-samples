@@ -70,7 +70,7 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
       {currentImageUrl && (
         <div
           className={cn(
-            "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
+            "flex justify-center border [border-color:var(--ul-theme-color-widget-border)] [border-radius:var(--ul-theme-border-widget-corner-radius)] p-8 [background-color:var(--ul-theme-color-widget-background)]",
             imageWrapperClassName,
           )}
         >

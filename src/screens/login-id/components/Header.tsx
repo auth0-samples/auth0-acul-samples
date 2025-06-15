@@ -11,10 +11,10 @@ const Header: React.FC = () => {
   return (
     <>
       <Logo imageClassName="h-13" altText={logoAltText} />
-      <h1 className="text-2xl font-normal text-center text-text-default mt-6 mb-4">
+      <h1 className="text-2xl font-normal text-center [color:var(--ul-theme-color-header)] mt-6 mb-4">
         {title}
       </h1>
-      <p className="text-center text-text-default text-sm mb-4">
+      <p className="text-center [color:var(--ul-theme-color-body-text)] text-sm mb-4">
         {description}
       </p>
     </>

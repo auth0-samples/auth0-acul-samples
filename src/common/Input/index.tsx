@@ -45,28 +45,37 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const baseStyles = [
-      "block w-full border rounded transition-all duration-200",
+      "block w-full border border-solid rounded-input transition-all duration-200",
       "focus:outline-none focus:ring-1 peer box-border",
       "overflow-hidden text-ellipsis whitespace-nowrap",
       "disabled:opacity-50 disabled:cursor-not-allowed",
+      // Typography using Auth0 tokens
+      "font-input-label",
     ];
 
     const sizeStyles = {
       sm: "px-2 py-2 h-10 text-sm",
-      md: "px-3 py-4 h-14 text-base",
+      md: "px-3 py-4 h-14",
       lg: "px-4 py-5 h-16 text-lg",
     };
 
     const variantStyles = {
-      default: "border-gray-mid focus:border-link focus:ring-link",
+      default:
+        "border-input-border bg-input-bg text-input-text " +
+        "focus:border-base-focus focus:ring-base-focus",
       error:
-        "border-error ring-1 ring-error focus:border-error focus:ring-error",
-      success: "border-success focus:border-success focus:ring-success",
+        "border-error ring-1 ring-error bg-input-bg text-input-text " +
+        "focus:border-error focus:ring-error",
+      success:
+        "border-success bg-input-bg text-input-text " +
+        "focus:border-success focus:ring-success",
     };
 
     const focusStyles = forceFocusStyle
-      ? "border-link ring-1 ring-link"
+      ? "border-base-focus ring-1 ring-base-focus"
       : variantStyles[variant];
+
+    const allClasses = cn(baseStyles, sizeStyles[size], focusStyles, className);
 
     return (
       <input
@@ -75,7 +84,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         id={id}
         name={name}
         placeholder={placeholder}
-        className={cn(baseStyles, sizeStyles[size], focusStyles, className)}
+        className={allClasses}
         {...rest}
       />
     );

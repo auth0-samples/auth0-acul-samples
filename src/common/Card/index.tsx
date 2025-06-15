@@ -13,9 +13,16 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Card = ({ children, className, ...rest }: CardProps) => {
-  const defaultStyles = "bg-background-widget rounded shadow-md px-10 py-10";
+  const baseStyles = [
+    // Auth0 semantic classes - clean and readable
+    "bg-widget-bg",
+    "rounded-widget",
+    "p-10",
+    "shadow-widget",
+  ];
+
   return (
-    <div className={cn(defaultStyles, className)} {...rest}>
+    <div className={cn(baseStyles, className)} {...rest}>
       {children}
     </div>
   );

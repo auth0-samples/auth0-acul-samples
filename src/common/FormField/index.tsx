@@ -72,12 +72,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
 
     return (
       <div className={className}>
-        <div
-          className={cn(
-            "relative mt-1 rounded-md shadow-sm",
-            inputWrapperClassName,
-          )}
-        >
+        <div className={cn("relative mt-1 rounded-md", inputWrapperClassName)}>
           <div className="relative w-full">
             <Input ref={ref} {...enhancedInputProps} />
             <Label
@@ -90,7 +85,8 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
               <div
                 className={cn(
                   "absolute inset-y-0 right-0 flex items-center rounded-r-md mt-px mt-3",
-                  isParentFocused && "bg-primary/15",
+                  isParentFocused &&
+                    "[background-color:color-mix(in_srgb,var(--ul-theme-color-primary-button)_15%,transparent)]",
                 )}
               >
                 {inputIcon}
@@ -103,7 +99,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
         {helpText && !error && (
           <div
             id={`${inputId}-help`}
-            className="mt-2 text-sm text-text-secondary"
+            className="mt-2 text-sm [color:var(--ul-theme-color-input-labels-placeholders)]"
           >
             {helpText}
           </div>
@@ -114,7 +110,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           <div
             id={`${inputId}-error`}
             className={cn(
-              "flex items-center mt-2 text-sm text-error",
+              "flex items-center mt-2 text-sm [color:var(--ul-theme-color-error)]",
               errorTextClassName,
             )}
             role="alert"

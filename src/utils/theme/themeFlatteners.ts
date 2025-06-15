@@ -81,11 +81,11 @@ export function flattenBorders(borders: any): Record<string, string> {
   if (borders.inputs_style)
     result["--ul-theme-border-inputs-style"] = borders.inputs_style;
 
-  // Boolean/numeric values for shadow - convert boolean to numeric for CSS
+  // Boolean/numeric values for shadow - convert boolean to actual shadow values
   if (borders.show_widget_shadow !== undefined)
     result["--ul-theme-border-show-widget-shadow"] = borders.show_widget_shadow
-      ? "1"
-      : "0";
+      ? "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+      : "none";
 
   return result;
 }

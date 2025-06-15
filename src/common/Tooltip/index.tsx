@@ -26,12 +26,12 @@ const Tooltip = ({
   };
 
   const arrowClasses = {
-    top: "left-1/2 -translate-x-1/2 bottom-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-black",
+    top: "left-1/2 -translate-x-1/2 bottom-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] [border-top-color:var(--ul-theme-color-body-text)]",
     bottom:
-      "left-1/2 -translate-x-1/2 top-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[4px] border-b-black",
-    left: "right-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[4px] border-l-black",
+      "left-1/2 -translate-x-1/2 top-[-4px] w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[4px] [border-bottom-color:var(--ul-theme-color-body-text)]",
+    left: "right-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[4px] [border-left-color:var(--ul-theme-color-body-text)]",
     right:
-      "left-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-r-[4px] border-r-black",
+      "left-[-4px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-r-[4px] [border-right-color:var(--ul-theme-color-body-text)]",
   };
 
   return (
@@ -47,7 +47,7 @@ const Tooltip = ({
         <div
           role="tooltip"
           className={cn(
-            "absolute z-10 px-2 py-1 text-xs font-medium text-white bg-black rounded shadow-sm text-center",
+            "absolute z-10 px-2 py-1 text-xs font-medium [color:var(--ul-theme-color-primary-button-label)] [background-color:var(--ul-theme-color-body-text)] rounded shadow-sm text-center",
             positionClasses[position],
             tooltipClassName,
           )}

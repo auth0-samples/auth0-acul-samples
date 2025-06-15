@@ -1,6 +1,71 @@
 @import "tailwindcss";
 
 @theme {
+  /* Auth0 Theme Color Mappings - v4 CSS-first configuration */
+
+  /* Button colors */
+  --color-primary-button: var(--ul-theme-color-primary-button);
+  --color-primary-button-label: var(--ul-theme-color-primary-button-label);
+  --color-secondary-button-border: var(
+    --ul-theme-color-secondary-button-border
+  );
+  --color-secondary-button-label: var(--ul-theme-color-secondary-button-label);
+
+  /* Interactive colors */
+  --color-base-focus: var(--ul-theme-color-base-focus-color);
+  --color-base-hover: var(--ul-theme-color-base-hover-color);
+  --color-link-focus: var(--ul-theme-color-links-focused-components);
+
+  /* Text colors */
+  --color-header: var(--ul-theme-color-header);
+  --color-body-text: var(--ul-theme-color-body-text);
+  --color-input-labels: var(--ul-theme-color-input-labels-placeholders);
+  --color-input-text: var(--ul-theme-color-input-filled-text);
+
+  /* Background colors */
+  --color-widget-bg: var(--ul-theme-color-widget-background);
+  --color-input-bg: var(--ul-theme-color-input-background);
+  --color-page-bg: var(--ul-theme-page-bg-background-color);
+
+  /* Border colors */
+  --color-widget-border: var(--ul-theme-color-widget-border);
+  --color-input-border: var(--ul-theme-color-input-border);
+
+  /* Status colors */
+  --color-error: var(--ul-theme-color-error);
+  --color-success: var(--ul-theme-color-success);
+  --color-warning: var(--ul-theme-color-warning);
+  --color-info: var(--ul-theme-color-primary-button);
+  --color-icons: var(--ul-theme-color-icons);
+
+  /* Border radius - using CSS variables */
+  --radius-button: var(--ul-theme-border-button-border-radius);
+  --radius-input: var(--ul-theme-border-input-border-radius);
+  --radius-widget: var(--ul-theme-border-widget-corner-radius);
+
+  /* Box shadow utilities - Auth0 controlled */
+  --shadow-widget: var(--ul-theme-border-show-widget-shadow);
+
+  /* Spacing tokens - semantic spacing for components */
+  --spacing-widget-padding: 2.5rem; /* 40px - standard widget padding */
+
+  /* Typography */
+  --text-title: var(--ul-theme-font-title-size);
+  --text-subtitle: var(--ul-theme-font-subtitle-size);
+  --text-body: var(--ul-theme-font-body-text-size);
+  --text-button: var(--ul-theme-font-buttons-text-size);
+  --text-input-label: var(--ul-theme-font-input-labels-size);
+  --text-link: var(--ul-theme-font-links-size);
+
+  --font-title: var(--ul-theme-font-title-weight);
+  --font-subtitle: var(--ul-theme-font-subtitle-weight);
+  --font-body: var(--ul-theme-font-body-text-weight);
+  --font-button: var(--ul-theme-font-buttons-text-weight);
+  --font-input-label: var(--ul-theme-font-input-labels-weight);
+  --font-link: var(--ul-theme-font-links-weight);
+}
+
+:root {
   /* Colors */
   --ul-theme-color-primary-button: #635dff;
   --ul-theme-color-primary-button-label: #ffffff;
@@ -20,6 +85,7 @@
   --ul-theme-color-icons: #65676e;
   --ul-theme-color-error: #d03c38;
   --ul-theme-color-success: #13a688;
+  --ul-theme-color-warning: #ffdb5f;
   --ul-theme-color-captcha-widget-theme: dark;
 
   /* Borders */
@@ -60,22 +126,6 @@
   --ul-theme-widget-header-text-alignment: center;
   --ul-theme-widget-social-buttons-layout: bottom;
 
-  /* Legacy variables for backward compatibility */
-  --color-primary: var(--ul-theme-color-primary-button);
-  --color-link: var(--ul-theme-color-links-focused-components);
-  --color-error: var(--ul-theme-color-error);
-  --color-success: var(--ul-theme-color-success);
-  --color-warning: #ffdb5f;
-  --color-text-default: var(--ul-theme-color-body-text);
-  --color-text-secondary: var(--ul-theme-color-input-labels-placeholders);
-  --color-background-page: var(--ul-theme-page-bg-background-color);
-  --color-background-widget: var(--ul-theme-color-widget-background);
-  --color-gray-mid: var(--ul-theme-color-widget-border);
-  --color-gray-darkest: #2d333a;
-  --height-13: 3.25rem;
-}
-
-:root {
   /* Global base styles not directly tied to Tailwind utility names */
   font-family:
     ui-sans-serif,

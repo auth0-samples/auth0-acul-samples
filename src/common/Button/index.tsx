@@ -39,41 +39,56 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
+    // Base styles
     const baseStyles =
-      "inline-flex items-center justify-center font-medium focus:outline-none transition-colors duration-150 ease-in-out";
+      "inline-flex items-center justify-center text-button font-button focus:outline-none transition-colors duration-150 ease-in-out";
 
     const cursorStyles =
       disabled || isLoading ? "cursor-not-allowed" : "cursor-pointer";
 
+    // Variant styles
     let variantStyles = "";
     switch (variant) {
       case "primary":
         variantStyles =
-          "bg-primary text-white hover:bg-primary/90 focus:ring-4 focus:ring-primary/15 disabled:opacity-70 disabled:bg-primary/70 px-4";
+          "bg-primary-button text-primary-button-label " +
+          "border border-solid border-primary-button " +
+          "rounded-button px-4 " +
+          "hover:bg-primary-button/90 " +
+          "focus:ring-4 focus:ring-primary-button/15 " +
+          "disabled:opacity-70 disabled:bg-primary-button/70";
         break;
       case "secondary":
         variantStyles =
-          "bg-background-widget text-text-default border border-gray-mid hover:bg-gray-100 focus:ring-4 focus:ring-primary/15 disabled:opacity-70";
+          "bg-widget-bg text-secondary-button-label " +
+          "border border-solid border-secondary-button-border " +
+          "rounded-button " +
+          "hover:bg-widget-border/20 " +
+          "focus:ring-4 focus:ring-primary-button/15 " +
+          "disabled:opacity-70";
         break;
       case "icon":
         variantStyles =
-          "h-full flex items-center justify-center px-3 focus:outline-none hover:text-text-default disabled:opacity-50";
+          "h-full flex items-center justify-center px-3 " +
+          "text-body-text hover:text-base-hover " +
+          "focus:outline-none disabled:opacity-50";
         break;
       default:
         variantStyles = "";
         break;
     }
 
+    // Size styles - clean and simple
     let sizeStyles = "";
     switch (size) {
       case "sm":
-        sizeStyles = variant === "icon" ? "" : "py-1 text-sm rounded-sm";
+        sizeStyles = variant === "icon" ? "" : "py-1";
         break;
       case "md":
-        sizeStyles = variant === "icon" ? "" : "py-4 text-md rounded";
+        sizeStyles = variant === "icon" ? "" : "py-4";
         break;
       case "lg":
-        sizeStyles = variant === "icon" ? "" : "py-5 text-lg rounded-lg";
+        sizeStyles = variant === "icon" ? "" : "py-5";
         break;
     }
 

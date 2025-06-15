@@ -14,7 +14,7 @@ const LoginIdScreen: React.FC = () => {
   document.title = pageTitle;
 
   // Apply theme from SDK instance when screen loads
-  applyAuth0Theme(loginIdInstance);
+  applyAuth0Theme(loginIdInstance as any);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-10 py-20">

@@ -27,13 +27,13 @@ const SocialProviderButton = forwardRef<
     const dataTestId = `social-provider-button-${displayName.toLowerCase().replace(/\s+/g, "-")}`;
 
     const baseStyles =
-      "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border rounded gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out focus:ring-4 focus:ring-primary/15";
+      "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border [border-radius:var(--ul-theme-border-button-border-radius)] gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out focus:ring-4 focus:[--tw-ring-color:color-mix(in_srgb,var(--ul-theme-color-primary-button)_15%,transparent)]";
 
     const enabledStyles =
-      "bg-white border-gray-mid text-text-default hover:bg-gray-mid/20 focus:bg-primary/15 cursor-pointer";
+      "[background-color:var(--ul-theme-color-widget-background)] [border-color:var(--ul-theme-color-widget-border)] [color:var(--ul-theme-color-body-text)] hover:[background-color:color-mix(in_srgb,var(--ul-theme-color-widget-border)_20%,var(--ul-theme-color-widget-background))] focus:[background-color:color-mix(in_srgb,var(--ul-theme-color-primary-button)_15%,var(--ul-theme-color-widget-background))] cursor-pointer";
 
     const disabledStyles =
-      "bg-gray-mid/10 border-gray-mid/50 text-text-secondary cursor-not-allowed";
+      "[background-color:color-mix(in_srgb,var(--ul-theme-color-widget-border)_10%,transparent)] [border-color:color-mix(in_srgb,var(--ul-theme-color-widget-border)_50%,transparent)] [color:var(--ul-theme-color-input-labels-placeholders)] cursor-not-allowed";
 
     return (
       <button
