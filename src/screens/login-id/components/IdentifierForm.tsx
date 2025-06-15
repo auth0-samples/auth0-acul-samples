@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "@/common/Button";
 import Alert from "@/common/Alert";
-import UniversalCaptchaWidget, {
-  createCaptchaConfig,
-} from "@/common/CaptchaWidget";
-import type { CaptchaResponse } from "@/common/CaptchaWidget";
 import FormField from "@/common/FormField";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 interface LoginIdFormData {
   identifier: string;
@@ -22,20 +19,24 @@ const IdentifierForm: React.FC = () => {
   const { handleLoginId, errors, captcha, links, loginIdInstance, texts } =
     useLoginIdManager();
 
-  // State for CAPTCHA response
-  const [captchaResponse, setCaptchaResponse] =
-    useState<CaptchaResponse | null>(null);
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
+  const captchaErrorText = "Please complete the captcha verification";
+
+  const {
+    Captcha,
+    value: captchaValue,
+    error: captchaError,
+    validate: validateCaptcha,
+  } = useCaptcha(captcha, captchaLabel, captchaErrorText);
 
   const isCaptchaAvailable = !!captcha;
-  const captchaConfig = createCaptchaConfig(captcha);
 
-  // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
-  const loadingText = "Processing..."; // Default fallback
-  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const loadingText = "Processing...";
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
-  // Get general errors (not field-specific)
   const generalErrors =
     errors?.filter((error: any) => !error.field || error.field === null) || [];
 
@@ -56,26 +57,15 @@ const IdentifierForm: React.FC = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<LoginIdFormData>();
 
-  // Proper submit handler with form data
   const onSubmit = (data: LoginIdFormData) => {
-    // Use the captcha response from the widget if available
-    const captchaValue = captchaResponse
-      ? captchaResponse.token ||
-        captchaResponse.answer ||
-        captchaResponse.arkoseToken
-      : data.captcha;
+    if (isCaptchaAvailable && !validateCaptcha()) {
+      return;
+    }
 
-    handleLoginId(data.identifier, captchaValue);
-  };
+    const finalCaptchaValue =
+      captcha?.provider === "auth0" ? captchaValue : data.captcha;
 
-  // Handle CAPTCHA response from the universal widget
-  const handleCaptchaResponse = (response: CaptchaResponse | null) => {
-    setCaptchaResponse(response);
-  };
-
-  // Handle CAPTCHA errors
-  const handleCaptchaError = (error: string) => {
-    console.error("CAPTCHA Error:", error);
+    handleLoginId(data.identifier, finalCaptchaValue);
   };
 
   const originalResetPasswordLink = links?.reset_password;
@@ -86,11 +76,12 @@ const IdentifierForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* General alerts at the top */}
-      {generalErrors.length > 0 && (
+      {(generalErrors.length > 0 || captchaError) && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: any, index: number) => (
             <Alert key={index} type="error" message={error.message} />
           ))}
+          {captchaError && <Alert type="error" message={captchaError} />}
         </div>
       )}
 
@@ -122,18 +113,8 @@ const IdentifierForm: React.FC = () => {
         }
       />
 
-      {isCaptchaAvailable && captchaConfig && (
-        <UniversalCaptchaWidget
-          className="mb-4"
-          config={captchaConfig}
-          onCaptchaResponse={handleCaptchaResponse}
-          onError={handleCaptchaError}
-          label={captchaLabel}
-          error={
-            formErrors.captcha?.message || getFieldError("captcha", errors)
-          }
-        />
-      )}
+      {Captcha}
+
       <div className="text-left">
         {localizedResetPasswordLink && (
           <a
@@ -150,6 +131,7 @@ const IdentifierForm: React.FC = () => {
         fullWidth
         loadingText={loadingText}
         isLoading={isSubmitting}
+        disabled={isSubmitting}
       >
         {buttonText}
       </Button>
