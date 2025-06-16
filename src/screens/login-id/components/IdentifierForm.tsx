@@ -2,12 +2,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "@/common/Button";
 import Alert from "@/common/Alert";
-import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 interface LoginIdFormData {
   identifier: string;
@@ -19,17 +19,24 @@ const IdentifierForm: React.FC = () => {
   const { handleLoginId, errors, captcha, links, loginIdInstance, texts } =
     useLoginIdManager();
 
-  const isCaptchaAvailable = !!captcha;
-  const captchaImage = captcha?.image || "";
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
+  const captchaErrorText = "Please complete the captcha verification";
 
-  // Handle text fallbacks in component
+  const {
+    Captcha,
+    value: captchaValue,
+    error: captchaError,
+    validate: validateCaptcha,
+  } = useCaptcha(captcha, captchaLabel, captchaErrorText);
+
+  const isCaptchaAvailable = !!captcha;
+
   const buttonText = texts?.buttonText || "Continue";
-  const loadingText = "Processing..."; // Default fallback
-  const captchaLabel = texts?.captchaCodePlaceholder.concat("*") || "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
+  const loadingText = "Processing...";
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
-  // Get general errors (not field-specific)
   const generalErrors =
     errors?.filter((error: any) => !error.field || error.field === null) || [];
 
@@ -50,9 +57,15 @@ const IdentifierForm: React.FC = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<LoginIdFormData>();
 
-  // Proper submit handler with form data
   const onSubmit = (data: LoginIdFormData) => {
-    handleLoginId(data.identifier, data.captcha);
+    if (isCaptchaAvailable && !validateCaptcha()) {
+      return;
+    }
+
+    const finalCaptchaValue =
+      captcha?.provider === "auth0" ? captchaValue : data.captcha;
+
+    handleLoginId(data.identifier, finalCaptchaValue);
   };
 
   const originalResetPasswordLink = links?.reset_password;
@@ -63,11 +76,12 @@ const IdentifierForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* General alerts at the top */}
-      {generalErrors.length > 0 && (
+      {(generalErrors.length > 0 || captchaError) && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: any, index: number) => (
             <Alert key={index} type="error" message={error.message} />
           ))}
+          {captchaError && <Alert type="error" message={captchaError} />}
         </div>
       )}
 
@@ -99,28 +113,8 @@ const IdentifierForm: React.FC = () => {
         }
       />
 
-      {isCaptchaAvailable && captchaImage && (
-        <CaptchaBox
-          className="mb-4"
-          id="captcha-input-login-id"
-          name="captcha"
-          label={captchaLabel}
-          imageUrl={captchaImage}
-          imageAltText={captchaImageAlt}
-          inputProps={{
-            ...register("captcha", {
-              required: "Please complete the CAPTCHA",
-              maxLength: {
-                value: 15,
-                message: "CAPTCHA too long",
-              },
-            }),
-          }}
-          error={
-            formErrors.captcha?.message || getFieldError("captcha", errors)
-          }
-        />
-      )}
+      {Captcha}
+
       <div className="text-left">
         {localizedResetPasswordLink && (
           <a
@@ -137,6 +131,7 @@ const IdentifierForm: React.FC = () => {
         fullWidth
         loadingText={loadingText}
         isLoading={isSubmitting}
+        disabled={isSubmitting}
       >
         {buttonText}
       </Button>
