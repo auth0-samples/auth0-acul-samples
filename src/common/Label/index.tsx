@@ -19,32 +19,31 @@ const Label = ({
   ...rest
 }: LabelProps) => {
   const unfloatedTextColor = isError
-    ? "[color:var(--ul-theme-color-error)]"
+    ? "text-error"
     : forceApplyFocusStyle
-      ? "![color:var(--ul-theme-color-links-focused-components)]"
-      : "[color:var(--ul-theme-color-input-labels-placeholders)]";
+      ? "!text-link-focus"
+      : "text-input-labels";
 
   const baseLabelStyles = cn(
+    "text-input-label [font-weight:var(--font-input-label)]",
     "absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-200 ease-in-out pointer-events-none origin-[0]",
     unfloatedTextColor,
   );
 
   const floatedTextColorForFilledOrForced = isError
-    ? "![color:var(--ul-theme-color-error)]"
-    : "![color:var(--ul-theme-color-links-focused-components)]";
+    ? "!text-error"
+    : "!text-link-focus";
 
   const floatedLabelStyles = cn(
     "peer-focus:scale-75 peer-focus:-translate-y-[1.18rem] peer-focus:top-2 peer-focus:z-10",
-    isError
-      ? "peer-focus:![color:var(--ul-theme-color-error)]"
-      : "peer-focus:![color:var(--ul-theme-color-links-focused-components)]",
+    isError ? "peer-focus:!text-error" : "peer-focus:!text-link-focus",
     "peer-[.is-forced-focus]:scale-75 peer-[.is-forced-focus]:-translate-y-[1.18rem] peer-[.is-forced-focus]:top-2 peer-[.is-forced-focus]:z-10",
     `peer-[.is-forced-focus]:${floatedTextColorForFilledOrForced}`,
     "peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-[1.18rem] peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:z-10",
     `peer-[:not(:placeholder-shown)]:${floatedTextColorForFilledOrForced}`,
-    "peer-focus:[background-color:var(--ul-theme-color-widget-background)] peer-focus:px-2",
-    "peer-[.is-forced-focus]:[background-color:var(--ul-theme-color-widget-background)] peer-[.is-forced-focus]:px-2",
-    "peer-[:not(:placeholder-shown)]:[background-color:var(--ul-theme-color-widget-background)] peer-[:not(:placeholder-shown)]:px-2",
+    "peer-focus:bg-widget-bg peer-focus:px-2",
+    "peer-[.is-forced-focus]:bg-widget-bg peer-[.is-forced-focus]:px-2",
+    "peer-[:not(:placeholder-shown)]:bg-widget-bg peer-[:not(:placeholder-shown)]:px-2",
   );
 
   return (

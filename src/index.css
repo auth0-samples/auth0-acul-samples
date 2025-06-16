@@ -63,6 +63,14 @@
   --font-button: var(--ul-theme-font-buttons-text-weight);
   --font-input-label: var(--ul-theme-font-input-labels-weight);
   --font-link: var(--ul-theme-font-links-weight);
+
+  /* Font weight utilities */
+  --font-weight-title: var(--ul-theme-font-title-weight);
+  --font-weight-subtitle: var(--ul-theme-font-subtitle-weight);
+  --font-weight-body: var(--ul-theme-font-body-text-weight);
+  --font-weight-button: var(--ul-theme-font-buttons-text-weight);
+  --font-weight-input-label: var(--ul-theme-font-input-labels-weight);
+  --font-weight-link: var(--ul-theme-font-links-weight);
 }
 
 :root {
