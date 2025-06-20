@@ -35,9 +35,7 @@ const AlternativeLogins: React.FC = () => {
             displayName="Passkey"
             buttonText={passkeyButtonText}
             iconComponent={
-              <span className="[color:var(--ul-theme-color-primary-button)]">
-                {getIcon("passkey")}
-              </span>
+              <span className="text-primary-button">{getIcon("passkey")}</span>
             }
             onClick={() => handlePasskeyLogin()}
           />

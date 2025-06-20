@@ -26,14 +26,23 @@ const SocialProviderButton = forwardRef<
   ) => {
     const dataTestId = `social-provider-button-${displayName.toLowerCase().replace(/\s+/g, "-")}`;
 
-    const baseStyles =
-      "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border [border-radius:var(--ul-theme-border-button-border-radius)] gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out focus:ring-4 focus:[--tw-ring-color:color-mix(in_srgb,var(--ul-theme-color-primary-button)_15%,transparent)]";
+    const baseStyles = [
+      "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px]",
+      "border rounded-button gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out",
+      "focus:ring-4 focus:ring-primary-button/15",
+      "text-button font-button",
+    ];
 
-    const enabledStyles =
-      "[background-color:var(--ul-theme-color-widget-background)] [border-color:var(--ul-theme-color-widget-border)] [color:var(--ul-theme-color-body-text)] hover:[background-color:color-mix(in_srgb,var(--ul-theme-color-widget-border)_20%,var(--ul-theme-color-widget-background))] focus:[background-color:color-mix(in_srgb,var(--ul-theme-color-primary-button)_15%,var(--ul-theme-color-widget-background))] cursor-pointer";
+    const enabledStyles = [
+      "bg-widget-bg border-widget-border text-body-text",
+      "hover:bg-widget-border/20 focus:bg-primary-button/15",
+      "cursor-pointer",
+    ];
 
-    const disabledStyles =
-      "[background-color:color-mix(in_srgb,var(--ul-theme-color-widget-border)_10%,transparent)] [border-color:color-mix(in_srgb,var(--ul-theme-color-widget-border)_50%,transparent)] [color:var(--ul-theme-color-input-labels-placeholders)] cursor-not-allowed";
+    const disabledStyles = [
+      "bg-widget-border/10 border-widget-border/50 text-input-labels",
+      "cursor-not-allowed",
+    ];
 
     return (
       <button
@@ -55,7 +64,7 @@ const SocialProviderButton = forwardRef<
             {iconComponent}
           </span>
         )}
-        <span className="overflow-hidden whitespace-nowrap text-ellipsis font-normal text-base">
+        <span className="overflow-hidden whitespace-nowrap text-ellipsis">
           {buttonText}
         </span>
       </button>

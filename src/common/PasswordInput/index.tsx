@@ -110,7 +110,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         >
           <Icon
             As={currentIcon}
-            className="h-5 w-5 [color:var(--ul-theme-color-icons)]"
+            className="h-5 w-5 text-icons"
             title={iconTitle}
           />
         </Button>
