@@ -25,7 +25,7 @@ const IdentifierForm: React.FC = () => {
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
   const loadingText = "Processing..."; // Default fallback
-  const captchaLabel = texts?.captchaCodePlaceholder.concat("*") || "CAPTCHA*";
+  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
