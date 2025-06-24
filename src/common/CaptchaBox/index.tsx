@@ -28,7 +28,6 @@ export interface CaptchaBoxProps {
   inputClassName?: string;
 }
 
-// No forwardRef needed - react-hook-form's register() provides the ref through inputProps
 const CaptchaBox: React.FC<CaptchaBoxProps> = ({
   label,
   name = "captcha",
@@ -70,7 +69,7 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
       {currentImageUrl && (
         <div
           className={cn(
-            "flex justify-center border [border-color:var(--ul-theme-color-widget-border)] [border-radius:var(--ul-theme-border-widget-corner-radius)] p-8 [background-color:var(--ul-theme-color-widget-background)]",
+            "flex justify-center border border-widget-border rounded-widget p-8 bg-widget-bg",
             imageWrapperClassName,
           )}
         >
