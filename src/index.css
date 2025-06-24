@@ -27,6 +27,9 @@
   --color-input-bg: var(--ul-theme-color-input-background);
   --color-page-bg: var(--ul-theme-page-bg-background-color);
 
+  /* Background images */
+  --image-page-bg: var(--ul-theme-page-bg-background-image-url);
+
   /* Border colors */
   --color-widget-border: var(--ul-theme-color-widget-border);
   --color-input-border: var(--ul-theme-color-input-border);
@@ -38,6 +41,9 @@
   --color-info: var(--ul-theme-color-primary-button);
   --color-icons: var(--ul-theme-color-icons);
 
+  /* Captcha theme */
+  --captcha-widget-theme: var(--ul-theme-color-captcha-widget-theme);
+
   /* Border radius - using CSS variables */
   --radius-button: var(--ul-theme-border-button-border-radius);
   --radius-input: var(--ul-theme-border-input-border-radius);
@@ -48,6 +54,15 @@
 
   /* Spacing tokens - semantic spacing for components */
   --spacing-widget-padding: 2.5rem; /* 40px - standard widget padding */
+
+  /* Widget */
+  --height-widget-logo: var(--ul-theme-widget-logo-height);
+  --justify-widget-logo: var(--ul-theme-widget-logo-position);
+  --text-align-header: var(--ul-theme-widget-header-text-alignment);
+  --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
+
+  /* Page Layout */
+  --justify-page-layout: var(--ul-theme-page-bg-page-layout);
 
   /* Typography */
   --text-title: var(--ul-theme-font-title-size);
@@ -126,6 +141,7 @@
   /* Page Background */
   --ul-theme-page-bg-page-layout: center;
   --ul-theme-page-bg-background-color: #bababa;
+  --ul-theme-page-bg-background-image-url: none;
 
   /* Widget */
   --ul-theme-widget-logo-position: center;
@@ -158,6 +174,10 @@
 body {
   margin: 0;
   background-color: var(--ul-theme-page-bg-background-color);
+  background-image: var(--ul-theme-page-bg-background-image-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--ul-theme-color-body-text);
   min-height: 100vh;
 }

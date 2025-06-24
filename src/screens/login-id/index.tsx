@@ -16,13 +16,28 @@ const LoginIdScreen: React.FC = () => {
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginIdInstance);
 
+  // Get social buttons layout from theme
+  const socialButtonsLayout =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--social-buttons-layout")
+      .trim() || "bottom";
+
+  // Get page layout from theme
+  const pageLayout =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--justify-page-layout")
+      .trim() || "center";
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-10 py-20">
+    <div className={`min-h-screen flex items-center px-20 py-20`} style={{ justifyContent: pageLayout }}>
       <Card className="w-full max-w-[400px]">
         <Header />
+        {socialButtonsLayout === "top" && <AlternativeLogins layout="top" />}
         <IdentifierForm />
         <Footer />
-        <AlternativeLogins />
+        {socialButtonsLayout === "bottom" && (
+          <AlternativeLogins layout="bottom" />
+        )}
       </Card>
     </div>
   );

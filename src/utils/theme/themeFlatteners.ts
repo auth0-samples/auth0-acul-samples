@@ -189,8 +189,23 @@ export function flattenPageBackground(
   if (pageBackground.background_color)
     result["--ul-theme-page-bg-background-color"] =
       pageBackground.background_color;
-  if (pageBackground.page_layout)
+  if (pageBackground.background_image_url) {
+    result["--ul-theme-page-bg-background-image-url"] = 
+      pageBackground.background_image_url === null || pageBackground.background_image_url === "" 
+        ? "none" 
+        : `url("${pageBackground.background_image_url}")`;
+  }
+  if (pageBackground.page_layout) {
     result["--ul-theme-page-bg-page-layout"] = pageBackground.page_layout;
+    
+    // Convert to CSS justify-content values for use with arbitrary properties
+    const layoutMap: Record<string, string> = {
+      "center": "center",
+      "left": "flex-start",
+      "right": "flex-end"
+    };
+    result["--justify-page-layout"] = layoutMap[pageBackground.page_layout] || "center";
+  }
 
   return result;
 }
@@ -201,8 +216,20 @@ export function flattenPageBackground(
 export function flattenWidget(widget: any): Record<string, string> {
   const result: Record<string, string> = {};
 
-  if (widget.logo_position)
+  // Logo position: convert Auth0 values to Tailwind justify values
+  if (widget.logo_position) {
     result["--ul-theme-widget-logo-position"] = widget.logo_position;
+
+    // Convert to Tailwind semantic variable
+    const positionMap: Record<string, string> = {
+      center: "center",
+      left: "flex-start",
+      right: "flex-end",
+      none: "none",
+    };
+    result["--justify-widget-logo"] =
+      positionMap[widget.logo_position] || "center";
+  }
   if (widget.logo_url)
     result["--ul-theme-widget-logo-url"] = `"${widget.logo_url}"`;
 
@@ -210,9 +237,20 @@ export function flattenWidget(widget: any): Record<string, string> {
   if (widget.logo_height)
     result["--ul-theme-widget-logo-height"] = `${widget.logo_height}px`;
 
-  if (widget.header_text_alignment)
+  // Header text alignment: convert Auth0 values to CSS text-align values
+  if (widget.header_text_alignment) {
     result["--ul-theme-widget-header-text-alignment"] =
       widget.header_text_alignment;
+
+    // Convert to CSS text-align values for use with arbitrary properties
+    const alignmentMap: Record<string, string> = {
+      center: "center",
+      left: "left",
+      right: "right",
+    };
+    result["--text-align-header"] =
+      alignmentMap[widget.header_text_alignment] || "center";
+  }
   if (widget.social_buttons_layout)
     result["--ul-theme-widget-social-buttons-layout"] =
       widget.social_buttons_layout;

@@ -44,7 +44,7 @@ function extractSettingsOverrides(screenInstance: any): Record<string, string> {
   // Essential variable mappings for precedence overrides
   const variableMapping = {
     "colors.primary": "--ul-theme-color-primary-button",
-    "colors.pageBackground": "--ul-theme-page-bg-background-color",
+    "colors.page_background": "--ul-theme-page-bg-background-color",
     logoUrl: "--ul-theme-widget-logo-url",
   };
 
@@ -64,7 +64,7 @@ function extractOrganizationOverrides(
   // Essential variable mappings for precedence overrides
   const variableMapping = {
     "colors.primary": "--ul-theme-color-primary-button",
-    "colors.pageBackground": "--ul-theme-page-bg-background-color",
+    "colors.page_background": "--ul-theme-page-bg-background-color",
     logoUrl: "--ul-theme-widget-logo-url",
   };
 

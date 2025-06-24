@@ -6,8 +6,13 @@ import type { SocialConnection } from "@/utils/helpers/socialUtils";
 import { getIcon } from "@/utils/helpers/iconUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
-// No props needed as it uses hooks internally
-const AlternativeLogins: React.FC = () => {
+interface AlternativeLoginsProps {
+  layout?: "top" | "bottom";
+}
+
+const AlternativeLogins: React.FC<AlternativeLoginsProps> = ({
+  layout = "top",
+}) => {
   const { loginIdInstance, handleSocialLogin, handlePasskeyLogin, texts } =
     useLoginIdManager();
 
@@ -26,7 +31,10 @@ const AlternativeLogins: React.FC = () => {
 
   return (
     <>
-      {showSeparator && <Separator text={separatorText} />}
+      {/* Separator at top when layout is bottom */}
+      {showSeparator && layout === "bottom" && (
+        <Separator text={separatorText} />
+      )}
 
       <div className="space-y-3 mt-4">
         {isPasskeyAvailable && (
@@ -55,6 +63,9 @@ const AlternativeLogins: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Separator at bottom when layout is top */}
+      {showSeparator && layout === "top" && <Separator text={separatorText} />}
     </>
   );
 };
