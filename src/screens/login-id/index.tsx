@@ -29,8 +29,11 @@ const LoginIdScreen: React.FC = () => {
       .trim() || "center";
 
   return (
-    <div className={`min-h-screen flex items-center px-20 py-20`} style={{ justifyContent: pageLayout }}>
-      <Card className="w-full max-w-[400px]">
+    <div
+      className={`min-h-screen flex items-center p-5`}
+      style={{ justifyContent: pageLayout }}
+    >
+      <Card className="w-full max-w-sm">
         <Header />
         {socialButtonsLayout === "top" && <AlternativeLogins layout="top" />}
         <IdentifierForm />

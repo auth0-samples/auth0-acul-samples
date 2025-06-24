@@ -1,70 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  /* Auth0 Theme Color Mappings - v4 CSS-first configuration */
+  /* Auth0 Theme */
 
-  /* Button colors */
+  /* Colors */
   --color-primary-button: var(--ul-theme-color-primary-button);
   --color-primary-button-label: var(--ul-theme-color-primary-button-label);
   --color-secondary-button-border: var(
     --ul-theme-color-secondary-button-border
   );
   --color-secondary-button-label: var(--ul-theme-color-secondary-button-label);
-
-  /* Interactive colors */
   --color-base-focus: var(--ul-theme-color-base-focus-color);
   --color-base-hover: var(--ul-theme-color-base-hover-color);
   --color-link-focus: var(--ul-theme-color-links-focused-components);
-
-  /* Text colors */
   --color-header: var(--ul-theme-color-header);
   --color-body-text: var(--ul-theme-color-body-text);
+  --color-widget-bg: var(--ul-theme-color-widget-background);
+  --color-widget-border: var(--ul-theme-color-widget-border);
   --color-input-labels: var(--ul-theme-color-input-labels-placeholders);
   --color-input-text: var(--ul-theme-color-input-filled-text);
-
-  /* Background colors */
-  --color-widget-bg: var(--ul-theme-color-widget-background);
-  --color-input-bg: var(--ul-theme-color-input-background);
-  --color-page-bg: var(--ul-theme-page-bg-background-color);
-
-  /* Background images */
-  --image-page-bg: var(--ul-theme-page-bg-background-image-url);
-
-  /* Border colors */
-  --color-widget-border: var(--ul-theme-color-widget-border);
   --color-input-border: var(--ul-theme-color-input-border);
-
-  /* Status colors */
+  --color-input-bg: var(--ul-theme-color-input-background);
+  --color-icons: var(--ul-theme-color-icons);
   --color-error: var(--ul-theme-color-error);
   --color-success: var(--ul-theme-color-success);
   --color-warning: var(--ul-theme-color-warning);
   --color-info: var(--ul-theme-color-primary-button);
-  --color-icons: var(--ul-theme-color-icons);
-
-  /* Captcha theme */
   --captcha-widget-theme: var(--ul-theme-color-captcha-widget-theme);
 
-  /* Border radius - using CSS variables */
+  /* Borders */
   --radius-button: var(--ul-theme-border-button-border-radius);
   --radius-input: var(--ul-theme-border-input-border-radius);
   --radius-widget: var(--ul-theme-border-widget-corner-radius);
-
-  /* Box shadow utilities - Auth0 controlled */
   --shadow-widget: var(--ul-theme-border-show-widget-shadow);
+  --border-button: var(--ul-theme-border-button-border-weight);
+  --border-input: var(--ul-theme-border-input-border-weight);
+  --border-widget: var(--ul-theme-border-widget-border-weight);
 
-  /* Spacing tokens - semantic spacing for components */
-  --spacing-widget-padding: 2.5rem; /* 40px - standard widget padding */
-
-  /* Widget */
-  --height-widget-logo: var(--ul-theme-widget-logo-height);
-  --justify-widget-logo: var(--ul-theme-widget-logo-position);
-  --text-align-header: var(--ul-theme-widget-header-text-alignment);
-  --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
-
-  /* Page Layout */
-  --justify-page-layout: var(--ul-theme-page-bg-page-layout);
-
-  /* Typography */
+  /* Font Sizes */
   --text-title: var(--ul-theme-font-title-size);
   --text-subtitle: var(--ul-theme-font-subtitle-size);
   --text-body: var(--ul-theme-font-body-text-size);
@@ -72,20 +45,37 @@
   --text-input-label: var(--ul-theme-font-input-labels-size);
   --text-link: var(--ul-theme-font-links-size);
 
-  --font-title: var(--ul-theme-font-title-weight);
-  --font-subtitle: var(--ul-theme-font-subtitle-weight);
-  --font-body: var(--ul-theme-font-body-text-weight);
-  --font-button: var(--ul-theme-font-buttons-text-weight);
-  --font-input-label: var(--ul-theme-font-input-labels-weight);
-  --font-link: var(--ul-theme-font-links-weight);
-
-  /* Font weight utilities */
+  /* Font Weights */
   --font-weight-title: var(--ul-theme-font-title-weight);
   --font-weight-subtitle: var(--ul-theme-font-subtitle-weight);
   --font-weight-body: var(--ul-theme-font-body-text-weight);
   --font-weight-button: var(--ul-theme-font-buttons-text-weight);
   --font-weight-input-label: var(--ul-theme-font-input-labels-weight);
   --font-weight-link: var(--ul-theme-font-links-weight);
+
+  /* Text Decoration */
+  --text-decoration-link: var(--ul-theme-font-links-style);
+
+  /* Page Background */
+  --color-page-bg: var(--ul-theme-page-bg-background-color);
+  --image-page-bg: var(--ul-theme-page-bg-background-image-url);
+  --justify-page-layout: var(--ul-theme-page-bg-page-layout);
+
+  /* Widget */
+  --height-widget-logo: var(--ul-theme-widget-logo-height);
+  --justify-widget-logo: var(--ul-theme-widget-logo-position);
+  --text-align-header: var(--ul-theme-widget-header-text-alignment);
+  --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
+
+  /* Layout */
+  --size-4: 1rem;
+  --size-5: 1.25rem;
+  --size-6: 1.5rem;
+  --size-8: 2rem;
+  --size-10: 2.5rem;
+  --size-20: 5rem;
+  --max-w-sm: 24rem;
+  --max-w-md: 28rem;
 }
 
 :root {

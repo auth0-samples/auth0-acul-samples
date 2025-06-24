@@ -100,7 +100,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
         {helpText && !error && (
           <div
             id={`${inputId}-help`}
-            className="mt-2 text-sm text-input-labels text-body font-body"
+            className="mt-2 text-sm text-input-labels [font-weight:var(--font-weight-body)]"
           >
             {helpText}
           </div>
@@ -111,7 +111,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           <div
             id={`${inputId}-error`}
             className={cn(
-              "flex items-center mt-2 text-sm text-error text-body font-body",
+              "flex items-center mt-2 text-sm text-error [font-weight:var(--font-weight-body)]",
               errorTextClassName,
             )}
             role="alert"

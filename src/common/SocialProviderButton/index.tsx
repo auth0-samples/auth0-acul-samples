@@ -30,7 +30,7 @@ const SocialProviderButton = forwardRef<
       "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px]",
       "border rounded-button gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out",
       "focus:ring-4 focus:ring-primary-button/15",
-      "text-button font-button",
+      "text-button [font-weight:var(--font-weight-button)]",
     ];
 
     const enabledStyles = [

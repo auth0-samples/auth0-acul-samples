@@ -41,7 +41,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     // Base styles
     const baseStyles =
-      "inline-flex items-center justify-center text-button font-button focus:outline-none transition-colors duration-150 ease-in-out";
+      "inline-flex items-center justify-center text-button [font-weight:var(--font-weight-button)] focus:outline-none transition-colors duration-150 ease-in-out";
 
     const cursorStyles =
       disabled || isLoading ? "cursor-not-allowed" : "cursor-pointer";

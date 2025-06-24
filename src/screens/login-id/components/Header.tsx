@@ -11,10 +11,10 @@ const Header: React.FC = () => {
   return (
     <>
       <Logo altText={logoAltText} />
-      <h1 className="text-2xl font-normal [text-align:var(--text-align-header)] [color:var(--ul-theme-color-header)] mt-6 mb-4">
+      <h1 className="text-title [font-weight:var(--font-weight-title)] text-header [text-align:var(--text-align-header)] mt-6 mb-4">
         {title}
       </h1>
-      <p className="[text-align:var(--text-align-header)] [color:var(--ul-theme-color-body-text)] text-sm mb-4">
+      <p className="text-body [font-weight:var(--font-weight-body)] text-body-text [text-align:var(--text-align-header)] mb-4">
         {description}
       </p>
     </>

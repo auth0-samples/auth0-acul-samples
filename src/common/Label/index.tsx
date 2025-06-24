@@ -25,7 +25,7 @@ const Label = ({
       : "text-input-labels";
 
   const baseLabelStyles = cn(
-    "text-input-label [font-weight:var(--font-input-label)]",
+    "text-input-label [font-weight:var(--font-weight-input-label)]",
     "absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-200 ease-in-out pointer-events-none origin-[0]",
     unfloatedTextColor,
   );

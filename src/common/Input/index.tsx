@@ -50,7 +50,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       "overflow-hidden text-ellipsis whitespace-nowrap",
       "disabled:opacity-50 disabled:cursor-not-allowed",
       // Typography using Auth0 tokens
-      "font-input-label",
+      "[font-weight:var(--font-weight-input-label)]",
     ];
 
     const sizeStyles = {
