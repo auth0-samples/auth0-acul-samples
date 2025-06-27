@@ -14,31 +14,22 @@ export interface AlertProps {
 }
 
 const Alert = ({ type, message, className, title }: AlertProps) => {
-  const baseStyles = "p-4 rounded-sm my-4";
-  let typeStyles = "";
-  let IconComponent: React.ElementType | null = null;
+  const baseStyles = ["p-4 rounded-widget my-4 border", "text-body font-body"];
 
-  switch (type) {
-    case "error":
-      typeStyles = "bg-error border border-error text-white";
-      break;
-    case "warning":
-      typeStyles = "bg-warning border border-warning text-white";
-      break;
-    case "success":
-      typeStyles = "bg-success border border-success text-white";
-      break;
-    case "info":
-      typeStyles = "bg-primary/10 border border-primary text-primary";
-      break;
-    default:
-      typeStyles = "bg-gray-mid/10 border border-gray-mid text-text-default";
-  }
+  const typeStyles = {
+    error: "bg-error border-error text-primary-button-label",
+    warning: "bg-warning border-warning text-body-text",
+    success: "bg-success border-success text-primary-button-label",
+    info: "bg-info border-info text-primary-button-label",
+  };
 
+  const selectedTypeStyles = typeStyles[type] || typeStyles.info;
   const messages = Array.isArray(message) ? message : [message];
 
+  const IconComponent: React.ElementType | null = null;
+
   return (
-    <div className={cn(baseStyles, typeStyles, className)} role="alert">
+    <div className={cn(baseStyles, selectedTypeStyles, className)} role="alert">
       <div className="flex">
         {IconComponent && (
           <div className="flex-shrink-0">
@@ -46,8 +37,8 @@ const Alert = ({ type, message, className, title }: AlertProps) => {
           </div>
         )}
         <div className={cn("ml-3 flex-1", !IconComponent && "ml-0")}>
-          {title && <h3 className="text-sm font-medium">{title}</h3>}
-          <div className={cn("text-sm", title && "mt-2")}>
+          {title && <h3 className="text-subtitle font-subtitle">{title}</h3>}
+          <div className={cn("text-body", title && "mt-2")}>
             {messages.length === 1 ? (
               <p>
                 {typeof messages[0] === "string"

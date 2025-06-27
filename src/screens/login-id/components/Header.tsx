@@ -10,11 +10,11 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <Logo imageClassName="h-13" altText={logoAltText} />
-      <h1 className="text-2xl font-normal text-center text-text-default mt-6 mb-4">
+      <Logo altText={logoAltText} />
+      <h1 className="text-title [font-weight:var(--font-weight-title)] text-header [text-align:var(--text-align-header)] mt-6 mb-4">
         {title}
       </h1>
-      <p className="text-center text-text-default text-sm mb-4">
+      <p className="text-body [font-weight:var(--font-weight-body)] text-body-text [text-align:var(--text-align-header)] mb-4">
         {description}
       </p>
     </>

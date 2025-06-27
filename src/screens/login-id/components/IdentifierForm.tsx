@@ -121,11 +121,12 @@ const IdentifierForm: React.FC = () => {
           }
         />
       )}
+
       <div className="text-left">
         {localizedResetPasswordLink && (
           <a
             href={localizedResetPasswordLink}
-            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
+            className="text-link [font-weight:var(--font-weight-link)] text-link-focus hover:opacity-80 focus:bg-base-focus/15 focus:rounded [text-decoration:var(--text-decoration-link)]"
           >
             {forgotPasswordText}
           </a>

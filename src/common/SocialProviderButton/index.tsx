@@ -26,14 +26,23 @@ const SocialProviderButton = forwardRef<
   ) => {
     const dataTestId = `social-provider-button-${displayName.toLowerCase().replace(/\s+/g, "-")}`;
 
-    const baseStyles =
-      "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] border rounded gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out focus:ring-4 focus:ring-primary/15";
+    const baseStyles = [
+      "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px]",
+      "border rounded-button gap-x-4 focus:outline-none transition-colors duration-150 ease-in-out",
+      "focus:ring-4 focus:ring-primary-button/15",
+      "text-button [font-weight:var(--font-weight-button)]",
+    ];
 
-    const enabledStyles =
-      "bg-white border-gray-mid text-text-default hover:bg-gray-mid/20 focus:bg-primary/15 cursor-pointer";
+    const enabledStyles = [
+      "bg-widget-bg border-widget-border text-body-text",
+      "hover:bg-widget-border/20 focus:bg-primary-button/15",
+      "cursor-pointer",
+    ];
 
-    const disabledStyles =
-      "bg-gray-mid/10 border-gray-mid/50 text-text-secondary cursor-not-allowed";
+    const disabledStyles = [
+      "bg-widget-border/10 border-widget-border/50 text-input-labels",
+      "cursor-not-allowed",
+    ];
 
     return (
       <button
@@ -55,7 +64,7 @@ const SocialProviderButton = forwardRef<
             {iconComponent}
           </span>
         )}
-        <span className="overflow-hidden whitespace-nowrap text-ellipsis font-normal text-base">
+        <span className="overflow-hidden whitespace-nowrap text-ellipsis">
           {buttonText}
         </span>
       </button>

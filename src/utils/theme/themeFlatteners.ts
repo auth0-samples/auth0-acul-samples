@@ -1,4 +1,24 @@
 /**
+ * This module handles the conversion of Auth0 branding data structures into
+ * CSS custom properties (variables) with proper unit conversions and formatting.
+ *
+ * KEY RESPONSIBILITIES:
+ * - Convert Auth0 nested objects to flat CSS variable mappings
+ * - Apply proper unit conversions (percentages to rem, numbers to px, etc.)
+ * - Handle special formatting for URLs, shadows, and layout values
+ * - Maintain consistent naming convention: --ul-theme-{category}-{property}
+ *
+ * UNIT CONVERSION EXAMPLES:
+ * - Font sizes: 150% → 1.5rem, 87.5% → 0.875rem
+ * - Font weights: true → 700, false → 400
+ * - URLs: "url" → "url" (quoted for CSS)
+ *
+ * USAGE FLOW:
+ * Branding Data from ACUL SDK → Flattener Functions → CSS Variables → DOM Injection
+ *
+ */
+
+/**
  * Flatten color data to CSS variables
  */
 export function flattenColors(colors: any): Record<string, string> {
@@ -81,11 +101,11 @@ export function flattenBorders(borders: any): Record<string, string> {
   if (borders.inputs_style)
     result["--ul-theme-border-inputs-style"] = borders.inputs_style;
 
-  // Boolean/numeric values for shadow - convert boolean to numeric for CSS
+  // Boolean/numeric values for shadow - convert boolean to actual shadow values
   if (borders.show_widget_shadow !== undefined)
     result["--ul-theme-border-show-widget-shadow"] = borders.show_widget_shadow
-      ? "1"
-      : "0";
+      ? "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+      : "none";
 
   return result;
 }
@@ -101,75 +121,27 @@ export function flattenFonts(fonts: any): Record<string, string> {
     result["--ul-theme-font-reference-text-size"] =
       `${fonts.reference_text_size}px`;
 
-  // Font sizes are percentages that need to be converted to rem
-  if (fonts.title?.size) {
-    const sizePercent = fonts.title.size as number;
-    const remValue = sizePercent / 100;
-    result["--ul-theme-font-title-size"] = `${remValue}rem`;
-  }
+  // Helper function to process font size and weight for each font type
+  const processFontType = (fontData: any, fontType: string): void => {
+    if (fontData?.size) {
+      const sizePercent = fontData.size as number;
+      const remValue = sizePercent / 100;
+      result[`--ul-theme-font-${fontType}-size`] = `${remValue}rem`;
+    }
 
-  if (fonts.subtitle?.size) {
-    const sizePercent = fonts.subtitle.size as number;
-    const remValue = sizePercent / 100;
-    result["--ul-theme-font-subtitle-size"] = `${remValue}rem`;
-  }
+    if (fontData?.bold !== undefined) {
+      result[`--ul-theme-font-${fontType}-weight`] = fontData.bold
+        ? "700"
+        : "400";
+    }
+  };
 
-  if (fonts.body_text?.size) {
-    const sizePercent = fonts.body_text.size as number;
-    const remValue = sizePercent / 100;
-    result["--ul-theme-font-body-text-size"] = `${remValue}rem`;
-  }
-
-  if (fonts.buttons_text?.size) {
-    const sizePercent = fonts.buttons_text.size as number;
-    const remValue = sizePercent / 100;
-    result["--ul-theme-font-buttons-text-size"] = `${remValue}rem`;
-  }
-
-  if (fonts.input_labels?.size) {
-    const sizePercent = fonts.input_labels.size as number;
-    const remValue = sizePercent / 100;
-    result["--ul-theme-font-input-labels-size"] = `${remValue}rem`;
-  }
-
-  if (fonts.links?.size) {
-    const sizePercent = fonts.links.size as number;
-    const remValue = sizePercent / 100;
-    result["--ul-theme-font-links-size"] = `${remValue}rem`;
-  }
-
-  // Font weights: convert boolean bold to numeric weights
-  if (fonts.title?.bold !== undefined) {
-    result["--ul-theme-font-title-weight"] = fonts.title.bold ? "700" : "400";
-  }
-
-  if (fonts.subtitle?.bold !== undefined) {
-    result["--ul-theme-font-subtitle-weight"] = fonts.subtitle.bold
-      ? "700"
-      : "400";
-  }
-
-  if (fonts.body_text?.bold !== undefined) {
-    result["--ul-theme-font-body-text-weight"] = fonts.body_text.bold
-      ? "700"
-      : "400";
-  }
-
-  if (fonts.buttons_text?.bold !== undefined) {
-    result["--ul-theme-font-buttons-text-weight"] = fonts.buttons_text.bold
-      ? "700"
-      : "400";
-  }
-
-  if (fonts.input_labels?.bold !== undefined) {
-    result["--ul-theme-font-input-labels-weight"] = fonts.input_labels.bold
-      ? "700"
-      : "400";
-  }
-
-  if (fonts.links?.bold !== undefined) {
-    result["--ul-theme-font-links-weight"] = fonts.links.bold ? "700" : "400";
-  }
+  processFontType(fonts.title, "title");
+  processFontType(fonts.subtitle, "subtitle");
+  processFontType(fonts.body_text, "body-text");
+  processFontType(fonts.buttons_text, "buttons-text");
+  processFontType(fonts.input_labels, "input-labels");
+  processFontType(fonts.links, "links");
 
   // Links style (normal/italic)
   if (fonts.links_style)
@@ -189,8 +161,25 @@ export function flattenPageBackground(
   if (pageBackground.background_color)
     result["--ul-theme-page-bg-background-color"] =
       pageBackground.background_color;
-  if (pageBackground.page_layout)
+  if (pageBackground.background_image_url) {
+    result["--ul-theme-page-bg-background-image-url"] =
+      pageBackground.background_image_url === null ||
+      pageBackground.background_image_url === ""
+        ? "none"
+        : `url("${pageBackground.background_image_url}")`;
+  }
+  if (pageBackground.page_layout) {
     result["--ul-theme-page-bg-page-layout"] = pageBackground.page_layout;
+
+    // Convert to CSS justify-content values for use with arbitrary properties
+    const layoutMap: Record<string, string> = {
+      center: "center",
+      left: "flex-start",
+      right: "flex-end",
+    };
+    result["--justify-page-layout"] =
+      layoutMap[pageBackground.page_layout] || "center";
+  }
 
   return result;
 }
@@ -201,8 +190,20 @@ export function flattenPageBackground(
 export function flattenWidget(widget: any): Record<string, string> {
   const result: Record<string, string> = {};
 
-  if (widget.logo_position)
+  // Logo position: convert Auth0 values to Tailwind justify values
+  if (widget.logo_position) {
     result["--ul-theme-widget-logo-position"] = widget.logo_position;
+
+    // Convert to Tailwind semantic variable
+    const positionMap: Record<string, string> = {
+      center: "center",
+      left: "flex-start",
+      right: "flex-end",
+      none: "none",
+    };
+    result["--justify-widget-logo"] =
+      positionMap[widget.logo_position] || "center";
+  }
   if (widget.logo_url)
     result["--ul-theme-widget-logo-url"] = `"${widget.logo_url}"`;
 
@@ -210,9 +211,20 @@ export function flattenWidget(widget: any): Record<string, string> {
   if (widget.logo_height)
     result["--ul-theme-widget-logo-height"] = `${widget.logo_height}px`;
 
-  if (widget.header_text_alignment)
+  // Header text alignment: convert Auth0 values to CSS text-align values
+  if (widget.header_text_alignment) {
     result["--ul-theme-widget-header-text-alignment"] =
       widget.header_text_alignment;
+
+    // Convert to CSS text-align values for use with arbitrary properties
+    const alignmentMap: Record<string, string> = {
+      center: "center",
+      left: "left",
+      right: "right",
+    };
+    result["--text-align-header"] =
+      alignmentMap[widget.header_text_alignment] || "center";
+  }
   if (widget.social_buttons_layout)
     result["--ul-theme-widget-social-buttons-layout"] =
       widget.social_buttons_layout;

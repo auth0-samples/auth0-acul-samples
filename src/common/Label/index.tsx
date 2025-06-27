@@ -21,28 +21,29 @@ const Label = ({
   const unfloatedTextColor = isError
     ? "text-error"
     : forceApplyFocusStyle
-      ? "!text-link"
-      : "text-text-secondary";
+      ? "!text-link-focus"
+      : "text-input-labels";
 
   const baseLabelStyles = cn(
+    "text-input-label [font-weight:var(--font-weight-input-label)]",
     "absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-200 ease-in-out pointer-events-none origin-[0]",
     unfloatedTextColor,
   );
 
   const floatedTextColorForFilledOrForced = isError
     ? "!text-error"
-    : "!text-link";
+    : "!text-link-focus";
 
   const floatedLabelStyles = cn(
     "peer-focus:scale-75 peer-focus:-translate-y-[1.18rem] peer-focus:top-2 peer-focus:z-10",
-    isError ? "peer-focus:!text-error" : "peer-focus:!text-link",
+    isError ? "peer-focus:!text-error" : "peer-focus:!text-link-focus",
     "peer-[.is-forced-focus]:scale-75 peer-[.is-forced-focus]:-translate-y-[1.18rem] peer-[.is-forced-focus]:top-2 peer-[.is-forced-focus]:z-10",
     `peer-[.is-forced-focus]:${floatedTextColorForFilledOrForced}`,
     "peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-[1.18rem] peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:z-10",
     `peer-[:not(:placeholder-shown)]:${floatedTextColorForFilledOrForced}`,
-    "peer-focus:bg-background-widget peer-focus:px-2",
-    "peer-[.is-forced-focus]:bg-background-widget peer-[.is-forced-focus]:px-2",
-    "peer-[:not(:placeholder-shown)]:bg-background-widget peer-[:not(:placeholder-shown)]:px-2",
+    "peer-focus:bg-widget-bg peer-focus:px-2",
+    "peer-[.is-forced-focus]:bg-widget-bg peer-[.is-forced-focus]:px-2",
+    "peer-[:not(:placeholder-shown)]:bg-widget-bg peer-[:not(:placeholder-shown)]:px-2",
   );
 
   return (

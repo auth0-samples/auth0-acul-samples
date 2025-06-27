@@ -10,8 +10,8 @@ export interface SeparatorProps {
 const Separator = ({
   text,
   className = "my-6",
-  textClassName = "px-2 text-xs text-text-default uppercase",
-  lineClassName = "border-gray-mid",
+  textClassName = "px-2 text-xs text-body-text uppercase",
+  lineClassName = "border-widget-border",
 }: SeparatorProps) => {
   if (text) {
     return (

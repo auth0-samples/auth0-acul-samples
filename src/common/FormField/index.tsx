@@ -73,10 +73,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
     return (
       <div className={className}>
         <div
-          className={cn(
-            "relative mt-1 rounded-md shadow-sm",
-            inputWrapperClassName,
-          )}
+          className={cn("relative mt-1 rounded-input", inputWrapperClassName)}
         >
           <div className="relative w-full">
             <Input ref={ref} {...enhancedInputProps} />
@@ -89,8 +86,8 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
             {inputIcon && (
               <div
                 className={cn(
-                  "absolute inset-y-0 right-0 flex items-center rounded-r-md mt-px mt-3",
-                  isParentFocused && "bg-primary/15",
+                  "absolute inset-y-0 right-0 flex items-center justify-center pr-2 rounded-r-input",
+                  isParentFocused && "bg-primary-button/15",
                 )}
               >
                 {inputIcon}
@@ -103,7 +100,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
         {helpText && !error && (
           <div
             id={`${inputId}-help`}
-            className="mt-2 text-sm text-text-secondary"
+            className="mt-2 text-sm text-input-labels [font-weight:var(--font-weight-body)]"
           >
             {helpText}
           </div>
@@ -114,7 +111,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           <div
             id={`${inputId}-error`}
             className={cn(
-              "flex items-center mt-2 text-sm text-error",
+              "flex items-center mt-2 text-sm text-error [font-weight:var(--font-weight-body)]",
               errorTextClassName,
             )}
             role="alert"

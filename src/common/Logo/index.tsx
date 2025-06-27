@@ -13,19 +13,34 @@ const Logo: React.FC<LogoProps> = ({
   className,
   imageClassName,
 }) => {
-  // Get logo URL from CSS variable (theme system sets this)
-  const getCSSVariable = (varName: string): string => {
+  // Get logo URL from Auth0 theme system
+  const getThemeLogoUrl = (): string => {
     return getComputedStyle(document.documentElement)
-      .getPropertyValue(varName)
+      .getPropertyValue("--ul-theme-widget-logo-url")
       .trim()
-      .replace(/^"(.*)"$/, "$1"); // Remove quotes
+      .replace(/^"(.*)"$/, "$1"); // Remove quotes from CSS string
   };
 
-  const logoFromCSS = getCSSVariable("--ul-theme-widget-logo-url");
-  const logoSrc = imageUrl || logoFromCSS;
+  // Get logo position from Auth0 theme system (via Tailwind semantic variable)
+  const getLogoPosition = (): string => {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue("--ul-theme-widget-logo-position")
+      .trim();
+  };
+
+  const logoSrc = imageUrl || getThemeLogoUrl();
+  const logoPosition = getLogoPosition();
+
+  // Hide logo completely when position is "none"
+  if (logoPosition === "none") {
+    return null;
+  }
 
   return (
-    <div className={cn("flex justify-center items-center mb-6", className)}>
+    <div
+      className={cn("flex items-center mb-6", className)}
+      style={{ justifyContent: "var(--justify-widget-logo)" }}
+    >
       <img
         src={logoSrc}
         alt={altText}
@@ -33,7 +48,7 @@ const Logo: React.FC<LogoProps> = ({
         decoding="async"
         fetchPriority="high"
         className={cn(
-          "object-contain max-w-full max-h-full aspect-square",
+          "object-contain max-w-full aspect-square h-widget-logo",
           imageClassName,
         )}
       />
