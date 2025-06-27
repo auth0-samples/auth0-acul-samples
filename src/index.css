@@ -4,7 +4,9 @@
   /* Auth0 Theme */
 
   /* Colors */
-  --color-primary-button: var(--ul-theme-color-primary-button);
+  --color-primary-button: var(
+    --ul-theme-color-primary-button
+  ); /* custom token */
   --color-primary-button-label: var(--ul-theme-color-primary-button-label);
   --color-secondary-button-border: var(
     --ul-theme-color-secondary-button-border
