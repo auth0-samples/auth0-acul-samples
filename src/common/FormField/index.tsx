@@ -5,7 +5,7 @@ import Input from "@/common/Input";
 import type { InputProps } from "@/common/Input";
 import Icon from "@/common/Icon";
 import { ExclamationCircleIcon } from "@/assets/icons";
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 
 export interface FormFieldProps {
   labelProps: LabelProps;

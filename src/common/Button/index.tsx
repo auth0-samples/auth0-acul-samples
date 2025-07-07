@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 import type { IconProps } from "@/common/Icon";
 
 export interface ButtonProps

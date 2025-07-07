@@ -1,5 +1,5 @@
 import { forwardRef, useId, useState, useCallback } from "react";
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 import Button from "@/common/Button";
 import { EyeIcon, EyeSlashIcon } from "@/assets/icons";
 import Icon from "@/common/Icon";

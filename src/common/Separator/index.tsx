@@ -1,4 +1,4 @@
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 
 export interface SeparatorProps {
   text?: string; // Optional text to display in the middle of the separator

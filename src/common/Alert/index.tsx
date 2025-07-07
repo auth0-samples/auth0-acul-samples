@@ -1,6 +1,6 @@
 import React from "react";
 import Icon from "@/common/Icon";
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 
 export interface ErrorMessage {
   message: string;

@@ -1,6 +1,84 @@
 @import "tailwindcss";
 
 @theme {
+  /* Auth0 Theme */
+
+  /* Colors */
+  --color-primary-button: var(
+    --ul-theme-color-primary-button
+  ); /* custom token */
+  --color-primary-button-label: var(--ul-theme-color-primary-button-label);
+  --color-secondary-button-border: var(
+    --ul-theme-color-secondary-button-border
+  );
+  --color-secondary-button-label: var(--ul-theme-color-secondary-button-label);
+  --color-base-focus: var(--ul-theme-color-base-focus-color);
+  --color-base-hover: var(--ul-theme-color-base-hover-color);
+  --color-link-focus: var(--ul-theme-color-links-focused-components);
+  --color-header: var(--ul-theme-color-header);
+  --color-body-text: var(--ul-theme-color-body-text);
+  --color-widget-bg: var(--ul-theme-color-widget-background);
+  --color-widget-border: var(--ul-theme-color-widget-border);
+  --color-input-labels: var(--ul-theme-color-input-labels-placeholders);
+  --color-input-text: var(--ul-theme-color-input-filled-text);
+  --color-input-border: var(--ul-theme-color-input-border);
+  --color-input-bg: var(--ul-theme-color-input-background);
+  --color-icons: var(--ul-theme-color-icons);
+  --color-error: var(--ul-theme-color-error);
+  --color-success: var(--ul-theme-color-success);
+  --color-warning: var(--ul-theme-color-warning);
+  --color-info: var(--ul-theme-color-primary-button);
+  --captcha-widget-theme: var(--ul-theme-color-captcha-widget-theme);
+
+  /* Borders */
+  --radius-button: var(--ul-theme-border-button-border-radius);
+  --radius-input: var(--ul-theme-border-input-border-radius);
+  --radius-widget: var(--ul-theme-border-widget-corner-radius);
+  --shadow-widget: var(--ul-theme-border-show-widget-shadow);
+  --border-button: var(--ul-theme-border-button-border-weight);
+  --border-input: var(--ul-theme-border-input-border-weight);
+  --border-widget: var(--ul-theme-border-widget-border-weight);
+
+  /* Font Sizes */
+  --text-title: var(--ul-theme-font-title-size);
+  --text-subtitle: var(--ul-theme-font-subtitle-size);
+  --text-body: var(--ul-theme-font-body-text-size);
+  --text-button: var(--ul-theme-font-buttons-text-size);
+  --text-input-label: var(--ul-theme-font-input-labels-size);
+  --text-link: var(--ul-theme-font-links-size);
+
+  /* Font Weights */
+  --font-weight-title: var(--ul-theme-font-title-weight);
+  --font-weight-subtitle: var(--ul-theme-font-subtitle-weight);
+  --font-weight-body: var(--ul-theme-font-body-text-weight);
+  --font-weight-button: var(--ul-theme-font-buttons-text-weight);
+  --font-weight-input-label: var(--ul-theme-font-input-labels-weight);
+  --font-weight-link: var(--ul-theme-font-links-weight);
+
+  /* Text Decoration */
+  --text-decoration-link: var(--ul-theme-font-links-style);
+
+  /* Page */
+  --justify-page-layout: var(--ul-theme-page-bg-page-layout);
+
+  /* Widget */
+  --height-widget-logo: var(--ul-theme-widget-logo-height);
+  --justify-widget-logo: var(--ul-theme-widget-logo-position);
+  --text-align-header: var(--ul-theme-widget-header-text-alignment);
+  --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
+
+  /* Layout */
+  --size-4: 1rem;
+  --size-5: 1.25rem;
+  --size-6: 1.5rem;
+  --size-8: 2rem;
+  --size-10: 2.5rem;
+  --size-20: 5rem;
+  --max-w-sm: 24rem;
+  --max-w-md: 28rem;
+}
+
+:root {
   /* Colors */
   --ul-theme-color-primary-button: #635dff;
   --ul-theme-color-primary-button-label: #ffffff;
@@ -20,6 +98,7 @@
   --ul-theme-color-icons: #65676e;
   --ul-theme-color-error: #d03c38;
   --ul-theme-color-success: #13a688;
+  --ul-theme-color-warning: #ffdb5f;
   --ul-theme-color-captcha-widget-theme: dark;
 
   /* Borders */
@@ -52,6 +131,7 @@
   /* Page Background */
   --ul-theme-page-bg-page-layout: center;
   --ul-theme-page-bg-background-color: #bababa;
+  --ul-theme-page-bg-background-image-url: none;
 
   /* Widget */
   --ul-theme-widget-logo-position: center;
@@ -60,22 +140,6 @@
   --ul-theme-widget-header-text-alignment: center;
   --ul-theme-widget-social-buttons-layout: bottom;
 
-  /* Legacy variables for backward compatibility */
-  --color-primary: var(--ul-theme-color-primary-button);
-  --color-link: var(--ul-theme-color-links-focused-components);
-  --color-error: var(--ul-theme-color-error);
-  --color-success: var(--ul-theme-color-success);
-  --color-warning: #ffdb5f;
-  --color-text-default: var(--ul-theme-color-body-text);
-  --color-text-secondary: var(--ul-theme-color-input-labels-placeholders);
-  --color-background-page: var(--ul-theme-page-bg-background-color);
-  --color-background-widget: var(--ul-theme-color-widget-background);
-  --color-gray-mid: var(--ul-theme-color-widget-border);
-  --color-gray-darkest: #2d333a;
-  --height-13: 3.25rem;
-}
-
-:root {
   /* Global base styles not directly tied to Tailwind utility names */
   font-family:
     ui-sans-serif,
@@ -100,6 +164,10 @@
 body {
   margin: 0;
   background-color: var(--ul-theme-page-bg-background-color);
+  background-image: var(--ul-theme-page-bg-background-image-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--ul-theme-color-body-text);
   min-height: 100vh;
 }

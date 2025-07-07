@@ -1,4 +1,4 @@
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 
 interface LogoProps {
   imageUrl?: string;

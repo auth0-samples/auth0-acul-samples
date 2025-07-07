@@ -1,7 +1,7 @@
 import FormField from "@/common/FormField";
 import type { InputProps } from "@/common/Input";
 import type { LabelProps } from "@/common/Label";
-import { cn } from "@/utils/helpers/cn";
+import { cn } from "@/lib/utils";
 
 export interface CaptchaBoxProps {
   label: string;
