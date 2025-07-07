@@ -49,6 +49,17 @@ const PRECEDENCE_VARIABLE_MAPPING = {
 /**
  * Main theme application function
  * Applies Auth0 branding data as CSS variables with proper precedence
+ * USAGE PATTERN:
+ * ```typescript
+ * // In any Auth0 screen component
+ * import { applyAuth0Theme } from "@/utils/theme";
+ *
+ * function LoginScreen() {
+ *   const { screenInstance } = useScreenManager();
+ *   applyAuth0Theme(screenInstance); // Apply theme when screen loads
+ *   return <div>...</div>;
+ * }
+ * ```
  */
 export function applyAuth0Theme(screenInstance: any): void {
   if (!screenInstance?.branding) {
