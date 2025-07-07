@@ -4,10 +4,12 @@ import Button from "@/common/Button";
 import Alert from "@/common/Alert";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
+// import { FormField as UDSFormField } from "@/components/ui/form-field";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import InputWrapper from "@/common/FormFieldWrapper";
 
 interface LoginIdFormData {
   identifier: string;
@@ -60,6 +62,13 @@ const IdentifierForm: React.FC = () => {
     originalResetPasswordLink,
   );
 
+  const formError =
+    formErrors.identifier?.message ||
+    getFieldError("identifier", errors) ||
+    getFieldError("email", errors) ||
+    getFieldError("phone", errors) ||
+    getFieldError("username", errors);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* General alerts at the top */}
@@ -70,6 +79,31 @@ const IdentifierForm: React.FC = () => {
           ))}
         </div>
       )}
+
+      <InputWrapper
+        className="mb-4"
+        label={identifierLabel}
+        id="identifier-login-id"
+        type={identifierType}
+        autoComplete={identifierAutoComplete}
+        autoFocus
+        {...register("identifier", {
+          required: "This field is required",
+          maxLength: {
+            value: 100,
+            message: "Maximum 100 characters allowed",
+          },
+        })}
+        error={!!formError}
+        errorMessage={formErrors.identifier?.message ||
+          getFieldError("identifier", errors) ||
+          getFieldError("email", errors) ||
+          getFieldError("phone", errors) ||
+          getFieldError("username", errors)}
+        variant="default"
+      />
+
+      {/* <UDSFormField label={identifierLabel} variant="default" error={true} /> */}
 
       <FormField
         className="mb-4"

@@ -30,7 +30,7 @@ const LoginIdScreen: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen flex items-center p-5`}
+      className={`min-h-screen flex items-center p-5 theme-universal`}
       style={{ justifyContent: pageLayout }}
     >
       <Card className="w-full max-w-sm">
