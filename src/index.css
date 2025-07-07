@@ -80,6 +80,16 @@
   --max-w-md: 28rem;
 }
 
+
+
+/* Define the custom variant using @custom-variant */
+@custom-variant theme-universal {
+  &.theme-universal {
+    @slot;
+  }
+}
+  
+
 :root {
   /* Colors */
   --ul-theme-color-primary-button: #635dff;
