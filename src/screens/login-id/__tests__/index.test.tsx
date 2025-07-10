@@ -6,12 +6,13 @@ import {
   MockConfigUtils,
   CommonTestData,
 } from "@/test/utils/screen-test-utils";
+import { MockLoginIdInstance } from "@/__mocks__/@auth0/auth0-acul-js/login-id";
 
 // Mock the Auth0 SDK
 const MockedLoginIdInstance = LoginIdInstance as unknown as jest.Mock;
 
 describe("LoginIdScreen", () => {
-  let mockInstance: any;
+  let mockInstance: MockLoginIdInstance;
 
   beforeEach(() => {
     MockedLoginIdInstance.mockClear();
@@ -49,9 +50,11 @@ describe("LoginIdScreen", () => {
   });
 
   describe("Basic Screen Rendering", () => {
-    it("should render the login screen with default content", () => {
+    beforeEach(() => {
       render(<LoginIdScreen />);
+    });
 
+    it("should render the login screen with default content", () => {
       expect(screen.getByText("Mock Welcome Title")).toBeInTheDocument();
       expect(screen.getByText("Mock description text.")).toBeInTheDocument();
       expect(
@@ -60,367 +63,381 @@ describe("LoginIdScreen", () => {
     });
 
     it("should render identifier input with correct label", () => {
-      render(<LoginIdScreen />);
-
       expect(
         screen.getByLabelText("Username or Email Address*"),
       ).toBeInTheDocument();
     });
 
     it("should render forgot password link when available", () => {
-      render(<LoginIdScreen />);
-
       expect(screen.getByText("Can't log in?")).toBeInTheDocument();
     });
 
     it("should render signup link when available", () => {
-      render(<LoginIdScreen />);
-
       expect(screen.getByText("Sign up")).toBeInTheDocument();
     });
   });
 
   describe("Identifier Input Variations", () => {
-    it("should show email-only input when only email is allowed", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        allowedIdentifiers: CommonTestData.identifierTypes.emailOnly,
+    describe("when only email is allowed", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureTransaction(mockInstance, {
+          allowedIdentifiers: CommonTestData.identifierTypes.emailOnly,
+        });
+        render(<LoginIdScreen />);
       });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByLabelText("Email Address*")).toBeInTheDocument();
+      it("should show email-only input", () => {
+        expect(screen.getByLabelText("Email Address*")).toBeInTheDocument();
+      });
     });
 
-    it("should show username-only input when only username is allowed", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        allowedIdentifiers: CommonTestData.identifierTypes.usernameOnly,
+    describe("when only username is allowed", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureTransaction(mockInstance, {
+          allowedIdentifiers: CommonTestData.identifierTypes.usernameOnly,
+        });
+        render(<LoginIdScreen />);
       });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByLabelText("Username*")).toBeInTheDocument();
+      it("should show username-only input", () => {
+        expect(screen.getByLabelText("Username*")).toBeInTheDocument();
+      });
     });
 
-    it("should show phone-only input when only phone is allowed", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        allowedIdentifiers: CommonTestData.identifierTypes.phoneOnly,
+    describe("when only phone is allowed", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureTransaction(mockInstance, {
+          allowedIdentifiers: CommonTestData.identifierTypes.phoneOnly,
+        });
+        render(<LoginIdScreen />);
       });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByLabelText("Phone Number*")).toBeInTheDocument();
+      it("should show phone-only input", () => {
+        expect(screen.getByLabelText("Phone Number*")).toBeInTheDocument();
+      });
     });
   });
 
   describe("Form Submission", () => {
-    it("should call login method with correct parameters", async () => {
-      render(<LoginIdScreen />);
+    describe("with a standard login", () => {
+      beforeEach(() => {
+        render(<LoginIdScreen />);
+      });
 
-      await ScreenTestUtils.fillInput(
-        /username|email|phone/i,
-        "test@example.com",
-      );
-      await ScreenTestUtils.clickButton("Mock Continue");
+      it("should call the login method with correct parameters", async () => {
+        await ScreenTestUtils.fillInput(
+          /username|email|phone/i,
+          "test@example.com",
+        );
+        await ScreenTestUtils.clickButton("Mock Continue");
 
-      expect(mockInstance.login).toHaveBeenCalledWith({
-        username: "test@example.com",
-        captcha: undefined,
+        expect(mockInstance.login).toHaveBeenCalledWith({
+          username: "test@example.com",
+          captcha: undefined,
+        });
       });
     });
 
-    it("should include captcha value when present", async () => {
-      mockInstance.screen.captcha = {
-        provider: "auth0",
-        image: "data:image/png;base64,mockimage",
-      };
+    describe("when a captcha is present", () => {
+      beforeEach(() => {
+        mockInstance.screen.captcha = {
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        };
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
+      it("should include the captcha value in the submission", async () => {
+        await ScreenTestUtils.fillInput(
+          /username|email|phone/i,
+          "test@example.com",
+        );
+        await ScreenTestUtils.fillInput(
+          /enter the code shown above/i,
+          "ABC123",
+        );
+        await ScreenTestUtils.clickButton("Mock Continue");
 
-      await ScreenTestUtils.fillInput(
-        /username|email|phone/i,
-        "test@example.com",
-      );
-      await ScreenTestUtils.fillInput(/enter the code shown above/i, "ABC123");
-      await ScreenTestUtils.clickButton("Mock Continue");
-
-      expect(mockInstance.login).toHaveBeenCalledWith({
-        username: "test@example.com",
-        captcha: "ABC123",
+        expect(mockInstance.login).toHaveBeenCalledWith({
+          username: "test@example.com",
+          captcha: "ABC123",
+        });
       });
     });
   });
 
   describe("Error Handling", () => {
-    it("should display general error messages", () => {
-      MockConfigUtils.configureErrors(mockInstance, [
-        CommonTestData.errors.general,
-      ]);
+    describe("when there are general errors", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureErrors(mockInstance, [
+          CommonTestData.errors.general,
+        ]);
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByText("Invalid credentials")).toBeInTheDocument();
+      it("should display the general error message", () => {
+        expect(screen.getByText("Invalid credentials")).toBeInTheDocument();
+      });
     });
 
-    it("should display field-specific error messages", () => {
-      MockConfigUtils.configureErrors(mockInstance, [
-        CommonTestData.errors.fieldSpecific,
-      ]);
+    describe("when there are field-specific errors", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureErrors(mockInstance, [
+          CommonTestData.errors.fieldSpecific,
+        ]);
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByText("Invalid email format")).toBeInTheDocument();
+      it("should display the field-specific error message", () => {
+        expect(screen.getByText("Invalid email format")).toBeInTheDocument();
+      });
     });
 
-    it("should display multiple error messages", () => {
-      MockConfigUtils.configureErrors(mockInstance, [
-        CommonTestData.errors.general,
-        CommonTestData.errors.fieldSpecific,
-      ]);
+    describe("when there are multiple errors", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureErrors(mockInstance, [
+          CommonTestData.errors.general,
+          CommonTestData.errors.fieldSpecific,
+        ]);
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByText("Invalid credentials")).toBeInTheDocument();
-      expect(screen.getByText("Invalid email format")).toBeInTheDocument();
+      it("should display all error messages", () => {
+        expect(screen.getByText("Invalid credentials")).toBeInTheDocument();
+        expect(screen.getByText("Invalid email format")).toBeInTheDocument();
+      });
     });
   });
 
   describe("CAPTCHA Functionality", () => {
-    it("should show captcha when configured with image", () => {
-      mockInstance.screen.captcha = {
-        provider: "auth0",
-        image: "data:image/png;base64,mockimage",
-      };
+    describe("when configured with an image", () => {
+      beforeEach(() => {
+        mockInstance.screen.captcha = {
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        };
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
-
-      expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
-      expect(
-        screen.getByRole("textbox", { name: /enter the code shown above/i }),
-      ).toBeInTheDocument();
+      it("should show the CAPTCHA image and input field", () => {
+        expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
+        expect(
+          screen.getByRole("textbox", { name: /enter the code shown above/i }),
+        ).toBeInTheDocument();
+      });
     });
 
-    it("should not show captcha when null", () => {
-      mockInstance.screen.captcha = null;
+    describe("when the captcha data is null", () => {
+      beforeEach(() => {
+        mockInstance.screen.captcha = null;
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
-
-      expect(
-        screen.queryByAltText("CAPTCHA challenge"),
-      ).not.toBeInTheDocument();
+      it("should not show the CAPTCHA", () => {
+        expect(
+          screen.queryByAltText("CAPTCHA challenge"),
+        ).not.toBeInTheDocument();
+      });
     });
 
-    it("should not show captcha when image is empty", () => {
-      mockInstance.screen.captcha = {
-        provider: "auth0",
-        image: "",
-      };
+    describe("when the captcha image is an empty string", () => {
+      beforeEach(() => {
+        mockInstance.screen.captcha = {
+          provider: "auth0",
+          image: "",
+        };
+        render(<LoginIdScreen />);
+      });
 
-      render(<LoginIdScreen />);
-
-      expect(
-        screen.queryByAltText("CAPTCHA challenge"),
-      ).not.toBeInTheDocument();
+      it("should not show the CAPTCHA", () => {
+        expect(
+          screen.queryByAltText("CAPTCHA challenge"),
+        ).not.toBeInTheDocument();
+      });
     });
 
-    it("should show captcha with correct image source", () => {
+    describe("when a specific image is provided", () => {
       const testImage = "data:image/png;base64,testimage123";
-      mockInstance.screen.captcha = {
-        provider: "auth0",
-        image: testImage,
-      };
 
-      render(<LoginIdScreen />);
+      beforeEach(() => {
+        mockInstance.screen.captcha = {
+          provider: "auth0",
+          image: testImage,
+        };
+        render(<LoginIdScreen />);
+      });
 
-      const captchaImage = screen.getByAltText("CAPTCHA challenge");
-      expect(captchaImage).toHaveAttribute("src", testImage);
+      it("should show the CAPTCHA with the correct image source", () => {
+        const captchaImage = screen.getByAltText("CAPTCHA challenge");
+        expect(captchaImage).toHaveAttribute("src", testImage);
+      });
     });
   });
 
   describe("Social Login", () => {
-    it("should show social login buttons when connections available", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: CommonTestData.socialConnections,
+    describe("when social connections are available", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureTransaction(mockInstance, {
+          alternateConnections: CommonTestData.socialConnections,
+        });
+        render(<LoginIdScreen />);
       });
 
-      render(<LoginIdScreen />);
-
-      expect(
-        screen.getByRole("button", { name: /continue with google/i }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: /continue with github/i }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: /continue with facebook/i }),
-      ).toBeInTheDocument();
-    });
-
-    it("should call federatedLogin method when button clicked", async () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: [CommonTestData.socialConnections[0]],
+      it("should show all social login buttons", () => {
+        expect(
+          screen.getByRole("button", { name: /continue with google/i }),
+        ).toBeInTheDocument();
+        expect(
+          screen.getByRole("button", { name: /continue with github/i }),
+        ).toBeInTheDocument();
+        expect(
+          screen.getByRole("button", { name: /continue with facebook/i }),
+        ).toBeInTheDocument();
       });
 
-      render(<LoginIdScreen />);
-
-      await ScreenTestUtils.clickButton(/continue with google/i);
-
-      expect(mockInstance.federatedLogin).toHaveBeenCalledWith({
-        connection: "google-oauth2",
+      it("should show the separator", () => {
+        expect(screen.getByText("Or")).toBeInTheDocument();
       });
     });
 
-    it("should show separator when social connections available", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: CommonTestData.socialConnections,
+    describe("when a social login button is clicked", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureTransaction(mockInstance, {
+          alternateConnections: [CommonTestData.socialConnections[0]],
+        });
+        render(<LoginIdScreen />);
       });
 
-      render(<LoginIdScreen />);
+      it("should call the federatedLogin method", async () => {
+        await ScreenTestUtils.clickButton(/continue with google/i);
 
-      expect(screen.getByText("Or")).toBeInTheDocument();
+        expect(mockInstance.federatedLogin).toHaveBeenCalledWith({
+          connection: "google-oauth2",
+        });
+      });
     });
 
-    it("should not show separator when no connections and no passkey", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: [],
+    describe("when no social connections or passkey are available", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureTransaction(mockInstance, {
+          alternateConnections: [],
+        });
+        MockConfigUtils.configureScreenData(mockInstance, {});
+        render(<LoginIdScreen />);
       });
-      MockConfigUtils.configureScreenData(mockInstance, {});
 
-      render(<LoginIdScreen />);
-
-      expect(screen.queryByText("Or")).not.toBeInTheDocument();
+      it("should not show the separator", () => {
+        expect(screen.queryByText("Or")).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("Passkey Login", () => {
-    it("should show passkey button when data available", () => {
-      MockConfigUtils.configureScreenData(mockInstance, {
-        passkey: {
-          public_key: {
-            challenge: "mock-challenge",
+    describe("when passkey is available", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureScreenData(mockInstance, {
+          passkey: {
+            public_key: {
+              challenge: "mock-challenge",
+            },
           },
-        },
+        });
+        render(<LoginIdScreen />);
       });
 
-      render(<LoginIdScreen />);
-
-      expect(
-        screen.getByRole("button", { name: /continue with a passkey/i }),
-      ).toBeInTheDocument();
-    });
-
-    it("should not show passkey button when data not available", () => {
-      MockConfigUtils.configureScreenData(mockInstance, {});
-
-      render(<LoginIdScreen />);
-
-      expect(
-        screen.queryByRole("button", { name: /continue with a passkey/i }),
-      ).not.toBeInTheDocument();
-    });
-
-    it("should call passkeyLogin method when button clicked", async () => {
-      MockConfigUtils.configureScreenData(mockInstance, {
-        passkey: {
-          public_key: {
-            challenge: "mock-challenge",
-          },
-        },
+      it("should show the passkey button", () => {
+        expect(
+          screen.getByRole("button", { name: /continue with a passkey/i }),
+        ).toBeInTheDocument();
       });
 
-      render(<LoginIdScreen />);
-
-      await ScreenTestUtils.clickButton(/continue with a passkey/i);
-
-      expect(mockInstance.passkeyLogin).toHaveBeenCalled();
-    });
-
-    it("should show separator when passkey available", () => {
-      MockConfigUtils.configureScreenData(mockInstance, {
-        passkey: {
-          public_key: {
-            challenge: "mock-challenge",
-          },
-        },
+      it("should call the passkeyLogin method when the button is clicked", async () => {
+        await ScreenTestUtils.clickButton(/continue with a passkey/i);
+        expect(mockInstance.passkeyLogin).toHaveBeenCalled();
       });
 
-      render(<LoginIdScreen />);
+      it("should show the separator", () => {
+        expect(screen.getByText("Or")).toBeInTheDocument();
+      });
+    });
 
-      expect(screen.getByText("Or")).toBeInTheDocument();
+    describe("when passkey is not available", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureScreenData(mockInstance, {});
+        render(<LoginIdScreen />);
+      });
+
+      it("should not show the passkey button", () => {
+        expect(
+          screen.queryByRole("button", { name: /continue with a passkey/i }),
+        ).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("Combined Authentication Methods", () => {
-    it("should show all methods when all available", () => {
-      MockConfigUtils.configureScreenData(mockInstance, {
-        passkey: {
-          public_key: { challenge: "mock-challenge" },
-        },
+    describe("when all methods are available", () => {
+      beforeEach(() => {
+        MockConfigUtils.configureScreenData(mockInstance, {
+          passkey: {
+            public_key: { challenge: "mock-challenge" },
+          },
+        });
+        MockConfigUtils.configureTransaction(mockInstance, {
+          alternateConnections: CommonTestData.socialConnections,
+        });
+        mockInstance.screen.captcha = {
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        };
+        render(<LoginIdScreen />);
       });
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: CommonTestData.socialConnections,
+
+      it("should show all relevant UI elements", () => {
+        // Primary form
+        expect(screen.getByText("Mock Welcome Title")).toBeInTheDocument();
+        expect(
+          screen.getByRole("button", { name: "Mock Continue" }),
+        ).toBeInTheDocument();
+        expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
+
+        // Alternative methods
+        expect(
+          screen.getByRole("button", { name: /continue with a passkey/i }),
+        ).toBeInTheDocument();
+        expect(
+          screen.getByRole("button", { name: /continue with google/i }),
+        ).toBeInTheDocument();
+
+        // Separator
+        expect(screen.getByText("Or")).toBeInTheDocument();
       });
-      mockInstance.screen.captcha = {
-        provider: "auth0",
-        image: "data:image/png;base64,mockimage",
-      };
 
-      render(<LoginIdScreen />);
+      it("should handle form submission correctly", async () => {
+        await ScreenTestUtils.fillInput(
+          /username|email|phone/i,
+          "test@example.com",
+        );
+        await ScreenTestUtils.fillInput(
+          /enter the code shown above/i,
+          "ABC123",
+        );
+        await ScreenTestUtils.clickButton("Mock Continue");
 
-      // Primary form
-      expect(screen.getByText("Mock Welcome Title")).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: "Mock Continue" }),
-      ).toBeInTheDocument();
-      expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
-
-      // Alternative methods
-      expect(
-        screen.getByRole("button", { name: /continue with a passkey/i }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: /continue with google/i }),
-      ).toBeInTheDocument();
-
-      // Separator
-      expect(screen.getByText("Or")).toBeInTheDocument();
-    });
-
-    it("should handle form submission with all methods present", async () => {
-      MockConfigUtils.configureScreenData(mockInstance, {
-        passkey: { public_key: { challenge: "mock-challenge" } },
-      });
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: CommonTestData.socialConnections,
-      });
-      mockInstance.screen.captcha = {
-        provider: "auth0",
-        image: "data:image/png;base64,mockimage",
-      };
-
-      render(<LoginIdScreen />);
-
-      await ScreenTestUtils.fillInput(
-        /username|email|phone/i,
-        "test@example.com",
-      );
-      await ScreenTestUtils.fillInput(/enter the code shown above/i, "ABC123");
-      await ScreenTestUtils.clickButton("Mock Continue");
-
-      expect(mockInstance.login).toHaveBeenCalledWith({
-        username: "test@example.com",
-        captcha: "ABC123",
+        expect(mockInstance.login).toHaveBeenCalledWith({
+          username: "test@example.com",
+          captcha: "ABC123",
+        });
       });
     });
   });
 
   describe("Page Title", () => {
-    it("should set document title from SDK texts", () => {
+    it("should set the document title from SDK texts", () => {
       MockConfigUtils.configureTexts(mockInstance, {
         pageTitle: "Custom Login Title",
       });
-
       render(<LoginIdScreen />);
-
       expect(document.title).toBe("Custom Login Title");
     });
   });

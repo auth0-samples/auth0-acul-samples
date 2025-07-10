@@ -4,7 +4,7 @@
  * changes in a future update, this type will cause a compile-error, alerting
  * us that our mock needs to be updated.
  */
-interface MockLoginIdInstance {
+export interface MockLoginIdInstance {
   login: jest.Mock;
   federatedLogin: jest.Mock;
   passkeyLogin: jest.Mock;

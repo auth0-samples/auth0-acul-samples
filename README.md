@@ -209,6 +209,12 @@ To run the entire test suite:
 npm test
 ```
 
+Run per screens tests
+
+```bash
+npm test -- --testPathPatterns="<screen_name>"
+```
+
 <a id="technical-details"></a>
 
 ## 🔍 Technical Details
