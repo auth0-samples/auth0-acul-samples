@@ -28,9 +28,9 @@ export const useLoginIdManager = () => {
     );
   };
 
-  const handleSocialLogin = (connectionName: string) => {
-    executeSafely(`Social login with connection: ${connectionName}`, () =>
-      loginIdInstance.socialLogin({ connection: connectionName }),
+  const handleFederatedLogin = (connectionName: string) => {
+    executeSafely(`Federated login with connection: ${connectionName}`, () =>
+      loginIdInstance.federatedLogin({ connection: connectionName }),
     );
   };
 
@@ -44,7 +44,7 @@ export const useLoginIdManager = () => {
   return {
     loginIdInstance,
     handleLoginId,
-    handleSocialLogin,
+    handleFederatedLogin,
     handlePasskeyLogin,
     // Core screen data
     pageTitle,

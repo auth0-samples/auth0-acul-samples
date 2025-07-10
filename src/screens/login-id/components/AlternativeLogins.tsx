@@ -8,7 +8,7 @@ import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 // No props needed as it uses hooks internally
 const AlternativeLogins: React.FC = () => {
-  const { loginIdInstance, handleSocialLogin, handlePasskeyLogin, texts } =
+  const { loginIdInstance, handleFederatedLogin, handlePasskeyLogin, texts } =
     useLoginIdManager();
 
   const alternateConnections = loginIdInstance?.transaction
@@ -50,7 +50,7 @@ const AlternativeLogins: React.FC = () => {
               displayName={displayName}
               buttonText={socialButtonText}
               iconComponent={iconComponent}
-              onClick={() => handleSocialLogin(connection.name)}
+              onClick={() => handleFederatedLogin(connection.name)}
             />
           );
         })}
