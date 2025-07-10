@@ -195,6 +195,20 @@ default_screen_deployment_status:
 
 Only screens set to `true` in this configuration file will be processed by the deployment workflow for Advanced Mode. This allows you to selectively roll out your custom screens.
 
+<a id="testing"></a>
+
+## Testing
+
+This project uses [Jest](https://jestjs.io/) for unit and integration testing of screen components.
+
+### Running Tests
+
+To run the entire test suite:
+
+```bash
+npm test
+```
+
 <a id="technical-details"></a>
 
 ## 🔍 Technical Details

@@ -17,7 +17,7 @@ describe("LoginIdScreen", () => {
     MockedLoginIdInstance.mockClear();
     mockInstance = {
       login: jest.fn(),
-      socialLogin: jest.fn(),
+      federatedLogin: jest.fn(),
       passkeyLogin: jest.fn(),
       pickCountryCode: jest.fn(),
       screen: {
@@ -255,7 +255,7 @@ describe("LoginIdScreen", () => {
       ).toBeInTheDocument();
     });
 
-    it("should call socialLogin method when button clicked", async () => {
+    it("should call federatedLogin method when button clicked", async () => {
       MockConfigUtils.configureTransaction(mockInstance, {
         alternateConnections: [CommonTestData.socialConnections[0]],
       });
@@ -264,7 +264,7 @@ describe("LoginIdScreen", () => {
 
       await ScreenTestUtils.clickButton(/continue with google/i);
 
-      expect(mockInstance.socialLogin).toHaveBeenCalledWith({
+      expect(mockInstance.federatedLogin).toHaveBeenCalledWith({
         connection: "google-oauth2",
       });
     });

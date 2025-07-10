@@ -6,7 +6,7 @@
  */
 interface MockLoginIdInstance {
   login: jest.Mock;
-  socialLogin: jest.Mock;
+  federatedLogin: jest.Mock;
   passkeyLogin: jest.Mock;
   pickCountryCode: jest.Mock;
   screen: {
@@ -38,7 +38,7 @@ interface MockLoginIdInstance {
 
 const mockLoginIdInstance: MockLoginIdInstance = {
   login: jest.fn(),
-  socialLogin: jest.fn(),
+  federatedLogin: jest.fn(),
   passkeyLogin: jest.fn(),
   pickCountryCode: jest.fn(),
   screen: {
