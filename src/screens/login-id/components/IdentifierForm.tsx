@@ -8,6 +8,7 @@ import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import type { Error } from "@auth0/auth0-acul-js";
 
 interface LoginIdFormData {
   identifier: string;
@@ -16,11 +17,16 @@ interface LoginIdFormData {
 
 // No props needed as it uses hooks internally for data and actions
 const IdentifierForm: React.FC = () => {
-  const { handleLoginId, errors, captcha, links, loginIdInstance, texts } =
-    useLoginIdManager();
-
-  const isCaptchaAvailable = !!captcha;
-  const captchaImage = captcha?.image || "";
+  const {
+    handleLoginId,
+    errors,
+    isCaptchaAvailable,
+    captchaImage,
+    resetPasswordLink,
+    isForgotPasswordEnabled,
+    loginIdInstance,
+    texts,
+  } = useLoginIdManager();
 
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
@@ -31,7 +37,8 @@ const IdentifierForm: React.FC = () => {
 
   // Get general errors (not field-specific)
   const generalErrors =
-    errors?.filter((error: any) => !error.field || error.field === null) || [];
+    errors?.filter((error: Error) => !error.field || error.field === null) ||
+    [];
 
   // Get allowed identifiers directly from SDK
   const allowedIdentifiers =
@@ -55,17 +62,15 @@ const IdentifierForm: React.FC = () => {
     handleLoginId(data.identifier, data.captcha);
   };
 
-  const originalResetPasswordLink = links?.reset_password;
-  const localizedResetPasswordLink = rebaseLinkToCurrentOrigin(
-    originalResetPasswordLink,
-  );
+  const localizedResetPasswordLink =
+    resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* General alerts at the top */}
       {generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
-          {generalErrors.map((error: any, index: number) => (
+          {generalErrors.map((error: Error, index: number) => (
             <Alert key={index} type="error" message={error.message} />
           ))}
         </div>
@@ -99,13 +104,13 @@ const IdentifierForm: React.FC = () => {
         }
       />
 
-      {isCaptchaAvailable && captchaImage && (
+      {isCaptchaAvailable && (
         <CaptchaBox
           className="mb-4"
           id="captcha-input-login-id"
           name="captcha"
           label={captchaLabel}
-          imageUrl={captchaImage}
+          imageUrl={captchaImage || ""}
           imageAltText={captchaImageAlt}
           inputProps={{
             ...register("captcha", {
@@ -122,7 +127,7 @@ const IdentifierForm: React.FC = () => {
         />
       )}
       <div className="text-left">
-        {localizedResetPasswordLink && (
+        {isForgotPasswordEnabled && localizedResetPasswordLink && (
           <a
             href={localizedResetPasswordLink}
             className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"

@@ -9,9 +9,9 @@ import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
 
 const LoginIdScreen: React.FC = () => {
-  const { loginIdInstance, pageTitle } = useLoginIdManager();
+  const { loginIdInstance, texts } = useLoginIdManager();
 
-  document.title = pageTitle;
+  document.title = texts?.pageTitle || "Login";
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginIdInstance);

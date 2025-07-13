@@ -8,12 +8,16 @@ import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 // No props needed as it uses hooks internally
 const AlternativeLogins: React.FC = () => {
-  const { loginIdInstance, handleFederatedLogin, handlePasskeyLogin, texts } =
-    useLoginIdManager();
+  const {
+    loginIdInstance,
+    handleFederatedLogin,
+    handlePasskeyLogin,
+    texts,
+    isPasskeyEnabled,
+  } = useLoginIdManager();
 
   const alternateConnections = loginIdInstance?.transaction
     ?.alternateConnections as SocialConnection[] | undefined;
-  const isPasskeyAvailable = !!loginIdInstance?.screen?.data?.passkey;
 
   // Handle text fallbacks in component
   const separatorText = texts?.separatorText || "OR";
@@ -21,7 +25,7 @@ const AlternativeLogins: React.FC = () => {
     texts?.passkeyButtonText || "Continue with a passkey";
 
   const showSeparator =
-    isPasskeyAvailable ||
+    isPasskeyEnabled ||
     (alternateConnections && alternateConnections.length > 0);
 
   return (
@@ -29,7 +33,7 @@ const AlternativeLogins: React.FC = () => {
       {showSeparator && <Separator text={separatorText} />}
 
       <div className="space-y-3 mt-4">
-        {isPasskeyAvailable && (
+        {isPasskeyEnabled && (
           <SocialProviderButton
             key="passkey"
             displayName="Passkey"

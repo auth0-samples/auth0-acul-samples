@@ -5,23 +5,17 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
 export const useLoginIdManager = () => {
   const [loginIdInstance] = useState(() => new LoginIdInstance());
 
-  // Extract core data only
-  const texts = loginIdInstance?.screen?.texts || {};
-  const pageTitle = texts?.pageTitle || "Login ID";
-  const title = texts?.title || "Welcome";
-  const description =
-    texts?.description ||
-    "Please enter your username or email address to continue.";
+  const { transaction, screen } = loginIdInstance;
+  const { isSignupEnabled, isForgotPasswordEnabled, isPasskeyEnabled } =
+    transaction;
 
-  // Extract screen data
-  const errors = loginIdInstance?.transaction?.errors || [];
-  const captcha = loginIdInstance?.screen?.captcha;
-  const links = loginIdInstance?.screen?.links || {};
+  // Extract links for consumption by UI components
+  const { signupLink, resetPasswordLink, texts, captchaImage } = screen;
 
   const handleLoginId = (loginId: string, captcha?: string): void => {
     const options = {
       username: loginId?.trim() || "",
-      captcha: loginIdInstance.screen?.captcha ? captcha?.trim() : undefined,
+      captcha: screen.isCaptchaAvailable ? captcha?.trim() : undefined,
     };
     executeSafely(`LoginId with options: ${JSON.stringify(options)}`, () =>
       loginIdInstance.login(options),
@@ -35,8 +29,7 @@ export const useLoginIdManager = () => {
   };
 
   const handlePasskeyLogin = () => {
-    const hasPasskeyData = !!loginIdInstance.screen?.data?.passkey;
-    if (hasPasskeyData) {
+    if (isPasskeyEnabled) {
       executeSafely(`Passkey login`, () => loginIdInstance.passkeyLogin());
     }
   };
@@ -46,14 +39,19 @@ export const useLoginIdManager = () => {
     handleLoginId,
     handleFederatedLogin,
     handlePasskeyLogin,
-    // Core screen data
-    pageTitle,
-    title,
-    description,
-    errors,
-    captcha,
-    links,
+    // --- State & Data for UI ---
     // Raw texts object - let components handle their own fallbacks
-    texts,
+    texts: texts || {},
+    // Explicit state flags for conditional rendering
+    isSignupEnabled: isSignupEnabled === true,
+    isForgotPasswordEnabled: isForgotPasswordEnabled === true,
+    isPasskeyEnabled: isPasskeyEnabled === true,
+    isCaptchaAvailable: screen.isCaptchaAvailable === true,
+    // Derived data
+    errors: transaction.errors || [],
+    captchaImage,
+    // Direct links for UI
+    signupLink,
+    resetPasswordLink,
   };
 };

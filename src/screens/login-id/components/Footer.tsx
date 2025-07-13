@@ -3,8 +3,12 @@ import { useLoginIdManager } from "../hooks/useLoginIdManager";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 const Footer: React.FC = () => {
-  const { loginIdInstance, texts } = useLoginIdManager();
-  const signupLink = loginIdInstance?.screen?.links?.signup;
+  const { isSignupEnabled, signupLink, texts } = useLoginIdManager();
+
+  if (!isSignupEnabled) {
+    return null;
+  }
+
   const localizedSignupLink = rebaseLinkToCurrentOrigin(signupLink);
 
   // Handle text fallbacks in component

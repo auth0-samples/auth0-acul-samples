@@ -24,6 +24,10 @@ const Logo: React.FC<LogoProps> = ({
   const logoFromCSS = getCSSVariable("--ul-theme-widget-logo-url");
   const logoSrc = imageUrl || logoFromCSS;
 
+  if (!logoSrc) {
+    return null;
+  }
+
   return (
     <div className={cn("flex justify-center items-center mb-6", className)}>
       <img

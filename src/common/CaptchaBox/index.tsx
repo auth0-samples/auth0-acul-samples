@@ -63,11 +63,9 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
     ...inputProps, // This includes the ref from register()
   };
 
-  const currentImageUrl = imageUrl;
-
   return (
     <div className={cn("space-y-2", className)}>
-      {currentImageUrl && (
+      {!!imageUrl && (
         <div
           className={cn(
             "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
@@ -75,7 +73,7 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
           )}
         >
           <img
-            src={currentImageUrl}
+            src={imageUrl}
             alt={imageAltText}
             className={cn("object-contain", imageClassName)}
           />
