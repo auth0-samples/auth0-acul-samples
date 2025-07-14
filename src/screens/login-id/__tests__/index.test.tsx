@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import LoginIdScreen from "../index";
 import LoginIdInstance from "@auth0/auth0-acul-js/login-id";
 import {
@@ -348,6 +348,41 @@ describe("LoginIdScreen", () => {
       });
       render(<LoginIdScreen />);
       expect(document.title).toBe("Custom Login Title");
+    });
+  });
+
+  describe("Country Code Picker Conditional Display", () => {
+    it("should NOT show country picker when phone is not supported", () => {
+      mockInstance.transaction.allowedIdentifiers = ["email", "username"];
+      render(<LoginIdScreen />);
+
+      // Should not have any country picker elements
+      expect(screen.queryByText("🇺🇸")).not.toBeInTheDocument();
+      expect(screen.queryByText("Select Country")).not.toBeInTheDocument();
+    });
+
+    it("should SHOW country picker when phone is supported", () => {
+      mockInstance.transaction.allowedIdentifiers = ["email", "phone"];
+      mockInstance.transaction.countryCode = null;
+      mockInstance.transaction.countryPrefix = null;
+      render(<LoginIdScreen />);
+
+      expect(screen.getByText("Select Country")).toBeInTheDocument();
+    });
+
+    it("should call pickCountryCode when clicked", async () => {
+      mockInstance.transaction.allowedIdentifiers = ["email", "phone"];
+      mockInstance.transaction.countryCode = null;
+      mockInstance.transaction.countryPrefix = null;
+      render(<LoginIdScreen />);
+
+      const countryPicker = screen
+        .getByText("Select Country")
+        .closest("button");
+      await act(async () => {
+        fireEvent.click(countryPicker!);
+      });
+      expect(mockInstance.pickCountryCode).toHaveBeenCalled();
     });
   });
 });

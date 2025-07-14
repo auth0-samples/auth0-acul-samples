@@ -12,7 +12,10 @@ export const useLoginIdManager = () => {
   // Extract links for consumption by UI components
   const { signupLink, resetPasswordLink, texts, captchaImage } = screen;
 
-  const handleLoginId = (loginId: string, captcha?: string): void => {
+  const handleLoginId = async (
+    loginId: string,
+    captcha?: string,
+  ): Promise<void> => {
     const options = {
       username: loginId?.trim() || "",
       captcha: screen.isCaptchaAvailable ? captcha?.trim() : undefined,
@@ -22,16 +25,20 @@ export const useLoginIdManager = () => {
     );
   };
 
-  const handleFederatedLogin = (connectionName: string) => {
+  const handleFederatedLogin = async (connectionName: string) => {
     executeSafely(`Federated login with connection: ${connectionName}`, () =>
       loginIdInstance.federatedLogin({ connection: connectionName }),
     );
   };
 
-  const handlePasskeyLogin = () => {
+  const handlePasskeyLogin = async () => {
     if (isPasskeyEnabled) {
       executeSafely(`Passkey login`, () => loginIdInstance.passkeyLogin());
     }
+  };
+
+  const handlePickCountryCode = async () => {
+    executeSafely(`Pick country code`, () => loginIdInstance.pickCountryCode());
   };
 
   return {
@@ -39,6 +46,7 @@ export const useLoginIdManager = () => {
     handleLoginId,
     handleFederatedLogin,
     handlePasskeyLogin,
+    handlePickCountryCode,
     // --- State & Data for UI ---
     // Raw texts object - let components handle their own fallbacks
     texts: texts || {},
@@ -47,8 +55,7 @@ export const useLoginIdManager = () => {
     isForgotPasswordEnabled: isForgotPasswordEnabled === true,
     isPasskeyEnabled: isPasskeyEnabled === true,
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    // Derived data
-    errors: transaction.errors || [],
+    errors: loginIdInstance.getError(),
     captchaImage,
     // Direct links for UI
     signupLink,

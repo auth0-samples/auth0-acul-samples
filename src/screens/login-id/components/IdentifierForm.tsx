@@ -4,11 +4,16 @@ import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import Alert from "@/common/Alert";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
+import CountryCodePicker from "@/common/CountryCodePicker";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
+import {
+  transformAuth0CountryCode,
+  isPhoneNumberSupported,
+} from "@/utils/helpers/countryUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
 
 interface LoginIdFormData {
   identifier: string;
@@ -26,6 +31,7 @@ const IdentifierForm: React.FC = () => {
     isForgotPasswordEnabled,
     loginIdInstance,
     texts,
+    handlePickCountryCode,
   } = useLoginIdManager();
 
   // Handle text fallbacks in component
@@ -58,12 +64,14 @@ const IdentifierForm: React.FC = () => {
   } = useForm<LoginIdFormData>();
 
   // Proper submit handler with form data
-  const onSubmit = (data: LoginIdFormData) => {
-    handleLoginId(data.identifier, data.captcha);
+  const onSubmit = async (data: LoginIdFormData) => {
+    await handleLoginId(data.identifier, data.captcha);
   };
 
   const localizedResetPasswordLink =
     resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
+
+  const shouldShowCountryPicker = isPhoneNumberSupported(allowedIdentifiers);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -73,6 +81,23 @@ const IdentifierForm: React.FC = () => {
           {generalErrors.map((error: Error, index: number) => (
             <Alert key={index} type="error" message={error.message} />
           ))}
+        </div>
+      )}
+
+      {/* Country Code Picker - only show if phone numbers are supported */}
+      {shouldShowCountryPicker && (
+        <div className="mb-4">
+          <CountryCodePicker
+            selectedCountry={transformAuth0CountryCode(
+              (loginIdInstance?.transaction as TransactionMembersOnLoginId)
+                ?.countryCode,
+              (loginIdInstance?.transaction as TransactionMembersOnLoginId)
+                ?.countryPrefix,
+            )}
+            onClick={handlePickCountryCode}
+            fullWidth
+            placeholder="Select Country"
+          />
         </div>
       )}
 
