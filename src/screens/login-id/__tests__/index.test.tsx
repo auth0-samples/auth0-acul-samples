@@ -352,17 +352,24 @@ describe("LoginIdScreen", () => {
   });
 
   describe("Country Code Picker Conditional Display", () => {
-    it("should NOT show country picker when phone is not supported", () => {
-      mockInstance.transaction.allowedIdentifiers = ["email", "username"];
+    it("should NOT show country picker when phone is mixed with other identifiers", () => {
+      mockInstance.transaction.allowedIdentifiers = ["email", "phone"];
       render(<LoginIdScreen />);
 
-      // Should not have any country picker elements
-      expect(screen.queryByText("🇺🇸")).not.toBeInTheDocument();
+      // Should not show country picker when phone is mixed with email
       expect(screen.queryByText("Select Country")).not.toBeInTheDocument();
     });
 
-    it("should SHOW country picker when phone is supported", () => {
-      mockInstance.transaction.allowedIdentifiers = ["email", "phone"];
+    it("should NOT show country picker when username and phone are both allowed", () => {
+      mockInstance.transaction.allowedIdentifiers = ["username", "phone"];
+      render(<LoginIdScreen />);
+
+      // Should not show country picker when phone is mixed with username
+      expect(screen.queryByText("Select Country")).not.toBeInTheDocument();
+    });
+
+    it("should SHOW country picker ONLY when phone is the sole identifier", () => {
+      mockInstance.transaction.allowedIdentifiers = ["phone"];
       mockInstance.transaction.countryCode = null;
       mockInstance.transaction.countryPrefix = null;
       render(<LoginIdScreen />);
@@ -370,8 +377,8 @@ describe("LoginIdScreen", () => {
       expect(screen.getByText("Select Country")).toBeInTheDocument();
     });
 
-    it("should call pickCountryCode when clicked", async () => {
-      mockInstance.transaction.allowedIdentifiers = ["email", "phone"];
+    it("should call pickCountryCode when clicked in phone-only mode", async () => {
+      mockInstance.transaction.allowedIdentifiers = ["phone"];
       mockInstance.transaction.countryCode = null;
       mockInstance.transaction.countryPrefix = null;
       render(<LoginIdScreen />);

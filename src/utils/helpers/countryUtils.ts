@@ -317,13 +317,15 @@ export function transformAuth0CountryCode(
 }
 
 /**
- * Checks if phone numbers are supported based on allowed identifiers
+ * Checks if country picker should be shown - only when phone is the ONLY identifier option
  * @param identifiers - Array of allowed identifier types
- * @returns boolean indicating if phone numbers are supported
+ * @returns boolean indicating if country picker should be displayed
  */
 export function isPhoneNumberSupported(identifiers: string[]): boolean {
-  return identifiers.some((identifier) =>
-    identifier.toLowerCase().includes("phone"),
+  // Show country picker only when phone is the sole identifier option
+  return (
+    identifiers.length === 1 &&
+    identifiers.some((identifier) => identifier.toLowerCase().includes("phone"))
   );
 }
 
