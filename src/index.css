@@ -99,14 +99,6 @@
   --border-input: var(--ul-theme-border-input-border-weight);
   --border-widget: var(--ul-theme-border-widget-border-weight);
 
-  /* Font Sizes */
-  --text-title: var(--ul-theme-font-title-size);
-  --text-subtitle: var(--ul-theme-font-subtitle-size);
-  --text-body: var(--ul-theme-font-body-text-size);
-  --text-button: var(--ul-theme-font-buttons-text-size);
-  --text-input-label: var(--ul-theme-font-input-labels-size);
-  --text-link: var(--ul-theme-font-links-size);
-
   /* Font Weights */
   --font-weight-title: var(--ul-theme-font-title-weight);
   --font-weight-subtitle: var(--ul-theme-font-subtitle-weight);

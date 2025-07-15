@@ -79,7 +79,7 @@ describe('ULThemePrimaryButton', () => {
     
     // Check for theme-universal variant classes
     expect(button.className).toContain('theme-universal:bg-primary-button');
-    expect(button.className).toContain('theme-universal:text-button');
+    expect(button.className).toContain('theme-universal:font-button');
     expect(button.className).toContain('theme-universal:rounded-button');
   });
 });

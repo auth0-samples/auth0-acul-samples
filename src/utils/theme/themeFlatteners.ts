@@ -73,10 +73,25 @@ export function flattenColors(colors: any): Record<string, string> {
 export function flattenBorders(borders: any): Record<string, string> {
   const result: Record<string, string> = {};
 
-  // Border radius values need px units
-  if (borders.button_border_radius)
+  // Border radius values need px units with automatic assignment based on buttons_style
+  let buttonBorderRadius = borders.button_border_radius;
+  
+  // Auto-assign border radius based on buttons_style when not explicitly provided
+  if (!buttonBorderRadius && borders.buttons_style) {
+    switch (borders.buttons_style) {
+      case 'pill':
+        buttonBorderRadius = 9999;
+        break;
+      case 'sharp':
+        buttonBorderRadius = 0;
+        break;
+      // 'rounded' style requires explicit button_border_radius value
+    }
+  }
+  
+  if (buttonBorderRadius !== undefined)
     result["--ul-theme-border-button-border-radius"] =
-      `${borders.button_border_radius}px`;
+      `${buttonBorderRadius}px`;
   if (borders.input_border_radius)
     result["--ul-theme-border-input-border-radius"] =
       `${borders.input_border_radius}px`;
