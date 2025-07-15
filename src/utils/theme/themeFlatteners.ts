@@ -76,8 +76,8 @@ export function flattenBorders(borders: any): Record<string, string> {
   // Border radius values need px units with automatic assignment based on buttons_style
   let buttonBorderRadius = borders.button_border_radius;
 
-  // Auto-assign border radius based on buttons_style when not explicitly provided
-  if (!buttonBorderRadius && borders.buttons_style) {
+  // Always override border radius for pill/sharp styles, regardless of existing value
+  if (borders.buttons_style) {
     switch (borders.buttons_style) {
       case "pill":
         buttonBorderRadius = 9999;
@@ -85,7 +85,9 @@ export function flattenBorders(borders: any): Record<string, string> {
       case "sharp":
         buttonBorderRadius = 0;
         break;
-      // 'rounded' style requires explicit button_border_radius value
+      case "rounded":
+        buttonBorderRadius = borders.button_border_radius || 10;
+        break;
     }
   }
 
