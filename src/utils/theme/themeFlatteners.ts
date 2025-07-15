@@ -75,20 +75,20 @@ export function flattenBorders(borders: any): Record<string, string> {
 
   // Border radius values need px units with automatic assignment based on buttons_style
   let buttonBorderRadius = borders.button_border_radius;
-  
+
   // Auto-assign border radius based on buttons_style when not explicitly provided
   if (!buttonBorderRadius && borders.buttons_style) {
     switch (borders.buttons_style) {
-      case 'pill':
+      case "pill":
         buttonBorderRadius = 9999;
         break;
-      case 'sharp':
+      case "sharp":
         buttonBorderRadius = 0;
         break;
       // 'rounded' style requires explicit button_border_radius value
     }
   }
-  
+
   if (buttonBorderRadius !== undefined)
     result["--ul-theme-border-button-border-radius"] =
       `${buttonBorderRadius}px`;
@@ -140,7 +140,7 @@ export function flattenFonts(fonts: any): Record<string, string> {
   const processFontType = (fontData: any, fontType: string): void => {
     if (fontData?.size) {
       const sizePercent = fontData.size as number;
-      
+
       // Universal percentage-based sizing: ALL font types calculate as percentage of reference_text_size
       if (fonts.reference_text_size) {
         const referenceSize = fonts.reference_text_size as number;
