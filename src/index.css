@@ -4,16 +4,18 @@
 /** UDS Custom Variant for Dark theme **/
 @custom-variant dark (&:is(.dark *));
 
-/** UL Custom Variant for Auth0 theme **/
+/** UDS Custom Variant for Auth0 Universal Login Theme Overrides **/
 @custom-variant theme-universal {
-  &.theme-universal {
+  .theme-universal & {
     @slot;
   }
 }
 
 /** UL Custom Utility for Page Layout **/
-@utility justify-page-layout {
-  justify-content: var(--ul-theme-page-bg-page-layout);
+@layer utilities {
+  .justify-page-layout {
+    justify-content: var(--ul-theme-page-bg-page-layout);
+  }
 }
 
 /** UDS Default theme variables **/
@@ -70,6 +72,8 @@
   --color-secondary-button-label: var(--ul-theme-color-secondary-button-label);
   --color-base-focus: var(--ul-theme-color-base-focus-color);
   --color-base-hover: var(--ul-theme-color-base-hover-color);
+  --button-hover-shadow: inset 0 0 0 100px
+    color-mix(in srgb, var(--color-base-hover) 10%, transparent);
   --color-link-focus: var(--ul-theme-color-links-focused-components);
   --color-header: var(--ul-theme-color-header);
   --color-body-text: var(--ul-theme-color-body-text);

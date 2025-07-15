@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Button from "@/common/Button";
+import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import Alert from "@/common/Alert";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
@@ -30,7 +30,7 @@ const IdentifierForm: React.FC = () => {
 
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
-  const loadingText = "Processing..."; // Default fallback
+
   const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
@@ -137,14 +137,13 @@ const IdentifierForm: React.FC = () => {
         )}
       </div>
 
-      <Button
+      <ULThemePrimaryButton
         type="submit"
-        fullWidth
-        loadingText={loadingText}
-        isLoading={isSubmitting}
+        className="w-full"
+        disabled={isSubmitting}
       >
         {buttonText}
-      </Button>
+      </ULThemePrimaryButton>
     </form>
   );
 };

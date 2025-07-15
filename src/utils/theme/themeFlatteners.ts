@@ -125,8 +125,17 @@ export function flattenFonts(fonts: any): Record<string, string> {
   const processFontType = (fontData: any, fontType: string): void => {
     if (fontData?.size) {
       const sizePercent = fontData.size as number;
-      const remValue = sizePercent / 100;
-      result[`--ul-theme-font-${fontType}-size`] = `${remValue}rem`;
+      
+      // Universal percentage-based sizing: ALL font types calculate as percentage of reference_text_size
+      if (fonts.reference_text_size) {
+        const referenceSize = fonts.reference_text_size as number;
+        const calculatedSize = (referenceSize * sizePercent) / 100;
+        result[`--ul-theme-font-${fontType}-size`] = `${calculatedSize}px`;
+      } else {
+        // Fallback: convert percentage to rem if no reference size available
+        const remValue = sizePercent / 100;
+        result[`--ul-theme-font-${fontType}-size`] = `${remValue}rem`;
+      }
     }
 
     if (fontData?.bold !== undefined) {
