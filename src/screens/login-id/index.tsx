@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import IdentifierForm from "./components/IdentifierForm";
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
+import ULThemePageLayout from "@/components/ULThemePageLayout";
 
 const LoginIdScreen: React.FC = () => {
   const { loginIdInstance, texts } = useLoginIdManager();
@@ -17,14 +18,15 @@ const LoginIdScreen: React.FC = () => {
   applyAuth0Theme(loginIdInstance);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-10 py-20">
+    // ULThemePageLayout applies UDS theme overrides using the "theme-universal" class.
+    <ULThemePageLayout className="theme-universal">
       <Card className="w-full max-w-[400px]">
         <Header />
         <IdentifierForm />
         <Footer />
         <AlternativeLogins />
       </Card>
-    </div>
+    </ULThemePageLayout>
   );
 };
 

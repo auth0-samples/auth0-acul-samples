@@ -169,15 +169,13 @@ export function flattenPageBackground(
         : `url("${pageBackground.background_image_url}")`;
   }
   if (pageBackground.page_layout) {
-    result["--ul-theme-page-bg-page-layout"] = pageBackground.page_layout;
-
     // Convert to CSS justify-content values for use with arbitrary properties
     const layoutMap: Record<string, string> = {
       center: "center",
       left: "flex-start",
       right: "flex-end",
     };
-    result["--justify-page-layout"] =
+    result["--ul-theme-page-bg-page-layout"] =
       layoutMap[pageBackground.page_layout] || "center";
   }
 

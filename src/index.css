@@ -4,6 +4,18 @@
 /** UDS Custom Variant for Dark theme **/
 @custom-variant dark (&:is(.dark *));
 
+/** UL Custom Variant for Auth0 theme **/
+@custom-variant theme-universal {
+  &.theme-universal {
+    @slot;
+  }
+}
+
+/** UL Custom Utility for Page Layout **/
+@utility justify-page-layout {
+  justify-content: var(--ul-theme-page-bg-page-layout);
+}
+
 /** UDS Default theme variables **/
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -101,9 +113,6 @@
 
   /* Text Decoration */
   --text-decoration-link: var(--ul-theme-font-links-style);
-
-  /* Page */
-  --justify-page-layout: var(--ul-theme-page-bg-page-layout);
 
   /* Widget */
   --height-widget-logo: var(--ul-theme-widget-logo-height);
