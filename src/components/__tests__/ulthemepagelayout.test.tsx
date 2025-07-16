@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
 
-describe("ULThemePageLayout Component", () => {
+describe("ULThemePageLayout Component Test Suite", () => {
   // Snapshot Tests
   it("matches snapshot with default props", () => {
     const { container } = render(
