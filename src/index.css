@@ -113,7 +113,6 @@
   /* Widget */
   --height-widget-logo: var(--ul-theme-widget-logo-height);
   --justify-widget-logo: var(--ul-theme-widget-logo-position);
-  --text-align-header: var(--ul-theme-widget-header-text-alignment);
   --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
 
   /* Layout */
