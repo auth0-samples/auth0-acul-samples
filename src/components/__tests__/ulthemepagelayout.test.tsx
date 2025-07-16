@@ -1,7 +1,36 @@
 import { render } from "@testing-library/react";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
 
-describe("ULThemePageLayout", () => {
+describe("ULThemePageLayout Component", () => {
+  // Snapshot Tests
+  it("matches snapshot with default props", () => {
+    const { container } = render(
+      <ULThemePageLayout>
+        <div>Test Content</div>
+      </ULThemePageLayout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it("matches snapshot with custom className", () => {
+    const { container } = render(
+      <ULThemePageLayout className="custom-class">
+        <div>Test Content</div>
+      </ULThemePageLayout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it("matches snapshot with additional props", () => {
+    const { container } = render(
+      <ULThemePageLayout id="test-id" data-testid="test-layout">
+        <div>Test Content</div>
+      </ULThemePageLayout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  // Functional Tests
   it("renders children correctly", () => {
     const { getByText } = render(
       <ULThemePageLayout>

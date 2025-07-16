@@ -18,7 +18,7 @@ const LoginIdScreen: React.FC = () => {
   applyAuth0Theme(loginIdInstance);
 
   return (
-    // ULThemePageLayout applies UDS theme overrides using the "theme-universal" class.
+    //Applying UDS theme overrides using the "theme-universal" class
     <ULThemePageLayout className="theme-universal">
       <Card className="w-full max-w-[400px]">
         <Header />
