@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "@/common/Logo";
 import ULThemeTitle from "@/components/ULThemeTitle";
+import ULThemeSubtitle from "@/components/ULThemeSubtitle";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 const Header: React.FC = () => {
@@ -13,10 +14,10 @@ const Header: React.FC = () => {
     <>
       <Logo imageClassName="h-13" altText={logoAltText} />
       <ULThemeTitle>{texts?.title || "Welcome"}</ULThemeTitle>
-      <p className="text-center text-text-default text-sm mb-4">
+      <ULThemeSubtitle>
         {texts?.description ||
           "Log in to dev-tenant to continue to my acul react."}
-      </p>
+      </ULThemeSubtitle>
     </>
   );
 };
