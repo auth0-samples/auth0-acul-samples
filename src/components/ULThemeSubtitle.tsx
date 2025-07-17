@@ -22,9 +22,9 @@ const ULThemeSubtitle = ({
     "mb-4 text-body-text justify-text-header text-(length:--ul-theme-font-subtitle-size) font-subtitle";
 
   return (
-    <h1 className={cn(themedStyles, className)} {...rest}>
+    <p className={cn(themedStyles, className)} {...rest}>
       {children}
-    </h1>
+    </p>
   );
 };
 
