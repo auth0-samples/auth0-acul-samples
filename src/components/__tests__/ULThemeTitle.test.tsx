@@ -43,7 +43,7 @@ describe("ULThemeTitle Component", () => {
   it("applies default themed styles", () => {
     const { container } = render(<ULThemeTitle>Test Title</ULThemeTitle>);
     expect(container.firstChild).toHaveClass(
-      "mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-(--ul-theme-font-title-weight)",
+      "mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-title",
     );
   });
 

@@ -11,10 +11,13 @@
   }
 }
 
-/** UL Custom Utility for Page Layout **/
+/** UL Custom Utilities **/
 @layer utilities {
   .justify-page-layout {
     justify-content: var(--ul-theme-page-bg-page-layout);
+  }
+  .justify-text-header {
+    text-align: var(--ul-theme-widget-header-text-alignment);
   }
 }
 

@@ -2,7 +2,7 @@
 
 exports[`ULThemeTitle Component matches snapshot with additional props 1`] = `
 <h1
-  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-(--ul-theme-font-title-weight)"
+  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-title"
   data-testid="title"
   id="test-id"
 >
@@ -12,7 +12,7 @@ exports[`ULThemeTitle Component matches snapshot with additional props 1`] = `
 
 exports[`ULThemeTitle Component matches snapshot with custom className 1`] = `
 <h1
-  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-(--ul-theme-font-title-weight) custom-class"
+  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-title custom-class"
 >
   Test Title
 </h1>
@@ -20,7 +20,7 @@ exports[`ULThemeTitle Component matches snapshot with custom className 1`] = `
 
 exports[`ULThemeTitle Component matches snapshot with default props 1`] = `
 <h1
-  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-(--ul-theme-font-title-weight)"
+  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-title"
 >
   Test Title
 </h1>
@@ -28,7 +28,7 @@ exports[`ULThemeTitle Component matches snapshot with default props 1`] = `
 
 exports[`ULThemeTitle Component matches snapshot with multiple children 1`] = `
 <h1
-  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-(--ul-theme-font-title-weight)"
+  class="mt-6 mb-4 text-header justify-text-header text-(length:--ul-theme-font-title-size) font-title"
 >
   <span>
     Child 1
