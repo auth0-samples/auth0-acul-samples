@@ -6,7 +6,6 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
-- [Project Structure](#project-structure)
 - [Screens](#screens)
 - [Development Workflow](#development-workflow)
 - [Deployment](#deployment)
@@ -70,44 +69,6 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
    ```
 
    This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/screen/mockContextLoader.ts` uses to inject the correct mock context.
-
-<a id="project-structure"></a>
-
-```
-auth0-acul-samples/
-├── .github/             # GitHub Actions workflows for CI/CD
-│   ├── config/          # Deployment configuration files
-│   │   ├── deploy_config.yml        # Controls which screens to deploy
-│   │   ├── screen-to-prompt-mapping.js  # Maps screens to Auth0 prompts
-│   │   └── context-configuration.js     # Auth0 context data configuration
-│   ├── actions/         # Custom GitHub Actions
-│   │   └── configure-auth0-screens/ # Action for configuring Auth0 screens
-│   └── workflows/       # GitHub workflow definitions
-├── dist/                # Production build output
-├── scripts/             # Node.js helper scripts for development
-│   └── dev-screen.js    # Script to run a specific screen with mock data
-├── src/                 # Source files
-│   ├── common/          # Shared, reusable UI components (grouped by function)
-│   │   ├── Button/      # e.g., Button components
-│   │   ├── Input/       # e.g., Input components
-│   │   ├── Layout/      # e.g., Layout templates like AuthScreen
-│   │   ├── Link/        # e.g., Link components like SignupLink
-│   │   ├── Alert/       # e.g., ErrorMessages
-│   │   └── ...          # etc. (other functional groups)
-│   ├── constants/       # Project-wide constant values
-│   │   └── validScreens.js # List of valid screen names for the dev script
-│   ├── screens/         # Login flow screens
-│   │   └── [screen-name]/
-│   │       ├── components/ # Components specific ONLY to this screen
-│   │       │   └── ...
-│   │       ├── hooks/      # Hooks specific ONLY to this screen (e.g., use<ScreenName>Manager, use<ScreenName>Form)
-│   │       └── index.tsx   # Main screen component, orchestrates components from its ./components/ folder.
-│   ├── mock-data/       # Mock data JSON files for local screen development (e.g., login-id.json)
-│   └── utils/           # Shared utility functions
-│       ├── theme/       # Auth0 theming system
-│       └── screen/      # Screen utilities including mockContextLoader.ts
-└── ...                  # Build and configuration files
-```
 
 <a id="screens"></a>
 

@@ -2,28 +2,6 @@
 
 This directory contains the complete GitHub Actions deployment pipeline for Auth0 Universal Login customizations.
 
-```
-.github/
-├── config/                      # Configuration files
-│   ├── deploy_config.yml        # Controls which screens to deploy
-│   ├── screen-to-prompt-mapping.js   # Maps screens to Auth0 prompts
-│   └── context-configuration.js      # Auth0 context data configuration
-├── actions/                     # Custom GitHub Actions
-│   ├── check-deployment-targets/ #Checks if any screens need deployment
-│   ├── configure-auth0-screens/ # Configures Auth0 Universal Login screens
-│   │   ├── action.yml           # Main action orchestrator
-│   │   └── scripts/             # Organized bash scripts
-│   │       ├── utils.sh         # Shared utilities
-│   │       ├── setup-and-config.sh # Config loading & validation
-│   │       ├── discover-assets.sh  # Asset discovery logic
-│   │       ├── process-screen.sh   # Screen processing
-│   │       └── generate-report.sh  # Final reporting
-│   ├── setup-auth0-cli/         # Sets up the Auth0 CLI
-│   └── upload-acul-to-s3/       # Uploads ACUL assets to S3
-└── workflows/                   # GitHub workflow definitions
-    └── acul-deploy.yml
-```
-
 ## Deployment Pipeline
 
 The deployment automatically builds, uploads, and configures Auth0 Universal Login screens using GitHub Actions.
