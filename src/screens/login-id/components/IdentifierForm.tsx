@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
-import Alert from "@/common/Alert";
+import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
 import CountryCodePicker from "@/common/CountryCodePicker";
@@ -20,7 +20,6 @@ interface LoginIdFormData {
   captcha?: string;
 }
 
-// No props needed as it uses hooks internally for data and actions
 const IdentifierForm: React.FC = () => {
   const {
     handleLoginId,
@@ -79,7 +78,9 @@ const IdentifierForm: React.FC = () => {
       {generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: Error, index: number) => (
-            <Alert key={index} type="error" message={error.message} />
+            <ULThemeAlert key={index}>
+              <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            </ULThemeAlert>
           ))}
         </div>
       )}

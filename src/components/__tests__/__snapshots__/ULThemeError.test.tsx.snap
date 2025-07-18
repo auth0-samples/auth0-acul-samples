@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemeAlert matches snapshot with ULThemeAlertTitle 1`] = `
+<div
+  class="shadow-input-hover bg-input relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 overflow-clip rounded-3xl text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 text-destructive-foreground [&>svg]:text-destructive-foreground p-4 theme-universal:bg-error theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:rounded-button theme-universal:font-body theme-universal:text-(length:--ul-theme-font-body-text-size)"
+  data-slot="alert"
+  role="alert"
+>
+  <div
+    class="col-start-2 line-clamp-1 flex h-auto min-h-4 leading-4.5 font-medium tracking-tight theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:font-body theme-universal:text-(length:--ul-theme-font-body-text-size)"
+    data-slot="alert-title"
+  >
+    Error message
+  </div>
+</div>
+`;
