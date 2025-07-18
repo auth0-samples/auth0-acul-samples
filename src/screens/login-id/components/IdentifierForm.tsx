@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
-import { Alert } from "@/components/ui/alert";
+import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import CaptchaBox from "@/common/CaptchaBox";
 import FormField from "@/common/FormField";
 import CountryCodePicker from "@/common/CountryCodePicker";
@@ -78,9 +78,9 @@ const IdentifierForm: React.FC = () => {
       {generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: Error, index: number) => (
-            <Alert key={index} variant="destructive">
-              {error.message}
-            </Alert>
+            <ULThemeAlert key={index}>
+              <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            </ULThemeAlert>
           ))}
         </div>
       )}
