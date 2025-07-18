@@ -71,8 +71,8 @@
   },
   "transaction": {
     "country_code": {
-      "code": "AZ",
-      "prefix": "41"
+      "code": "IN",
+      "prefix": "91"
     },
     "alternate_connections": [
       {
@@ -103,9 +103,25 @@
         "signup_enabled": true,
         "forgot_password_enabled": true,
         "attributes": {
+          "email": {
+            "signup_status": "required",
+            "identifier_active": true
+          },
           "phone": {
             "signup_status": "required",
             "identifier_active": true
+          },
+          "username": {
+            "signup_status": "required",
+            "identifier_active": true,
+            "validation": {
+              "max_length": 15,
+              "min_length": 1,
+              "allowed_types": {
+                "email": false,
+                "phone_number": false
+              }
+            }
           }
         },
         "authentication_methods": {
