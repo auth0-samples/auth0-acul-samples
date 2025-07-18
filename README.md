@@ -73,8 +73,6 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 
 <a id="project-structure"></a>
 
-## 📁 Project Structure
-
 ```
 auth0-acul-samples/
 ├── .github/             # GitHub Actions workflows for CI/CD

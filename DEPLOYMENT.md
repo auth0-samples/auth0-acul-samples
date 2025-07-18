@@ -13,7 +13,6 @@ This document provides a comprehensive guide to set up the infrastructure and co
 - [Deployment Options](#deployment-options)
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
-- [Working Directory Configuration](#working-directory-configuration)
 
 <a id="overview"></a>
 
@@ -381,32 +380,3 @@ The workflow is designed to be resilient:
 - **Check:** Browser console for 404 errors on assets
 - **Solution:** Verify `S3_CDN_URL` is correct and assets are publicly accessible
 </details>
-
-<a id="logs-and-monitoring"></a>
-
-### Logs and Monitoring
-
-- 📊 The GitHub Actions workflow provides detailed logs for each step
-- 🔎 Each screen deployment includes asset discovery information
-- ✅ Successful and failed deployments are tracked and reported
-- 📑 The workflow outputs a summary at the end with links to deployed screens
-
-<a id="working-directory-configuration"></a>
-
-## 🗂️ Working Directory Configuration
-
-If you're using this workflow in a monorepo, the default setting assumes:
-
-```yaml
-env:
-  WORKING_DIR: /auth0-acul-samples
-```
-
-If your ACUL code is in the repository root, change this to:
-
-```yaml
-env:
-  WORKING_DIR: .
-```
-
-Adjust this path according to your repository structure.

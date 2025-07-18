@@ -2,8 +2,6 @@
 
 This directory contains the complete GitHub Actions deployment pipeline for Auth0 Universal Login customizations.
 
-## Directory Structure
-
 ```
 .github/
 ├── config/                      # Configuration files
