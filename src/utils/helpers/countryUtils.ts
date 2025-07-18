@@ -1,11 +1,7 @@
 /**
  * Utility functions for handling country code data from Auth0 SDK
  */
-
-// Comprehensive country code to name and flag mapping
-// Using Unicode Regional Indicator Symbols (not ASCII, but widely supported)
 const COUNTRY_DATA: Record<string, { name: string; flag: string }> = {
-  // Complete Auth0-compatible country database
   AD: { name: "Andorra", flag: "🇦🇩" },
   AE: { name: "United Arab Emirates", flag: "🇦🇪" },
   AF: { name: "Afghanistan", flag: "🇦🇫" },
@@ -270,24 +266,17 @@ export interface Auth0CountryCode {
  * Alternative structure that might be in mock data or different SDK versions
  */
 export interface Auth0CountryCodeAlt {
-  countryCode: string; // From SDK interface
-  countryPrefix: string; // From SDK interface
+  countryCode: string;
+  countryPrefix: string;
 }
 
-/**
- * CountryCodePicker expected structure
- */
 export interface CountryCodePickerData {
-  name: string; // Country name like "India"
-  code: string; // Country code like "IN"
-  dialCode: string; // Phone code like "+91"
-  flag: string; // Flag emoji like "🇮🇳"
+  name: string;
+  code: string;
+  dialCode: string;
+  flag: string;
 }
 
-/**
- * Transforms Auth0 SDK country code data to CountryCodePicker format
- * Uses SDK interface: countryCode (string) and countryPrefix (string) as separate parameters
- */
 export function transformAuth0CountryCode(
   countryCode: string | null | undefined,
   countryPrefix?: string | null | undefined,
@@ -329,96 +318,10 @@ export function isPhoneNumberSupported(identifiers: string[]): boolean {
   );
 }
 
-/**
- * Legacy transform function for backward compatibility with object format
- * @deprecated Use transformAuth0CountryCode with separate parameters instead
- */
-export function transformAuth0CountryCodeLegacy(
-  auth0CountryCode:
-    | Auth0CountryCode
-    | Auth0CountryCodeAlt
-    | any
-    | null
-    | undefined,
-): CountryCodePickerData | undefined {
-  if (!auth0CountryCode) {
-    return undefined;
-  }
-
-  // Handle case where we get just a string (like "IN")
-  if (typeof auth0CountryCode === "string") {
-    // If it's just a country code string, we can't determine the prefix
-    // This shouldn't happen with our current setup, but adding as fallback
-    const countryInfo = COUNTRY_DATA[auth0CountryCode];
-    return countryInfo
-      ? {
-          name: countryInfo.name,
-          code: auth0CountryCode,
-          dialCode: "+??", // Unknown prefix - shouldn't happen now
-          flag: countryInfo.flag,
-        }
-      : undefined;
-  }
-
-  // Handle case where it's not an object
-  if (typeof auth0CountryCode !== "object") {
-    return undefined;
-  }
-
-  // Extract country code and prefix from different possible structures
-  let countryCode: string;
-  let countryPrefix: string;
-
-  if ("code" in auth0CountryCode && "prefix" in auth0CountryCode) {
-    // Mock data format: { code: "IN", prefix: "91" }
-    countryCode = auth0CountryCode.code;
-    countryPrefix = auth0CountryCode.prefix;
-  } else if (
-    "countryCode" in auth0CountryCode &&
-    "countryPrefix" in auth0CountryCode
-  ) {
-    // SDK interface format: { countryCode: "IN", countryPrefix: "91" }
-    countryCode = auth0CountryCode.countryCode;
-    countryPrefix = auth0CountryCode.countryPrefix;
-  } else {
-    // Invalid or unknown format
-    return undefined;
-  }
-
-  if (!countryCode) {
-    return undefined;
-  }
-
-  const countryInfo = COUNTRY_DATA[countryCode];
-
-  if (!countryInfo) {
-    // Fallback for unknown country codes
-    return {
-      name: `Country ${countryCode}`,
-      code: countryCode,
-      dialCode: `+${countryPrefix}`,
-      flag: "🏳️", // Generic flag
-    };
-  }
-
-  return {
-    name: countryInfo.name,
-    code: countryCode,
-    dialCode: `+${countryPrefix}`,
-    flag: countryInfo.flag,
-  };
-}
-
-/**
- * Gets country name from country code
- */
 export function getCountryName(countryCode: string): string {
   return COUNTRY_DATA[countryCode]?.name || `Country ${countryCode}`;
 }
 
-/**
- * Gets country flag from country code
- */
 export function getCountryFlag(countryCode: string): string {
   return COUNTRY_DATA[countryCode]?.flag || "🏳️";
 }
