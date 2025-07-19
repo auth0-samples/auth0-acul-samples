@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+
 import ULThemePageLayout from "@/components/ULThemePageLayout";
 
 describe("ULThemePageLayout Component Test Suite", () => {
@@ -7,7 +8,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     const { container } = render(
       <ULThemePageLayout>
         <div>Test Content</div>
-      </ULThemePageLayout>,
+      </ULThemePageLayout>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -16,7 +17,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     const { container } = render(
       <ULThemePageLayout className="custom-class">
         <div>Test Content</div>
-      </ULThemePageLayout>,
+      </ULThemePageLayout>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -25,7 +26,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     const { container } = render(
       <ULThemePageLayout id="test-id" data-testid="test-layout">
         <div>Test Content</div>
-      </ULThemePageLayout>,
+      </ULThemePageLayout>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -35,7 +36,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     const { getByText } = render(
       <ULThemePageLayout>
         <div>Test Content</div>
-      </ULThemePageLayout>,
+      </ULThemePageLayout>
     );
 
     expect(getByText("Test Content")).toBeInTheDocument();
@@ -43,11 +44,11 @@ describe("ULThemePageLayout Component Test Suite", () => {
 
   it("applies default themed styles", () => {
     const { container } = render(
-      <ULThemePageLayout>Test Content</ULThemePageLayout>,
+      <ULThemePageLayout>Test Content</ULThemePageLayout>
     );
 
     expect(container.firstChild).toHaveClass(
-      "flex px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url)",
+      "flex px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url)"
     );
   });
 
@@ -55,7 +56,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     const { container } = render(
       <ULThemePageLayout className="custom-class">
         Test Content
-      </ULThemePageLayout>,
+      </ULThemePageLayout>
     );
 
     expect(container.firstChild).toHaveClass("custom-class");
@@ -65,7 +66,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     const { container } = render(
       <ULThemePageLayout id="test-id" data-testid="test-layout">
         Test Content
-      </ULThemePageLayout>,
+      </ULThemePageLayout>
     );
 
     expect(container.firstChild).toHaveAttribute("id", "test-id");

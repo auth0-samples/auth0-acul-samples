@@ -279,7 +279,7 @@ export interface CountryCodePickerData {
 
 export function transformAuth0CountryCode(
   countryCode: string | null | undefined,
-  countryPrefix?: string | null | undefined,
+  countryPrefix?: string | null | undefined
 ): CountryCodePickerData | undefined {
   if (!countryCode) {
     return undefined;

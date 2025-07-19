@@ -1,5 +1,7 @@
-import { Avatar as AvatarPrimitive } from "@base-ui-components/react";
 import * as React from "react";
+
+import { Avatar as AvatarPrimitive } from "@base-ui-components/react";
+
 import { cn } from "@/lib/utils";
 
 function Avatar({
@@ -11,7 +13,7 @@ function Avatar({
       data-slot="avatar"
       className={cn(
         "relative flex size-8 shrink-0 overflow-hidden rounded-full",
-        className,
+        className
       )}
       {...props}
     />
@@ -40,11 +42,11 @@ function AvatarFallback({
       data-slot="avatar-fallback"
       className={cn(
         "bg-muted flex size-full items-center justify-center rounded-full",
-        className,
+        className
       )}
       {...props}
     />
   );
 }
 
-export { Avatar, AvatarImage, AvatarFallback };
+export { Avatar, AvatarFallback, AvatarImage };

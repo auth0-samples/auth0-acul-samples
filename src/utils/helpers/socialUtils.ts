@@ -56,7 +56,7 @@ const generateDisplayName = (connection: SocialConnection): string => {
  * Gets the display details (displayName, iconComponent) for a social connection.
  */
 export const getSocialProviderDetails = (
-  connection: SocialConnection,
+  connection: SocialConnection
 ): SocialProviderDetails => {
   const displayName = generateDisplayName(connection);
 

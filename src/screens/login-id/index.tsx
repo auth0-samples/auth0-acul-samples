@@ -1,15 +1,14 @@
-import React from "react";
 import Card from "@/common/Card";
-import { useLoginIdManager } from "./hooks/useLoginIdManager";
-import { applyAuth0Theme } from "@/utils/theme";
+import ULThemePageLayout from "@/components/ULThemePageLayout";
+import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
-import Header from "./components/Header";
-import IdentifierForm from "./components/IdentifierForm";
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
-import ULThemePageLayout from "@/components/ULThemePageLayout";
+import Header from "./components/Header";
+import IdentifierForm from "./components/IdentifierForm";
+import { useLoginIdManager } from "./hooks/useLoginIdManager";
 
-const LoginIdScreen: React.FC = () => {
+function LoginIdScreen() {
   const { loginIdInstance, texts } = useLoginIdManager();
 
   document.title = texts?.pageTitle || "Login";
@@ -28,6 +27,6 @@ const LoginIdScreen: React.FC = () => {
       </Card>
     </ULThemePageLayout>
   );
-};
+}
 
 export default LoginIdScreen;

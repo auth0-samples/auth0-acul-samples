@@ -1,9 +1,11 @@
 import { lazy } from "react";
 
-const SCREEN_COMPONENTS: Record<string, any> = {
+const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "login-id": lazy(() => import("@/screens/login-id")),
 };
 
-export const getScreenComponent = (screenName: string) => {
+export const getScreenComponent = (
+  screenName: string
+): React.ComponentType | null => {
   return SCREEN_COMPONENTS[screenName] || null;
 };

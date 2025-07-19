@@ -1,13 +1,10 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-interface SvgIconProps extends React.SVGProps<SVGSVGElement> {
+interface SvgIconProps extends SVGProps<SVGSVGElement> {
   title?: string;
 }
 
-export const ExclamationCircleIcon: React.FC<SvgIconProps> = ({
-  title,
-  ...props
-}) => (
+export const ExclamationCircleIcon = ({ title, ...props }: SvgIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"

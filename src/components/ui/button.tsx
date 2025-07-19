@@ -2,6 +2,7 @@
 
 import { useRender } from "@base-ui-components/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
+
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -30,7 +31,7 @@ const buttonVariants = cva(
       variant: "primary",
       size: "default",
     },
-  },
+  }
 );
 
 export interface ButtonProps

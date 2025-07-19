@@ -32,7 +32,17 @@ export default defineConfig({
   },
   clearScreen: false,
   resolve: {
-    alias: { "@": resolve(__dirname, "./src") },
+    alias: {
+      "@": resolve(__dirname, "./src"),
+      "@/components": resolve(__dirname, "./src/components"),
+      "@/common": resolve(__dirname, "./src/common"),
+      "@/screens": resolve(__dirname, "./src/screens"),
+      "@/utils": resolve(__dirname, "./src/utils"),
+      "@/types": resolve(__dirname, "./src/types"),
+      "@/constants": resolve(__dirname, "./src/constants"),
+      "@/assets": resolve(__dirname, "./src/assets"),
+      "@/lib": resolve(__dirname, "./src/lib"),
+    },
   },
   build: {
     rollupOptions: {
@@ -53,7 +63,7 @@ export default defineConfig({
 
           // For screen-specific chunks
           const screenMatch = Object.keys(screenEntries).find((screen) =>
-            chunkName.startsWith(`${screen}-`),
+            chunkName.startsWith(`${screen}-`)
           );
 
           if (screenMatch) {

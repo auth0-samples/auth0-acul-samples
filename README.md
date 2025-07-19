@@ -46,10 +46,16 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 <details>
 <summary>📦 Dependencies Installation</summary>
 
-- Install dependencies:
-  ```bash
-  npm install
-  ```
+**Prerequisites:**
+
+- Node.js >=22.0.0
+
+**Install project dependencies:**
+
+```bash
+npm install
+```
+
   </details>
 
 <a id="quick-start"></a>
@@ -61,11 +67,11 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
    ```bash
    # View a specific screen component
    # Replace <screen_name> with the desired screen (e.g., login-id, login-password, signup-id)
-   npm run screen <screen_name>
+   npm screen <screen_name>
 
    # Examples:
-   npm run screen login-id
-   npm run screen login-password
+   npm screen login-id
+   npm screen login-password
    ```
 
    This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/screen/mockContextLoader.ts` uses to inject the correct mock context.
@@ -77,7 +83,6 @@ This project provides a template for creating custom Auth0 Advanced Customizatio
 This template includes implementations for several Universal Login screens that match Auth0's design language:
 
 - **Login ID Screen** (`src/screens/login-id/`)
-
   - Username/email input step in a multi-step login flow
   - Follows Auth0's Identifier First authentication pattern
 
@@ -92,7 +97,7 @@ Each screen component is designed to be used with the Auth0 ACUL JavaScript SDK 
 For local development, each screen component is provided with mock data in folder `mock-data` for sdk to render screens. To work on a specific screen:
 
 ```bash
-npm run screen <screen_name>
+npm screen <screen_name>
 ```
 
 This command, managed by `scripts/dev-screen.js`:

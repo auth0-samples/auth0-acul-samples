@@ -1,12 +1,12 @@
-import React from "react";
+import type { HTMLAttributes, ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
-export interface ULThemeTitleProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface ULThemeTitleProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The title of the screen.
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * Optional class names for additional styling or overriding default styles.
    */
