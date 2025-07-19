@@ -1,28 +1,58 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Environment and configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+.npmrc
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Test coverage
+coverage/
+*.lcov
 
-# Test coverage reports
-coverage
+# Development tools
+.husky/
+
+# Documentation
+docs/
+
+# Operating system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
+*.swp
+*.swo
+*.sw?
+
+# IDE project files
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
-docs
+.husky
