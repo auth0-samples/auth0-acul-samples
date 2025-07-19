@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Run lint-staged on staged files only
+# Run lint-staged to format and lint staged files
 echo "🔍 Running lint-staged (format + lint staged files)..."
-pnpm exec lint-staged || exit 1
+npx lint-staged || exit 1
 
 echo "✅ Pre-commit checks passed!"

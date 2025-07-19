@@ -2,4 +2,4 @@
 
 # Validate commit message format
 echo "📝 Validating commit message format..."
-pnpm exec commitlint --edit "$1"
+npx commitlint --edit "$1"
