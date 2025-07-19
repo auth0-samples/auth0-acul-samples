@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+
 import type { IconProps } from "@/common/Icon";
+import { cn } from "@/lib/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -37,7 +38,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       "aria-label": ariaLabel,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const baseStyles =
       "inline-flex items-center justify-center font-medium focus:outline-none transition-colors duration-150 ease-in-out";
@@ -96,7 +97,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           widthStyles,
           loadingStyles,
           cursorStyles,
-          className,
+          className
         )}
         {...rest}
       >
@@ -112,7 +113,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </button>
     );
-  },
+  }
 );
 
 Button.displayName = "Button";

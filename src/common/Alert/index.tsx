@@ -1,4 +1,5 @@
-import React from "react";
+import type { ElementType } from "react";
+
 import Icon from "@/common/Icon";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +17,7 @@ export interface AlertProps {
 const Alert = ({ type, message, className, title }: AlertProps) => {
   const baseStyles = "p-4 rounded-sm my-4";
   let typeStyles = "";
-  let IconComponent: React.ElementType | null = null;
+  const IconComponent: ElementType | null = null;
 
   switch (type) {
     case "error":

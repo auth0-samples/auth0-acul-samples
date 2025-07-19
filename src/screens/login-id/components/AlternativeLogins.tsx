@@ -1,13 +1,13 @@
-import React from "react";
 import Separator from "@/common/Separator";
 import SocialProviderButton from "@/common/SocialProviderButton";
-import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
-import type { SocialConnection } from "@/utils/helpers/socialUtils";
 import { getIcon } from "@/utils/helpers/iconUtils";
+import type { SocialConnection } from "@/utils/helpers/socialUtils";
+import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
+
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 // No props needed as it uses hooks internally
-const AlternativeLogins: React.FC = () => {
+const AlternativeLogins = () => {
   const {
     loginIdInstance,
     handleFederatedLogin,

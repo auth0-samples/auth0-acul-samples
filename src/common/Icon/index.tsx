@@ -2,28 +2,27 @@ import React from "react";
 
 export interface IconProps {
   /**
-   * The SVG React Component to render.
-   * e.g., import { EyeIcon } from '@/assets/icons';
-   * then pass: <Icon As={EyeIcon} className="w-5 h-5" title="Some title" />
-   * The 'As' component is responsible for rendering the <title> tag if needed.
+   * The SVG icon component to render (e.g., EyeIcon, EyeSlashIcon).
    */
-  As: React.ElementType<React.SVGProps<SVGSVGElement> & { title?: string }>; // Allow title prop on As
+  As: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   /**
-   * Additional classes for styling the icon.
+   * Optional CSS class name for styling.
    */
   className?: string;
   /**
-   * Title for accessibility - will be passed to the 'As' component.
+   * Optional title for accessibility.
    */
   title?: string;
-  // Allow any other SVG-compatible props to be passed through
-  [key: string]: any;
 }
 
-const Icon = ({ As, className, title, ...rest }: IconProps) => {
+const Icon = ({
+  As,
+  className,
+  ...rest
+}: IconProps & Omit<React.SVGProps<SVGSVGElement>, "title">) => {
   // The 'As' component (e.g., EyeIcon) should handle the title prop
   // to render an SVG <title> element for accessibility.
-  return <As className={className} title={title} {...rest} />;
+  return <As className={className} {...rest} />;
 };
 
 export default Icon;

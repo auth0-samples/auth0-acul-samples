@@ -1,13 +1,15 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import LoginIdScreen from "../index";
 import LoginIdInstance from "@auth0/auth0-acul-js/login-id";
-import {
-  ScreenTestUtils,
-  MockConfigUtils,
-} from "@/test/utils/screen-test-utils";
-import { CommonTestData } from "@/test/fixtures/common-data";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+
 import type { MockLoginIdInstance } from "@/__mocks__/@auth0/auth0-acul-js/login-id";
 import { createMockLoginIdInstance } from "@/__mocks__/@auth0/auth0-acul-js/login-id";
+import { CommonTestData } from "@/test/fixtures/common-data";
+import {
+  MockConfigUtils,
+  ScreenTestUtils,
+} from "@/test/utils/screen-test-utils";
+
+import LoginIdScreen from "../index";
 
 // Mock the Auth0 SDK
 const MockedLoginIdInstance = LoginIdInstance as unknown as jest.Mock;
@@ -30,20 +32,20 @@ describe("LoginIdScreen", () => {
       expect(screen.getByText("Mock Welcome Title")).toBeInTheDocument();
       expect(screen.getByText("Mock description text.")).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: "Mock Continue" }),
+        screen.getByRole("button", { name: "Mock Continue" })
       ).toBeInTheDocument();
     });
 
     it("should render identifier input with correct label", () => {
       expect(
-        screen.getByLabelText("Username or Email Address*"),
+        screen.getByLabelText("Username or Email Address*")
       ).toBeInTheDocument();
     });
 
     it("should call the login method with correct parameters", async () => {
       await ScreenTestUtils.fillInput(
         /username|email|phone/i,
-        "test@example.com",
+        "test@example.com"
       );
       await ScreenTestUtils.clickButton("Mock Continue");
 
@@ -169,7 +171,7 @@ describe("LoginIdScreen", () => {
       render(<LoginIdScreen />);
       expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
       expect(
-        screen.getByRole("textbox", { name: /enter the code shown above/i }),
+        screen.getByRole("textbox", { name: /enter the code shown above/i })
       ).toBeInTheDocument();
     });
 
@@ -177,7 +179,7 @@ describe("LoginIdScreen", () => {
       mockInstance.screen.isCaptchaAvailable = false;
       render(<LoginIdScreen />);
       expect(
-        screen.queryByAltText("CAPTCHA challenge"),
+        screen.queryByAltText("CAPTCHA challenge")
       ).not.toBeInTheDocument();
     });
 
@@ -186,7 +188,7 @@ describe("LoginIdScreen", () => {
       mockInstance.screen.captchaImage = ""; // But the component should handle empty image
       render(<LoginIdScreen />);
       expect(
-        screen.queryByAltText("CAPTCHA challenge"),
+        screen.queryByAltText("CAPTCHA challenge")
       ).not.toBeInTheDocument();
     });
 
@@ -196,7 +198,7 @@ describe("LoginIdScreen", () => {
       render(<LoginIdScreen />);
       await ScreenTestUtils.fillInput(
         /username|email|phone/i,
-        "test@example.com",
+        "test@example.com"
       );
       await ScreenTestUtils.fillInput(/enter the code shown above/i, "ABC123");
       await ScreenTestUtils.clickButton("Mock Continue");
@@ -215,13 +217,13 @@ describe("LoginIdScreen", () => {
       });
       render(<LoginIdScreen />);
       expect(
-        screen.getByRole("button", { name: /continue with google/i }),
+        screen.getByRole("button", { name: /continue with google/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /continue with github/i }),
+        screen.getByRole("button", { name: /continue with github/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /continue with facebook/i }),
+        screen.getByRole("button", { name: /continue with facebook/i })
       ).toBeInTheDocument();
     });
 
@@ -244,7 +246,7 @@ describe("LoginIdScreen", () => {
       mockInstance.screen.publicKey = { challenge: "mock-challenge" };
       render(<LoginIdScreen />);
       expect(
-        screen.getByRole("button", { name: /continue with a passkey/i }),
+        screen.getByRole("button", { name: /continue with a passkey/i })
       ).toBeInTheDocument();
     });
 
@@ -252,7 +254,7 @@ describe("LoginIdScreen", () => {
       mockInstance.transaction.isPasskeyEnabled = false;
       render(<LoginIdScreen />);
       expect(
-        screen.queryByRole("button", { name: /continue with a passkey/i }),
+        screen.queryByRole("button", { name: /continue with a passkey/i })
       ).not.toBeInTheDocument();
     });
 
@@ -305,16 +307,16 @@ describe("LoginIdScreen", () => {
       // Primary form
       expect(screen.getByText("Mock Welcome Title")).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: "Mock Continue" }),
+        screen.getByRole("button", { name: "Mock Continue" })
       ).toBeInTheDocument();
       expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
 
       // Alternative methods
       expect(
-        screen.getByRole("button", { name: /continue with a passkey/i }),
+        screen.getByRole("button", { name: /continue with a passkey/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /continue with google/i }),
+        screen.getByRole("button", { name: /continue with google/i })
       ).toBeInTheDocument();
 
       // Separator
@@ -329,7 +331,7 @@ describe("LoginIdScreen", () => {
 
       await ScreenTestUtils.fillInput(
         /username|email|phone/i,
-        "test@example.com",
+        "test@example.com"
       );
       await ScreenTestUtils.fillInput(/enter the code shown above/i, "ABC123");
       await ScreenTestUtils.clickButton("Mock Continue");

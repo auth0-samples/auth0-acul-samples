@@ -1,10 +1,10 @@
-import React from "react";
 import Logo from "@/common/Logo";
-import ULThemeTitle from "@/components/ULThemeTitle";
 import ULThemeSubtitle from "@/components/ULThemeSubtitle";
+import ULThemeTitle from "@/components/ULThemeTitle";
+
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
-const Header: React.FC = () => {
+function Header() {
   const { texts } = useLoginIdManager();
 
   // Handle text fallbacks in component
@@ -20,6 +20,6 @@ const Header: React.FC = () => {
       </ULThemeSubtitle>
     </>
   );
-};
+}
 
 export default Header;

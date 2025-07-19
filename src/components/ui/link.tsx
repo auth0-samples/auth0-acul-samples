@@ -1,5 +1,7 @@
-import { cva, VariantProps } from "class-variance-authority";
 import * as React from "react";
+
+import { cva, VariantProps } from "class-variance-authority";
+
 import { cn } from "@/lib/utils";
 
 const linkVariants = cva(
@@ -21,7 +23,7 @@ const linkVariants = cva(
       variant: "primary",
       underline: "always",
     },
-  },
+  }
 );
 
 export interface LinkProps
@@ -30,7 +32,7 @@ export interface LinkProps
 
 function Link(
   { className, children, variant, underline, ...props }: LinkProps,
-  ref: React.Ref<HTMLAnchorElement> | undefined,
+  ref: React.Ref<HTMLAnchorElement> | undefined
 ) {
   return (
     <a

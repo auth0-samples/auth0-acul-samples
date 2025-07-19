@@ -27,13 +27,23 @@
  * Screen Instance from ACUL SDK → Theme Extraction → Flattening → Change Detection → DOM Update
  */
 
+import type {
+  BrandingMembers,
+  OrganizationMembers,
+} from "@auth0/auth0-acul-js";
+
 import {
-  flattenColors,
   flattenBorders,
+  flattenColors,
   flattenFonts,
   flattenPageBackground,
   flattenWidget,
 } from "./themeFlatteners";
+
+interface Auth0ScreenInstance {
+  branding?: BrandingMembers;
+  organization?: OrganizationMembers;
+}
 
 // Cache for performance optimization - tracks current theme state
 let currentThemeCache: Record<string, string> = {};
@@ -61,7 +71,7 @@ const PRECEDENCE_VARIABLE_MAPPING = {
  * }
  * ```
  */
-export function applyAuth0Theme(screenInstance: any): void {
+export function applyAuth0Theme(screenInstance: Auth0ScreenInstance): void {
   if (!screenInstance?.branding) {
     return;
   }
@@ -75,15 +85,18 @@ export function applyAuth0Theme(screenInstance: any): void {
  * Extracts and merges theme data with precedence handling
  * Precedence order (lowest to highest): Settings -> Theme -> Organization
  */
-function extractThemeData(screenInstance: any): Record<string, string> {
-  const theme = screenInstance.branding?.themes?.default || {};
+function extractThemeData(
+  screenInstance: Auth0ScreenInstance
+): Record<string, string> {
+  const theme =
+    screenInstance.branding?.themes?.default || ({} as Record<string, unknown>);
 
   const settingsVars = extractBrandingOverrides(
-    screenInstance.branding?.settings,
+    screenInstance.branding?.settings as Record<string, unknown> | undefined
   );
-  const themeVars = extractThemeVariables(theme);
+  const themeVars = extractThemeVariables(theme as Record<string, unknown>);
   const organizationVars = extractBrandingOverrides(
-    screenInstance.organization?.branding,
+    screenInstance.organization?.branding as Record<string, unknown> | undefined
   );
 
   return { ...settingsVars, ...themeVars, ...organizationVars };
@@ -92,13 +105,15 @@ function extractThemeData(screenInstance: any): Record<string, string> {
 /**
  * Extracts core theme variables from theme object
  */
-function extractThemeVariables(theme: any): Record<string, string> {
+function extractThemeVariables(
+  theme: Record<string, unknown>
+): Record<string, string> {
   return {
     ...flattenColors(theme.colors || {}),
     ...flattenBorders(theme.borders || {}),
     ...flattenFonts(theme.fonts || {}),
     ...flattenPageBackground(
-      theme.pageBackground || theme.page_background || {},
+      theme.pageBackground || theme.page_background || {}
     ),
     ...flattenWidget(theme.widget || {}),
   };
@@ -108,15 +123,13 @@ function extractThemeVariables(theme: any): Record<string, string> {
  * Extracts branding overrides from settings or organization data
  * Handles both settings and organization sources with the same logic
  */
-function extractBrandingOverrides(brandingSource: any): Record<string, string> {
+function extractBrandingOverrides(
+  branding: Record<string, unknown> | undefined
+): Record<string, string> {
   const overrides: Record<string, string> = {};
 
-  if (brandingSource) {
-    applyMappedOverrides(
-      brandingSource,
-      PRECEDENCE_VARIABLE_MAPPING,
-      overrides,
-    );
+  if (branding) {
+    applyMappedOverrides(branding, PRECEDENCE_VARIABLE_MAPPING, overrides);
   }
 
   return overrides;
@@ -127,13 +140,13 @@ function extractBrandingOverrides(brandingSource: any): Record<string, string> {
  * Handles special formatting for specific CSS variables
  */
 function applyMappedOverrides(
-  source: any,
+  source: Record<string, unknown>,
   mapping: Record<string, string>,
-  overrides: Record<string, string>,
+  overrides: Record<string, string>
 ): void {
   Object.entries(mapping).forEach(([authPath, cssVar]) => {
     const value = getNestedValue(source, authPath);
-    if (value) {
+    if (value && typeof value === "string") {
       // Handle special formatting for specific variables
       if (cssVar === "--ul-theme-widget-logo-url") {
         overrides[cssVar] = `"${value}"`;
@@ -147,8 +160,14 @@ function applyMappedOverrides(
   });
 }
 
-function getNestedValue(obj: any, path: string): any {
-  return path.split(".").reduce((current, key) => current?.[key], obj);
+function getNestedValue(
+  obj: Record<string, unknown>,
+  path: string
+): string | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return path.split(".").reduce((current: any, key) => current?.[key], obj) as
+    | string
+    | undefined;
 }
 
 /**
@@ -170,7 +189,7 @@ function applyThemeVariables(newTheme: Record<string, string>): void {
  * Identifies which variables have changed compared to cache
  */
 function findChangedVariables(
-  newTheme: Record<string, string>,
+  newTheme: Record<string, string>
 ): Record<string, string> {
   const changed: Record<string, string> = {};
 

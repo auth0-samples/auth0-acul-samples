@@ -1,6 +1,8 @@
+import * as React from "react";
+
 import { Field as FieldPrimitive } from "@base-ui-components/react";
 import { cva, VariantProps } from "class-variance-authority";
-import * as React from "react";
+
 import { cn } from "@/lib/utils";
 
 const formFieldVariants = cva(
@@ -23,7 +25,7 @@ const formFieldVariants = cva(
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 
 export interface FormFieldProps
@@ -50,11 +52,11 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
       endAdornment,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [focused, setFocused] = React.useState(false);
     const [hasValue, setHasValue] = React.useState(
-      Boolean(props.value || props.defaultValue),
+      Boolean(props.value || props.defaultValue)
     );
     const isDisabled = props.disabled;
 
@@ -87,7 +89,7 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
             isDisabled && variant === "default" && "bg-input-muted",
             startAdornment && "pl-[5px]",
             endAdornment && "pr-[5px]",
-            className,
+            className
           )}
         >
           <FieldPrimitive.Label
@@ -98,7 +100,7 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
               isLabelFloating && "top-4 text-xs",
               isLabelFloating && size === "sm" && "top-3.5 text-xs",
               error ? "text-destructive-foreground" : "text-muted-foreground",
-              focused && !error && "text-primary",
+              focused && !error && "text-primary"
             )}
           >
             {label}
@@ -117,7 +119,7 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
                 startAdornment ? "rounded-l-none pl-0" : "pl-3",
                 endAdornment ? "rounded-r-none pr-0" : "pr-3",
                 size === "sm" && "h-12 pb-2 text-sm",
-                size === "lg" && "h-16 pt-4 pb-0 text-base",
+                size === "lg" && "h-16 pt-4 pb-0 text-base"
               )}
               ref={ref}
               onFocus={handleFocus}
@@ -136,7 +138,7 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
           <p
             className={cn(
               "mt-1.5 text-xs",
-              error ? "text-destructive-foreground" : "text-muted-foreground",
+              error ? "text-destructive-foreground" : "text-muted-foreground"
             )}
           >
             {helperText}
@@ -144,7 +146,7 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
         )}
       </div>
     );
-  },
+  }
 );
 
 FormField.displayName = "FormField";

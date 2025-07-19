@@ -7,7 +7,7 @@ export interface CaptchaBoxProps {
   label: string;
   name?: string;
   id?: string;
-  error?: string;
+  error?: string | undefined;
   imageUrl: string;
   imageAltText: string;
   onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -69,7 +69,7 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
         <div
           className={cn(
             "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
-            imageWrapperClassName,
+            imageWrapperClassName
           )}
         >
           <img

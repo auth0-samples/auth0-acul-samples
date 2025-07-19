@@ -3,7 +3,7 @@
  * preserving the path and query parameters.
  */
 export const rebaseLinkToCurrentOrigin = (
-  originalLink: string | undefined | null,
+  originalLink: string | undefined | null
 ): string | undefined | null => {
   if (typeof window === "undefined" || !originalLink) {
     return originalLink;

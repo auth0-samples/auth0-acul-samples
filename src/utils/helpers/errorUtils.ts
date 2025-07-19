@@ -5,7 +5,8 @@ export interface SdkError {
   code?: string;
   message: string;
   field?: string;
-  [key: string]: any; // Allow other properties
+  rules?: Array<{ message: string; format?: string[] }>; // Password complexity rules
+  [key: string]: unknown; // Allow other properties with unknown type
 }
 
 /**
@@ -16,7 +17,7 @@ export interface SdkError {
  */
 export const getFieldError = (
   fieldName: string,
-  errors: SdkError[] = [],
+  errors: Array<{ field?: string; message: string }>
 ): string | undefined => {
   if (!Array.isArray(errors)) {
     return undefined;

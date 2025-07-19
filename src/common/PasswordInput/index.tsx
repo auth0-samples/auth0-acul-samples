@@ -1,12 +1,13 @@
-import { forwardRef, useId, useState, useCallback } from "react";
-import { cn } from "@/lib/utils";
-import Button from "@/common/Button";
+import { forwardRef, useCallback, useId, useState } from "react";
+
 import { EyeIcon, EyeSlashIcon } from "@/assets/icons";
-import Icon from "@/common/Icon";
-import Tooltip from "@/common/Tooltip";
+import Button from "@/common/Button";
 import FormField from "@/common/FormField";
+import Icon from "@/common/Icon";
 import type { InputProps } from "@/common/Input";
 import type { LabelProps } from "@/common/Label";
+import Tooltip from "@/common/Tooltip";
+import { cn } from "@/lib/utils";
 
 export interface PasswordInputProps
   extends Omit<
@@ -56,7 +57,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       helpText,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const generatedId = useId();
     const inputId = id || generatedId;
@@ -131,7 +132,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         inputIcon={toggleButton}
       />
     );
-  },
+  }
 );
 
 PasswordInput.displayName = "PasswordInput";

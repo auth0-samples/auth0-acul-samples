@@ -1,8 +1,6 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-export const MicrosoftIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props,
-) => (
+export const MicrosoftIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"

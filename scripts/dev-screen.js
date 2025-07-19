@@ -17,7 +17,7 @@ const screenName = process.argv[2];
 if (!screenName) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,
-    "Error: No screen name provided.",
+    "Error: No screen name provided."
   );
   console.log("Usage: npm run screen <screen-name>");
   process.exit(1);
@@ -26,10 +26,10 @@ if (!screenName) {
 if (!VALID_SCREENS.includes(screenName)) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,
-    `Error: Invalid screen name: '${screenName}'.`,
+    `Error: Invalid screen name: '${screenName}'.`
   );
   console.log(
-    "Please use one of the valid screen names. You can find the list in src/constants/validScreens.js or project documentation.",
+    "Please use one of the valid screen names. You can find the list in src/constants/validScreens.js or project documentation."
   );
   process.exit(1);
 }
@@ -39,16 +39,16 @@ const mockDataPath = path.join(
   projectRoot,
   "src",
   "mock-data",
-  `${screenName}.json`,
+  `${screenName}.json`
 );
 
 if (!fs.existsSync(mockDataPath)) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,
-    `Error: Mock data file not found for screen '${screenName}'.`,
+    `Error: Mock data file not found for screen '${screenName}'.`
   );
   console.log(
-    `Please create '${screenName}.json' in the 'src/mock-data/' directory.`,
+    `Please create '${screenName}.json' in the 'src/mock-data/' directory.`
   );
   process.exit(1);
 }
@@ -57,7 +57,7 @@ process.env.VITE_SCREEN_NAME = screenName;
 
 console.log(
   `${ANSI_GREEN}%s${ANSI_RESET}`,
-  `Starting Vite dev server for screen: ${screenName}...`,
+  `Starting Vite dev server for screen: ${screenName}...`
 );
 
 try {
@@ -65,7 +65,7 @@ try {
 } catch (error) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,
-    `Vite server failed to start or exited with an error for screen: ${screenName}.`,
+    `Vite server failed to start or exited with an error for screen: ${screenName}.`
   );
   process.exit(1);
 }
