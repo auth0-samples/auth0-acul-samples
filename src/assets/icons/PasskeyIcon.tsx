@@ -1,6 +1,6 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-export const PasskeyIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const PasskeyIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"

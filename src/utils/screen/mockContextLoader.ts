@@ -16,7 +16,7 @@ export async function loadAndSetMockContext(): Promise<void> {
 
   if (!screenName) {
     console.error(
-      "DEV_ERROR: VITE_SCREEN_NAME not set. Use 'npm run screen <screen-name>'. Defaulting to empty context for dev.",
+      "DEV_ERROR: VITE_SCREEN_NAME not set. Use 'npm run screen <screen-name>'. Defaulting to empty context for dev."
     );
     // @ts-expect-error - It's safe to assign an empty object here because the
     // themeEngine, the primary consumer, is now robust enough to handle it.
@@ -34,7 +34,7 @@ export async function loadAndSetMockContext(): Promise<void> {
     console.error(
       `DEV_ERROR: Failed to load mock data for '${screenName}.json'. ` +
         `Ensure file exists. Dev script should have caught this. Error:`,
-      error,
+      error
     );
     // @ts-expect-error - It's safe to assign an empty object here because the
     // themeEngine, the primary consumer, is now robust enough to handle it.

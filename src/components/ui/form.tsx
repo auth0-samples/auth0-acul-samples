@@ -1,17 +1,19 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
-import { Field as FieldPrimitive } from "@base-ui-components/react";
+import * as React from "react";
 import {
   Controller,
-  FormProvider,
-  useFormContext,
-  useFormState,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
+  FormProvider,
+  useFormContext,
+  useFormState,
 } from "react-hook-form";
-import * as React from "react";
+
+import { Field as FieldPrimitive } from "@base-ui-components/react";
+
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
 const Form = FormProvider;
@@ -24,7 +26,7 @@ type FormFieldContextValue<
 };
 
 const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue,
+  {} as FormFieldContextValue
 );
 
 const FormField = <
@@ -68,7 +70,7 @@ type FormItemContextValue = {
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue,
+  {} as FormItemContextValue
 );
 
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
@@ -161,12 +163,12 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
 }
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
-  FormMessage,
   FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
 };

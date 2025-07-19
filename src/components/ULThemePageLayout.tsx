@@ -1,12 +1,12 @@
-import React from "react";
+import type { HTMLAttributes, ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
-export interface ULThemePageLayoutProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface ULThemePageLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The content of the layout.
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * Optional class names for additional styling or overriding default styles.
    */

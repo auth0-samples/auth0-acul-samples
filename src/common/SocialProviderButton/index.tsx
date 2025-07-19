@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+
 import { cn } from "@/lib/utils";
 
 interface SocialProviderButtonProps
@@ -22,7 +23,7 @@ const SocialProviderButton = forwardRef<
       className,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const dataTestId = `social-provider-button-${displayName.toLowerCase().replace(/\s+/g, "-")}`;
 
@@ -43,7 +44,7 @@ const SocialProviderButton = forwardRef<
         className={cn(
           baseStyles,
           disabled ? disabledStyles : enabledStyles,
-          className,
+          className
         )}
         data-testid={dataTestId}
         title={buttonText}
@@ -60,7 +61,7 @@ const SocialProviderButton = forwardRef<
         </span>
       </button>
     );
-  },
+  }
 );
 
 SocialProviderButton.displayName = "SocialProviderButton";

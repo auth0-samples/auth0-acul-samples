@@ -18,10 +18,81 @@
  *
  */
 
+interface ColorData {
+  primary_button?: string;
+  primary_button_label?: string;
+  secondary_button_border?: string;
+  secondary_button_label?: string;
+  base_focus_color?: string;
+  base_hover_color?: string;
+  links_focused_components?: string;
+  header?: string;
+  body_text?: string;
+  widget_background?: string;
+  widget_border?: string;
+  input_labels_placeholders?: string;
+  input_filled_text?: string;
+  input_border?: string;
+  input_background?: string;
+  icons?: string;
+  error?: string;
+  success?: string;
+  captcha_widget_theme?: string;
+}
+
+interface BorderData {
+  button_border_radius?: number;
+  buttons_style?: string;
+  input_border_radius?: number;
+  inputs_style?: string;
+  widget_corner_radius?: number;
+  button_border_weight?: number;
+  input_border_weight?: number;
+  widget_border_weight?: number;
+  show_widget_shadow?: boolean;
+}
+
+interface FontData {
+  reference_text_size?: number;
+  title?: {
+    size?: number;
+    bold?: boolean;
+  };
+  subtitle?: {
+    size?: number;
+    bold?: boolean;
+  };
+  body_text?: {
+    size?: number;
+    bold?: boolean;
+  };
+  buttons_text?: {
+    size?: number;
+    bold?: boolean;
+  };
+  input_labels?: {
+    size?: number;
+    bold?: boolean;
+  };
+  links?: {
+    size?: number;
+    bold?: boolean;
+  };
+  links_style?: string;
+}
+
+interface WidgetData {
+  logo_position?: string;
+  logo_url?: string;
+  logo_height?: number;
+  header_text_alignment?: string;
+  social_buttons_layout?: string;
+}
+
 /**
  * Flatten color data to CSS variables
  */
-export function flattenColors(colors: any): Record<string, string> {
+export function flattenColors(colors: ColorData): Record<string, string> {
   const result: Record<string, string> = {};
 
   if (colors.primary_button)
@@ -70,7 +141,7 @@ export function flattenColors(colors: any): Record<string, string> {
 /**
  * Flatten border data to CSS variables with proper unit conversions
  */
-export function flattenBorders(borders: any): Record<string, string> {
+export function flattenBorders(borders: BorderData): Record<string, string> {
   const result: Record<string, string> = {};
 
   // Border radius values need px units with automatic assignment based on buttons_style
@@ -130,7 +201,7 @@ export function flattenBorders(borders: any): Record<string, string> {
 /**
  * Flatten font data to CSS variables with proper unit conversions
  */
-export function flattenFonts(fonts: any): Record<string, string> {
+export function flattenFonts(fonts: FontData): Record<string, string> {
   const result: Record<string, string> = {};
 
   // Reference text size is in pixels
@@ -139,7 +210,10 @@ export function flattenFonts(fonts: any): Record<string, string> {
       `${fonts.reference_text_size}px`;
 
   // Helper function to process font size and weight for each font type
-  const processFontType = (fontData: any, fontType: string): void => {
+  const processFontType = (
+    fontData: { size?: number; bold?: boolean } | undefined,
+    fontType: string
+  ): void => {
     if (fontData?.size) {
       const sizePercent = fontData.size as number;
 
@@ -179,9 +253,11 @@ export function flattenFonts(fonts: any): Record<string, string> {
 /**
  * Flatten page background data to CSS variables
  */
-export function flattenPageBackground(
-  pageBackground: any,
-): Record<string, string> {
+export function flattenPageBackground(pageBackground: {
+  background_color?: string;
+  background_image_url?: string;
+  page_layout?: string;
+}): Record<string, string> {
   const result: Record<string, string> = {};
 
   if (pageBackground.background_color)
@@ -211,7 +287,7 @@ export function flattenPageBackground(
 /**
  * Flatten widget data to CSS variables with proper unit conversions
  */
-export function flattenWidget(widget: any): Record<string, string> {
+export function flattenWidget(widget: WidgetData): Record<string, string> {
   const result: Record<string, string> = {};
 
   // Logo position: convert Auth0 values to Tailwind justify values

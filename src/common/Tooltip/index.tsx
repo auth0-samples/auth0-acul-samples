@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { cn } from "@/lib/utils";
 
 export interface TooltipProps {
@@ -49,7 +50,7 @@ const Tooltip = ({
           className={cn(
             "absolute z-10 px-2 py-1 text-xs font-medium text-white bg-black rounded shadow-sm text-center",
             positionClasses[position],
-            tooltipClassName,
+            tooltipClassName
           )}
         >
           {text}

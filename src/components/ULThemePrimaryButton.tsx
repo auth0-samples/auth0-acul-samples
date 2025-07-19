@@ -1,7 +1,7 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export interface ULThemePrimaryButtonProps extends ButtonProps {}
+export type ULThemePrimaryButtonProps = ButtonProps;
 
 export function ULThemePrimaryButton({
   variant = "primary",
@@ -20,7 +20,7 @@ export function ULThemePrimaryButton({
       "theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15",
       "theme-universal:disabled:bg-primary-button/70",
       "theme-universal:disabled:border-primary-button/70",
-      "theme-universal:disabled:cursor-not-allowed",
+      "theme-universal:disabled:cursor-not-allowed"
     ),
     secondary: "", // Add secondary overrides if needed
     destructive: "", // Add destructive overrides if needed
@@ -34,22 +34,22 @@ export function ULThemePrimaryButton({
     default: cn(
       "theme-universal:rounded-button",
       "theme-universal:font-button", //font-weight
-      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)", //font-size
+      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)" //font-size
     ),
     xs: cn(
       "theme-universal:rounded-button",
       "theme-universal:font-button",
-      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)",
+      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
     ),
     sm: cn(
       "theme-universal:rounded-button",
       "theme-universal:font-button",
-      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)",
+      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
     ),
     lg: cn(
       "theme-universal:rounded-button",
       "theme-universal:font-button",
-      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)",
+      "theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
     ),
     icon: cn("theme-universal:rounded-button"),
   };

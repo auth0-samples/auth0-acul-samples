@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+
 import { cn } from "@/lib/utils";
 
 export interface InputProps
@@ -14,7 +15,7 @@ export interface InputProps
   /**
    * Optional class names for styling.
    */
-  className?: string;
+  className?: string | undefined;
   /**
    * Force focus styling (used by FormField for complex interactions)
    */
@@ -42,7 +43,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       variant = "default",
       ...rest
     },
-    ref,
+    ref
   ) => {
     const baseStyles = [
       "block w-full border rounded transition-all duration-200",
@@ -79,7 +80,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 
 Input.displayName = "Input";

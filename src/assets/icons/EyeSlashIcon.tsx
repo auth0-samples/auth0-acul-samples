@@ -1,8 +1,6 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-export const EyeSlashIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props,
-) => (
+export const EyeSlashIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"

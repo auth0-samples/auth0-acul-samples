@@ -1,8 +1,6 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-export const InstagramIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props,
-) => (
+export const InstagramIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"

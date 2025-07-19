@@ -1,26 +1,28 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import CaptchaBox from "@/common/CaptchaBox";
-import FormField from "@/common/FormField";
-import CountryCodePicker from "@/common/CountryCodePicker";
-import { getFieldError } from "@/utils/helpers/errorUtils";
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
-import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
-import {
-  transformAuth0CountryCode,
-  isPhoneNumberSupported,
-} from "@/utils/helpers/countryUtils";
-import { useLoginIdManager } from "../hooks/useLoginIdManager";
+
 import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
+
+import CaptchaBox from "@/common/CaptchaBox";
+import CountryCodePicker from "@/common/CountryCodePicker";
+import FormField from "@/common/FormField";
+import {
+  isPhoneNumberSupported,
+  transformAuth0CountryCode,
+} from "@/utils/helpers/countryUtils";
+import { getFieldError } from "@/utils/helpers/errorUtils";
+import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+
+import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 interface LoginIdFormData {
   identifier: string;
   captcha?: string;
 }
 
-const IdentifierForm: React.FC = () => {
+function IdentifierForm() {
   const {
     handleLoginId,
     errors,
@@ -93,7 +95,7 @@ const IdentifierForm: React.FC = () => {
               (loginIdInstance?.transaction as TransactionMembersOnLoginId)
                 ?.countryCode,
               (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                ?.countryPrefix,
+                ?.countryPrefix
             )}
             onClick={handlePickCountryCode}
             fullWidth
@@ -172,6 +174,6 @@ const IdentifierForm: React.FC = () => {
       </ULThemePrimaryButton>
     </form>
   );
-};
+}
 
 export default IdentifierForm;
