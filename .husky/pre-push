@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "🔍 Running TypeScript check before push..."
+pnpm tsc --noEmit || exit 1
+
+echo "📦 Checking build compilation..."
+pnpm run build || exit 1
+
+echo "✅ All pre-push checks passed!"
