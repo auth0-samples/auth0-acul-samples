@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import { ULThemeAlert, ULThemeAlertTitle } from "../ULThemeError";
 
 describe("ULThemeAlert", () => {
@@ -7,7 +8,7 @@ describe("ULThemeAlert", () => {
     const { container } = render(
       <ULThemeAlert>
         <ULThemeAlertTitle>Error message</ULThemeAlertTitle>
-      </ULThemeAlert>,
+      </ULThemeAlert>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -19,7 +20,7 @@ describe("ULThemeAlert", () => {
         <ULThemeAlertTitle>Test error</ULThemeAlertTitle>
       </ULThemeAlert>
     );
-    
+
     const alert = screen.getByRole("alert");
     expect(alert).toBeInTheDocument();
     expect(screen.getByText("Test error")).toBeInTheDocument();
@@ -32,10 +33,12 @@ describe("ULThemeAlert", () => {
         <ULThemeAlertTitle>Themed error</ULThemeAlertTitle>
       </ULThemeAlert>
     );
-    
+
     const alert = screen.getByTestId("themed-alert");
     expect(alert.className).toContain("theme-universal:bg-error");
-    expect(alert.className).toContain("theme-universal:text-(--ul-theme-color-primary-button-label)");
+    expect(alert.className).toContain(
+      "theme-universal:text-(--ul-theme-color-primary-button-label)"
+    );
   });
 });
 
@@ -54,7 +57,7 @@ describe("ULThemeAlert Integration", () => {
             <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
           </ULThemeAlert>
         ))}
-      </div>,
+      </div>
     );
 
     expect(screen.getByText("Enter a valid phone number")).toBeInTheDocument();
