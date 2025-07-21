@@ -30,7 +30,7 @@
     "@babel/preset-typescript": "^7.27.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@eslint/js": "^9.31.0",
+    "@eslint/js": "9.31.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -38,13 +38,15 @@
     "@types/node": "^24.0.15",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@typescript-eslint/eslint-plugin": "^8.37.0",
-    "@typescript-eslint/parser": "^8.37.0",
+    "@typescript-eslint/eslint-plugin": "8.37.0",
+    "@typescript-eslint/parser": "8.37.0",
     "@vitejs/plugin-react": "^4.7.0",
     "babel-jest": "^30.0.4",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.3",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "eslint-plugin-simple-import-sort": "12.1.1",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
@@ -56,7 +58,7 @@
     "tailwindcss": "^4.1.11",
     "tw-animate-css": "^1.3.5",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.37.0",
+    "typescript-eslint": "8.37.0",
     "vite": "^7.0.5"
   },
   "engines": {
@@ -64,7 +66,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "prettier --write",
       "eslint --fix --no-error-on-unmatched-pattern"
     ],
     "*.{js,jsx,json,md,html,css}": [
