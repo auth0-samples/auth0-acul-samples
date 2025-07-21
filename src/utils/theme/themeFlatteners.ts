@@ -192,7 +192,7 @@ export function flattenBorders(borders: BorderData): Record<string, string> {
   // Boolean/numeric values for shadow - convert boolean to actual shadow values
   if (borders.show_widget_shadow !== undefined)
     result["--ul-theme-border-show-widget-shadow"] = borders.show_widget_shadow
-      ? "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+      ? "0px 12px 40px 0px rgba(0, 0, 0, 0.12)"
       : "none";
 
   return result;

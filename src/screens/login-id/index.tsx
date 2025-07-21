@@ -1,12 +1,12 @@
-import Card from "@/common/Card";
-import ULThemePageLayout from "@/components/ULThemePageLayout";
-import { applyAuth0Theme } from "@/utils/theme/themeEngine";
-
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import IdentifierForm from "./components/IdentifierForm";
+import ULThemePageLayout from "@/components/ULThemePageLayout";
+import ULThemeCard from "@/components/ULThemeCard";
+
 import { useLoginIdManager } from "./hooks/useLoginIdManager";
+import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 function LoginIdScreen() {
   const { loginIdInstance, texts } = useLoginIdManager();
@@ -19,12 +19,12 @@ function LoginIdScreen() {
   return (
     //Applying UDS theme overrides using the "theme-universal" class
     <ULThemePageLayout className="theme-universal">
-      <Card className="w-full max-w-[400px]">
+      <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
         <IdentifierForm />
         <Footer />
         <AlternativeLogins />
-      </Card>
+      </ULThemeCard>
     </ULThemePageLayout>
   );
 }
