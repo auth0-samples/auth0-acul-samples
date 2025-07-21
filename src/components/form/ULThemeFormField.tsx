@@ -37,6 +37,8 @@ const ULThemeFormField = ({
     // Focus states
     "theme-universal:focus-within:border-base-focus",
     "theme-universal:focus-within:ring-base-focus/15",
+    // Floating label background override to match input background
+    "theme-universal:[&_label]:bg-(--ul-theme-color-input-background)",
     // Error states
     error && [
       "theme-universal:text-error",

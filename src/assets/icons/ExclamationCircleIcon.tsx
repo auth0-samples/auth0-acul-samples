@@ -11,17 +11,16 @@ export const ExclamationCircleIcon: React.FC<SvgIconProps> = ({
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill="none" // Typically error icons are outlines, fill can be added if needed
+    fill="none"
     stroke="currentColor"
     strokeWidth="1.5"
     width="1em"
     height="1em"
     aria-hidden={title ? undefined : "true"}
     focusable="false"
-    {...props} // className, etc. passed from Icon wrapper
+    {...props}
   >
-    {title && <title>{title}</title>} {/* SVG accessible title */}
-    {/* Placeholder paths for ExclamationCircleIcon - replace with actual SVG */}
+    {title && <title>{title}</title>}
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
