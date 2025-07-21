@@ -1,75 +1,46 @@
-import FormField from "@/common/FormField";
-import type { InputProps } from "@/common/Input";
-import type { LabelProps } from "@/common/Label";
+import { Control, FieldValues, Path, RegisterOptions } from "react-hook-form";
+
+import { ULThemeFormField } from "@/components/form/ULThemeFormField";
+import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
+import { FormField, FormItem } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
-export interface CaptchaBoxProps {
+export interface CaptchaBoxProps<T extends FieldValues = FieldValues> {
   label: string;
-  name?: string;
-  id?: string;
-  error?: string;
   imageUrl: string;
   imageAltText: string;
-  onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  inputValue?: string;
-  /**
-   * Additional props to pass to the input element
-   * Note: id, name, type, value, onChange, size are controlled by this component
-   */
-  inputProps?: Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    "id" | "name" | "type" | "size"
-  >;
+  name: Path<T>;
+  control: Control<T>;
+  rules?: RegisterOptions<T>;
+  sdkError?: string;
   className?: string;
   imageWrapperClassName?: string;
   imageClassName?: string;
   inputWrapperClassName?: string;
-  errorTextClassName?: string;
   inputClassName?: string;
 }
 
-// No forwardRef needed - react-hook-form's register() provides the ref through inputProps
-const CaptchaBox: React.FC<CaptchaBoxProps> = ({
+const CaptchaBox = <T extends FieldValues = FieldValues>({
+  name,
+  control,
+  rules,
   label,
-  name = "captcha",
-  id = "captcha-input",
-  error,
   imageUrl,
   imageAltText,
-  onInputChange,
-  inputValue,
-  inputProps,
+  sdkError,
   className,
   imageWrapperClassName,
   imageClassName,
   inputWrapperClassName,
-  errorTextClassName,
   inputClassName,
-}) => {
-  const formFieldLabelProps: LabelProps = {
-    children: label,
-    htmlFor: id,
-  };
-
-  const formFieldInputProps: InputProps = {
-    id: id,
-    name: name,
-    type: "text",
-    className: inputClassName,
-    value: inputValue,
-    onChange: onInputChange,
-    placeholder: "\u00A0",
-    autoComplete: "off",
-    ...inputProps, // This includes the ref from register()
-  };
-
+}: CaptchaBoxProps<T>) => {
   return (
     <div className={cn("space-y-2", className)}>
       {!!imageUrl && (
         <div
           className={cn(
             "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
-            imageWrapperClassName,
+            imageWrapperClassName
           )}
         >
           <img
@@ -80,16 +51,30 @@ const CaptchaBox: React.FC<CaptchaBoxProps> = ({
         </div>
       )}
       <FormField
-        labelProps={formFieldLabelProps}
-        inputProps={formFieldInputProps}
-        error={error}
-        inputWrapperClassName={inputWrapperClassName}
-        errorTextClassName={errorTextClassName}
+        control={control}
+        name={name}
+        rules={rules}
+        render={({ field, fieldState }) => (
+          <FormItem>
+            <ULThemeFormField
+              {...field}
+              label={label}
+              type="text"
+              autoComplete="off"
+              error={!!fieldState.error || !!sdkError}
+              className={inputClassName}
+              wrapperClassName={inputWrapperClassName}
+            />
+            <ULThemeFormMessage
+              className="mt-1"
+              sdkError={sdkError}
+              hasFormError={!!fieldState.error}
+            />
+          </FormItem>
+        )}
       />
     </div>
   );
 };
-
-CaptchaBox.displayName = "CaptchaBox";
 
 export default CaptchaBox;
