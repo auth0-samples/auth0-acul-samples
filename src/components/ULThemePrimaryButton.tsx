@@ -56,10 +56,8 @@ export function ULThemePrimaryButton({
 
   // Combine all theme classes with proper type safety
   const themeClasses = cn(
-    variant && variantThemeOverrides[variant]
-      ? variantThemeOverrides[variant]
-      : "",
-    size && sizeThemeOverrides[size] ? sizeThemeOverrides[size] : "",
+    variant && variantThemeOverrides[variant],
+    size && sizeThemeOverrides[size],
   );
 
   return (

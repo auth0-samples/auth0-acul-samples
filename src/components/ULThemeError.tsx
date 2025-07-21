@@ -23,11 +23,7 @@ function ULThemeAlert({
     ),
   };
 
-  const themeClasses = cn(
-    variant && variantThemeOverrides[variant]
-      ? variantThemeOverrides[variant]
-      : "",
-  );
+  const themeClasses = cn(variant && variantThemeOverrides[variant]);
 
   return (
     <Alert
