@@ -139,35 +139,45 @@ export function flattenColors(colors: ColorData): Record<string, string> {
 }
 
 /**
+ * Helper function to calculate border radius based on style
+ */
+function calculateBorderRadius(
+  style: string,
+  defaultRadius: number | undefined,
+  fallbackRadius: number = 10
+): number {
+  switch (style) {
+    case "pill":
+      return 9999;
+    case "sharp":
+      return 0;
+    case "rounded":
+      return defaultRadius || fallbackRadius;
+    default:
+      return defaultRadius || fallbackRadius;
+  }
+}
+
+/**
  * Flatten border data to CSS variables with proper unit conversions
  */
 export function flattenBorders(borders: BorderData): Record<string, string> {
   const result: Record<string, string> = {};
 
-  // Border radius values need px units with automatic assignment based on buttons_style
-  let buttonBorderRadius = borders.button_border_radius;
+  // Calculate border radius values based on style, with automatic assignment
+  const buttonBorderRadius = borders.buttons_style
+    ? calculateBorderRadius(borders.buttons_style, borders.button_border_radius)
+    : borders.button_border_radius;
 
-  // Always override border radius for pill/sharp styles, regardless of existing value
-  if (borders.buttons_style) {
-    switch (borders.buttons_style) {
-      case "pill":
-        buttonBorderRadius = 9999;
-        break;
-      case "sharp":
-        buttonBorderRadius = 0;
-        break;
-      case "rounded":
-        buttonBorderRadius = borders.button_border_radius || 10;
-        break;
-    }
-  }
+  const inputBorderRadius = borders.inputs_style
+    ? calculateBorderRadius(borders.inputs_style, borders.input_border_radius)
+    : borders.input_border_radius;
 
   if (buttonBorderRadius !== undefined)
     result["--ul-theme-border-button-border-radius"] =
       `${buttonBorderRadius}px`;
-  if (borders.input_border_radius)
-    result["--ul-theme-border-input-border-radius"] =
-      `${borders.input_border_radius}px`;
+  if (inputBorderRadius !== undefined)
+    result["--ul-theme-border-input-border-radius"] = `${inputBorderRadius}px`;
   if (borders.widget_corner_radius)
     result["--ul-theme-border-widget-corner-radius"] =
       `${borders.widget_corner_radius}px`;

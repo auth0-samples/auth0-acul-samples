@@ -136,13 +136,6 @@
         }
       }
     },
-    "errors": [
-      {
-        "code": "invalid-phone-number",
-        "message": "Enter a valid phone number",
-        "field": "username"
-      }
-    ],
     "locale": "en",
     "state": "mockedStateForPreservedTextsLoginId_cl_mock_preservedTexts_vbn789_andOriginalClientNameAndTenantName_txId_mnb654"
   },

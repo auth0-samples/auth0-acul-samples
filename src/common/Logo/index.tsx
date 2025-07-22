@@ -29,7 +29,7 @@ const Logo: React.FC<LogoProps> = ({
   }
 
   return (
-    <div className={cn("flex justify-center items-center mb-6", className)}>
+    <div className={cn("flex justify-center items-center", className)}>
       <img
         src={logoSrc}
         alt={altText}

@@ -38,7 +38,7 @@ const ULThemeFormMessage = ({
     <div
       className={cn(
         "flex mb-2 items-center text-sm font-medium theme-universal:text-error",
-        className,
+        className
       )}
       role="alert"
       aria-live="polite"

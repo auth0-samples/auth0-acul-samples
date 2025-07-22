@@ -41,12 +41,7 @@ export default tseslint.config(
 
     rules: {
       // Run Prettier as an ESLint rule and report formatting issues as errors
-      "prettier/prettier": [
-        "error",
-        {
-          endOfLine: "auto", // Prevents false positives for line endings
-        },
-      ],
+      "prettier/prettier": "error",
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": [
         "warn",
