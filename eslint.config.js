@@ -70,6 +70,18 @@ export default tseslint.config(
     },
   },
 
+  // Test file overrides - allow more relaxed rules for test files
+  {
+    files: [
+      "**/__tests__/**/*.{ts,tsx}",
+      "**/*.test.{ts,tsx}",
+      "**/*.spec.{ts,tsx}",
+    ],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off", // Allow 'any' type in tests for simplicity
+    },
+  },
+
   // Disables all formatting rules that conflict with Prettier. Must be last.
   eslintConfigPrettier
 );

@@ -46,9 +46,13 @@ const ULThemeFormMessage = ({
       {showIcon && (
         <Icon As={ErrorCircleIcon} className="h-4 w-4 mr-1 flex-shrink-0" />
       )}
-      <FormMessage className="theme-universal:text-error">
-        {sdkError}
-      </FormMessage>
+      {sdkError ? (
+        <p className="text-destructive text-sm theme-universal:text-error">
+          {sdkError}
+        </p>
+      ) : (
+        <FormMessage className="theme-universal:text-error" />
+      )}
     </div>
   );
 };

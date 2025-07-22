@@ -50,6 +50,9 @@ const ulThemeFormFieldVariants = cva(
           // Focus States - Default
           "theme-universal:focus-within:border-base-focus",
           "theme-universal:focus-within:ring-base-focus/15",
+
+          // Focus Label States - Override label color when focused
+          "theme-universal:focus-within:[&_label]:text-base-focus",
         ],
         error: [
           // Error States
