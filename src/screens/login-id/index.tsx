@@ -1,12 +1,12 @@
+import ULThemeCard from "@/components/ULThemeCard";
+import ULThemePageLayout from "@/components/ULThemePageLayout";
+import { applyAuth0Theme } from "@/utils/theme/themeEngine";
+
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import IdentifierForm from "./components/IdentifierForm";
-import ULThemePageLayout from "@/components/ULThemePageLayout";
-import ULThemeCard from "@/components/ULThemeCard";
-
 import { useLoginIdManager } from "./hooks/useLoginIdManager";
-import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 function LoginIdScreen() {
   const { loginIdInstance, texts } = useLoginIdManager();
