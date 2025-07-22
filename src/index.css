@@ -19,6 +19,9 @@
   .justify-text-header {
     text-align: var(--ul-theme-widget-header-text-alignment);
   }
+  .justify-widget-logo {
+    justify-content: var(--ul-theme-widget-logo-position);
+  }
 }
 
 /** UDS Default theme variables **/
@@ -115,7 +118,6 @@
 
   /* Widget */
   --height-widget-logo: var(--ul-theme-widget-logo-height);
-  --justify-widget-logo: var(--ul-theme-widget-logo-position);
   --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
 
   /* Layout */
