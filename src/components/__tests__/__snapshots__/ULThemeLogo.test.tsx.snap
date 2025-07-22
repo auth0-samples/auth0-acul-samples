@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`ULthemeLogo matches snapshot with custom className 1`] = `
+exports[`ULThemeLogo matches snapshot with custom className 1`] = `
 <div>
   <div
-    class="mb-6 flex flex-wrap justify-widget-logo snapshot-class"
+    class="flex flex-wrap justify-widget-logo snapshot-class"
   >
     <span
       class="relative flex shrink-0 overflow-hidden size-auto rounded-none"
@@ -13,10 +13,10 @@ exports[`ULthemeLogo matches snapshot with custom className 1`] = `
 </div>
 `;
 
-exports[`ULthemeLogo renders correctly with default props 1`] = `
+exports[`ULThemeLogo renders correctly with default props 1`] = `
 <div>
   <div
-    class="mb-6 flex flex-wrap justify-widget-logo"
+    class="flex flex-wrap justify-widget-logo"
   >
     <span
       class="relative flex shrink-0 overflow-hidden size-auto rounded-none"

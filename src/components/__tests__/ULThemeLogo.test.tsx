@@ -1,12 +1,12 @@
 import { render } from "@testing-library/react";
-import ULthemeLogo from "../ULthemeLogo";
+import ULThemeLogo from "../ULThemeLogo";
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 
 jest.mock("@/utils/helpers/tokenUtils", () => ({
   extractTokenValue: jest.fn(),
 }));
 
-describe("ULthemeLogo", () => {
+describe("ULThemeLogo", () => {
   const mockExtractTokenValue = extractTokenValue as jest.Mock;
 
   beforeEach(() => {
@@ -16,51 +16,51 @@ describe("ULthemeLogo", () => {
   // Snapshot Test: Default Props
   it("renders correctly with default props", () => {
     mockExtractTokenValue.mockReturnValue("");
-    const { container } = render(<ULthemeLogo altText="Default Logo" />);
+    const { container } = render(<ULThemeLogo altText="Default Logo" />);
     expect(container).toMatchSnapshot();
   });
 
   // Functional Test: Uses imageUrl prop
   it("uses the imageUrl prop when provided", () => {
     render(
-      <ULthemeLogo
+      <ULThemeLogo
         imageUrl="https://example.com/logo.png"
         altText="Custom Logo"
-      />,
+      />
     );
     const avatar = document.querySelector('[data-slot="avatar"]');
     expect(avatar).toHaveClass(
-      "relative flex shrink-0 overflow-hidden rounded-none size-auto",
+      "relative flex shrink-0 overflow-hidden rounded-none size-auto"
     );
   });
 
   // Functional Test: Uses fallback when imageUrl is not provided
   it("uses fallback when imageUrl is not provided", () => {
     mockExtractTokenValue.mockReturnValue(
-      "https://example.com/fallback-logo.png",
+      "https://example.com/fallback-logo.png"
     );
-    render(<ULthemeLogo altText="Fallback Logo" />);
+    render(<ULThemeLogo altText="Fallback Logo" />);
     const avatar = document.querySelector('[data-slot="avatar"]');
     expect(avatar).toHaveClass(
-      "relative flex shrink-0 overflow-hidden rounded-none size-auto",
+      "relative flex shrink-0 overflow-hidden rounded-none size-auto"
     );
   });
 
   // Functional Test: Applies custom className
   it("applies custom className", () => {
     render(
-      <ULthemeLogo altText="Custom Class Logo" className="custom-class" />,
+      <ULThemeLogo altText="Custom Class Logo" className="custom-class" />
     );
     const avatar = document.querySelector('[data-slot="avatar"]');
     expect(avatar).toHaveClass(
-      "relative flex shrink-0 overflow-hidden rounded-none size-auto",
+      "relative flex shrink-0 overflow-hidden rounded-none size-auto"
     );
   });
 
   // Snapshot Test: With custom className
   it("matches snapshot with custom className", () => {
     const { container } = render(
-      <ULthemeLogo altText="Snapshot Logo" className="snapshot-class" />,
+      <ULThemeLogo altText="Snapshot Logo" className="snapshot-class" />
     );
     expect(container).toMatchSnapshot();
   });
@@ -68,10 +68,10 @@ describe("ULthemeLogo", () => {
   // Functional Test: Renders with correct alt text
   it("renders with correct alt text", () => {
     render(
-      <ULthemeLogo
+      <ULThemeLogo
         imageUrl="https://example.com/logo.png"
         altText="Accessible Logo"
-      />,
+      />
     );
     const avatar = document.querySelector('[data-slot="avatar"]');
     expect(avatar).toBeInTheDocument();
@@ -80,7 +80,7 @@ describe("ULthemeLogo", () => {
   // Functional Test: Handles empty imageUrl and fallback gracefully
   it("handles empty imageUrl and fallback gracefully", () => {
     mockExtractTokenValue.mockReturnValue("");
-    render(<ULthemeLogo altText="Empty Fallback Logo" />);
+    render(<ULThemeLogo altText="Empty Fallback Logo" />);
     const avatar = document.querySelector('[data-slot="avatar"]');
     expect(avatar).toBeInTheDocument();
   });

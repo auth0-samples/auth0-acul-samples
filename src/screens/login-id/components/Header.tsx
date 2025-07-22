@@ -1,4 +1,4 @@
-import ULthemeLogo from "@/components/ULthemeLogo";
+import ULThemeLogo from "@/components/ULThemeLogo";
 import ULThemeTitle from "@/components/ULThemeTitle";
 import ULThemeSubtitle from "@/components/ULThemeSubtitle";
 
@@ -12,7 +12,7 @@ function Header() {
 
   return (
     <>
-      <ULthemeLogo altText={logoAltText} />
+      <ULThemeLogo altText={logoAltText}></ULThemeLogo>
       <ULThemeTitle>{texts?.title || "Welcome"}</ULThemeTitle>
       <ULThemeSubtitle>
         {texts?.description ||
