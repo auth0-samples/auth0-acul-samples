@@ -29,7 +29,7 @@ interface IdentifierConfig {
 const createIdentifierKey = (
   hasEmail: boolean,
   hasPhone: boolean,
-  hasUsername: boolean,
+  hasUsername: boolean
 ): string => {
   const identifiers = [];
   if (hasEmail) identifiers.push("email");
@@ -48,7 +48,7 @@ const createIdentifierKey = (
  */
 export const getIdentifierDetails = (
   connectionAttributes?: IdentifierType[],
-  screenTexts?: any, // Auth0 screen.texts object
+  screenTexts?: Record<string, string> | null // Auth0 screen.texts object
 ): IdentifierDetails => {
   // Initialize with the most common / general defaults
   let finalLabel =

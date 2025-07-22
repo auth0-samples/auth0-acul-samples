@@ -1,9 +1,9 @@
-import React from "react";
+import type { LabelHTMLAttributes, ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
-export interface LabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {
-  children: React.ReactNode;
+export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+  children: ReactNode;
   htmlFor: string;
   className?: string;
   isError?: boolean;
@@ -26,7 +26,7 @@ const Label = ({
 
   const baseLabelStyles = cn(
     "absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-200 ease-in-out pointer-events-none origin-[0]",
-    unfloatedTextColor,
+    unfloatedTextColor
   );
 
   const floatedTextColorForFilledOrForced = isError
@@ -42,7 +42,7 @@ const Label = ({
     `peer-[:not(:placeholder-shown)]:${floatedTextColorForFilledOrForced}`,
     "peer-focus:bg-background-widget peer-focus:px-2",
     "peer-[.is-forced-focus]:bg-background-widget peer-[.is-forced-focus]:px-2",
-    "peer-[:not(:placeholder-shown)]:bg-background-widget peer-[:not(:placeholder-shown)]:px-2",
+    "peer-[:not(:placeholder-shown)]:bg-background-widget peer-[:not(:placeholder-shown)]:px-2"
   );
 
   return (
@@ -52,7 +52,7 @@ const Label = ({
         baseLabelStyles,
         floatedLabelStyles,
         "overflow-hidden whitespace-nowrap text-ellipsis max-w-[calc(100%-1rem)] box-border px-3",
-        className,
+        className
       )}
       {...rest}
     >

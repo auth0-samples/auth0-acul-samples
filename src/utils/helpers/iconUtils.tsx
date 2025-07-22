@@ -1,20 +1,21 @@
-import React from "react";
+import type { ReactNode } from "react";
+
 import {
-  GoogleIcon,
-  TwitterIcon,
-  MicrosoftIcon,
-  PasskeyIcon,
-  DefaultConnectionIcon,
   AppleIcon,
-  LinkedinIcon,
-  SlackIcon,
-  InstagramIcon,
+  DefaultConnectionIcon,
+  DuolingoIcon,
   FacebookIcon,
   GithubIcon,
-  DuolingoIcon,
+  GoogleIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  MicrosoftIcon,
+  PasskeyIcon,
+  SlackIcon,
+  TwitterIcon,
 } from "@/assets/icons";
 
-export const getIcon = (strategy: string): React.ReactNode => {
+export const getIcon = (strategy: string): ReactNode => {
   switch (strategy.toLowerCase()) {
     case "google-oauth2":
       return <GoogleIcon />;

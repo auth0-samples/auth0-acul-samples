@@ -1,25 +1,26 @@
 import { forwardRef } from "react";
-import Label from "@/common/Label";
-import type { LabelProps } from "@/common/Label";
-import Input from "@/common/Input";
-import type { InputProps } from "@/common/Input";
-import Icon from "@/common/Icon";
+
 import { ExclamationCircleIcon } from "@/assets/icons";
+import Icon from "@/common/Icon";
+import type { InputProps } from "@/common/Input";
+import Input from "@/common/Input";
+import type { LabelProps } from "@/common/Label";
+import Label from "@/common/Label";
 import { cn } from "@/lib/utils";
 
 export interface FormFieldProps {
   labelProps: LabelProps;
   inputProps: InputProps;
-  error?: string;
-  className?: string;
-  inputIcon?: React.ReactNode;
-  isParentFocused?: boolean;
-  inputWrapperClassName?: string;
-  errorTextClassName?: string;
+  error?: string | undefined;
+  className?: string | undefined;
+  inputIcon?: React.ReactNode | undefined;
+  isParentFocused?: boolean | undefined;
+  inputWrapperClassName?: string | undefined;
+  errorTextClassName?: string | undefined;
   /**
    * Help text to display below the input
    */
-  helpText?: string;
+  helpText?: string | undefined;
   /**
    * Whether to show the error icon
    */
@@ -40,7 +41,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
       helpText,
       showErrorIcon = true,
     },
-    ref,
+    ref
   ) => {
     const {
       id: inputId,
@@ -54,7 +55,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
     // Combine input classes
     const combinedInputClassName = cn(
       inputClassName,
-      inputIcon ? "pr-16" : "", // Add padding for icon
+      inputIcon ? "pr-16" : "" // Add padding for icon
     );
 
     // Enhanced input props with error handling
@@ -75,7 +76,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
         <div
           className={cn(
             "relative mt-1 rounded-md shadow-sm",
-            inputWrapperClassName,
+            inputWrapperClassName
           )}
         >
           <div className="relative w-full">
@@ -89,8 +90,8 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
             {inputIcon && (
               <div
                 className={cn(
-                  "absolute inset-y-0 right-0 flex items-center rounded-r-md mt-px mt-3",
-                  isParentFocused && "bg-primary/15",
+                  "absolute inset-y-0 right-0 flex items-center rounded-r-md mt-3",
+                  isParentFocused && "bg-primary/15"
                 )}
               >
                 {inputIcon}
@@ -115,7 +116,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
             id={`${inputId}-error`}
             className={cn(
               "flex items-center mt-2 text-sm text-error",
-              errorTextClassName,
+              errorTextClassName
             )}
             role="alert"
             aria-live="polite"
@@ -131,7 +132,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
         )}
       </div>
     );
-  },
+  }
 );
 
 FormField.displayName = "FormField";

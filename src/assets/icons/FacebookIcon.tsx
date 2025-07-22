@@ -1,8 +1,6 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-export const FacebookIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props,
-) => (
+export const FacebookIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"

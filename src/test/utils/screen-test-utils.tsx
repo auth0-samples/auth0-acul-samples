@@ -1,4 +1,5 @@
-import { screen, fireEvent, act } from "@testing-library/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { act, fireEvent, screen } from "@testing-library/react";
 
 /**
  * Generic test utilities for Auth0 ACUL screens
@@ -64,14 +65,14 @@ export class MockConfigUtils {
    */
   static configureErrors(
     mockInstance: any,
-    errors: Array<{ message: string; field?: string }>,
+    errors: Array<{ message: string; field?: string }>
   ) {
     if (!mockInstance.transaction) {
       mockInstance.transaction = {};
     }
     mockInstance.transaction.errors = errors;
     // Also configure getError() method to return the same errors
-    mockInstance.getError.mockReturnValue(errors);
+    mockInstance.getError = jest.fn(() => errors);
   }
 
   /**
@@ -90,7 +91,7 @@ export class MockConfigUtils {
   /**
    * Configure screen data on any mock instance
    */
-  static configureScreenData(mockInstance: any, data: Record<string, any>) {
+  static configureScreenData(mockInstance: any, data: Record<string, unknown>) {
     if (!mockInstance.screen) {
       mockInstance.screen = {};
     }
@@ -105,11 +106,28 @@ export class MockConfigUtils {
    */
   static configureTransaction(
     mockInstance: any,
-    transaction: Record<string, any>,
+    transaction: Record<string, unknown>
   ) {
     if (!mockInstance.transaction) {
       mockInstance.transaction = {};
     }
     Object.assign(mockInstance.transaction, transaction);
+  }
+
+  /**
+   * Configure connection data on any mock instance
+   */
+  static configureConnectionData(
+    mockInstance: any,
+    identifierTypes: string[],
+    alternateConnections: Record<string, unknown>[]
+  ) {
+    if (!mockInstance.transaction) {
+      mockInstance.transaction = {};
+    }
+    Object.assign(mockInstance.transaction, {
+      identifierTypes,
+      alternateConnections,
+    });
   }
 }

@@ -1,8 +1,6 @@
-import React from "react";
+import type { SVGProps } from "react";
 
-export const DefaultConnectionIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
-  props,
-) => (
+export const DefaultConnectionIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="20"
     height="20"

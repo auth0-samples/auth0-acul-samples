@@ -1,29 +1,28 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
-import Alert from "@/common/Alert";
+
+import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
+
 import CaptchaBox from "@/common/CaptchaBox";
 import CountryCodePicker from "@/common/CountryCodePicker";
-import { getFieldError } from "@/utils/helpers/errorUtils";
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
-import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
+import FormField from "@/common/FormField";
+import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
+import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import {
-  transformAuth0CountryCode,
   isPhoneNumberSupported,
+  transformAuth0CountryCode,
 } from "@/utils/helpers/countryUtils";
+import { getFieldError } from "@/utils/helpers/errorUtils";
+import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
-import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
-import { Form, FormField, FormItem } from "@/components/ui/form";
-import { ULThemeFormField } from "@/components/form/ULThemeFormField";
-import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 
 interface LoginIdFormData {
   identifier: string;
   captcha?: string;
 }
 
-// No props needed as it uses hooks internally for data and actions
-const IdentifierForm: React.FC = () => {
+function IdentifierForm() {
   const {
     handleLoginId,
     errors,
@@ -36,19 +35,9 @@ const IdentifierForm: React.FC = () => {
     handlePickCountryCode,
   } = useLoginIdManager();
 
-  const form = useForm<LoginIdFormData>({
-    defaultValues: {
-      identifier: "",
-      captcha: "",
-    },
-  });
-
-  const {
-    formState: { isSubmitting },
-  } = form;
-
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
+
   const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
@@ -57,14 +46,6 @@ const IdentifierForm: React.FC = () => {
   const generalErrors =
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
-
-  const identifierSDKError =
-    getFieldError("identifier", errors) ||
-    getFieldError("email", errors) ||
-    getFieldError("phone", errors) ||
-    getFieldError("username", errors);
-
-  const captchaSDKError = getFieldError("captcha", errors);
 
   // Get allowed identifiers directly from SDK
   const allowedIdentifiers =
@@ -75,6 +56,13 @@ const IdentifierForm: React.FC = () => {
     type: identifierType,
     autoComplete: identifierAutoComplete,
   } = getIdentifierDetails(allowedIdentifiers, texts);
+
+  // React Hook Form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: formErrors, isSubmitting },
+  } = useForm<LoginIdFormData>();
 
   // Proper submit handler with form data
   const onSubmit = async (data: LoginIdFormData) => {
@@ -87,106 +75,105 @@ const IdentifierForm: React.FC = () => {
   const shouldShowCountryPicker = isPhoneNumberSupported(allowedIdentifiers);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        {/* General alerts at the top */}
-        {generalErrors.length > 0 && (
-          <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <Alert key={index} type="error" message={error.message} />
-            ))}
-          </div>
-        )}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* General alerts at the top */}
+      {generalErrors.length > 0 && (
+        <div className="space-y-3 mb-4">
+          {generalErrors.map((error: Error, index: number) => (
+            <ULThemeAlert key={index}>
+              <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            </ULThemeAlert>
+          ))}
+        </div>
+      )}
 
-        {/* Country Code Picker - only show if phone numbers are supported */}
-        {shouldShowCountryPicker && (
-          <div className="mb-4">
-            <CountryCodePicker
-              selectedCountry={transformAuth0CountryCode(
-                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryCode,
-                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryPrefix,
-              )}
-              onClick={handlePickCountryCode}
-              fullWidth
-              placeholder="Select Country"
-            />
-          </div>
-        )}
+      {/* Country Code Picker - only show if phone numbers are supported */}
+      {shouldShowCountryPicker && (
+        <div className="mb-4">
+          <CountryCodePicker
+            selectedCountry={transformAuth0CountryCode(
+              (loginIdInstance?.transaction as TransactionMembersOnLoginId)
+                ?.countryCode,
+              (loginIdInstance?.transaction as TransactionMembersOnLoginId)
+                ?.countryPrefix
+            )}
+            onClick={handlePickCountryCode}
+            fullWidth
+            placeholder="Select Country"
+          />
+        </div>
+      )}
 
-        {/* Identifier input field */}
-        <FormField
-          control={form.control}
-          name="identifier"
-          rules={{
+      <FormField
+        className="mb-4"
+        labelProps={{
+          children: identifierLabel,
+          htmlFor: "identifier-login-id",
+        }}
+        inputProps={{
+          ...register("identifier", {
             required: "This field is required",
             maxLength: {
               value: 100,
               message: "Maximum 100 characters allowed",
             },
-          }}
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <ULThemeFormField
-                {...field}
-                label={identifierLabel}
-                type={identifierType}
-                autoFocus={true}
-                autoComplete={identifierAutoComplete}
-                error={!!fieldState.error || !!identifierSDKError}
-              />
-              <ULThemeFormMessage
-                sdkError={identifierSDKError}
-                hasFormError={!!fieldState.error}
-              />
-            </FormItem>
-          )}
-        />
+          }),
+          id: "identifier-login-id",
+          type: identifierType,
+          autoComplete: identifierAutoComplete,
+          autoFocus: true,
+        }}
+        error={
+          formErrors.identifier?.message ||
+          getFieldError("identifier", errors) ||
+          getFieldError("email", errors) ||
+          getFieldError("phone", errors) ||
+          getFieldError("username", errors)
+        }
+      />
 
-        {/* CAPTCHA Box */}
-        {isCaptchaAvailable && (
-          <CaptchaBox
-            control={form.control}
-            name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
-            className="mb-4"
-            sdkError={captchaSDKError}
-            rules={{
+      {isCaptchaAvailable && (
+        <CaptchaBox
+          className="mb-4"
+          id="captcha-input-login-id"
+          name="captcha"
+          label={captchaLabel}
+          imageUrl={captchaImage || ""}
+          imageAltText={captchaImageAlt}
+          inputProps={{
+            ...register("captcha", {
               required: "Please complete the CAPTCHA",
               maxLength: {
                 value: 15,
                 message: "CAPTCHA too long",
               },
-            }}
-          />
+            }),
+          }}
+          error={
+            formErrors.captcha?.message || getFieldError("captcha", errors)
+          }
+        />
+      )}
+      <div className="text-left">
+        {isForgotPasswordEnabled && localizedResetPasswordLink && (
+          <a
+            href={localizedResetPasswordLink}
+            className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
+          >
+            {forgotPasswordText}
+          </a>
         )}
+      </div>
 
-        {/* Forgot Password link */}
-        <div className="text-left">
-          {isForgotPasswordEnabled && localizedResetPasswordLink && (
-            <a
-              href={localizedResetPasswordLink}
-              className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
-            >
-              {forgotPasswordText}
-            </a>
-          )}
-        </div>
-
-        {/* Submit button */}
-        <ULThemePrimaryButton
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
-          {buttonText}
-        </ULThemePrimaryButton>
-      </form>
-    </Form>
+      <ULThemePrimaryButton
+        type="submit"
+        className="w-full"
+        disabled={isSubmitting}
+      >
+        {buttonText}
+      </ULThemePrimaryButton>
+    </form>
   );
-};
+}
 
 export default IdentifierForm;

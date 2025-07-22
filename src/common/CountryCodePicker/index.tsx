@@ -1,18 +1,22 @@
 import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+
 import { ChevronRight } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export interface CountryCodePickerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Selected country information
    */
-  selectedCountry?: {
-    name: string;
-    code: string; // Country code like "DZ"
-    dialCode: string; // Phone code like "+213"
-    flag: string; // Flag emoji or URL
-  };
+  selectedCountry?:
+    | {
+        name: string;
+        code: string; // Country code like "DZ"
+        dialCode: string; // Phone code like "+213"
+        flag: string; // Flag emoji or URL
+      }
+    | undefined;
   /**
    * Placeholder text when no country is selected
    */
@@ -38,7 +42,7 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
       disabled,
       ...rest
     },
-    ref,
+    ref
   ) => {
     const baseStyles =
       "inline-flex items-center justify-between px-4 py-4 bg-background-widget text-text-default border border-gray-mid hover:bg-primary/5 focus:bg-primary/15 focus:outline-none focus:ring-4 focus:ring-primary/15 transition-colors duration-150 ease-in-out text-md rounded font-medium text-left";
@@ -97,13 +101,13 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
           <ChevronRight
             className={cn(
               "w-4 h-4 text-gray-400 transition-transform duration-200",
-              isLoading && "animate-pulse",
+              isLoading && "animate-pulse"
             )}
           />
         </div>
       </button>
     );
-  },
+  }
 );
 
 CountryCodePicker.displayName = "CountryCodePicker";
