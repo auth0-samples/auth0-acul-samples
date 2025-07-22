@@ -10,7 +10,7 @@ describe("ULThemeCard Component", () => {
 
   it("matches snapshot with custom className", () => {
     const { container } = render(
-      <ULThemeCard className="custom-class">Test Card</ULThemeCard>,
+      <ULThemeCard className="custom-class">Test Card</ULThemeCard>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -19,7 +19,7 @@ describe("ULThemeCard Component", () => {
     const { container } = render(
       <ULThemeCard id="test-id" data-testid="card">
         Test Card
-      </ULThemeCard>,
+      </ULThemeCard>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -29,7 +29,7 @@ describe("ULThemeCard Component", () => {
       <ULThemeCard>
         <span>Child 1</span>
         <span>Child 2</span>
-      </ULThemeCard>,
+      </ULThemeCard>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -42,19 +42,19 @@ describe("ULThemeCard Component", () => {
 
   it("applies additional props correctly", () => {
     const { container } = render(
-      <ULThemeCard data-testid="card">Test Card</ULThemeCard>,
+      <ULThemeCard data-testid="card">Test Card</ULThemeCard>
     );
     expect(container.firstChild).toHaveAttribute("data-testid", "card");
   });
 
   it("combines themed styles and custom className", () => {
     const { container } = render(
-      <ULThemeCard className="custom-class">Test Card</ULThemeCard>,
+      <ULThemeCard className="custom-class">Test Card</ULThemeCard>
     );
     expect(container.firstChild).toHaveClass("custom-class");
     // Replace "themed-styles" with the actual default styles of ULThemeCard
     expect(container.firstChild).toHaveClass(
-      "px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget)",
+      "px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget)"
     );
   });
 });

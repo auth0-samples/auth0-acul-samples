@@ -21,7 +21,7 @@ const ULThemeCard = ({ children, className, ...rest }: ULThemeCardProps) => {
     "theme-universal:rounded-widget",
     "theme-universal:shadow-widget",
     "theme-universal:border-(length:--border-widget)",
-    className,
+    className
   );
 
   return (
