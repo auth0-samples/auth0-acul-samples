@@ -1,4 +1,4 @@
-import { ExclamationCircleIcon } from "@/assets/icons";
+import { ErrorCircleIcon } from "@/assets/icons";
 import Icon from "@/common/Icon";
 import { FormMessage } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
@@ -38,16 +38,13 @@ const ULThemeFormMessage = ({
     <div
       className={cn(
         "flex mb-2 items-center text-sm font-medium theme-universal:text-error",
-        className
+        className,
       )}
       role="alert"
       aria-live="polite"
     >
       {showIcon && (
-        <Icon
-          As={ExclamationCircleIcon}
-          className="h-4 w-4 mr-1 flex-shrink-0"
-        />
+        <Icon As={ErrorCircleIcon} className="h-4 w-4 mr-1 flex-shrink-0" />
       )}
       <FormMessage className="theme-universal:text-error">
         {sdkError}

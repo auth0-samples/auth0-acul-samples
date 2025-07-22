@@ -40,7 +40,7 @@ const CaptchaBox = <T extends FieldValues = FieldValues>({
         <div
           className={cn(
             "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
-            imageWrapperClassName
+            imageWrapperClassName,
           )}
         >
           <img

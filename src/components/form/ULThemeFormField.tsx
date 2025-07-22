@@ -45,7 +45,7 @@ const ULThemeFormField = ({
       "theme-universal:border-error",
       "theme-universal:focus-within:border-error",
       "theme-universal:focus-within:ring-error/15",
-    ]
+    ],
   );
 
   return (

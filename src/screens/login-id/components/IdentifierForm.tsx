@@ -43,7 +43,9 @@ const IdentifierForm: React.FC = () => {
     },
   });
 
-  const { handleSubmit, formState: { isSubmitting } } = form;
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
@@ -86,7 +88,7 @@ const IdentifierForm: React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         {/* General alerts at the top */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
@@ -104,7 +106,7 @@ const IdentifierForm: React.FC = () => {
                 (loginIdInstance?.transaction as TransactionMembersOnLoginId)
                   ?.countryCode,
                 (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryPrefix
+                  ?.countryPrefix,
               )}
               onClick={handlePickCountryCode}
               fullWidth
@@ -113,6 +115,7 @@ const IdentifierForm: React.FC = () => {
           </div>
         )}
 
+        {/* Identifier input field */}
         <FormField
           control={form.control}
           name="identifier"
@@ -141,6 +144,7 @@ const IdentifierForm: React.FC = () => {
           )}
         />
 
+        {/* CAPTCHA Box */}
         {isCaptchaAvailable && (
           <CaptchaBox
             control={form.control}
@@ -159,6 +163,8 @@ const IdentifierForm: React.FC = () => {
             }}
           />
         )}
+
+        {/* Forgot Password link */}
         <div className="text-left">
           {isForgotPasswordEnabled && localizedResetPasswordLink && (
             <a
@@ -170,6 +176,7 @@ const IdentifierForm: React.FC = () => {
           )}
         </div>
 
+        {/* Submit button */}
         <ULThemePrimaryButton
           type="submit"
           className="w-full"

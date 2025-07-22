@@ -1,6 +1,7 @@
 export * from "./EyeIcon";
 export * from "./EyeSlashIcon";
 export * from "./ExclamationCircleIcon";
+export * from "./ErrorCircleIcon";
 export * from "./GoogleIcon";
 export * from "./TwitterIcon";
 export * from "./MicrosoftIcon";
