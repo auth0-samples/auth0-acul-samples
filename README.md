@@ -67,11 +67,11 @@ npm install
    ```bash
    # View a specific screen component
    # Replace <screen_name> with the desired screen (e.g., login-id, login-password, signup-id)
-   npm screen <screen_name>
+   npm run screen <screen_name>
 
    # Examples:
-   npm screen login-id
-   npm screen login-password
+   npm run screen login-id
+   npm run screen login-password
    ```
 
    This command loads the specified screen component with its corresponding mock data (e.g., `src/mock-data/login-id.json`) in your browser for local development. The `scripts/dev-screen.js` utility handles setting the `VITE_SCREEN_NAME` environment variable, which `src/utils/screen/mockContextLoader.ts` uses to inject the correct mock context.
@@ -97,7 +97,7 @@ Each screen component is designed to be used with the Auth0 ACUL JavaScript SDK 
 For local development, each screen component is provided with mock data in folder `mock-data` for sdk to render screens. To work on a specific screen:
 
 ```bash
-npm screen <screen_name>
+npm run screen <screen_name>
 ```
 
 This command, managed by `scripts/dev-screen.js`:

@@ -55,6 +55,9 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
     ref
   ) => {
     const [focused, setFocused] = React.useState(false);
+    const [hasValue, setHasValue] = React.useState(
+      Boolean(props.value || props.defaultValue)
+    );
     const isDisabled = props.disabled;
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -64,30 +67,14 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
 
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
       setFocused(false);
+      setHasValue(Boolean(e.target.value));
       props.onBlur?.(e);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setHasValue(Boolean(e.target.value));
       props.onChange?.(e);
     };
-
-    // Compose event handlers to work with React Hook Form
-    const composedProps = {
-      ...props,
-      onFocus: handleFocus,
-      onBlur: handleBlur,
-      onChange: handleChange,
-    };
-
-    // Check if input has value - properly handle React Hook Form controlled inputs
-    const hasValue = Boolean(
-      (props.value !== undefined &&
-        props.value !== null &&
-        props.value !== "") ||
-        (props.defaultValue !== undefined &&
-          props.defaultValue !== null &&
-          props.defaultValue !== "")
-    );
 
     const isLabelFloating = focused || hasValue;
 
@@ -140,8 +127,14 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
                 size === "sm" && "h-12 py-3 text-sm",
                 size === "lg" && "h-16 py-5 text-base"
               )}
+              // Spread props first, then override with our handlers
+              // This ensures our focus/blur handlers take precedence over React Hook Form's
+              // allowing proper floating label state management
+              {...props}
               ref={ref}
-              {...composedProps}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onChange={handleChange}
             />
           </div>
           {endAdornment && (
