@@ -300,10 +300,16 @@ export function flattenPageBackground(pageBackground: {
 export function flattenWidget(widget: WidgetData): Record<string, string> {
   const result: Record<string, string> = {};
 
+  // Logo Source URL
+  if (widget.logo_url)
+    result["--ul-theme-widget-logo-url"] = `"${widget.logo_url}"`;
+
+  // Logo height needs px units
+  if (widget.logo_height)
+    result["--ul-theme-widget-logo-height"] = `${widget.logo_height}px`;
+
   // Logo position: convert Auth0 values to Tailwind justify values
   if (widget.logo_position) {
-    result["--ul-theme-widget-logo-position"] = widget.logo_position;
-
     // Convert to Tailwind semantic variable
     const positionMap: Record<string, string> = {
       center: "center",
@@ -311,15 +317,9 @@ export function flattenWidget(widget: WidgetData): Record<string, string> {
       right: "flex-end",
       none: "none",
     };
-    result["--justify-widget-logo"] =
+    result["--ul-theme-widget-logo-position"] =
       positionMap[widget.logo_position] || "center";
   }
-  if (widget.logo_url)
-    result["--ul-theme-widget-logo-url"] = `"${widget.logo_url}"`;
-
-  // Logo height needs px units
-  if (widget.logo_height)
-    result["--ul-theme-widget-logo-height"] = `${widget.logo_height}px`;
 
   // Header text alignment: convert Auth0 values to CSS text-align values
   if (widget.header_text_alignment) {

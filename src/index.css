@@ -11,13 +11,23 @@
   }
 }
 
-/** UL Custom Utilities **/
+/** UL Custom Utilities:
+Created to support alignment related utlities like justify, text-align etc with dynamic theming values 
+**/
 @layer utilities {
+  /** Custom Utility to handle page layout alignment **/
   .justify-page-layout {
     justify-content: var(--ul-theme-page-bg-page-layout);
   }
+
+  /** Custom Utility to handle text header alignment **/
   .justify-text-header {
     text-align: var(--ul-theme-widget-header-text-alignment);
+  }
+
+  /** Custom Utility to handle logo alignment(left, right, center) **/
+  .justify-widget-logo {
+    justify-content: var(--ul-theme-widget-logo-position);
   }
 }
 
@@ -115,7 +125,6 @@
 
   /* Widget */
   --height-widget-logo: var(--ul-theme-widget-logo-height);
-  --justify-widget-logo: var(--ul-theme-widget-logo-position);
   --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
 
   /* Layout */
