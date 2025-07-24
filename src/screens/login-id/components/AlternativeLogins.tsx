@@ -1,55 +1,40 @@
-import Separator from "@/common/Separator";
-import SocialProviderButton from "@/common/SocialProviderButton";
 import { getIcon } from "@/utils/helpers/iconUtils";
 import type { SocialConnection } from "@/utils/helpers/socialUtils";
 import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
 
-// No props needed as it uses hooks internally
-const AlternativeLogins = () => {
-  const {
-    loginIdInstance,
-    handleFederatedLogin,
-    handlePasskeyLogin,
-    texts,
-    isPasskeyEnabled,
-  } = useLoginIdManager();
+export interface AlternativeLoginsProps {
+  connections?: SocialConnection[] | undefined;
+}
 
-  const alternateConnections = loginIdInstance?.transaction
-    ?.alternateConnections as SocialConnection[] | undefined;
+const AlternativeLogins = ({ connections }: AlternativeLoginsProps) => {
+  const { handleFederatedLogin, handlePasskeyLogin, texts, isPasskeyEnabled } =
+    useLoginIdManager();
 
   // Handle text fallbacks in component
-  const separatorText = texts?.separatorText || "OR";
   const passkeyButtonText =
     texts?.passkeyButtonText || "Continue with a passkey";
 
-  const showSeparator =
-    isPasskeyEnabled ||
-    (alternateConnections && alternateConnections.length > 0);
-
   return (
     <>
-      {showSeparator && <Separator text={separatorText} />}
-
       <div className="space-y-3 mt-4">
         {isPasskeyEnabled && (
-          <SocialProviderButton
+          <ULThemeSocialProviderButton
             key="passkey"
             displayName="Passkey"
             buttonText={passkeyButtonText}
-            iconComponent={
-              <span className="text-primary">{getIcon("passkey")}</span>
-            }
+            iconComponent={<span>{getIcon("passkey")}</span>}
             onClick={() => handlePasskeyLogin()}
           />
         )}
-        {alternateConnections?.map((connection) => {
+        {connections?.map((connection: any) => {
           const { displayName, iconComponent } =
             getSocialProviderDetails(connection);
           const socialButtonText = `Continue with ${displayName}`;
           return (
-            <SocialProviderButton
+            <ULThemeSocialProviderButton
               key={connection.name}
               displayName={displayName}
               buttonText={socialButtonText}

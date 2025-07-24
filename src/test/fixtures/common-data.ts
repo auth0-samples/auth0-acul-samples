@@ -10,10 +10,26 @@ export const CommonTestData = {
   },
 
   socialConnections: [
-    { name: "google-oauth2", strategy: "google" },
-    { name: "github", strategy: "github" },
-    { name: "facebook", strategy: "facebook" },
-    { name: "linkedin", strategy: "linkedin" },
+    {
+      name: "google-oauth2",
+      strategy: "google",
+      options: { iconUrl: null, displayName: "Google" },
+    },
+    {
+      name: "github",
+      strategy: "github",
+      options: { iconUrl: null, displayName: "Github" },
+    },
+    {
+      name: "facebook",
+      strategy: "facebook",
+      options: { iconUrl: null, displayName: "Facebook" },
+    },
+    {
+      name: "linkedin",
+      strategy: "linkedin",
+      options: { iconUrl: null, displayName: "Linkedin" },
+    },
   ],
 
   identifierTypes: {

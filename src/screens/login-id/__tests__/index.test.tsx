@@ -14,6 +14,11 @@ import LoginIdScreen from "../index";
 // Mock the Auth0 SDK
 const MockedLoginIdInstance = LoginIdInstance as unknown as jest.Mock;
 
+// Mock extractTokenValue to return a default value
+jest.mock("@/utils/helpers/tokenUtils", () => ({
+  extractTokenValue: jest.fn(() => "bottom"),
+}));
+
 describe("LoginIdScreen", () => {
   let mockInstance: MockLoginIdInstance;
 
@@ -217,17 +222,17 @@ describe("LoginIdScreen", () => {
       });
       render(<LoginIdScreen />);
       expect(
-        screen.getByRole("button", { name: /continue with google/i })
+        screen.getByRole("button", { name: /continue with Google/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /continue with github/i })
+        screen.getByRole("button", { name: /continue with Github/i })
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: /continue with facebook/i })
+        screen.getByRole("button", { name: /continue with Facebook/i })
       ).toBeInTheDocument();
     });
 
-    it("should call the federatedLogin method when clicked", async () => {
+    it("should call the federatedLogin method when a social login button is clicked", async () => {
       MockConfigUtils.configureTransaction(mockInstance, {
         alternateConnections: [CommonTestData.socialConnections[0]],
       });
@@ -258,7 +263,7 @@ describe("LoginIdScreen", () => {
       ).not.toBeInTheDocument();
     });
 
-    it("should call the passkeyLogin method when the button is clicked", async () => {
+    it("should call the passkeyLogin method when the passkey button is clicked", async () => {
       mockInstance.transaction.isPasskeyEnabled = true;
       mockInstance.screen.publicKey = { challenge: "mock-challenge" };
       render(<LoginIdScreen />);
