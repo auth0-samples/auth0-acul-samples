@@ -20,7 +20,6 @@ interface SocialProviderDetails {
  * If name is unavailable, it attempts to use the strategy.
  */
 const generateDisplayName = (connection: SocialConnection): string => {
-  console.log("connection", connection);
   if (connection?.options?.displayName) {
     return connection?.options?.displayName;
   }
