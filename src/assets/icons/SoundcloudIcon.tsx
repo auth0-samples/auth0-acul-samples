@@ -2,11 +2,10 @@ import type { SVGProps } from "react";
 
 export const SoundcloudIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    width="2500"
+    height="1085"
+    viewBox="5.12 25.095 2500 1085"
     {...props}
   >
     <linearGradient

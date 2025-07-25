@@ -2,11 +2,10 @@ import type { SVGProps } from "react";
 
 export const YandexIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    width="2500"
+    height="985"
+    viewBox="0 0 429.557 169.23"
     {...props}
   >
     <path

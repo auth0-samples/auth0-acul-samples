@@ -2,11 +2,11 @@ import type { SVGProps } from "react";
 
 export const BitbucketIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
+    width="2169"
+    height="2500"
+    viewBox="0 0 256 295"
     xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMinYMin meet"
     {...props}
   >
     <g fill="#205081">

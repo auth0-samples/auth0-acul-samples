@@ -2,11 +2,9 @@ import type { SVGProps } from "react";
 
 export const EvernoteIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
+    data-name="Mark's List"
     xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
     {...props}
   >
     <path fill="#7bc144" d="M0 0h100v100H0z" />

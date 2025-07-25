@@ -2,11 +2,11 @@ import type { SVGProps } from "react";
 
 export const SpotifyIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    width="400"
+    height="400"
+    preserveAspectRatio="xMidYMid"
+    viewBox="0 0 400 400"
     {...props}
   >
     <circle cx="200" cy="200" r="125" fill="#fff" />

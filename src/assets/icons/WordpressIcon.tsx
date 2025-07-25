@@ -2,11 +2,12 @@ import type { SVGProps } from "react";
 
 export const WordpressIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    fill-rule="evenodd"
+    height="500"
+    width="500"
+    version="1"
+    viewBox="0 0 5.556 5.556"
     {...props}
   >
     <path

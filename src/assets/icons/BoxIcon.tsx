@@ -2,11 +2,10 @@ import type { SVGProps } from "react";
 
 export const BoxIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    width="2500"
+    height="1379"
+    viewBox="0 0 444.893 245.414"
     {...props}
   >
     <g fill="#0075C9">
