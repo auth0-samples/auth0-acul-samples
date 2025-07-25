@@ -2,11 +2,10 @@ import type { SVGProps } from "react";
 
 export const ExactIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    height="71.13"
+    viewBox="0 0 839.6 341.3"
+    width="175"
     {...props}
   >
     <path

@@ -2,11 +2,10 @@ import type { SVGProps } from "react";
 
 export const DropboxIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    width="900"
+    height="840.59"
+    viewBox="0 0 900 840.59"
     {...props}
   >
     <g fill="#007ee5">

@@ -2,11 +2,11 @@ import type { SVGProps } from "react";
 
 export const MiicardIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
+    width="91"
+    height="61"
     xmlns="http://www.w3.org/2000/svg"
+    fill=""
+    viewBox="0 0 91 61"
     {...props}
   >
     <path

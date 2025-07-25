@@ -2,11 +2,10 @@ import type { SVGProps } from "react";
 
 export const RenrenIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
+    width="206"
+    height="117"
     xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 206 117"
     {...props}
   >
     <g fill="none" fill-rule="evenodd">

@@ -2,11 +2,12 @@ import type { SVGProps } from "react";
 
 export const WaadIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    width="20"
-    height="20"
+    width="20px"
+    height="20px"
     viewBox="0 0 20 20"
-    fill="none"
+    version="1.1"
     xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}
   >
     <g
