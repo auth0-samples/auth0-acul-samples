@@ -79,10 +79,11 @@ This application allows the workflow to interact with Auth0's Management API:
 6. Under the **APIs** tab, select **Auth0 Management API**
 7. Toggle the switch to authorize access
 8. Expand the permissions list and grant these specific permissions:
-   - `read:branding_settings`
-   - `update:branding_settings`
+   - `read:branding`
+   - `update:branding`
    - `read:prompts`
    - `update:prompts`
+   - `read:custom_domains` (required by Auth0 to verify whether a custom domain has already been set and verified)
 9. Click **Update**
 10. Go to the **Settings** tab and note down:
     - Domain
