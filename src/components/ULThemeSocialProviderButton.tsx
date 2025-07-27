@@ -49,6 +49,7 @@ const ULThemeSocialProviderButton = ({
   // UL theme overrrides
   const variantThemeOverrides = {
     outline: cn(
+      "border-button", // border-weight or border-width
       "theme-universal:font-button", //font-weight
       "theme-universal:rounded-button", // border-radius
       "theme-universal:border-(length:--ul-theme-border-button-border-weight)", // border-weight or border-width
