@@ -25,17 +25,17 @@ function LoginIdScreen() {
     isPasskeyEnabled ||
     (socialConnectionsList && socialConnectionsList.length > 0);
 
-  // Extracting Tenant setting for social login component alignment on the layout via theme token
-  const socialLoginAlignment = extractTokenValue(
-    "--ul-theme-widget-social-buttons-layout"
-  );
-
   // Other Texts
   const separatorText = texts?.separatorText || "OR";
   document.title = texts?.pageTitle || "Login";
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginIdInstance);
+
+  // Extracting Tenant setting for social login component alignment on the layout via theme token
+  const socialLoginAlignment = extractTokenValue(
+    "--ul-theme-widget-social-buttons-layout"
+  );
 
   const renderSocialLogins = (alignment: "top" | "bottom") => (
     <>

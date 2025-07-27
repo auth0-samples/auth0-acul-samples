@@ -26,7 +26,7 @@ const AlternativeLogins = ({ connections }: AlternativeLoginsProps) => {
             displayName="Passkey"
             buttonText={passkeyButtonText}
             iconComponent={
-              <span className="text-icons">{getIcon("passkey")}</span>
+              <span className="text-primary">{getIcon("passkey")}</span>
             }
             onClick={() => handlePasskeyLogin()}
           />
