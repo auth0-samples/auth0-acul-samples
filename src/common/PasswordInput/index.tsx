@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useId, useState } from "react";
 
-import { EyeIcon, EyeSlashIcon } from "@/assets/icons";
+import { DefaultConnectionIcon } from "@/assets/icons";
 import Button from "@/common/Button";
 import FormField from "@/common/FormField";
 import Icon from "@/common/Icon";
@@ -77,7 +77,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     }, []);
 
     // Use proper icons and text based on state
-    const currentIcon = showPassword ? EyeSlashIcon : EyeIcon;
+    const currentIcon = DefaultConnectionIcon;
     const iconTitle = showPassword ? hidePasswordText : showPasswordText;
 
     const formFieldLabelProps: LabelProps = {

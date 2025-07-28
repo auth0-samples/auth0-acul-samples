@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { ExclamationCircleIcon } from "@/assets/icons";
+import { DefaultConnectionIcon } from "@/assets/icons";
 import Icon from "@/common/Icon";
 import type { InputProps } from "@/common/Input";
 import Input from "@/common/Input";
@@ -123,7 +123,7 @@ const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
           >
             {showErrorIcon && (
               <Icon
-                As={ExclamationCircleIcon}
+                As={DefaultConnectionIcon}
                 className="h-4 w-4 mr-1 flex-shrink-0"
               />
             )}
