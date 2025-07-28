@@ -29,11 +29,6 @@ Created to support alignment related utlities like justify, text-align etc with 
   .justify-widget-logo {
     justify-content: var(--ul-theme-widget-logo-position);
   }
-
-  /** Custom Utility to handle border weight/width of button element*/
-  .border-button {
-    border-width: var(--ul-theme-border-button-border-weight);
-  }
 }
 
 /** UDS Default theme variables **/

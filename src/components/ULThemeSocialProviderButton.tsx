@@ -42,20 +42,20 @@ const ULThemeSocialProviderButton = ({
 
   // Keeping the button enable and disable styles as is. Will need to revisit this in future if needed
   const enabledStyles =
-    "bg-white border-gray-mid text-text-default hover:bg-gray-mid/20 focus:bg-primary/15 cursor-pointer";
+    "bg-white border-gray-mid text-text-default cursor-pointer";
   const disabledStyles =
     "bg-gray-mid/10 border-gray-mid/50 text-text-secondary cursor-not-allowed";
 
   // UL theme overrrides
   const variantThemeOverrides = {
     outline: cn(
-      "border-button", // border-weight or border-width
       "theme-universal:font-button", //font-weight
       "theme-universal:rounded-button", // border-radius
+      "theme-universal:border-(length:--ul-theme-border-button-border-weight)", // border-weight or border-width
       "theme-universal:border-(--color-secondary-button-border)", // border-color
       "theme-universal:text-(--color-secondary-button-label)", // text label color
       "theme-universal:hover:shadow-[var(--button-hover-shadow)]", // box-shadow on hover
-      "theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15" // focus base color
+      "theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15" // focus base color
     ),
     primary: "", // Add primary overrides if needed
     secondary: "", // Add secondary overrides if needed
