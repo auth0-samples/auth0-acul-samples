@@ -152,7 +152,6 @@ function calculateBorderRadius(
     case "sharp":
       return 0;
     case "rounded":
-      return defaultRadius || fallbackRadius;
     default:
       return defaultRadius || fallbackRadius;
   }

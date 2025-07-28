@@ -1,6 +1,6 @@
 import { Control, FieldValues, Path, RegisterOptions } from "react-hook-form";
 
-import { ULThemeFormField } from "@/components/form/ULThemeFormField";
+import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { FormField, FormItem } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,7 @@ const CaptchaBox = <T extends FieldValues = FieldValues>({
         rules={rules}
         render={({ field, fieldState }) => (
           <FormItem>
-            <ULThemeFormField
+            <ULThemeFloatingLabelField
               {...field}
               label={label}
               type="text"

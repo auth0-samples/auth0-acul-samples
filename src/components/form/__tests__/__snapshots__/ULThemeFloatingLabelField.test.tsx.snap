@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`ULThemeFormField Component matches snapshot with email identifier 1`] = `
+exports[`ULThemeFloatingLabelField Component matches snapshot with email identifier 1`] = `
 <form>
   <div
     class="grid"
@@ -43,7 +43,7 @@ exports[`ULThemeFormField Component matches snapshot with email identifier 1`] =
 </form>
 `;
 
-exports[`ULThemeFormField Component matches snapshot with error state 1`] = `
+exports[`ULThemeFloatingLabelField Component matches snapshot with error state 1`] = `
 <form>
   <div
     class="grid"
@@ -82,7 +82,7 @@ exports[`ULThemeFormField Component matches snapshot with error state 1`] = `
 </form>
 `;
 
-exports[`ULThemeFormField Component matches snapshot with phone number type 1`] = `
+exports[`ULThemeFloatingLabelField Component matches snapshot with phone number type 1`] = `
 <form>
   <div
     class="grid"

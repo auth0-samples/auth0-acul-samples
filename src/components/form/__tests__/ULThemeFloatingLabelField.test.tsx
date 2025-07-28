@@ -5,7 +5,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Form, FormField, FormItem } from "@/components/ui/form";
 
-import { ULThemeFormField } from "../ULThemeFormField";
+import { ULThemeFloatingLabelField } from "../ULThemeFloatingLabelField";
 
 // Test wrapper that mimics IdentifierForm usage pattern
 const TestFormFieldWrapper = ({
@@ -51,13 +51,13 @@ const TestFormFieldWrapper = ({
   );
 };
 
-describe("ULThemeFormField Component", () => {
+describe("ULThemeFloatingLabelField Component", () => {
   // Snapshot Tests - main usage scenarios
   it("matches snapshot with email identifier", () => {
     const { container } = render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"
@@ -75,7 +75,7 @@ describe("ULThemeFormField Component", () => {
     const { container } = render(
       <TestFormFieldWrapper hasValidationError>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"
@@ -91,7 +91,7 @@ describe("ULThemeFormField Component", () => {
     const { container } = render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Phone Number"
             type="tel"
@@ -109,7 +109,7 @@ describe("ULThemeFormField Component", () => {
     render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"
@@ -130,7 +130,7 @@ describe("ULThemeFormField Component", () => {
     const { container } = render(
       <TestFormFieldWrapper hasValidationError>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"
@@ -151,7 +151,7 @@ describe("ULThemeFormField Component", () => {
     render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             autoFocus={true}
@@ -170,7 +170,7 @@ describe("ULThemeFormField Component", () => {
     const { container } = render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"
@@ -180,7 +180,7 @@ describe("ULThemeFormField Component", () => {
       </TestFormFieldWrapper>
     );
 
-    // Check for the w-full class on the ULThemeFormField wrapper
+    // Check for the w-full class on the ULThemeFloatingLabelField wrapper
     const wrapper = container.querySelector("div.w-full");
     expect(wrapper).toBeTruthy();
 
@@ -195,7 +195,7 @@ describe("ULThemeFormField Component", () => {
     const { container: emailContainer } = render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"
@@ -208,7 +208,12 @@ describe("ULThemeFormField Component", () => {
     const { container: phoneContainer } = render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField {...field} label="Phone" type="tel" error={error} />
+          <ULThemeFloatingLabelField
+            {...field}
+            label="Phone"
+            type="tel"
+            error={error}
+          />
         )}
       </TestFormFieldWrapper>
     );
@@ -224,7 +229,7 @@ describe("ULThemeFormField Component", () => {
     const { container } = render(
       <TestFormFieldWrapper>
         {({ field, error }) => (
-          <ULThemeFormField
+          <ULThemeFloatingLabelField
             {...field}
             label="Email"
             type="email"

@@ -1,2 +1,2 @@
-export { ULThemeFormField } from "./ULThemeFormField";
+export { ULThemeFloatingLabelField } from "./ULThemeFloatingLabelField";
 export { ULThemeFormMessage } from "./ULThemeFormMessage";

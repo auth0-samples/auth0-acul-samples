@@ -1,13 +1,13 @@
 import { cva } from "class-variance-authority";
 
-import { useFormField } from "@/components/ui/form";
 import {
-  FormField as BaseFormField,
-  type FormFieldProps as BaseFormFieldProps,
-} from "@/components/ui/form-field";
+  FloatingLabelField as BaseFloatingLabelField,
+  type FloatingLabelFieldProps as BaseFloatingLabelFieldProps,
+} from "@/components/ui/floating-label-field";
+import { useFormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
-const ulThemeFormFieldVariants = cva(
+const ulThemeFloatingLabelFieldVariants = cva(
   [
     // Layout & Spacing
     "mb-2",
@@ -72,21 +72,22 @@ const ulThemeFormFieldVariants = cva(
   }
 );
 
-export interface ULThemeFormFieldProps extends BaseFormFieldProps {
+export interface ULThemeFloatingLabelFieldProps
+  extends BaseFloatingLabelFieldProps {
   /**
    * Additional wrapper class for form field container
    */
   wrapperClassName?: string;
 }
 
-const ULThemeFormField = ({
+const ULThemeFloatingLabelField = ({
   className,
   variant = "default",
   size = "default",
   wrapperClassName,
   error,
   ...props
-}: ULThemeFormFieldProps) => {
+}: ULThemeFloatingLabelFieldProps) => {
   // Get the form field context for proper ID association
   const { formItemId } = useFormField();
 
@@ -94,13 +95,13 @@ const ULThemeFormField = ({
   const effectiveVariant = error ? "error" : variant;
 
   // Generate theme classes using CVA - automatically use error state when error prop is true
-  const themeOverrides = ulThemeFormFieldVariants({
+  const themeOverrides = ulThemeFloatingLabelFieldVariants({
     themeState: error ? "error" : "default",
   });
 
   return (
     <div className={cn("w-full", wrapperClassName)}>
-      <BaseFormField
+      <BaseFloatingLabelField
         id={formItemId}
         className={cn(className, themeOverrides)}
         variant={effectiveVariant}
@@ -112,6 +113,6 @@ const ULThemeFormField = ({
   );
 };
 
-ULThemeFormField.displayName = "ULThemeFormField";
+ULThemeFloatingLabelField.displayName = "ULThemeFloatingLabelField";
 
-export { ULThemeFormField };
+export { ULThemeFloatingLabelField };

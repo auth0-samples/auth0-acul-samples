@@ -1,6 +1,8 @@
 import { render } from "@testing-library/react";
-import ULThemeLogo from "../ULThemeLogo";
+
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
+
+import ULThemeLogo from "../ULThemeLogo";
 
 jest.mock("@/utils/helpers/tokenUtils", () => ({
   extractTokenValue: jest.fn(),

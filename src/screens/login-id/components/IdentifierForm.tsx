@@ -5,7 +5,7 @@ import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
 import Alert from "@/common/Alert";
 import CaptchaBox from "@/common/CaptchaBox";
 import CountryCodePicker from "@/common/CountryCodePicker";
-import { ULThemeFormField } from "@/components/form/ULThemeFormField";
+import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
@@ -129,7 +129,7 @@ function IdentifierForm() {
           }}
           render={({ field, fieldState }) => (
             <FormItem>
-              <ULThemeFormField
+              <ULThemeFloatingLabelField
                 {...field}
                 label={identifierLabel}
                 type={identifierType}

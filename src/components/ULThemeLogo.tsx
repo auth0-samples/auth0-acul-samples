@@ -1,6 +1,7 @@
-import { Avatar, AvatarImage } from "./ui/avatar";
 import { cn } from "@/lib/utils";
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
+
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 export interface ULThemeLogoProps
   extends React.HTMLAttributes<HTMLSpanElement> {
