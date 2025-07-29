@@ -1,45 +1,43 @@
 import { useForm } from "react-hook-form";
 
-import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-js";
 
 import CaptchaBox from "@/common/CaptchaBox";
-import CountryCodePicker from "@/common/CountryCodePicker";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
+import { ULThemePasswordField } from "@/components/ULThemePasswordField";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
-import {
-  isPhoneNumberSupported,
-  transformAuth0CountryCode,
-} from "@/utils/helpers/countryUtils";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
-import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import { useLoginManager } from "../hooks/useLoginManager";
 
-interface LoginIdFormData {
-  identifier: string;
+interface LoginFormData {
+  username: string;
+  password: string;
   captcha?: string;
 }
 
-function IdentifierForm() {
+function LoginForm() {
   const {
-    handleLoginId,
+    handleLogin,
     errors,
     isCaptchaAvailable,
     captchaImage,
     resetPasswordLink,
     isForgotPasswordEnabled,
-    loginIdInstance,
     texts,
-    handlePickCountryCode,
-  } = useLoginIdManager();
+    allowedIdentifiers,
+    passwordPolicy,
+  } = useLoginManager();
 
-  const form = useForm<LoginIdFormData>({
+  const form = useForm<LoginFormData>({
     defaultValues: {
-      identifier: "",
+      username: "",
+      password: "",
       captcha: "",
     },
   });
@@ -54,38 +52,33 @@ function IdentifierForm() {
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
-  // Get general errors (not field-specific)
+  // Use getIdentifierDetails pattern for username label
+  const {
+    label: usernameLabel,
+    type: usernameType,
+    autoComplete: usernameAutoComplete,
+  } = getIdentifierDetails(allowedIdentifiers, texts);
+
+  const passwordLabel = texts?.passwordPlaceholder?.concat("*") || "Password*";
+
+  // Password visibility toggle
   const generalErrors =
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
 
-  const identifierSDKError =
-    getFieldError("identifier", errors) ||
-    getFieldError("email", errors) ||
-    getFieldError("phone", errors) ||
-    getFieldError("username", errors);
+  const usernameSDKError =
+    getFieldError("username", errors) || getFieldError("email", errors);
 
+  const passwordSDKError = getFieldError("password", errors);
   const captchaSDKError = getFieldError("captcha", errors);
 
-  // Get allowed identifiers directly from SDK
-  const allowedIdentifiers =
-    loginIdInstance?.transaction?.allowedIdentifiers || [];
-
-  const {
-    label: identifierLabel,
-    type: identifierType,
-    autoComplete: identifierAutoComplete,
-  } = getIdentifierDetails(allowedIdentifiers, texts);
-
   // Proper submit handler with form data
-  const onSubmit = async (data: LoginIdFormData) => {
-    await handleLoginId(data.identifier, data.captcha);
+  const onSubmit = async (data: LoginFormData) => {
+    await handleLogin(data.username, data.password, data.captcha);
   };
 
   const localizedResetPasswordLink =
     resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
-
-  const shouldShowCountryPicker = isPhoneNumberSupported(allowedIdentifiers);
 
   return (
     <Form {...form}>
@@ -101,27 +94,10 @@ function IdentifierForm() {
           </div>
         )}
 
-        {/* Country Code Picker - only show if phone numbers are supported */}
-        {shouldShowCountryPicker && (
-          <div className="mb-4">
-            <CountryCodePicker
-              selectedCountry={transformAuth0CountryCode(
-                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryCode,
-                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryPrefix
-              )}
-              onClick={handlePickCountryCode}
-              fullWidth
-              placeholder="Select Country"
-            />
-          </div>
-        )}
-
-        {/* Identifier input field */}
+        {/* Username/Email input field */}
         <FormField
           control={form.control}
-          name="identifier"
+          name="username"
           rules={{
             required: "This field is required",
             maxLength: {
@@ -133,14 +109,47 @@ function IdentifierForm() {
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
-                label={identifierLabel}
-                type={identifierType}
+                label={usernameLabel}
+                type={usernameType}
                 autoFocus={true}
-                autoComplete={identifierAutoComplete}
-                error={!!fieldState.error || !!identifierSDKError}
+                autoComplete={usernameAutoComplete}
+                error={!!fieldState.error || !!usernameSDKError}
               />
               <ULThemeFormMessage
-                sdkError={identifierSDKError}
+                sdkError={usernameSDKError}
+                hasFormError={!!fieldState.error}
+              />
+            </FormItem>
+          )}
+        />
+
+        {/* Password input field */}
+        <FormField
+          control={form.control}
+          name="password"
+          rules={{
+            required: "Password is required",
+            maxLength: {
+              value: 200,
+              message: "Maximum 200 characters allowed",
+            },
+            minLength: passwordPolicy?.minLength
+              ? {
+                  value: passwordPolicy.minLength,
+                  message: `Password must be at least ${passwordPolicy.minLength} characters`,
+                }
+              : undefined,
+          }}
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <ULThemePasswordField
+                {...field}
+                label={passwordLabel}
+                autoComplete="current-password"
+                error={!!fieldState.error || !!passwordSDKError}
+              />
+              <ULThemeFormMessage
+                sdkError={passwordSDKError}
                 hasFormError={!!fieldState.error}
               />
             </FormItem>
@@ -192,4 +201,4 @@ function IdentifierForm() {
   );
 }
 
-export default IdentifierForm;
+export default LoginForm;

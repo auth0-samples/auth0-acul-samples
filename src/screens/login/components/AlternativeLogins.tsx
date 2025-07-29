@@ -1,34 +1,19 @@
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
-import { getIcon } from "@/utils/helpers/iconUtils";
 import type { SocialConnection } from "@/utils/helpers/socialUtils";
 import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
 
-import { useLoginIdManager } from "../hooks/useLoginIdManager";
+import { useLoginManager } from "../hooks/useLoginManager";
 
 export interface AlternativeLoginsProps {
   connections?: SocialConnection[] | undefined;
 }
 
 const AlternativeLogins = ({ connections }: AlternativeLoginsProps) => {
-  const { handleFederatedLogin, handlePasskeyLogin, texts, isPasskeyEnabled } =
-    useLoginIdManager();
-
-  // Handle text fallbacks in component
-  const passkeyButtonText =
-    texts?.passkeyButtonText || "Continue with a passkey";
+  const { handleFederatedLogin } = useLoginManager();
 
   return (
     <>
       <div className="space-y-3 mt-4">
-        {isPasskeyEnabled && (
-          <ULThemeSocialProviderButton
-            key="passkey"
-            displayName="Passkey"
-            buttonText={passkeyButtonText}
-            iconComponent={<span className="text-primary">{getIcon()}</span>}
-            onClick={() => handlePasskeyLogin()}
-          />
-        )}
         {connections?.map((connection: SocialConnection) => {
           const { displayName, iconComponent } =
             getSocialProviderDetails(connection);

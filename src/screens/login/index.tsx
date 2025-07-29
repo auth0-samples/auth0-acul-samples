@@ -8,28 +8,27 @@ import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import IdentifierForm from "./components/IdentifierForm";
-import { useLoginIdManager } from "./hooks/useLoginIdManager";
+import LoginForm from "./components/LoginForm";
+import { useLoginManager } from "./hooks/useLoginManager";
 
-function LoginIdScreen() {
-  // Extracting attributes from hook made out of LoginIdInstance class of Auth0 JS SDK
-  const { loginIdInstance, texts, isPasskeyEnabled } = useLoginIdManager();
+function LoginScreen() {
+  // Extracting attributes from hook made out of LoginInstance class of Auth0 JS SDK
+  const { loginInstance, texts } = useLoginManager();
 
   // Fetching List of Social Connections
-  const socialConnectionsList = loginIdInstance?.transaction
+  const socialConnectionsList = loginInstance?.transaction
     ?.alternateConnections as SocialConnection[] | undefined;
 
-  // Check whether separator component needs to be rendered based on passkey or other social connections
+  // Check whether separator component needs to be rendered based on social connections
   const showSeparator =
-    isPasskeyEnabled ||
-    (socialConnectionsList && socialConnectionsList.length > 0);
+    socialConnectionsList && socialConnectionsList.length > 0;
 
   // Other Texts
   const separatorText = texts?.separatorText || "OR";
   document.title = texts?.pageTitle || "Login";
 
   // Apply theme from SDK instance when screen loads
-  applyAuth0Theme(loginIdInstance);
+  applyAuth0Theme(loginInstance);
 
   // Extracting Tenant setting for social login component alignment on the layout via theme token
   const socialLoginAlignment = extractTokenValue(
@@ -54,7 +53,7 @@ function LoginIdScreen() {
       <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
         {socialLoginAlignment === "top" && renderSocialLogins("top")}
-        <IdentifierForm />
+        <LoginForm />
         <Footer />
         {socialLoginAlignment === "bottom" && renderSocialLogins("bottom")}
       </ULThemeCard>
@@ -62,4 +61,4 @@ function LoginIdScreen() {
   );
 }
 
-export default LoginIdScreen;
+export default LoginScreen;

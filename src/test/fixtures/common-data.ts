@@ -1,3 +1,5 @@
+import type { EnterpriseConnection } from "@auth0/auth0-acul-js";
+
 /**
  * Common test data that can be reused across all screens
  */
@@ -13,24 +15,24 @@ export const CommonTestData = {
     {
       name: "google-oauth2",
       strategy: "google",
-      options: { iconUrl: null, displayName: "Google" },
+      options: { displayName: "Google", showAsButton: true },
     },
     {
       name: "github",
       strategy: "github",
-      options: { iconUrl: null, displayName: "Github" },
+      options: { displayName: "Github", showAsButton: true },
     },
     {
       name: "facebook",
       strategy: "facebook",
-      options: { iconUrl: null, displayName: "Facebook" },
+      options: { displayName: "Facebook", showAsButton: true },
     },
     {
       name: "linkedin",
       strategy: "linkedin",
-      options: { iconUrl: null, displayName: "Linkedin" },
+      options: { displayName: "Linkedin", showAsButton: true },
     },
-  ],
+  ] as EnterpriseConnection[],
 
   identifierTypes: {
     emailOnly: ["email"],

@@ -1,13 +1,8 @@
+import type { Connection, EnterpriseConnection } from "@auth0/auth0-acul-js";
+
 import { getIcon } from "./iconUtils";
 
-export interface SocialConnection {
-  name: string;
-  strategy?: string;
-  options: {
-    iconUrl?: string;
-    displayName?: string;
-  };
-}
+export type SocialConnection = Connection | EnterpriseConnection;
 
 interface SocialProviderDetails {
   displayName: string;
@@ -20,9 +15,11 @@ interface SocialProviderDetails {
  * If name is unavailable, it attempts to use the strategy.
  */
 const generateDisplayName = (connection: SocialConnection): string => {
-  if (connection?.options?.displayName) {
-    return connection?.options?.displayName;
+  // Check if it's an EnterpriseConnection with options.displayName
+  if ("options" in connection && connection.options?.displayName) {
+    return connection.options.displayName;
   }
+
   // Fallback to capitalizing the connection.name if not in map
   if (connection.name) {
     return connection.name
@@ -30,12 +27,14 @@ const generateDisplayName = (connection: SocialConnection): string => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
   }
+
   // Last resort: use strategy if name is totally missing
   if (connection.strategy) {
     return (
       connection.strategy.charAt(0).toUpperCase() + connection.strategy.slice(1)
     );
   }
+
   return "Login Provider";
 };
 

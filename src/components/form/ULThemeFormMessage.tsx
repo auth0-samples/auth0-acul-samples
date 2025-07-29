@@ -1,5 +1,5 @@
-import { ErrorCircleIcon } from "@/assets/icons";
-import Icon from "@/common/Icon";
+import { AlertCircle } from "lucide-react";
+
 import { FormMessage } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
@@ -43,9 +43,7 @@ const ULThemeFormMessage = ({
       role="alert"
       aria-live="polite"
     >
-      {showIcon && (
-        <Icon As={ErrorCircleIcon} className="h-4 w-4 mr-1 flex-shrink-0" />
-      )}
+      {showIcon && <AlertCircle className="h-4 w-4 mr-1 flex-shrink-0" />}
       {sdkError ? (
         <p className="text-destructive text-sm theme-universal:text-error">
           {sdkError}

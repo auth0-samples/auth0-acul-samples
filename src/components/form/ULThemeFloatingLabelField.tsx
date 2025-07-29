@@ -80,14 +80,14 @@ export interface ULThemeFloatingLabelFieldProps
   wrapperClassName?: string;
 }
 
-const ULThemeFloatingLabelField = ({
+function ULThemeFloatingLabelField({
   className,
   variant = "default",
   size = "default",
   wrapperClassName,
   error,
   ...props
-}: ULThemeFloatingLabelFieldProps) => {
+}: ULThemeFloatingLabelFieldProps) {
   // Get the form field context for proper ID association
   const { formItemId } = useFormField();
 
@@ -111,7 +111,7 @@ const ULThemeFloatingLabelField = ({
       />
     </div>
   );
-};
+}
 
 ULThemeFloatingLabelField.displayName = "ULThemeFloatingLabelField";
 
