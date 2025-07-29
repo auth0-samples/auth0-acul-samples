@@ -19,7 +19,6 @@ const ulThemeFloatingLabelFieldVariants = cva(
     // Border Styling
     "theme-universal:border-(length:--ul-theme-border-input-border-weight)",
     "theme-universal:border-input-border",
-    "theme-universal:border-2",
 
     // Border Radius
     "theme-universal:rounded-input",
@@ -59,7 +58,6 @@ const ulThemeFloatingLabelFieldVariants = cva(
           // Error States
           "theme-universal:text-error",
           "theme-universal:border-error",
-          "theme-universal:border-2",
           "theme-universal:focus-within:border-error",
           "theme-universal:focus-within:ring-0",
 
