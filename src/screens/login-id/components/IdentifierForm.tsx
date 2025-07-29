@@ -155,7 +155,6 @@ function IdentifierForm() {
             label={captchaLabel}
             imageUrl={captchaImage || ""}
             imageAltText={captchaImageAlt}
-            className="mb-4"
             sdkError={captchaSDKError}
             rules={{
               required: "Please complete the CAPTCHA",
