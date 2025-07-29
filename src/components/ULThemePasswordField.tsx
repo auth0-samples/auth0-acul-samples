@@ -7,6 +7,11 @@ import {
   type ULThemeFloatingLabelFieldProps,
 } from "@/components/form/ULThemeFloatingLabelField";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export interface ULThemePasswordFieldProps
@@ -29,43 +34,46 @@ export const ULThemePasswordField = ({
   };
 
   const passwordButton = (
-    <Button
-      variant="ghost"
-      size="icon"
-      type="button"
-      onClick={handleToggle}
-      className={cn(
-        // Layout & Positioning
-        "h-full w-full min-w-[44px] mr-[-5px]",
+    <Tooltip>
+      <TooltipTrigger className="w-full h-full">
+        <Button
+          variant="ghost"
+          size="icon"
+          type="button"
+          onClick={handleToggle}
+          className={cn(
+            // Layout & Positioning
+            "cursor-pointer h-full w-full min-w-[44px] mr-[-5px]",
 
-        // Border Radius - matches input field
-        "theme-universal:rounded-r-input theme-universal:rounded-l-none",
+            // Border Radius - matches input field
+            "theme-universal:rounded-r-input theme-universal:rounded-l-none",
 
-        // Background & Border
-        "border-0",
+            // Colors
+            "theme-universal:text-input-labels",
+            "theme-universal:hover:text-input-text",
 
-        // Colors
-        "theme-universal:text-input-labels",
-        "theme-universal:hover:text-input-text",
+            // Transitions
+            "transition-colors",
 
-        // Transitions
-        "transition-colors",
+            // Focus States
+            "theme-universal:focus:bg-base-focus/15 theme-universal:focus-visible:ring-0 theme-universal:focus-visible:ring-offset-0",
 
-        // Focus States
-        "focus-visible:ring-0 focus-visible:ring-offset-0",
-
-        // Layout
-        "flex items-center justify-center",
-        buttonClassName
-      )}
-      aria-label={showPassword ? "Hide password" : "Show password"}
-    >
-      {showPassword ? (
-        <EyeOff className="h-5 w-5" />
-      ) : (
-        <Eye className="h-5 w-5" />
-      )}
-    </Button>
+            // Layout
+            "flex items-center justify-center",
+            buttonClassName
+          )}
+          aria-label={showPassword ? "Hide password" : "Show password"}
+        >
+          {showPassword ? <EyeOff /> : <Eye />}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent
+        sideOffset={0}
+        className="bg-black text-white -mb-2 ml-0.5"
+      >
+        {showPassword ? "Hide password" : "Show password"}
+      </TooltipContent>
+    </Tooltip>
   );
 
   return (
