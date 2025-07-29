@@ -19,6 +19,7 @@ const ulThemeFloatingLabelFieldVariants = cva(
     // Border Styling
     "theme-universal:border-(length:--ul-theme-border-input-border-weight)",
     "theme-universal:border-input-border",
+    "theme-universal:border-2",
 
     // Border Radius
     "theme-universal:rounded-input",
@@ -49,7 +50,7 @@ const ulThemeFloatingLabelFieldVariants = cva(
         default: [
           // Focus States - Default
           "theme-universal:focus-within:border-base-focus",
-          "theme-universal:focus-within:ring-base-focus/15",
+          "theme-universal:focus-within:ring-0",
 
           // Focus Label States - Override label color when focused
           "theme-universal:focus-within:[&_label]:text-base-focus",
@@ -58,8 +59,9 @@ const ulThemeFloatingLabelFieldVariants = cva(
           // Error States
           "theme-universal:text-error",
           "theme-universal:border-error",
+          "theme-universal:border-2",
           "theme-universal:focus-within:border-error",
-          "theme-universal:focus-within:ring-error/15",
+          "theme-universal:focus-within:ring-0",
 
           // Error Label States - Force override using color CSS property
           "theme-universal:[&_label]:text-error",
