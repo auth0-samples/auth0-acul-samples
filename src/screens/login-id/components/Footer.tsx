@@ -1,5 +1,6 @@
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+import ULThemeLink from "@/components/ULThemeLink";
 
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 function Footer() {
@@ -17,14 +18,11 @@ function Footer() {
 
   return (
     <div className="mt-4 text-left">
-      <span className="text-sm pr-1">{footerText}</span>
+      <span className="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body">
+        {footerText}
+      </span>
       {localizedSignupLink && (
-        <a
-          href={localizedSignupLink}
-          className="text-sm font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded"
-        >
-          {footerLinkText}
-        </a>
+        <ULThemeLink href={localizedSignupLink}>{footerLinkText}</ULThemeLink>
       )}
     </div>
   );
