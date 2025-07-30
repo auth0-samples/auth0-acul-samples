@@ -10,6 +10,14 @@ This project provides a production-ready template for creating custom Auth0 Adva
 > - **Enterprise Feature**: Requires Enterprise Auth0 plan and verified custom domain
 > - **Work in Progress**: This template repository is actively being developed
 
+<div align="center">
+  <img 
+    width="800" 
+    alt="Login ID Screen with mock data" 
+    src="https://github.com/user-attachments/assets/70c747fa-6374-46d4-a0d8-29c08cdd1f99" />
+  <p><em>Login ID Screen with mock data on local setup</em></p>
+</div>
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
