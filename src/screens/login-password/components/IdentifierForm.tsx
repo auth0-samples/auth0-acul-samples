@@ -9,6 +9,7 @@ import {
   ULThemeFormMessage,
 } from "@/components/form";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
+import ULThemeLink from "@/components/ULThemeLink";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 
 import { getFieldError } from "@/utils/helpers/errorUtils";
@@ -102,6 +103,10 @@ function IdentifierForm() {
   const localizedResetPasswordLink =
     resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
 
+  // Rebase the edit identifier link to the current origin
+  const editIdentifierLink =
+    rebaseLinkToCurrentOrigin(links?.edit_identifier) || "";
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
@@ -130,23 +135,11 @@ function IdentifierForm() {
                 error={!!fieldState.error || !!usernameSDKError}
                 readOnly={true}
                 endAdornment={
-                  <ULThemePrimaryButton
-                    variant="link"
-                    onClick={() => {
-                      // Redirect to edit identifier link
-                      const editIdentifierLink = links?.edit_identifier;
-                      if (editIdentifierLink) {
-                        const rebasedLink =
-                          rebaseLinkToCurrentOrigin(editIdentifierLink);
-                        if (rebasedLink) {
-                          window.location.href = rebasedLink;
-                        }
-                      }
-                    }}
-                  >
+                  <ULThemeLink href={editIdentifierLink}>
                     {texts?.editEmailText || "Edit"}
-                  </ULThemePrimaryButton>
+                  </ULThemeLink>
                 }
+                className="pr-[16px]"
               />
               <ULThemeFormMessage
                 sdkError={usernameSDKError}
@@ -212,14 +205,11 @@ function IdentifierForm() {
           )}
 
         {/* Forgot Password link */}
-        <div className="text-left">
+        <div className="text-left mb-4">
           {isForgotPasswordEnabled && localizedResetPasswordLink && (
-            <a
-              href={localizedResetPasswordLink}
-              className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
-            >
+            <ULThemeLink href={localizedResetPasswordLink}>
               {forgotPasswordText}
-            </a>
+            </ULThemeLink>
           )}
         </div>
 
