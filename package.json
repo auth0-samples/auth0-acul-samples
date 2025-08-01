@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@auth0/auth0-acul-js": "0.1.0-beta.7",
-    "@base-ui-components/react": "1.0.0-beta.1",
+    "@base-ui-components/react": "^1.0.0-beta.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",

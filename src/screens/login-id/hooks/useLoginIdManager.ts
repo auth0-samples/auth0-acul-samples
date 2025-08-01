@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 
 import type { ScreenMembersOnLoginId } from "@auth0/auth0-acul-js";
 import LoginIdInstance from "@auth0/auth0-acul-js/login-id";
@@ -6,7 +6,7 @@ import LoginIdInstance from "@auth0/auth0-acul-js/login-id";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useLoginIdManager = () => {
-  const [loginIdInstance] = useState(() => new LoginIdInstance());
+  const loginIdInstance = useMemo(() => new LoginIdInstance(), []);
 
   const { transaction, screen } = loginIdInstance;
   const { isSignupEnabled, isForgotPasswordEnabled, isPasskeyEnabled } =
