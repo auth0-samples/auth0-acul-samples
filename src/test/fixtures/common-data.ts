@@ -13,22 +13,22 @@ export const CommonTestData = {
     {
       name: "google-oauth2",
       strategy: "google",
-      options: { iconUrl: null, displayName: "Google" },
+      options: { iconUrl: null, displayName: "Google", showAsButton: true },
     },
     {
       name: "github",
       strategy: "github",
-      options: { iconUrl: null, displayName: "Github" },
+      options: { iconUrl: null, displayName: "Github", showAsButton: true },
     },
     {
       name: "facebook",
       strategy: "facebook",
-      options: { iconUrl: null, displayName: "Facebook" },
+      options: { iconUrl: null, displayName: "Facebook", showAsButton: true },
     },
     {
       name: "linkedin",
       strategy: "linkedin",
-      options: { iconUrl: null, displayName: "Linkedin" },
+      options: { iconUrl: null, displayName: "Linkedin", showAsButton: true },
     },
   ],
 

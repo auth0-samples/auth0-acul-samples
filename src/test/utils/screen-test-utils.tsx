@@ -10,7 +10,21 @@ export class ScreenTestUtils {
    * Generic helper to fill and submit any form
    */
   static async fillInput(labelPattern: string | RegExp, value: string) {
-    const input = screen.getByRole("textbox", { name: labelPattern });
+    // Try standard textbox first
+    let input = screen.queryByRole("textbox", { name: labelPattern });
+
+    // If not found, try any input element by label
+    if (!input) {
+      const elements = screen.queryAllByLabelText(labelPattern);
+      input = elements.find((el) => el.tagName === "INPUT") || null;
+    }
+
+    if (!input) {
+      throw new Error(
+        `Could not find input element with label matching: ${labelPattern}`
+      );
+    }
+
     await act(async () => {
       fireEvent.change(input, { target: { value } });
     });
