@@ -1,5 +1,6 @@
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+import ULThemeLink from "@/components/ULThemeLink";
 
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 
 function Footer() {
@@ -19,12 +20,7 @@ function Footer() {
     <div className="mt-4 text-left">
       <span className="text-sm pr-1">{footerText}</span>
       {localizedSignupLink && (
-        <a
-          href={localizedSignupLink}
-          className="text-sm font-bold text-link hover:text-link/80 focus:bg-link/15 focus:rounded"
-        >
-          {footerLinkText}
-        </a>
+        <ULThemeLink href={localizedSignupLink}>{footerLinkText}</ULThemeLink>
       )}
     </div>
   );
