@@ -9,6 +9,7 @@ import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabe
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import ULThemeLink from "@/components/ULThemeLink";
 import {
   isPhoneNumberSupported,
   transformAuth0CountryCode,
@@ -166,14 +167,11 @@ function IdentifierForm() {
         )}
 
         {/* Forgot Password link */}
-        <div className="text-left">
+        <div className="text-left mb-4">
           {isForgotPasswordEnabled && localizedResetPasswordLink && (
-            <a
-              href={localizedResetPasswordLink}
-              className="text-sm text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
-            >
+            <ULThemeLink href={localizedResetPasswordLink}>
               {forgotPasswordText}
-            </a>
+            </ULThemeLink>
           )}
         </div>
 
