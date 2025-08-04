@@ -1,3 +1,4 @@
+import ULThemeLink from "@/components/ULThemeLink";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginManager } from "../hooks/useLoginManager";
@@ -19,12 +20,7 @@ function Footer() {
       {isSignupEnabled && localizedSignupLink && (
         <div className="text-sm">
           <span className="text-body-text">{footerText} </span>
-          <a
-            href={localizedSignupLink}
-            className="text-link font-bold hover:text-link/80 focus:bg-link/15 focus:rounded"
-          >
-            {signupLinkText}
-          </a>
+          <ULThemeLink href={localizedSignupLink}>{signupLinkText}</ULThemeLink>
         </div>
       )}
     </div>
