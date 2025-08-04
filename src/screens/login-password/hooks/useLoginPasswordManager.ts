@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 
 import type { ScreenMembersOnLoginPassword } from "@auth0/auth0-acul-js";
 import LoginPassword from "@auth0/auth0-acul-js/login-password";
@@ -12,7 +12,7 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  */
 export const useLoginPasswordManager = () => {
   // Initialize the LoginPassword instance
-  const [loginPasswordInstance] = useState(() => new LoginPassword());
+  const loginPasswordInstance = useMemo(() => new LoginPassword(), []);
 
   // Extract transaction and screen properties from the LoginPassword instance
   const { transaction, screen } = loginPasswordInstance;
@@ -63,50 +63,20 @@ export const useLoginPasswordManager = () => {
     );
   };
 
-  /**
-   * Handles federated login for a specific social connection.
-   *
-   * @param connectionName - The name of the social connection (e.g., "google-oauth2").
-   * @returns A promise that resolves when the federated login process is complete.
-   */
-  const handleFederatedLogin = async (connectionName: string) => {
-    executeSafely(`Federated login with connection: ${connectionName}`, () =>
-      loginPasswordInstance.federatedLogin({ connection: connectionName })
-    );
-  };
-
   return {
-    // Instance of the LoginPassword class
     loginPasswordInstance,
-
-    // Method to handle login with username and password
     handleLoginPassword,
-
-    // Method to handle federated login
-    handleFederatedLogin,
-
-    // Texts and labels for the screen
     texts: (texts || {}) as ScreenMembersOnLoginPassword["texts"],
-
-    // Flags indicating the availability of various features
     isSignupEnabled: isSignupEnabled === true,
     isForgotPasswordEnabled: isForgotPasswordEnabled === true,
     isPasskeyEnabled: isPasskeyEnabled === true,
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
-
-    // Error messages from the LoginPassword instance
     errors: loginPasswordInstance.getError(),
-
-    // Links for editing identifier, signing up, and resetting password
     links,
     editIdentifierLink,
     signupLink,
     resetPasswordLink,
-
-    // CAPTCHA image if available
     captchaImage,
-
-    // Other Data
     data,
   };
 };

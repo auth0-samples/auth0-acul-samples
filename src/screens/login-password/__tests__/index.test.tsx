@@ -94,36 +94,6 @@ describe("LoginPasswordScreen", () => {
     });
   });
 
-  describe("Social Login", () => {
-    it("should show all social login buttons when available", () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: CommonTestData.socialConnections,
-      });
-      render(<LoginPasswordScreen />);
-      expect(
-        screen.getByRole("button", { name: /continue with Google/i })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: /continue with Github/i })
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: /continue with Facebook/i })
-      ).toBeInTheDocument();
-    });
-
-    it("should call the federatedLogin method when a social login button is clicked", async () => {
-      MockConfigUtils.configureTransaction(mockInstance, {
-        alternateConnections: [CommonTestData.socialConnections[0]],
-      });
-      render(<LoginPasswordScreen />);
-      await ScreenTestUtils.clickButton(/continue with google/i);
-
-      expect(mockInstance.federatedLogin).toHaveBeenCalledWith({
-        connection: "google-oauth2",
-      });
-    });
-  });
-
   describe("Error Handling", () => {
     it("should display general error messages", () => {
       MockConfigUtils.configureErrors(mockInstance, [

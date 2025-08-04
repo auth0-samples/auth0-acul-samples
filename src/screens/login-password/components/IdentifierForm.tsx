@@ -185,7 +185,7 @@ function IdentifierForm() {
 
         {/* CAPTCHA Box */}
         {isCaptchaAvailable &&
-          (passwordSDKError || generalErrors.length > 0) && (
+          (passwordSDKError || captchaSDKError || generalErrors.length > 0) && (
             <CaptchaBox
               control={form.control}
               name="captcha"
