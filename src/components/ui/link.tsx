@@ -28,12 +28,21 @@ const linkVariants = cva(
 
 export interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof linkVariants> {}
+    VariantProps<typeof linkVariants> {
+  /**
+   * Optional ref for the link element.
+   */
+  ref?: React.Ref<HTMLAnchorElement>;
+}
 
-function Link(
-  { className, children, variant, underline, ...props }: LinkProps,
-  ref: React.Ref<HTMLAnchorElement> | undefined
-) {
+function Link({
+  className,
+  children,
+  variant,
+  underline,
+  ref,
+  ...props
+}: LinkProps) {
   return (
     <a
       ref={ref}
