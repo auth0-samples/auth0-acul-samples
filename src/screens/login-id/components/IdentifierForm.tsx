@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 
 import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
 
-import CaptchaBox from "@/common/CaptchaBox";
-import CountryCodePicker from "@/common/CountryCodePicker";
+import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
+import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
@@ -105,7 +105,7 @@ function IdentifierForm() {
         {/* Country Code Picker - only show if phone numbers are supported */}
         {shouldShowCountryPicker && (
           <div className="mb-4">
-            <CountryCodePicker
+            <ULThemeCountryCodePicker
               selectedCountry={transformAuth0CountryCode(
                 (loginIdInstance?.transaction as TransactionMembersOnLoginId)
                   ?.countryCode,
@@ -150,7 +150,7 @@ function IdentifierForm() {
 
         {/* CAPTCHA Box */}
         {isCaptchaAvailable && (
-          <CaptchaBox
+          <Captcha
             control={form.control}
             name="captcha"
             label={captchaLabel}

@@ -12,7 +12,7 @@ export function ULThemePrimaryButton({
   // Variant-specific theme overrides for colors and states
   const variantThemeOverrides = {
     primary: cn(
-      "p-6",
+      "p-6 border-0",
       "cursor-pointer",
       "theme-universal:bg-primary-button",
       "theme-universal:text-(--ul-theme-color-primary-button-label)", //text-color

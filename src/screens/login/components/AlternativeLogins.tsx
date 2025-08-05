@@ -13,7 +13,7 @@ const AlternativeLogins = ({ connections }: AlternativeLoginsProps) => {
 
   return (
     <>
-      <div className="space-y-3 mt-4">
+      <div className="space-y-3 mt-2">
         {connections?.map((connection: SocialConnection) => {
           const { displayName, iconComponent } =
             getSocialProviderDetails(connection);

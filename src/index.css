@@ -132,21 +132,6 @@ Created to support alignment related utlities like justify, text-align etc with 
   --size-20: 5rem;
   --max-w-sm: 24rem;
   --max-w-md: 28rem;
-
-  /* Legacy variables for backward compatibility
-   To be removed as ui components are upgraded to use new tokens */
-  --color-primary: var(--ul-theme-color-primary-button);
-  --color-link: var(--ul-theme-color-links-focused-components);
-  --color-error: var(--ul-theme-color-error);
-  --color-success: var(--ul-theme-color-success);
-  --color-warning: #ffdb5f;
-  --color-text-default: var(--ul-theme-color-body-text);
-  --color-text-secondary: var(--ul-theme-color-input-labels-placeholders);
-  --color-background-page: var(--ul-theme-page-bg-background-color);
-  --color-background-widget: var(--ul-theme-color-widget-background);
-  --color-gray-mid: var(--ul-theme-color-widget-border);
-  --color-gray-darkest: #2d333a;
-  --height-13: 3.25rem;
 }
 
 :root {

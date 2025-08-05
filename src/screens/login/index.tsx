@@ -1,6 +1,6 @@
-import Separator from "@/common/Separator";
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
+import ULThemeSeparator from "@/components/ULThemeSeparator";
 import { SocialConnection } from "@/utils/helpers/socialUtils";
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
@@ -38,11 +38,11 @@ function LoginScreen() {
   const renderSocialLogins = (alignment: "top" | "bottom") => (
     <>
       {alignment === "bottom" && showSeparator && (
-        <Separator text={separatorText} />
+        <ULThemeSeparator text={separatorText} />
       )}
       <AlternativeLogins connections={socialConnectionsList} />
       {alignment === "top" && showSeparator && (
-        <Separator text={separatorText} />
+        <ULThemeSeparator text={separatorText} />
       )}
     </>
   );

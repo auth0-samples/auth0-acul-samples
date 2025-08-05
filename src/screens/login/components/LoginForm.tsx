@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 
 import type { Error } from "@auth0/auth0-acul-js";
 
-import CaptchaBox from "@/common/CaptchaBox";
+import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -159,7 +159,7 @@ function LoginForm() {
 
         {/* CAPTCHA Box */}
         {isCaptchaAvailable && (
-          <CaptchaBox
+          <Captcha
             control={form.control}
             name="captcha"
             label={captchaLabel}

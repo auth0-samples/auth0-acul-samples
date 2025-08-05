@@ -5,7 +5,7 @@ import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { FormField, FormItem } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
-export interface CaptchaBoxProps<T extends FieldValues = FieldValues> {
+export interface CaptchaProps<T extends FieldValues = FieldValues> {
   label: string;
   imageUrl: string;
   imageAltText: string;
@@ -14,13 +14,9 @@ export interface CaptchaBoxProps<T extends FieldValues = FieldValues> {
   rules?: RegisterOptions<T>;
   sdkError?: string;
   className?: string;
-  imageWrapperClassName?: string;
-  imageClassName?: string;
-  inputWrapperClassName?: string;
-  inputClassName?: string;
 }
 
-const CaptchaBox = <T extends FieldValues = FieldValues>({
+const Captcha = <T extends FieldValues = FieldValues>({
   name,
   control,
   rules,
@@ -29,27 +25,28 @@ const CaptchaBox = <T extends FieldValues = FieldValues>({
   imageAltText,
   sdkError,
   className,
-  imageWrapperClassName,
-  imageClassName,
-  inputWrapperClassName,
-  inputClassName,
-}: CaptchaBoxProps<T>) => {
+}: CaptchaProps<T>) => {
+  // Container styles with theme
+  const containerStyles = cn("space-y-2", className);
+
+  // Image container styles with theme
+  const imageContainerStyles = cn(
+    "flex justify-center p-8 rounded",
+    "theme-universal:bg-input-bg",
+    "theme-universal:border",
+    "theme-universal:border-input-border",
+    "theme-universal:rounded-input"
+  );
+
+  if (!imageUrl) {
+    return null;
+  }
+
   return (
-    <div className={cn("space-y-2", className)}>
-      {!!imageUrl && (
-        <div
-          className={cn(
-            "flex justify-center border border-gray-mid rounded p-8 bg-background-widget",
-            imageWrapperClassName
-          )}
-        >
-          <img
-            src={imageUrl}
-            alt={imageAltText}
-            className={cn("object-contain", imageClassName)}
-          />
-        </div>
-      )}
+    <div className={containerStyles}>
+      <div className={imageContainerStyles}>
+        <img src={imageUrl} alt={imageAltText} className="object-contain" />
+      </div>
       <FormField
         control={control}
         name={name}
@@ -62,8 +59,6 @@ const CaptchaBox = <T extends FieldValues = FieldValues>({
               type="text"
               autoComplete="off"
               error={!!fieldState.error || !!sdkError}
-              className={inputClassName}
-              wrapperClassName={inputWrapperClassName}
             />
             <ULThemeFormMessage
               className="mt-1"
@@ -77,4 +72,4 @@ const CaptchaBox = <T extends FieldValues = FieldValues>({
   );
 };
 
-export default CaptchaBox;
+export default Captcha;

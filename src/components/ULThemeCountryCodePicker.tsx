@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export interface CountryCodePickerProps
+export interface ULThemeCountryCodePickerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Selected country information
@@ -31,7 +31,10 @@ export interface CountryCodePickerProps
   fullWidth?: boolean;
 }
 
-const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
+const ULThemeCountryCodePicker = forwardRef<
+  HTMLButtonElement,
+  ULThemeCountryCodePickerProps
+>(
   (
     {
       selectedCountry,
@@ -44,8 +47,19 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
     },
     ref
   ) => {
-    const baseStyles =
-      "inline-flex items-center justify-between px-4 py-4 bg-background-widget text-text-default border border-gray-mid hover:bg-primary/5 focus:bg-primary/15 focus:outline-none focus:ring-4 focus:ring-primary/15 transition-colors duration-150 ease-in-out text-md rounded font-medium text-left";
+    // Base styles with theme overrides
+    const baseStyles = cn(
+      "inline-flex items-center justify-between px-4 py-4 text-left font-medium transition-colors duration-150 ease-in-out",
+      "theme-universal:bg-input-bg",
+      "theme-universal:text-input-text",
+      "theme-universal:border",
+      "theme-universal:border-input-border",
+      "theme-universal:text-(length:--ul-theme-font-body-text-size)",
+      "theme-universal:font-body",
+      "theme-universal:rounded-input",
+      "theme-universal:hover:border-base-focus",
+      "theme-universal:focus:outline-none theme-universal:focus:ring-2 theme-universal:focus:ring-base-focus/20"
+    );
 
     const widthStyles = fullWidth ? "w-full" : "";
     const disabledStyles =
@@ -79,7 +93,7 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
 
               {/* Country Info */}
               <div className="flex-1 min-w-0">
-                <span className="text-gray-900 font-medium truncate">
+                <span className="theme-universal:text-input-text theme-universal:font-body truncate">
                   {selectedCountry.name}, {selectedCountry.code},{" "}
                   {selectedCountry.dialCode}
                 </span>
@@ -88,8 +102,8 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
           ) : (
             <>
               {/* Placeholder state */}
-              <div className="flex-shrink-0 w-6 h-4 bg-gray-200 rounded-sm"></div>
-              <span className="text-gray-500 flex-1 truncate">
+              <div className="flex-shrink-0 w-6 h-4 theme-universal:bg-input-border rounded-sm"></div>
+              <span className="theme-universal:text-input-labels flex-1 truncate">
                 {placeholder}
               </span>
             </>
@@ -100,7 +114,7 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
         <div className="flex-shrink-0 ml-2">
           <ChevronRight
             className={cn(
-              "w-4 h-4 text-gray-400 transition-transform duration-200",
+              "w-4 h-4 theme-universal:text-input-labels transition-transform duration-200",
               isLoading && "animate-pulse"
             )}
           />
@@ -110,6 +124,6 @@ const CountryCodePicker = forwardRef<HTMLButtonElement, CountryCodePickerProps>(
   }
 );
 
-CountryCodePicker.displayName = "CountryCodePicker";
+ULThemeCountryCodePicker.displayName = "ULThemeCountryCodePicker";
 
-export default CountryCodePicker;
+export default ULThemeCountryCodePicker;

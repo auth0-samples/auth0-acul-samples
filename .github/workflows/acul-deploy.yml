@@ -21,15 +21,6 @@ on:
       - "!.github/workflows/acul-deploy.yml"
       - "!DEPLOYMENT.md"
       - "!README.md"
-  pull_request:
-    branches: [main, master]
-    # Only trigger if files within the boilerplate example change.
-    paths:
-      - "**/*"
-      - ".github/config/deploy_config.yml" # This file is used to determine which screens to deploy
-      - "!.github/workflows/acul-deploy.yml"
-      - "!DEPLOYMENT.md"
-      - "!README.md"
   workflow_dispatch: # Kept for manual triggering, but inputs removed
 
 env:
