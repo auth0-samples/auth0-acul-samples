@@ -1,6 +1,6 @@
 import ULThemeLogo from "@/components/ULThemeLogo";
-import ULThemeTitle from "@/components/ULThemeTitle";
 import ULThemeSubtitle from "@/components/ULThemeSubtitle";
+import ULThemeTitle from "@/components/ULThemeTitle";
 
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 

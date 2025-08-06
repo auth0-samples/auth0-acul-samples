@@ -1,11 +1,11 @@
+import ULThemeCard from "@/components/ULThemeCard";
+import ULThemePageLayout from "@/components/ULThemePageLayout";
+import { applyAuth0Theme } from "@/utils/theme/themeEngine";
+
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import IdentifierForm from "./components/IdentifierForm";
-import ULThemePageLayout from "@/components/ULThemePageLayout";
-import ULThemeCard from "@/components/ULThemeCard";
-
 import { useLoginPasswordManager } from "./hooks/useLoginPasswordManager";
-import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 function LoginPasswordScreen() {
   // Extracting attributes from hook made out of LoginPasswordInstance class of Auth0 JS SDK
