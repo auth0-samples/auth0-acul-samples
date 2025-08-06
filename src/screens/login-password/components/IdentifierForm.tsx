@@ -1,20 +1,21 @@
 import { useForm } from "react-hook-form";
+
 import type { Error } from "@auth0/auth0-acul-js";
 
-import CaptchaBox from "@/common/CaptchaBox";
-import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import Captcha from "@/components/Captcha";
 import {
   ULThemeFloatingLabelField,
   ULThemeFormMessage,
 } from "@/components/form";
-import { ULThemePasswordField } from "@/components/ULThemePasswordField";
-import ULThemeLink from "@/components/ULThemeLink";
 import { Form, FormField, FormItem } from "@/components/ui/form";
-
+import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
+import ULThemeLink from "@/components/ULThemeLink";
+import { ULThemePasswordField } from "@/components/ULThemePasswordField";
+import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 
 interface LoginPasswordFormData {
@@ -186,7 +187,7 @@ function IdentifierForm() {
         {/* CAPTCHA Box */}
         {isCaptchaAvailable &&
           (passwordSDKError || captchaSDKError || generalErrors.length > 0) && (
-            <CaptchaBox
+            <Captcha
               control={form.control}
               name="captcha"
               label={captchaLabel}
