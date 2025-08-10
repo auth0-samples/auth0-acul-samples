@@ -97,6 +97,9 @@ nvm use 22
 Once you're ready to test with actual Auth0 authentication:
 
 ```bash
+# Navigate to the React-JS sample
+cd react-js
+
 # Build and serve assets locally
 npm run build
 npx serve dist -p 8080 --cors
@@ -117,7 +120,7 @@ auth0 ul customize --rendering-mode advanced --prompt login-id --screen login-id
 
 ## Screens
 
-The main screen implementations are located in [`src/screens/`](./src/screens/), with each screen designed to integrate with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login).
+The main screen implementations are located in [`react-js/src/screens/`](./react-js/src/screens/), with each screen designed to integrate with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login).
 
 <a id="build-structure"></a>
 
@@ -126,6 +129,9 @@ The main screen implementations are located in [`src/screens/`](./src/screens/),
 Vite compiles each screen as a separate entry point for optimized loading:
 
 ```bash
+# Navigate to the React-JS sample
+cd react-js
+
 # Build optimized assets
 npm run build
 
@@ -230,7 +236,7 @@ This repository includes GitHub Actions workflows for automated deployment. See 
 <details>
 <summary>Enabling Screens for Deployment</summary>
 
-Control which screens are deployed by modifying [`.github/config/deploy_config.yml`](./.github/config/deploy_config.yml):
+Control which screens are deployed by modifying [`react/.github/config/deploy_config.yml`](./react/.github/config/deploy_config.yml):
 
 ```yaml
 default_screen_deployment_status:
@@ -251,7 +257,7 @@ We welcome contributions! Here's how you can help:
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
 3. Make your changes using mock data for testing
-4. Test thoroughly: `npm run test`
+4. Test thoroughly: Navigate to `react-js/` and run `npm test`
 5. Submit a pull request
 
 **What to Contribute:**
@@ -263,7 +269,7 @@ We welcome contributions! Here's how you can help:
 
 **Development Guidelines:**
 
-- Follow the existing code patterns in `src/screens/`
+- Follow the existing code patterns in `react-js/src/screens/`
 - Use TypeScript for type safety
 - Follow the Auth0 design system principles
 - Include tests for new functionality
@@ -289,7 +295,7 @@ We welcome contributions! Here's how you can help:
 **Solutions:**
 
 1. Check browser console for JavaScript errors
-2. Verify screen name matches directory in `src/screens/`
+2. Verify screen name matches directory in `react-js/src/screens/`
 3. Ensure all dependencies installed: `npm install`
 4. Try clearing browser cache and restarting dev server
 </details>
@@ -300,7 +306,7 @@ We welcome contributions! Here's how you can help:
 **Symptoms:** Forms show empty fields or default values
 **Solutions:**
 
-1. Check if mock data file exists in `src/mock-data/`
+1. Check if mock data file exists in `react-js/src/mock-data/`
 2. Verify mock data structure matches screen requirements
 3. Check network tab for failed API calls to mock endpoints
 </details>
