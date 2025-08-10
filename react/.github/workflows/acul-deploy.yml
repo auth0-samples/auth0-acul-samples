@@ -1,0 +1,42 @@
+name: Deploy React Sample to S3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'react/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'react/package-lock.json'
+          
+      - name: Install dependencies
+        working-directory: react
+        run: npm ci
+        
+      - name: Build
+        working-directory: react
+        run: npm run build
+        
+      - name: Deploy to S3
+        working-directory: react
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+        run: |
+          # Add deployment script here when ready
+          echo "React sample deployment - Coming soon"

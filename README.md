@@ -1,6 +1,6 @@
-# Auth0 Advanced Customizations for Universal Login Template
+# Auth0 Advanced Customizations for Universal Login Samples
 
-This project provides a production-ready template for creating custom Auth0 Advanced Customizations for Universal Login (ACUL) screens using React, TypeScript, and Tailwind CSS. The template follows the same design language and user experience patterns as Auth0's Universal Login screens while integrating with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login) to provide seamless authentication functionality.
+This monorepo provides production-ready templates for creating custom Auth0 Advanced Customizations for Universal Login (ACUL) screens. Each sample demonstrates different implementation approaches and SDK integrations while following Auth0's design language and user experience patterns.
 
 **What is ACUL?** Advanced Customizations for Universal Login (ACUL) is an Early Access capability that allows you to build custom, client-rendered versions of Universal Login screens, giving you control over every pixel of your authentication experience. ACUL uses a client/server model where you have full control over the client-side interface while leveraging the security, extensibility, and flexibility of Universal Login's hosted authentication on the server side.
 
@@ -9,6 +9,20 @@ This project provides a production-ready template for creating custom Auth0 Adva
 > - **Early Access Feature**: ACUL is currently in Early Access (EA) and not yet Generally Available (GA)
 > - **Enterprise Feature**: Requires Enterprise Auth0 plan and verified custom domain
 > - **Work in Progress**: This template repository is actively being developed
+
+## Available Samples
+
+### 🚀 [React-JS Sample](./react-js/) (Ready)
+- **SDK**: Auth0 ACUL JS SDK (`@auth0/auth0-acul-js`)
+- **Screens**: 3 authentication screens (login, login-id, login-password)
+- **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
+- **Status**: ✅ Production ready
+
+### ⚡ [React Sample](./react/) (Coming Soon)
+- **SDK**: Auth0 ACUL React SDK (`@auth0/auth0-acul-react`)
+- **Screens**: ~30 authentication screens (login, signup, MFA, password reset, etc.)
+- **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
+- **Status**: 🚧 Under development for GA release
 
 <div align="center">
   <img 
@@ -33,12 +47,13 @@ This project provides a production-ready template for creating custom Auth0 Adva
 
 ## Quick Start
 
-Get started with local development in under 2 minutes:
+### React-JS Sample (Auth0 ACUL JS SDK)
 
 ```bash
-# Clone and setup
-git clone https://github.com/auth0-samples/auth0-acul-samples.git
-cd auth0-acul-samples
+# Navigate to the React-JS sample
+cd react-js
+
+# Install dependencies
 npm install
 
 # Start developing with mock data
