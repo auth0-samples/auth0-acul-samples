@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Run lint-staged to format and lint staged files
+echo "🔍 Running lint-staged (format + lint staged files)..."
+npx lint-staged || exit 1
+
+echo "✅ Pre-commit checks passed!"
