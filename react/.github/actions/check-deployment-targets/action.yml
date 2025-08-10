@@ -1,0 +1,67 @@
+name: 'Check Deployment Targets'
+description: 'Checks if any screens are targeted for deployment based on deploy_config.yml'
+inputs:
+  working-directory:
+    description: 'Working directory relative to repository root'
+    required: true
+    default: '.'
+  deploy_config_path:
+    description: 'Path to the deploy_config.yml file'
+    required: false
+    default: '.github/config/deploy_config.yml'
+outputs:
+  has_targets:
+    description: 'true if any screens are targeted for deployment, false otherwise'
+    value: ${{ steps.check.outputs.has_targets }}
+  target_count:
+    description: 'Number of screens targeted for deployment'
+    value: ${{ steps.check.outputs.target_count }}
+  target_screens:
+    description: 'JSON array of targeted screen names'
+    value: ${{ steps.check.outputs.target_screens }}
+runs:
+  using: 'composite'
+  steps:
+    - id: check
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        DEPLOY_CONFIG_PATH: ${{ inputs.deploy_config_path }}
+      run: |
+        set -euo pipefail
+        
+        echo "Checking deployment targets in $DEPLOY_CONFIG_PATH"
+        
+        # Default values
+        has_targets="false"
+        target_count="0"
+        target_screens="[]"
+        
+        if [[ -f "$DEPLOY_CONFIG_PATH" ]]; then
+          # Extract screens marked as true for deployment
+          if command -v yq &> /dev/null; then
+            target_screens_json=$(yq eval '.default_screen_deployment_status | to_entries | map(select(.value == true) | .key)' "$DEPLOY_CONFIG_PATH" -o json | jq -c '.' || echo "[]")
+          else
+            echo "::warning::yq not available, assuming no targets"
+            target_screens_json="[]"
+          fi
+          
+          if [[ -n "$target_screens_json" && "$target_screens_json" != "null" && "$target_screens_json" != "[]" ]]; then
+            target_screens="$target_screens_json"
+            target_count=$(echo "$target_screens" | jq 'length')
+            has_targets="true"
+            
+            echo "✅ Found $target_count screen(s) targeted for deployment: $target_screens"
+          else
+            echo "ℹ️ No screens are marked for deployment in $DEPLOY_CONFIG_PATH"
+          fi
+        else
+          echo "::warning::Deployment config file not found: $DEPLOY_CONFIG_PATH"
+        fi
+        
+        # Set outputs
+        echo "has_targets=$has_targets" >> $GITHUB_OUTPUT
+        echo "target_count=$target_count" >> $GITHUB_OUTPUT
+        echo "target_screens=$target_screens" >> $GITHUB_OUTPUT
+        
+        echo "Deployment check result: has_targets=$has_targets, target_count=$target_count" 
