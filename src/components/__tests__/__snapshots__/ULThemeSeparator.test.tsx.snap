@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemeSeparator Component matches snapshot with custom className 1`] = `
+<div
+  class="relative flex items-center my-4 custom-class"
+>
+  <div
+    class="flex-grow border-t theme-universal:border-input-border"
+  />
+  <span
+    class="flex-shrink px-2 theme-universal:text-body-text theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body"
+  >
+    OR
+  </span>
+  <div
+    class="flex-grow border-t theme-universal:border-input-border"
+  />
+</div>
+`;
+
+exports[`ULThemeSeparator Component matches snapshot with text (renders with separator text) 1`] = `
+<div
+  class="relative flex items-center my-4"
+>
+  <div
+    class="flex-grow border-t theme-universal:border-input-border"
+  />
+  <span
+    class="flex-shrink px-2 theme-universal:text-body-text theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body"
+  >
+    OR
+  </span>
+  <div
+    class="flex-grow border-t theme-universal:border-input-border"
+  />
+</div>
+`;
+
+exports[`ULThemeSeparator Component matches snapshot without text (renders as hr) 1`] = `
+<hr
+  class="my-4 flex-grow border-t theme-universal:border-input-border"
+/>
+`;

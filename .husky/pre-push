@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Run TypeScript compilation check
+echo "🔍 Running TypeScript compilation check..."
+npx tsc --noEmit || exit 1
+
+# Run build to ensure everything compiles
+echo "🛠️ Running build check..."
+npm run build || exit 1
+
+echo "✅ All pre-push checks passed!"

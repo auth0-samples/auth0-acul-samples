@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Captcha Component matches snapshot when imageUrl is empty 1`] = `<form />`;
+
+exports[`Captcha Component matches snapshot when imageUrl is provided 1`] = `
+<form>
+  <div
+    class="space-y-2"
+  >
+    <div
+      class="flex justify-center p-8 rounded theme-universal:bg-input-bg theme-universal:border theme-universal:border-input-border theme-universal:rounded-input"
+    >
+      <img
+        alt="CAPTCHA verification image"
+        class="object-contain"
+        src="https://example.com/captcha.png"
+      />
+    </div>
+    <div
+      class="grid"
+      data-slot="form-item"
+    >
+      <div
+        class="w-full"
+      >
+        <div>
+          <div
+            class="bg-input aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] box-border inline-flex w-full shrink-0 cursor-text justify-center text-sm transition-[color,box-shadow] duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-input-foreground shadow-input-resting hover:shadow-input-hover focus-within:ring-ring focus-within:ring-4 h-14 rounded-2xl group relative items-end gap-0.5 mb-2 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-(length:--ul-theme-border-input-border-weight) theme-universal:border-input-border theme-universal:rounded-input theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body-text theme-universal:placeholder:text-input-labels theme-universal:[&_input]:placeholder:text-input-labels theme-universal:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_input]:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:placeholder:font-input-label theme-universal:[&_input]:placeholder:font-input-label theme-universal:[&_label]:bg-input-bg theme-universal:[&_label]:text-input-labels theme-universal:[&_label]:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_label]:font-input-label theme-universal:focus-within:border-base-focus theme-universal:focus-within:ring-0 theme-universal:focus-within:[&_label]:text-base-focus"
+          >
+            <label
+              class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
+              for="«r0»-form-item"
+              id="base-ui-«r1»"
+            >
+              Enter CAPTCHA
+            </label>
+            <div
+              class="relative flex-1"
+            >
+              <input
+                aria-labelledby="base-ui-«r1»"
+                autocomplete="off"
+                class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
+                id="«r0»-form-item"
+                name="captcha"
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
+exports[`Captcha Component matches snapshot with custom className 1`] = `
+<form>
+  <div
+    class="space-y-2 custom-class"
+  >
+    <div
+      class="flex justify-center p-8 rounded theme-universal:bg-input-bg theme-universal:border theme-universal:border-input-border theme-universal:rounded-input"
+    >
+      <img
+        alt="CAPTCHA verification image"
+        class="object-contain"
+        src="https://example.com/captcha.png"
+      />
+    </div>
+    <div
+      class="grid"
+      data-slot="form-item"
+    >
+      <div
+        class="w-full"
+      >
+        <div>
+          <div
+            class="bg-input aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] box-border inline-flex w-full shrink-0 cursor-text justify-center text-sm transition-[color,box-shadow] duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-input-foreground shadow-input-resting hover:shadow-input-hover focus-within:ring-ring focus-within:ring-4 h-14 rounded-2xl group relative items-end gap-0.5 mb-2 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-(length:--ul-theme-border-input-border-weight) theme-universal:border-input-border theme-universal:rounded-input theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body-text theme-universal:placeholder:text-input-labels theme-universal:[&_input]:placeholder:text-input-labels theme-universal:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_input]:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:placeholder:font-input-label theme-universal:[&_input]:placeholder:font-input-label theme-universal:[&_label]:bg-input-bg theme-universal:[&_label]:text-input-labels theme-universal:[&_label]:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_label]:font-input-label theme-universal:focus-within:border-base-focus theme-universal:focus-within:ring-0 theme-universal:focus-within:[&_label]:text-base-focus"
+          >
+            <label
+              class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
+              for="«r3»-form-item"
+              id="base-ui-«r4»"
+            >
+              Enter CAPTCHA
+            </label>
+            <div
+              class="relative flex-1"
+            >
+              <input
+                aria-labelledby="base-ui-«r4»"
+                autocomplete="off"
+                class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
+                id="«r3»-form-item"
+                name="captcha"
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
