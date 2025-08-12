@@ -39,8 +39,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-          cache-dependency-path: 'react-js/package-lock.json'
           
       - name: Install dependencies
         working-directory: react-js
@@ -64,7 +62,7 @@ jobs:
 
   react-quality:
     name: React Quality Checks  
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-2cpu-8ram-75ssd
     if: contains(github.event.head_commit.modified, 'react/') || contains(join(github.event.pull_request.changed_files.*.filename || '', ' '), 'react/') || github.event_name == 'pull_request'
     
     steps:

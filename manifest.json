@@ -6,7 +6,6 @@
       "framework": "react",
       "sdk": "js",
       "base_files": [
-        "react-js/.npmrc",
         "react-js/.prettierrc.json",
         "react-js/README.md",
         "react-js/babel.config.cjs",
