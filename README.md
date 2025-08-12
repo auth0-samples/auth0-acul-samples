@@ -126,6 +126,8 @@ The main screen implementations are located in [`react-js/src/screens/`](./react
 
 ## Build Structure
 
+**About manifest.json:** The `manifest.json` file at the project root defines the available templates and screens for the `auth0-cli` tool, enabling developers to scaffold projects with `auth0 acul init` by specifying which files and directories to include for each framework and screen combination.
+
 Vite compiles each screen as a separate entry point for optimized loading:
 
 ```bash
