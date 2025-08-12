@@ -66,7 +66,7 @@ jobs:
 
       - name: Configure AWS credentials
         if: steps.check-targets.outputs.has_targets == 'true'
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@be2e7ad815e27b890489a89ce2717b0f9e26b56e # v4.3.1
         with:
           role-to-assume: ${{ secrets.AWS_S3_ARN }}
           aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
