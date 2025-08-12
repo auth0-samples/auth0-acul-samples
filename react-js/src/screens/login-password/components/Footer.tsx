@@ -18,7 +18,9 @@ function Footer() {
 
   return (
     <div className="mt-4 text-left">
-      <span className="text-sm pr-1">{footerText}</span>
+      <span className="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body">
+        {footerText}
+      </span>
       {localizedSignupLink && (
         <ULThemeLink href={localizedSignupLink}>{footerLinkText}</ULThemeLink>
       )}

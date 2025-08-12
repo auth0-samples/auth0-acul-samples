@@ -38,6 +38,8 @@ const projectRoot = path.resolve(__dirname, "..");
 const mockDataPath = path.join(
   projectRoot,
   "src",
+  "screens",
+  screenName,
   "mock-data",
   `${screenName}.json`
 );
@@ -48,7 +50,7 @@ if (!fs.existsSync(mockDataPath)) {
     `Error: Mock data file not found for screen '${screenName}'.`
   );
   console.log(
-    `Please create '${screenName}.json' in the 'src/mock-data/' directory.`
+    `Please create '${screenName}.json' in the 'src/screens/${screenName}/mock-data/' directory.`
   );
   process.exit(1);
 }
