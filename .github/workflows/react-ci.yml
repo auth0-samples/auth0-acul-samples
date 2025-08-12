@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate-manifest:
-    name: Validate Manifest
+    name: Validate Manifest Structure
     runs-on: ubuntu-latest
     
     steps:
@@ -20,8 +20,11 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Validate manifest.json
-        run: node scripts/validate-manifest.js
+      - name: Validate manifest
+        uses: ./.github/actions/validate-manifest
+        with:
+          manifest-path: './manifest.json'
+          strict-mode: 'true'
 
   react-js-quality:
     name: React-JS Quality Checks
@@ -43,9 +46,9 @@ jobs:
         working-directory: react-js
         run: npm ci
         
-      - name: Lint
+      - name: Lint check
         working-directory: react-js
-        run: npm run lint
+        run: npm run lint:check
         
       - name: Type check
         working-directory: react-js

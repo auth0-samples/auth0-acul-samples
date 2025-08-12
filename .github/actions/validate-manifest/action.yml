@@ -1,0 +1,35 @@
+name: 'Validate Auth0 ACUL Manifest'
+description: 'Validates manifest.json structure and file integrity for Auth0 ACUL samples'
+author: 'Auth0 ACUL Team'
+
+inputs:
+  manifest-path:
+    description: 'Path to manifest.json file'
+    required: false
+    default: './manifest.json'
+  strict-mode:
+    description: 'Enable strict validation mode'
+    required: false
+    default: 'true'
+
+outputs:
+  result:
+    description: 'Validation result (success/failure)'
+  errors:
+    description: 'Number of validation errors'
+  warnings:
+    description: 'Number of validation warnings'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run manifest validation
+      shell: bash
+      run: ${{ github.action_path }}/validate.sh
+      env:
+        MANIFEST_PATH: ${{ inputs.manifest-path }}
+        STRICT_MODE: ${{ inputs.strict-mode }}
+
+branding:
+  icon: 'check-circle'
+  color: 'green'
