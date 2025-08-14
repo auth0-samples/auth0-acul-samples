@@ -14,7 +14,8 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@auth0/auth0-acul-js": "0.1.0-beta.7",
+    "@auth0/auth0-acul-js": "file:../universal-login/packages/auth0-acul-js",
+    "@auth0/auth0-acul-react": "file:../universal-login/packages/auth0-acul-react",
     "@base-ui-components/react": "^1.0.0-beta.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
