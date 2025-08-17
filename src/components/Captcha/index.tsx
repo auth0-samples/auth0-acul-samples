@@ -27,7 +27,7 @@ export interface CaptchaWidgetProps<T extends FieldValues = FieldValues> {
     size?: string;
     placeholder?: string;
   };
-  control: Control<T>;
+  control?: Control<T>;
   rules?: RegisterOptions<T>;
   name: Path<T>;
   onCaptchaResponse: (response: CaptchaResponse | null) => void;
