@@ -21,6 +21,7 @@ const baseProps = {
     provider: "recaptcha_v2",
     siteKey: "test-site-key",
   },
+  name: "captcha",
   onCaptchaResponse: jest.fn(),
   className: "",
   theme: "light" as const,
