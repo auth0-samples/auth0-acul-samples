@@ -2,11 +2,9 @@ import React from "react";
 import { Control, FieldValues, Path, RegisterOptions } from "react-hook-form";
 
 import AuthChallengeWidget from "./providers/AuthChallengeWidget";
-// import FriendlyCaptchaWidget from "./providers/FriendlyCaptchaWidget";
 import HCaptchaWidget from "./providers/HCaptchaWidget";
 import RecaptchaCombinedWidget from "./providers/ReCaptchaCombinedWidget";
 import SimpleCaptchaWidget from "./providers/SimpleCaptchaWidget";
-// import ArkoseWidget from "./providers/ArkoseWidget";
 
 // ---
 // Interfaces
@@ -27,7 +25,7 @@ export interface CaptchaWidgetProps<T extends FieldValues = FieldValues> {
     size?: string;
     placeholder?: string;
   };
-  control: Control<T>;
+  control?: Control<T>;
   rules?: RegisterOptions<T>;
   name: Path<T>;
   onCaptchaResponse: (response: CaptchaResponse | null) => void;
@@ -43,7 +41,6 @@ export interface ICaptcha {
   imageAltText?: string;
   enabled?: boolean;
   siteKey?: string;
-  // clientSubdomain?: string;
 }
 
 export interface CaptchaProps<T extends FieldValues = FieldValues> {
@@ -137,9 +134,7 @@ const Captcha = <T extends FieldValues = FieldValues>({
     return (
       <SpecificCaptchaWidget
         config={{ provider, siteKey }}
-        control={control}
         name={name}
-        rules={rules}
         onCaptchaResponse={handleResponse}
         theme={theme}
         label={label}
