@@ -1,0 +1,74 @@
+{
+  "templates": {
+    "react-js": {
+      "name": "React (with ACUL JS SDK)",
+      "description": "React sample using @auth0/auth0-acul-js SDK with 3 authentication screens",
+      "framework": "react",
+      "sdk": "js",
+      "base_files": [
+        "react-js/.prettierrc.json",
+        "react-js/README.md",
+        "react-js/babel.config.cjs",
+        "react-js/components.json",
+        "react-js/eslint.config.js",
+        "react-js/index.html",
+        "react-js/jest.config.cjs",
+        "react-js/package.json",
+        "react-js/postcss.config.mjs",
+        "react-js/tsconfig.json",
+        "react-js/vite.config.ts",
+        "react-js/src/App.tsx",
+        "react-js/src/index.css",
+        "react-js/src/main.tsx",
+        "react-js/src/vite-env.d.ts"
+      ],
+      "base_directories": [
+        "react-js/src/components",
+        "react-js/src/lib",
+        "react-js/src/types",
+        "react-js/src/utils",
+        "react-js/src/constants",
+        "react-js/src/assets",
+        "react-js/src/__mocks__",
+        "react-js/src/test",
+        "react-js/scripts",
+        "react-js/.github"
+      ],
+      "screens": [
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "react-js/src/screens/login"
+        },
+        {
+          "id": "login-id",
+          "name": "Login: Identifier First",
+          "description": "Identifier-first login flow for collecting email/username",
+          "path": "react-js/src/screens/login-id"
+        },
+        {
+          "id": "login-password",
+          "name": "Login: Password",
+          "description": "Password entry screen for authentication",
+          "path": "react-js/src/screens/login-password"
+        }
+      ]
+    },
+    "react": {
+      "name": "React (with ACUL React SDK)",
+      "description": "Advanced React sample using @auth0/auth0-acul-react SDK with 30+ authentication screens",
+      "framework": "react",
+      "sdk": "react",
+      "base_files": [],
+      "base_directories": [],
+      "screens": []
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "repository": "auth0-samples/auth0-acul-samples",
+    "last_updated": "2025-08-12",
+    "description": "Auth0 Advanced Customizations for Universal Login (ACUL) sample templates for multiple frameworks and SDKs"
+  }
+}

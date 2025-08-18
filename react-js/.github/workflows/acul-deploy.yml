@@ -1,20 +1,11 @@
-name: ACUL Screens - Build and Deploy
+name: Deploy React-JS Sample to S3
 
-# This workflow file is provided as an example template for Auth0 ACUL deployments.
-# It is intentionally included in the boilerplate example to demonstrate how to set up
-# CI/CD for your own Auth0 ACUL implementation.
-#
-# When implementing in your own project:
-# 1. Update paths and settings as needed
-# 2. Configure the required GitHub secrets
-#
-# Note: This workflow is intentionally disabled with 'if: false' to prevent accidental runs.
-# Remove this condition when deploying in your own environment.
+# This workflow deploys the React-JS sample (using Auth0 ACUL JS SDK)
+# It is triggered when changes are made to the react-js directory
 
 on:
   push:
     branches: [main, master]
-    # Only trigger if files within the boilerplate example change.
     paths:
       - "**/*"
       - ".github/config/deploy_config.yml" # This file is used to determine which screens to deploy
@@ -75,7 +66,7 @@ jobs:
 
       - name: Configure AWS credentials
         if: steps.check-targets.outputs.has_targets == 'true'
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@be2e7ad815e27b890489a89ce2717b0f9e26b56e # v4.3.1
         with:
           role-to-assume: ${{ secrets.AWS_S3_ARN }}
           aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}

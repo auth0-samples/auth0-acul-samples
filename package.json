@@ -1,18 +1,41 @@
 {
-  "name": "auth0-acul-sample",
+  "name": "auth0-acul-samples",
+  "version": "1.0.0",
+  "description": "Auth0 Advanced Customizations for Universal Login Samples - Monorepo",
   "private": true,
-  "version": "0.0.0",
-  "license": "MIT",
-  "type": "module",
   "scripts": {
-    "screen": "node ./scripts/dev-screen.js",
-    "build": "tsc && vite build --logLevel info",
-    "test": "jest",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --no-error-on-unmatched-pattern",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,html,css}\" --ignore-unknown",
-    "validate:mock-file": "node ./scripts/validate-mock-filenames.js",
+    "install:all": "npm install --workspaces",
+    "build:all": "npm run build --workspaces --if-present",
+    "test:all": "npm run test --workspaces --if-present",
+    "lint:all": "npm run lint --workspaces --if-present",
+    "lint:check": "npm run lint:check --workspaces --if-present",
+    "clean:all": "npm run clean --workspaces --if-present",
+    "validate-manifest": "node scripts/validate-manifest.js",
+    "ci": "npm run validate-manifest && npm run lint:check && npm run test:all && npm run build:all",
     "prepare": "husky"
   },
+  "workspaces": [
+    "react-js",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/auth0-samples/auth0-acul-samples.git"
+  },
+  "keywords": [
+    "auth0",
+    "acul",
+    "universal-login",
+    "authentication",
+    "react",
+    "typescript"
+  ],
+  "author": "Auth0",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/auth0-samples/auth0-acul-samples/issues"
+  },
+  "homepage": "https://github.com/auth0-samples/auth0-acul-samples#readme",
   "dependencies": {
     "@auth0/auth0-acul-js": "file:../universal-login/packages/auth0-acul-js",
     "@auth0/auth0-acul-react": "file:../universal-login/packages/auth0-acul-react",
@@ -26,52 +49,12 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.28.0",
-    "@babel/preset-react": "^7.27.1",
-    "@babel/preset-typescript": "^7.27.1",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@eslint/js": "9.31.0",
-    "@tailwindcss/postcss": "^4.1.11",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.0.15",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@typescript-eslint/eslint-plugin": "8.37.0",
-    "@typescript-eslint/parser": "8.37.0",
-    "@vitejs/plugin-react": "^4.7.0",
-    "babel-jest": "^30.0.4",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-prettier": "5.5.3",
-    "eslint-plugin-react-hooks": "5.2.0",
-    "eslint-plugin-react-refresh": "0.4.20",
-    "eslint-plugin-simple-import-sort": "12.1.1",
-    "globals": "^16.3.0",
-    "husky": "^9.1.7",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.0.4",
-    "jest-environment-jsdom": "^30.0.4",
-    "lint-staged": "^16.1.2",
-    "postcss": "^8.5.6",
-    "prettier": "3.6.2",
-    "tailwindcss": "^4.1.11",
-    "tw-animate-css": "^1.3.5",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "8.37.0",
-    "vite": "^7.0.5"
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "husky": "^9.0.0"
   },
   "engines": {
-    "node": ">=22.0.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix --no-error-on-unmatched-pattern",
-      "prettier --write"
-    ],
-    "*.{js,jsx,json,md,html,css}": [
-      "prettier --write"
-    ]
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }

@@ -1,6 +1,6 @@
-# Auth0 Advanced Customizations for Universal Login Template
+# Auth0 Advanced Customizations for Universal Login Samples
 
-This project provides a production-ready template for creating custom Auth0 Advanced Customizations for Universal Login (ACUL) screens using React, TypeScript, and Tailwind CSS. The template follows the same design language and user experience patterns as Auth0's Universal Login screens while integrating with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login) to provide seamless authentication functionality.
+This monorepo provides production-ready templates for creating custom Auth0 Advanced Customizations for Universal Login (ACUL) screens. Each sample demonstrates different implementation approaches and SDK integrations while following Auth0's design language and user experience patterns.
 
 **What is ACUL?** Advanced Customizations for Universal Login (ACUL) is an Early Access capability that allows you to build custom, client-rendered versions of Universal Login screens, giving you control over every pixel of your authentication experience. ACUL uses a client/server model where you have full control over the client-side interface while leveraging the security, extensibility, and flexibility of Universal Login's hosted authentication on the server side.
 
@@ -9,6 +9,20 @@ This project provides a production-ready template for creating custom Auth0 Adva
 > - **Early Access Feature**: ACUL is currently in Early Access (EA) and not yet Generally Available (GA)
 > - **Enterprise Feature**: Requires Enterprise Auth0 plan and verified custom domain
 > - **Work in Progress**: This template repository is actively being developed
+
+## Available Samples
+
+### 🚀 [React-JS Sample](./react-js/) (Ready)
+- **SDK**: Auth0 ACUL JS SDK (`@auth0/auth0-acul-js`)
+- **Screens**: 3 authentication screens (login, login-id, login-password)
+- **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
+- **Status**: ✅ Production ready
+
+### ⚡ [React Sample](./react/) (Coming Soon)
+- **SDK**: Auth0 ACUL React SDK (`@auth0/auth0-acul-react`)
+- **Screens**: ~30 authentication screens (login, signup, MFA, password reset, etc.)
+- **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
+- **Status**: 🚧 Under development for GA release
 
 <div align="center">
   <img 
@@ -33,12 +47,13 @@ This project provides a production-ready template for creating custom Auth0 Adva
 
 ## Quick Start
 
-Get started with local development in under 2 minutes:
+### React-JS Sample (Auth0 ACUL JS SDK)
 
 ```bash
-# Clone and setup
-git clone https://github.com/auth0-samples/auth0-acul-samples.git
-cd auth0-acul-samples
+# Navigate to the React-JS sample
+cd react-js
+
+# Install dependencies
 npm install
 
 # Start developing with mock data
@@ -82,6 +97,9 @@ nvm use 22
 Once you're ready to test with actual Auth0 authentication:
 
 ```bash
+# Navigate to the React-JS sample
+cd react-js
+
 # Build and serve assets locally
 npm run build
 npx serve dist -p 8080 --cors
@@ -102,15 +120,20 @@ auth0 ul customize --rendering-mode advanced --prompt login-id --screen login-id
 
 ## Screens
 
-The main screen implementations are located in [`src/screens/`](./src/screens/), with each screen designed to integrate with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login).
+The main screen implementations are located in [`react-js/src/screens/`](./react-js/src/screens/), with each screen designed to integrate with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login).
 
 <a id="build-structure"></a>
 
 ## Build Structure
 
+**About manifest.json:** The `manifest.json` file at the project root defines the available templates and screens for the `auth0-cli` tool, enabling developers to scaffold projects with `auth0 acul init` by specifying which files and directories to include for each framework and screen combination.
+
 Vite compiles each screen as a separate entry point for optimized loading:
 
 ```bash
+# Navigate to the React-JS sample
+cd react-js
+
 # Build optimized assets
 npm run build
 
@@ -215,7 +238,7 @@ This repository includes GitHub Actions workflows for automated deployment. See 
 <details>
 <summary>Enabling Screens for Deployment</summary>
 
-Control which screens are deployed by modifying [`.github/config/deploy_config.yml`](./.github/config/deploy_config.yml):
+Control which screens are deployed by modifying [`react/.github/config/deploy_config.yml`](./react/.github/config/deploy_config.yml):
 
 ```yaml
 default_screen_deployment_status:
@@ -236,7 +259,7 @@ We welcome contributions! Here's how you can help:
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
 3. Make your changes using mock data for testing
-4. Test thoroughly: `npm run test`
+4. Test thoroughly: Navigate to `react-js/` and run `npm test`
 5. Submit a pull request
 
 **What to Contribute:**
@@ -248,7 +271,7 @@ We welcome contributions! Here's how you can help:
 
 **Development Guidelines:**
 
-- Follow the existing code patterns in `src/screens/`
+- Follow the existing code patterns in `react-js/src/screens/`
 - Use TypeScript for type safety
 - Follow the Auth0 design system principles
 - Include tests for new functionality
@@ -274,7 +297,7 @@ We welcome contributions! Here's how you can help:
 **Solutions:**
 
 1. Check browser console for JavaScript errors
-2. Verify screen name matches directory in `src/screens/`
+2. Verify screen name matches directory in `react-js/src/screens/`
 3. Ensure all dependencies installed: `npm install`
 4. Try clearing browser cache and restarting dev server
 </details>
@@ -285,7 +308,7 @@ We welcome contributions! Here's how you can help:
 **Symptoms:** Forms show empty fields or default values
 **Solutions:**
 
-1. Check if mock data file exists in `src/mock-data/`
+1. Check if mock data file exists in `react-js/src/mock-data/`
 2. Verify mock data structure matches screen requirements
 3. Check network tab for failed API calls to mock endpoints
 </details>

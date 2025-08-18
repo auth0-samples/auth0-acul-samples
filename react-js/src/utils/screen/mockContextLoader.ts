@@ -26,14 +26,16 @@ export async function loadAndSetMockContext(): Promise<void> {
 
   try {
     console.log(`[DEV] Loading mock data for screen: ${screenName}...`);
-    // Dynamically import the mock data file for the specified screen
-    const mockDataModule = await import(`../../mock-data/${screenName}.json`);
+    // Dynamically import the mock data file from the screen's own mock-data folder
+    const mockDataModule = await import(
+      `../../screens/${screenName}/mock-data/${screenName}.json`
+    );
     console.log(`[DEV] Successfully loaded mock data for: ${screenName}`);
     window.universal_login_context = mockDataModule.default;
   } catch (error) {
     console.error(
-      `DEV_ERROR: Failed to load mock data for '${screenName}.json'. ` +
-        `Ensure file exists. Dev script should have caught this. Error:`,
+      `DEV_ERROR: Failed to load mock data for '${screenName}.json' from screens/${screenName}/mock-data/. ` +
+        `Ensure file exists in the screen's mock-data folder. Dev script should have caught this. Error:`,
       error
     );
     // @ts-expect-error - It's safe to assign an empty object here because the
