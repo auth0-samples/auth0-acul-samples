@@ -16,12 +16,16 @@
   "dependencies": {
     "@auth0/auth0-acul-js": "0.1.0-beta.7",
     "@base-ui-components/react": "^1.0.0-beta.1",
+    "@hcaptcha/react-hcaptcha": "^1.12.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-google-recaptcha": "^3.1.0",
+    "react-google-recaptcha-enterprise": "^1.0.3",
     "react-hook-form": "^7.60.0",
+    "react-turnstile": "^1.1.4",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
@@ -38,6 +42,8 @@
     "@types/node": "^24.0.15",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/react-google-recaptcha": "^2.1.9",
+    "@types/react-google-recaptcha-enterprise": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "8.37.0",
     "@typescript-eslint/parser": "8.37.0",
     "@vitejs/plugin-react": "^4.7.0",

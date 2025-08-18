@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 
 import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -10,6 +10,7 @@ import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import {
   isPhoneNumberSupported,
   transformAuth0CountryCode,
@@ -30,7 +31,7 @@ function IdentifierForm() {
     handleLoginId,
     errors,
     isCaptchaAvailable,
-    captchaImage,
+    captcha,
     resetPasswordLink,
     isForgotPasswordEnabled,
     loginIdInstance,
@@ -49,10 +50,27 @@ function IdentifierForm() {
     formState: { isSubmitting },
   } = form;
 
+  const getCaptchaTheme = (): "light" | "dark" | "auto" => {
+    const allowedThemes = ["light", "dark", "auto"] as const;
+    const rawTheme =
+      loginIdInstance?.branding?.themes?.default?.colors?.captcha_widget_theme;
+
+    // Type guard to check if the raw theme is a valid theme
+    const isValidTheme = (
+      theme: unknown
+    ): theme is "light" | "dark" | "auto" => {
+      return allowedThemes.includes(theme as "light" | "dark" | "auto");
+    };
+
+    return isValidTheme(rawTheme) ? rawTheme : "auto";
+  };
+
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
   const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
+  // This error text is for when the user *fails* the CAPTCHA validation (e.g., empty field)
+  const captchaValidationErrorText =
+    "Please complete the CAPTCHA verification.";
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
   // Get general errors (not field-specific)
@@ -68,6 +86,14 @@ function IdentifierForm() {
 
   const captchaSDKError = getFieldError("captcha", errors);
 
+  const { captchaConfig, captchaProps, captchaValue, validateCaptcha } =
+    useCaptcha(
+      captcha || undefined,
+      captchaLabel,
+      captchaValidationErrorText,
+      getCaptchaTheme()
+    );
+
   // Get allowed identifiers directly from SDK
   const allowedIdentifiers =
     loginIdInstance?.transaction?.allowedIdentifiers || [];
@@ -80,7 +106,11 @@ function IdentifierForm() {
 
   // Proper submit handler with form data
   const onSubmit = async (data: LoginIdFormData) => {
-    await handleLoginId(data.identifier, data.captcha);
+    if (!validateCaptcha()) {
+      return; // Prevent submission if CAPTCHA validation fails
+    }
+
+    await handleLoginId(data.identifier, captchaValue);
   };
 
   const localizedResetPasswordLink =
@@ -149,13 +179,12 @@ function IdentifierForm() {
         />
 
         {/* CAPTCHA Box */}
-        {isCaptchaAvailable && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
               required: "Please complete the CAPTCHA",
