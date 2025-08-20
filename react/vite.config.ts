@@ -26,7 +26,7 @@ if (fs.existsSync(screensDir)) {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use './' for relative paths
+  base: "./", // Use './' for relative paths
   server: {
     port: 3000,
     strictPort: true,

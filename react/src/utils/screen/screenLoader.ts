@@ -1,9 +1,9 @@
 import { lazy } from "react";
 
 const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
-  "login-id": lazy(() => import("@/screens/login-id")),
-  login: lazy(() => import("@/screens/login")),
-  "login-password": lazy(() => import("@/screens/login-password")),
+  "login-passwordless-sms-otp": lazy(
+    () => import("@/screens/login-passwordless-sms-otp")
+  ),
 };
 
 export const getScreenComponent = (

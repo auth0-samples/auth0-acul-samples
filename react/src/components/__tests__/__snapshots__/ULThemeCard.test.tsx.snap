@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemeCard Component matches snapshot with additional props 1`] = `
+<div
+  class="bg-card text-card-foreground shadow-bevel-2xl flex flex-col gap-6 rounded-4xl px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget)"
+  data-slot="card"
+  data-testid="card"
+  id="test-id"
+>
+  Test Card
+</div>
+`;
+
+exports[`ULThemeCard Component matches snapshot with custom className 1`] = `
+<div
+  class="bg-card text-card-foreground shadow-bevel-2xl flex flex-col gap-6 rounded-4xl px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget) custom-class"
+  data-slot="card"
+>
+  Test Card
+</div>
+`;
+
+exports[`ULThemeCard Component matches snapshot with default props 1`] = `
+<div
+  class="bg-card text-card-foreground shadow-bevel-2xl flex flex-col gap-6 rounded-4xl px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget)"
+  data-slot="card"
+>
+  Test Card
+</div>
+`;
+
+exports[`ULThemeCard Component matches snapshot with multiple children 1`] = `
+<div
+  class="bg-card text-card-foreground shadow-bevel-2xl flex flex-col gap-6 rounded-4xl px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget)"
+  data-slot="card"
+>
+  <span>
+    Child 1
+  </span>
+  <span>
+    Child 2
+  </span>
+</div>
+`;
