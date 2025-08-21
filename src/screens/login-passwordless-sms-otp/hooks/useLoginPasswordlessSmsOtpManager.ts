@@ -32,9 +32,8 @@ export const useLoginPasswordlessSmsOtpManager = () => {
     if (screen.isCaptchaAvailable && captcha?.trim()) {
       options.captcha = captcha.trim();
     }
-    executeSafely(
-      `Submit OTP with options: ${JSON.stringify(options)}`,
-      () => () => loginPasswordlessSmsOtp.submitOTP(options)
+    executeSafely(`Submit OTP with options: ${JSON.stringify(options)}`, () =>
+      loginPasswordlessSmsOtp.submitOTP(options)
     );
   };
 

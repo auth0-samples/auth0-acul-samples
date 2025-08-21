@@ -43,6 +43,7 @@ export const createMockLoginPasswordlessSmsOtpInstance =
         helpLink: "/test-help",
       },
       data: {
+        phone_number: "Mock Phone Number",
         username: "Mock Phone Number",
       },
       signupLink: null,
