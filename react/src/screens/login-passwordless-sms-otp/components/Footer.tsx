@@ -13,7 +13,10 @@ function Footer() {
     <div className="mt-4 text-center">
       <span className="text-sm pr-1">{footerText}</span>
       {footerLinkText && (
-        <ULThemeLink onClick={() => handleResendOTP()}>
+        <ULThemeLink
+          href="javascript:void(0)"
+          onClick={() => handleResendOTP()}
+        >
           {footerLinkText}
         </ULThemeLink>
       )}

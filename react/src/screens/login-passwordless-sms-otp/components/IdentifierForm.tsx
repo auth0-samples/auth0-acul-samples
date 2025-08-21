@@ -44,7 +44,7 @@ function IdentifierForm() {
   // Initialize the form using react-hook-form
   const form = useForm<LoginPasswordlessSmsOtpFormData>({
     defaultValues: {
-      phonenumber: data?.username || "",
+      phonenumber: data?.phone_number || "",
       code: "",
       captcha: "",
     },
@@ -106,7 +106,7 @@ function IdentifierForm() {
               <ULThemeFloatingLabelField
                 {...field}
                 label=""
-                value={data?.username || ""}
+                value={data?.phone_number || ""}
                 error={!!fieldState.error || !!phoneSDKError}
                 readOnly={true}
                 endAdornment={
