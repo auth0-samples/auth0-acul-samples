@@ -91,7 +91,7 @@ npm install -g @auth0/auth0-cli
 auth0 login
 
 # Configure ACUL with settings file
-auth0 ul customize --rendering-mode advanced --prompt login-id --screen login-id --settings ./settings.json
+auth0 ul customize --rendering-mode advanced --prompt login-id --screen login-id --settings-file ./settings.json
 ```
 
 **About settings.json:** This file contains the same ACUL payload configuration as shown in the [Build Structure](#build-structure) section. It defines how Auth0 should load your custom screen assets, including CSS files, JavaScript bundles, and context configuration. The settings.json file structure is identical to the payload you'd use when configuring ACUL programmatically.
