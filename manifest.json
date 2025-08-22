@@ -60,9 +60,43 @@
       "description": "Advanced React sample using @auth0/auth0-acul-react SDK with 30+ authentication screens",
       "framework": "react",
       "sdk": "react",
-      "base_files": [],
-      "base_directories": [],
-      "screens": []
+      "base_files": [
+        "react/.prettierrc.json",
+        "react/README.md",
+        "react/babel.config.cjs",
+        "react/components.json",
+        "react/eslint.config.js",
+        "react/index.html",
+        "react/jest.config.cjs",
+        "react/package.json",
+        "react/postcss.config.mjs",
+        "react/tsconfig.json",
+        "react/vite.config.ts",
+        "react/src/App.tsx",
+        "react/src/index.css",
+        "react/src/main.tsx",
+        "react/src/vite-env.d.ts"
+      ],
+      "base_directories": [
+        "react/src/components",
+        "react/src/lib",
+        "react/src/types",
+        "react/src/utils",
+        "react/src/constants",
+        "react/src/assets",
+        "react/src/__mocks__",
+        "react/src/test",
+        "react/scripts",
+        "react/.github"
+      ],
+      "screens": [
+        {
+          "id": "login-passwordless-sms-otp",
+          "name": "Login: Passwordless SMS OTP",
+          "description": "Passwordless SMS OTP entry screen for authentication",
+          "path": "react/src/screens/login-passwordless-sms-otp"
+        }
+      ]
     }
   },
   "metadata": {

@@ -8,8 +8,10 @@ const App = () => {
   const [screen, setScreen] = useState("login-id");
 
   useEffect(() => {
-    const current = getCurrentScreen();
-    setScreen(current || "login-id");
+    const currentScreenDetails = getCurrentScreen();
+    if (currentScreenDetails) {
+      setScreen(currentScreenDetails);
+    }
   }, []);
 
   const ScreenComponent = getScreenComponent(screen);

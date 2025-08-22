@@ -36,6 +36,16 @@
     "url": "https://github.com/auth0-samples/auth0-acul-samples/issues"
   },
   "homepage": "https://github.com/auth0-samples/auth0-acul-samples#readme",
+  "dependencies": {
+    "@base-ui-components/react": "^1.0.0-beta.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.525.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.60.0",
+    "tailwind-merge": "^3.3.1"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
