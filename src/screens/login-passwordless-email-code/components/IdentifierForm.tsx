@@ -14,10 +14,10 @@ import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
-import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
+import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
-interface LoginPasswordlessSmsOtpFormData {
-  phonenumber: string;
+interface LoginPasswordlessEmailCodeFormData {
+  email: string;
   code: string;
   captcha?: string;
 }
@@ -32,19 +32,19 @@ interface LoginPasswordlessSmsOtpFormData {
 function IdentifierForm() {
   // Extract necessary methods and properties from the custom hook
   const {
-    handleSubmitOTP,
+    handleSubmitEmailCode,
     data,
     errors,
     isCaptchaAvailable,
     captchaImage,
     texts,
     links,
-  } = useLoginPasswordlessSmsOtpManager();
+  } = useLoginPasswordlessEmailCodeManager();
 
   // Initialize the form using react-hook-form
-  const form = useForm<LoginPasswordlessSmsOtpFormData>({
+  const form = useForm<LoginPasswordlessEmailCodeFormData>({
     defaultValues: {
-      phonenumber: data?.phone_number || "",
+      email: "",
       code: "",
       captcha: "",
     },
@@ -56,7 +56,7 @@ function IdentifierForm() {
 
   // Handle text fallbacks for button and field labels
   const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the 6-digit code";
+  const codeLabelText = texts?.placeholder || "Enter the code";
   const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
 
@@ -65,18 +65,18 @@ function IdentifierForm() {
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
 
-  // Extract field-specific errors for phonenumber, code, and CAPTCHA
-  const phoneSDKError = getFieldError("phonenumber", errors);
+  // Extract field-specific errors for email, code, and CAPTCHA
+  const emailSDKError = getFieldError("email", errors);
   const codeSDKError = getFieldError("code", errors);
   const captchaSDKError = getFieldError("captcha", errors);
 
   /**
    * Handles form submission.
    *
-   * @param data - The form data containing username, password, and optional CAPTCHA.
+   * @param data - The form data containing email, code, and optional CAPTCHA.
    */
-  const onSubmit = async (data: LoginPasswordlessSmsOtpFormData) => {
-    await handleSubmitOTP(data.phonenumber, data.code, data.captcha);
+  const onSubmit = async (data: LoginPasswordlessEmailCodeFormData) => {
+    await handleSubmitEmailCode(data.code, data.captcha);
   };
 
   // Rebase the edit identifier link to the current origin
@@ -97,23 +97,23 @@ function IdentifierForm() {
           </div>
         )}
 
-        {/* Username input field */}
+        {/* Email input field */}
         <FormField
           control={form.control}
-          name="phonenumber"
+          name="email"
           render={({ field, fieldState }) => (
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
                 label=""
-                value={data?.phone_number || ""}
-                error={!!fieldState.error || !!phoneSDKError}
+                value={data?.email || ""}
+                error={!!fieldState.error || !!emailSDKError}
                 readOnly={true}
                 endAdornment={
                   <ULThemeLink
                     href={editIdentifierLink}
                     aria-label={
-                      texts?.editLinkScreenReadableText || "Edit phone number"
+                      texts?.editLinkScreenReadableText || "Edit email address"
                     }
                   >
                     {texts?.editText || "Edit"}
@@ -122,14 +122,14 @@ function IdentifierForm() {
                 className="pr-[16px]"
               />
               <ULThemeFormMessage
-                sdkError={phoneSDKError}
+                sdkError={emailSDKError}
                 hasFormError={!!fieldState.error}
               />
             </FormItem>
           )}
         />
 
-        {/* OTP input field */}
+        {/* Code input field */}
         <FormField
           control={form.control}
           name="code"
