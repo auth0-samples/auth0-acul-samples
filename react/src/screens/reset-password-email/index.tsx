@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import { useResetPasswordEmailManager } from "./hooks/useResetPasswordEmailManager";
 
 function ResetPasswordEmailScreen() {
-  // Extracting attributes from hook made out of ResetPasswordEmailInstance class of Auth0 JS SDK
+  // Extracting attributes from hook made out of ResetPasswordEmailInstance class of Auth0 React SDK
   const { resetPasswordEmail, texts, handleResendEmail } =
     useResetPasswordEmailManager();
   const buttonText = texts?.resendLinkText || "Resend email";
