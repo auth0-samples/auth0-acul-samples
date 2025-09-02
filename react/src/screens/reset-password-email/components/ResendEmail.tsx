@@ -18,7 +18,7 @@ function ResendEmail() {
   return (
     <>
       {/* General error messages */}
-      {errors.length > 0 && (
+      {generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: Error, index: number) => (
             <ULThemeAlert key={index}>
