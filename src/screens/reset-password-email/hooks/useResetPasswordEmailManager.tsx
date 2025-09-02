@@ -1,7 +1,10 @@
 import {
+  resendEmail,
   ScreenMembersOnResetPasswordEmail,
   useResetPasswordEmail,
-} from "@auth0/auth0-acul-react";
+  useScreen,
+  useTransaction,
+} from "@auth0/auth0-acul-react/reset-password-email";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -12,22 +15,17 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  * @returns A promise that resolves when the email resend process is complete.
  */
 export const useResetPasswordEmailManager = () => {
-  const resetPasswordEmail = useResetPasswordEmail();
-  const { screen, transaction } = resetPasswordEmail;
-
-  const { texts, data } = screen;
+  const { texts, data } = useScreen();
 
   const handleResendEmail = async (): Promise<void> => {
-    executeSafely(`Resend email for password reset`, () =>
-      resetPasswordEmail.resendEmail()
-    );
+    executeSafely(`Resend email for password reset`, () => resendEmail);
   };
 
   return {
-    resetPasswordEmail,
+    resetPasswordEmail: useResetPasswordEmail(),
     handleResendEmail,
     texts: (texts || {}) as ScreenMembersOnResetPasswordEmail["texts"],
-    errors: transaction.errors || [],
+    errors: useTransaction().errors || [],
     data: data || {},
   };
 };
