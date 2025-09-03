@@ -13,7 +13,7 @@ import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import { ULThemeButton } from "@/components/ULThemeButton";
 import { transformAuth0CountryCode } from "@/utils/helpers/countryUtils";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIndividualIdentifierDetails } from "@/utils/helpers/identifierUtils";
@@ -200,13 +200,13 @@ function SignupIdForm() {
         )}
 
         {/* Submit button */}
-        <ULThemePrimaryButton
+        <ULThemeButton
           type="submit"
           className="w-full"
           disabled={isSubmitting}
         >
           {buttonText}
-        </ULThemePrimaryButton>
+        </ULThemeButton>
       </form>
     </Form>
   );
