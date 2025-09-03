@@ -1,38 +1,36 @@
 import { render, screen } from "@testing-library/react";
 
-import { ULThemePrimaryButton } from "../ULThemePrimaryButton";
+import { ULThemeButton } from "../ULThemeButton";
 
-describe("ULThemePrimaryButton", () => {
+describe("ULThemeButton", () => {
   // Snapshot Tests
   it("matches snapshot with default props", () => {
-    const { container } = render(
-      <ULThemePrimaryButton>Default Button</ULThemePrimaryButton>
-    );
+    const { container } = render(<ULThemeButton>Default Button</ULThemeButton>);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it("matches snapshot with disabled state", () => {
     const { container } = render(
-      <ULThemePrimaryButton disabled>Disabled Button</ULThemePrimaryButton>
+      <ULThemeButton disabled>Disabled Button</ULThemeButton>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it("matches snapshot with custom className", () => {
     const { container } = render(
-      <ULThemePrimaryButton className="w-full custom-btn">
+      <ULThemeButton className="w-full custom-btn">
         Full Width Button
-      </ULThemePrimaryButton>
+      </ULThemeButton>
     );
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it("matches snapshot with different sizes", () => {
     const { container: smallContainer } = render(
-      <ULThemePrimaryButton size="sm">Small Button</ULThemePrimaryButton>
+      <ULThemeButton size="sm">Small Button</ULThemeButton>
     );
     const { container: largeContainer } = render(
-      <ULThemePrimaryButton size="lg">Large Button</ULThemePrimaryButton>
+      <ULThemeButton size="lg">Large Button</ULThemeButton>
     );
 
     expect(smallContainer.firstChild).toMatchSnapshot("small-button");
@@ -41,7 +39,7 @@ describe("ULThemePrimaryButton", () => {
 
   // Functional Tests
   it("renders with text content", () => {
-    render(<ULThemePrimaryButton>Click me</ULThemePrimaryButton>);
+    render(<ULThemeButton>Click me</ULThemeButton>);
     expect(
       screen.getByRole("button", { name: "Click me" })
     ).toBeInTheDocument();
@@ -49,39 +47,32 @@ describe("ULThemePrimaryButton", () => {
 
   it("forwards props to UDS Button", () => {
     render(
-      <ULThemePrimaryButton disabled data-testid="test-button">
+      <ULThemeButton disabled data-testid="test-button">
         Disabled Button
-      </ULThemePrimaryButton>
+      </ULThemeButton>
     );
     const button = screen.getByTestId("test-button");
     expect(button).toBeDisabled();
   });
 
   it("applies theme classes correctly", () => {
-    render(
-      <ULThemePrimaryButton data-testid="themed-button">
-        Themed
-      </ULThemePrimaryButton>
-    );
+    render(<ULThemeButton data-testid="themed-button">Themed</ULThemeButton>);
     const button = screen.getByTestId("themed-button");
     expect(button.className).toContain("theme-universal:bg-primary-button");
   });
 
   it("supports custom className", () => {
     render(
-      <ULThemePrimaryButton
-        className="custom-class"
-        data-testid="custom-button"
-      >
+      <ULThemeButton className="custom-class" data-testid="custom-button">
         Custom
-      </ULThemePrimaryButton>
+      </ULThemeButton>
     );
     const button = screen.getByTestId("custom-button");
     expect(button).toHaveClass("custom-class");
   });
 
   it("has proper accessibility attributes", () => {
-    render(<ULThemePrimaryButton>Accessible Button</ULThemePrimaryButton>);
+    render(<ULThemeButton>Accessible Button</ULThemeButton>);
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
     expect(button.tagName.toLowerCase()).toBe("button");
@@ -89,9 +80,7 @@ describe("ULThemePrimaryButton", () => {
 
   it("applies Auth0 theme utility classes", () => {
     render(
-      <ULThemePrimaryButton data-testid="auth0-button">
-        Auth0 Themed
-      </ULThemePrimaryButton>
+      <ULThemeButton data-testid="auth0-button">Auth0 Themed</ULThemeButton>
     );
     const button = screen.getByTestId("auth0-button");
 
@@ -99,5 +88,14 @@ describe("ULThemePrimaryButton", () => {
     expect(button.className).toContain("theme-universal:bg-primary-button");
     expect(button.className).toContain("theme-universal:font-button");
     expect(button.className).toContain("theme-universal:rounded-button");
+  });
+
+  it("supports outline variant", () => {
+    render(<ULThemeButton variant="outline">Outline Button</ULThemeButton>);
+    const button = screen.getByRole("button", { name: "Outline Button" });
+    expect(button.className).toContain("theme-universal:border-1");
+    expect(button.className).toContain(
+      "theme-universal:border-(--ul-theme-color-secondary-button-border)"
+    );
   });
 });
