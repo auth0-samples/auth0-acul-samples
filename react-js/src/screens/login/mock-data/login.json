@@ -53,9 +53,9 @@
       "devKeysAlertUrl": "https://auth0.com/docs/connections/social/devkeys",
       "devKeysAlertLinkText": "Learn More",
       "invitationTitle": "You've Been Invited!",
-      "invitationDescription": "Log in to accept 's invitation to join dev-jg46yds2ecm5851u on my acul react.",
+      "invitationDescription": "Log in to accept 's invitation to join dev-abc on my acul react.",
       "captchaCodePlaceholder": "Enter the code shown above",
-      "logoAltText": "dev-jg46yds2ecm5851u",
+      "logoAltText": "dev-abc",
       "showPasswordText": "Show password",
       "hidePasswordText": "Hide password",
       "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
@@ -98,12 +98,8 @@
         "signup_enabled": true,
         "forgot_password_enabled": true,
         "attributes": {
-          "email": {
-            "signup_status": "required",
-            "identifier_active": true
-          },
           "username": {
-            "signup_status": "required",
+            "signup_status": "optional",
             "identifier_active": true,
             "validation": {
               "max_length": 15,
