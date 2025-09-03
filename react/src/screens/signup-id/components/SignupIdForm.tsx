@@ -64,20 +64,9 @@ function SignupIdForm() {
 
   const captchaSDKError = getFieldError("captcha", errors || []);
 
-  // Submit handler
+  // Simplified submit handler matching login-id pattern
   const onSubmit = async (data: SignupOptions) => {
-    const cleanedData: SignupOptions = {};
-
-    if (data.email?.trim()) cleanedData.email = data.email.trim();
-    if (data.phone?.trim()) cleanedData.phone = data.phone.trim();
-    if (data.username?.trim()) cleanedData.username = data.username.trim();
-    if (data.captcha?.trim()) cleanedData.captcha = data.captcha.trim();
-
-    await handleSignup(cleanedData);
-  };
-
-  const handleCountryCodeClick = () => {
-    handlePickCountryCode();
+    await handleSignup(data);
   };
 
   const renderIdentifierField = (
@@ -151,7 +140,7 @@ function SignupIdForm() {
                     (signupId?.transaction as TransactionMembersOnSignupId)
                       ?.countryPrefix
                   )}
-                  onClick={handleCountryCodeClick}
+                  onClick={handlePickCountryCode}
                   fullWidth
                   placeholder="Select Country"
                 />
@@ -178,7 +167,7 @@ function SignupIdForm() {
                     (signupId?.transaction as TransactionMembersOnSignupId)
                       ?.countryPrefix
                   )}
-                  onClick={handleCountryCodeClick}
+                  onClick={handlePickCountryCode}
                   fullWidth
                   placeholder="Select Country"
                 />

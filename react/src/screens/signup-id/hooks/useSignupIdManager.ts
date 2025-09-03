@@ -17,8 +17,24 @@ export const useSignupIdManager = () => {
   const { isCaptchaAvailable, texts, loginLink, captchaImage } = screen;
 
   const handleSignup = async (payload: SignupOptions): Promise<void> => {
-    executeSafely(`Signup with options: ${JSON.stringify(payload)}`, () =>
-      signupId.signup(payload)
+    // Clean and prepare data like login-id pattern
+    const options: SignupOptions = {};
+
+    if (payload.email?.trim()) {
+      options.email = payload.email.trim();
+    }
+    if (payload.phone?.trim()) {
+      options.phone = payload.phone.trim();
+    }
+    if (payload.username?.trim()) {
+      options.username = payload.username.trim();
+    }
+    if (screen.isCaptchaAvailable && payload.captcha?.trim()) {
+      options.captcha = payload.captcha.trim();
+    }
+
+    executeSafely(`Signup with options: ${JSON.stringify(options)}`, () =>
+      signupId.signup(options)
     );
   };
 
