@@ -18,7 +18,7 @@ function Header() {
         color={themedLogoWidgetColorValue}
         size={80}
         strokeWidth={1}
-        className="flex flex-wrap justify-widget-logo ml-[120px]"
+        className="flex flex-wrap justify-widget-logo ml-28"
       />
       <ULThemeTitle>{texts?.title || "Check Your Email"}</ULThemeTitle>
       <ULThemeSubtitle className="mb-6">

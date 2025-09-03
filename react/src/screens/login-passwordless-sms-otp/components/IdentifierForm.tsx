@@ -8,9 +8,9 @@ import {
   ULThemeFormMessage,
 } from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
+import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
-import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
@@ -174,13 +174,9 @@ function IdentifierForm() {
           )}
 
         {/* Submit button */}
-        <ULThemePrimaryButton
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
+        <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
           {buttonText}
-        </ULThemePrimaryButton>
+        </ULThemeButton>
       </form>
     </Form>
   );

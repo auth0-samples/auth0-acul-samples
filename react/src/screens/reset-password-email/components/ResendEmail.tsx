@@ -1,7 +1,7 @@
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-react";
 
+import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 
 import { useResetPasswordEmailManager } from "../hooks/useResetPasswordEmailManager";
 
@@ -27,14 +27,14 @@ function ResendEmail() {
           ))}
         </div>
       )}
-      <ULThemePrimaryButton
+      <ULThemeButton
         variant="outline"
         type="button"
         className="w-full"
         onClick={handleResendEmail}
       >
         {buttonText}
-      </ULThemePrimaryButton>
+      </ULThemeButton>
     </>
   );
 }
