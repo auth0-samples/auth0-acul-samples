@@ -65,7 +65,7 @@ const createIdentifierKey = (
  * This function is specifically designed for signup screens where identifiers
  * can be either required or optional based on transaction.requiredIdentifiers
  * and transaction.optionalIdentifiers.
- * 
+ *
  * @param identifierType - The specific identifier type (email, phone, username)
  * @param isRequired - Whether this identifier is required or optional
  * @param screenTexts - The screen.texts object from Auth0 SDK instance
