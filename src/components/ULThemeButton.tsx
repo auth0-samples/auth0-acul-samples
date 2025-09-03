@@ -1,14 +1,14 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export type ULThemePrimaryButtonProps = ButtonProps;
+export type ULThemeButtonProps = ButtonProps;
 
-export function ULThemePrimaryButton({
+export function ULThemeButton({
   variant = "primary",
   size = "default",
   className,
   ...props
-}: ULThemePrimaryButtonProps) {
+}: ULThemeButtonProps) {
   // Variant-specific theme overrides for colors and states
   const variantThemeOverrides = {
     primary: cn(
@@ -25,7 +25,7 @@ export function ULThemePrimaryButton({
     secondary: "", // Add secondary overrides if needed
     destructive: "", // Add destructive overrides if needed
     outline: cn(
-      "p-6 border-0",
+      "p-6",
       "cursor-pointer",
       "theme-universal:text-(--ul-theme-color-secondary-button-label)", //text-color
       "theme-universal:border-(--ul-theme-color-secondary-button-border)", //button-border color

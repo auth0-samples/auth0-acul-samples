@@ -12,7 +12,7 @@ function ResetPasswordEmailScreen() {
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(resetPasswordEmail);
-  document.title = texts?.pageTitle || "Login";
+  document.title = texts?.pageTitle || "Check your email";
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class
