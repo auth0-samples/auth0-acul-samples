@@ -11,9 +11,9 @@ import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
+import { ULThemeButton } from "@/components/ULThemeButton";
 import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { ULThemeButton } from "@/components/ULThemeButton";
 import { transformAuth0CountryCode } from "@/utils/helpers/countryUtils";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIndividualIdentifierDetails } from "@/utils/helpers/identifierUtils";
@@ -200,11 +200,7 @@ function SignupIdForm() {
         )}
 
         {/* Submit button */}
-        <ULThemeButton
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
+        <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
           {buttonText}
         </ULThemeButton>
       </form>
