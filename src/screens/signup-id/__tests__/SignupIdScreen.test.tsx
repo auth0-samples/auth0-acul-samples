@@ -81,7 +81,7 @@ describe("SignupIdScreen", () => {
         phone: "1234567890",
         email: "test@example.com",
         username: "testuser",
-        captcha: ""
+        captcha: "",
       });
     });
   });
