@@ -101,6 +101,12 @@
           "name": "Reset Password: Email",
           "description": "Resend Email screen for password reset",
           "path": "react/src/screens/reset-password-email"
+        },
+        {
+          "id": "reset-password",
+          "name": "Reset Password",
+          "description": "Screen for password reset",
+          "path": "react/src/screens/reset-password"
         }
       ]
     }
