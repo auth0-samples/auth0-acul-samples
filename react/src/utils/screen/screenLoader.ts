@@ -7,6 +7,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "login-passwordless-email-code": lazy(
     () => import("@/screens/login-passwordless-email-code")
   ),
+  "reset-password-email": lazy(() => import("@/screens/reset-password-email")),
 };
 
 export const getScreenComponent = (
