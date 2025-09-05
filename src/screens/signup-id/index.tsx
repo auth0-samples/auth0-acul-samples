@@ -11,7 +11,7 @@ import SignupIdForm from "./components/SignupIdForm";
 import { useSignupIdManager } from "./hooks/useSignupIdManager";
 
 function SignupIdScreen() {
-  // Extracting attributes from hook made out of SignupIdInstance class of Auth0 JS SDK
+  // Extracting attributes from hook made out of SignupIdInstance class of Auth0 React ACUL SDK
   const { signupId, texts, alternateConnections } = useSignupIdManager();
 
   // Check whether separator component needs to be rendered based on social connections
