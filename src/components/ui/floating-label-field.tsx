@@ -37,6 +37,7 @@ export interface FloatingLabelFieldProps
   variant?: VariantProps<typeof floatingLabelFieldVariants>["variant"];
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
+  isRequired?: boolean;
 }
 
 const FloatingLabelField = React.forwardRef<
@@ -53,6 +54,7 @@ const FloatingLabelField = React.forwardRef<
       label,
       startAdornment,
       endAdornment,
+      isRequired,
       ...props
     },
     ref
@@ -111,6 +113,9 @@ const FloatingLabelField = React.forwardRef<
             )}
           >
             {label}
+            {isRequired && (
+              <span className="text-destructive-foreground">*</span>
+            )}
           </FieldPrimitive.Label>
           {startAdornment && (
             <div className="flex h-full items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
