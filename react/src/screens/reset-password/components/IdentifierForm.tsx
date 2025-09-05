@@ -83,7 +83,7 @@ function IdentifierForm() {
                 isRequired={true}
                 {...field}
                 label={texts?.passwordPlaceholder || "New Password"}
-                autoComplete="current-password"
+                autoComplete="new-password"
                 error={!!fieldState.error || !!passwordSDKError}
               />
               <ULThemeFormMessage hasFormError={!!fieldState.error} />
@@ -91,7 +91,7 @@ function IdentifierForm() {
           )}
         />
 
-        {/* New Password input field */}
+        {/* Re-Enter Password input field */}
         <FormField
           control={form.control}
           name="confirm_password"
@@ -103,7 +103,7 @@ function IdentifierForm() {
                 label={
                   texts?.reEnterpasswordPlaceholder || "Re-enter new password"
                 }
-                autoComplete="current-password"
+                autoComplete="new-password"
                 error={!!fieldState.error || !!passwordSDKError}
               />
               <ULThemeFormMessage
