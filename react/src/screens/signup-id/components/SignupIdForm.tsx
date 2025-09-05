@@ -69,6 +69,32 @@ function SignupIdForm() {
     await handleSignup(data);
   };
 
+  const renderFields = (identifiers: IdentifierType[], isRequired: boolean) =>
+    identifiers.map((identifierType) => {
+      if (identifierType === "phone") {
+        return (
+          <div
+            key={`${isRequired ? "required" : "optional"}-phone-container`}
+            className="space-y-2"
+          >
+            <ULThemeCountryCodePicker
+              selectedCountry={transformAuth0CountryCode(
+                (signupId?.transaction as TransactionMembersOnSignupId)
+                  ?.countryCode,
+                (signupId?.transaction as TransactionMembersOnSignupId)
+                  ?.countryPrefix
+              )}
+              onClick={handlePickCountryCode}
+              fullWidth
+              placeholder="Select Country"
+            />
+            {renderIdentifierField(identifierType, isRequired)}
+          </div>
+        );
+      }
+      return renderIdentifierField(identifierType, isRequired);
+    });
+
   const renderIdentifierField = (
     identifierType: IdentifierType,
     isRequired: boolean
@@ -127,58 +153,10 @@ function SignupIdForm() {
         )}
 
         {/* Required identifier fields first */}
-        {requiredIdentifiers.map((identifierType: IdentifierType) => {
-          // Handle phone field with country picker
-          if (identifierType === "phone") {
-            return (
-              <div key={`required-phone-container`} className="space-y-2">
-                {/* Country Code Picker */}
-                <ULThemeCountryCodePicker
-                  selectedCountry={transformAuth0CountryCode(
-                    (signupId?.transaction as TransactionMembersOnSignupId)
-                      ?.countryCode,
-                    (signupId?.transaction as TransactionMembersOnSignupId)
-                      ?.countryPrefix
-                  )}
-                  onClick={handlePickCountryCode}
-                  fullWidth
-                  placeholder="Select Country"
-                />
-                {/* Phone Number Field */}
-                {renderIdentifierField(identifierType, true)}
-              </div>
-            );
-          }
-
-          return renderIdentifierField(identifierType, true);
-        })}
+        {renderFields(requiredIdentifiers, true)}
 
         {/* Optional identifier fields */}
-        {optionalIdentifiers.map((identifierType: IdentifierType) => {
-          // Handle phone field with country picker
-          if (identifierType === "phone") {
-            return (
-              <div key={`optional-phone-container`} className="space-y-2">
-                {/* Country Code Picker */}
-                <ULThemeCountryCodePicker
-                  selectedCountry={transformAuth0CountryCode(
-                    (signupId?.transaction as TransactionMembersOnSignupId)
-                      ?.countryCode,
-                    (signupId?.transaction as TransactionMembersOnSignupId)
-                      ?.countryPrefix
-                  )}
-                  onClick={handlePickCountryCode}
-                  fullWidth
-                  placeholder="Select Country"
-                />
-                {/* Phone Number Field */}
-                {renderIdentifierField(identifierType, false)}
-              </div>
-            );
-          }
-
-          return renderIdentifierField(identifierType, false);
-        })}
+        {renderFields(optionalIdentifiers, false)}
 
         {/* CAPTCHA Box */}
         {isCaptchaAvailable && (
