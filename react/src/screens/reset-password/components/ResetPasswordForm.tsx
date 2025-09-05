@@ -17,13 +17,13 @@ interface resetPasswordFormData {
 }
 
 /**
- * IdentifierForm Component
+ * ResetPasswordForm Component
  *
- * This component renders the login form for the resetPassword screen.
+ * This component renders the form for the resetPassword screen.
  * It includes fields for new password, and confirm new password,
- * along with error handling and support for editing identifiers.
+ * along with error handling.
  */
-function IdentifierForm() {
+function ResetPasswordForm() {
   // Extract necessary methods and properties from the custom hook
   const { handleSubmitPassword, errors, texts } = useResetPasswordManager();
 
@@ -123,4 +123,4 @@ function IdentifierForm() {
   );
 }
 
-export default IdentifierForm;
+export default ResetPasswordForm;

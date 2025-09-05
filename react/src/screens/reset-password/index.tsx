@@ -3,7 +3,7 @@ import ULThemePageLayout from "@/components/ULThemePageLayout";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 import Header from "./components/Header";
-import IdentifierForm from "./components/IdentifierForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 import { useResetPasswordManager } from "./hooks/useResetPasswordManager";
 
 function ResetPasswordScreen() {
@@ -12,14 +12,14 @@ function ResetPasswordScreen() {
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(resetPassword);
-  document.title = texts?.pageTitle || "Login";
+  document.title = texts?.pageTitle || "Reset your password";
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class
     <ULThemePageLayout className="theme-universal">
       <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
-        <IdentifierForm />
+        <ResetPasswordForm />
       </ULThemeCard>
     </ULThemePageLayout>
   );
