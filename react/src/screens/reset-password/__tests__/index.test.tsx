@@ -17,7 +17,7 @@ jest.mock("../hooks/useResetPasswordManager", () => ({
 jest.mock("../components/Header", () => () => (
   <div data-testid="reset-header">Mock Header</div>
 ));
-jest.mock("../components/IdentifierForm", () => () => (
+jest.mock("../components/ResetPasswordForm", () => () => (
   <div data-testid="reset-form">Mock Form</div>
 ));
 
@@ -69,7 +69,7 @@ describe("ResetPasswordScreen", () => {
       });
 
       render(<ResetPasswordScreen />);
-      expect(document.title).toBe("Login");
+      expect(document.title).toBe("Reset your password");
     });
   });
 });
