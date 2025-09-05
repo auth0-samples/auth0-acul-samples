@@ -4,9 +4,9 @@ import type { Error } from "@auth0/auth0-acul-react";
 
 import { ULThemeFormMessage } from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
+import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
-import { ULThemeButton } from "@/components/ULThemeButton";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { useResetPasswordManager } from "../hooks/useResetPasswordManager";
