@@ -5,6 +5,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
     () => import("@/screens/login-passwordless-sms-otp")
   ),
   "reset-password-email": lazy(() => import("@/screens/reset-password-email")),
+  "reset-password": lazy(() => import("@/screens/reset-password")),
 };
 
 export const getScreenComponent = (
