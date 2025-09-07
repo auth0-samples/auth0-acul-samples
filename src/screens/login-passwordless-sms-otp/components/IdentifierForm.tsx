@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-react";
+import { SubmitOTPOptions } from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
 
 import Captcha from "@/components/Captcha";
 import {
@@ -16,17 +17,11 @@ import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
 
-interface LoginPasswordlessSmsOtpFormData {
-  phonenumber: string;
-  code: string;
-  captcha?: string;
-}
-
 /**
  * IdentifierForm Component
  *
  * This component renders the login form for the LoginPassword screen.
- * It includes fields for username, password, and CAPTCHA (if required),
+ * It includes fields for username(phonenumber), password, and CAPTCHA (if required),
  * along with error handling and support for editing identifiers.
  */
 function IdentifierForm() {
@@ -42,9 +37,9 @@ function IdentifierForm() {
   } = useLoginPasswordlessSmsOtpManager();
 
   // Initialize the form using react-hook-form
-  const form = useForm<LoginPasswordlessSmsOtpFormData>({
+  const form = useForm<SubmitOTPOptions>({
     defaultValues: {
-      phonenumber: data?.phone_number || "",
+      username: data?.phone_number || "",
       code: "",
       captcha: "",
     },
@@ -65,18 +60,18 @@ function IdentifierForm() {
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
 
-  // Extract field-specific errors for phonenumber, code, and CAPTCHA
-  const phoneSDKError = getFieldError("phonenumber", errors);
+  // Extract field-specific errors for username(phonenumber), code, and CAPTCHA
+  const phoneSDKError = getFieldError("username", errors);
   const codeSDKError = getFieldError("code", errors);
   const captchaSDKError = getFieldError("captcha", errors);
 
   /**
    * Handles form submission.
    *
-   * @param data - The form data containing username, password, and optional CAPTCHA.
+   * @param data - The form data containing username(phonenumber), password, and optional CAPTCHA.
    */
-  const onSubmit = async (data: LoginPasswordlessSmsOtpFormData) => {
-    await handleSubmitOTP(data.phonenumber, data.code, data.captcha);
+  const onSubmit = async (data: SubmitOTPOptions) => {
+    await handleSubmitOTP(data.username || "", data.code, data.captcha);
   };
 
   // Rebase the edit identifier link to the current origin
@@ -100,7 +95,7 @@ function IdentifierForm() {
         {/* Username input field */}
         <FormField
           control={form.control}
-          name="phonenumber"
+          name="username"
           render={({ field, fieldState }) => (
             <FormItem>
               <ULThemeFloatingLabelField

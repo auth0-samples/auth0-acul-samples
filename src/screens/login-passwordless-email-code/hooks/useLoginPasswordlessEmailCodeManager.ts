@@ -1,7 +1,9 @@
 import {
   ScreenMembersOnLoginPasswordlessEmailCode,
   useLoginPasswordlessEmailCode,
-} from "@auth0/auth0-acul-react";
+  useScreen,
+  useTransaction,
+} from "@auth0/auth0-acul-react/login-passwordless-email-code";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -14,8 +16,9 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  * @returns A promise that resolves when the login process is complete.
  */
 export const useLoginPasswordlessEmailCodeManager = () => {
+  const screen = useScreen();
+  const transaction = useTransaction();
   const loginPasswordlessEmailCode = useLoginPasswordlessEmailCode();
-  const { transaction, screen } = loginPasswordlessEmailCode;
 
   const { texts, captchaImage, data, links } = screen;
 

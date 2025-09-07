@@ -1,7 +1,9 @@
 import {
   ScreenMembersOnLoginPasswordlessSmsOtp,
   useLoginPasswordlessSmsOtp,
-} from "@auth0/auth0-acul-react";
+  useScreen,
+  useTransaction,
+} from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -15,8 +17,9 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  * @returns A promise that resolves when the login process is complete.
  */
 export const useLoginPasswordlessSmsOtpManager = () => {
+  const screen = useScreen();
+  const transaction = useTransaction();
   const loginPasswordlessSmsOtp = useLoginPasswordlessSmsOtp();
-  const { transaction, screen } = loginPasswordlessSmsOtp;
 
   const { texts, captchaImage, data, links } = screen;
 

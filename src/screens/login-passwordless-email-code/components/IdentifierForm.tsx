@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-react";
+import { SubmitCodeOptions } from "@auth0/auth0-acul-react/login-passwordless-email-code";
 
 import Captcha from "@/components/Captcha";
 import {
@@ -8,19 +9,13 @@ import {
   ULThemeFormMessage,
 } from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
+import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
-import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
-
-interface LoginPasswordlessEmailCodeFormData {
-  email: string;
-  code: string;
-  captcha?: string;
-}
 
 /**
  * IdentifierForm Component
@@ -42,9 +37,9 @@ function IdentifierForm() {
   } = useLoginPasswordlessEmailCodeManager();
 
   // Initialize the form using react-hook-form
-  const form = useForm<LoginPasswordlessEmailCodeFormData>({
+  const form = useForm<SubmitCodeOptions>({
     defaultValues: {
-      email: "",
+      email: data?.username || "",
       code: "",
       captcha: "",
     },
@@ -75,8 +70,8 @@ function IdentifierForm() {
    *
    * @param data - The form data containing email, code, and optional CAPTCHA.
    */
-  const onSubmit = async (data: LoginPasswordlessEmailCodeFormData) => {
-    await handleSubmitEmailCode(data.code, data.captcha);
+  const onSubmit = async (data: SubmitCodeOptions) => {
+    await handleSubmitEmailCode(String(data.code), data.captcha);
   };
 
   // Rebase the edit identifier link to the current origin
@@ -106,7 +101,7 @@ function IdentifierForm() {
               <ULThemeFloatingLabelField
                 {...field}
                 label=""
-                value={data?.email || ""}
+                value={data?.username || ""}
                 error={!!fieldState.error || !!emailSDKError}
                 readOnly={true}
                 endAdornment={
@@ -174,13 +169,9 @@ function IdentifierForm() {
           )}
 
         {/* Submit button */}
-        <ULThemePrimaryButton
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
+        <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
           {buttonText}
-        </ULThemePrimaryButton>
+        </ULThemeButton>
       </form>
     </Form>
   );
