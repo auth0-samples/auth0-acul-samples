@@ -11,7 +11,9 @@ function Footer() {
 
   return (
     <div className="mt-4 text-center">
-      <span className="text-sm pr-1">{footerText}</span>
+      <span className="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body">
+        {footerText}
+      </span>
       {footerLinkText && (
         <ULThemeLink
           href="javascript:void(0)"

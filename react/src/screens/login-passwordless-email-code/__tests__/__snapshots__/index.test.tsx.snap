@@ -121,7 +121,7 @@ exports[`LoginPasswordlessEmailCodeScreen should render correctly and match snap
         class="mt-4 text-center"
       >
         <span
-          class="text-sm pr-1"
+          class="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body"
         >
           Didn't receive an email?
         </span>
