@@ -27,9 +27,6 @@ lerna-debug.log*
 coverage/
 *.lcov
 
-# Development tools
-.husky/
-
 # Documentation
 docs/
 
