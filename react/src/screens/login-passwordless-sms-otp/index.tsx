@@ -8,7 +8,7 @@ import IdentifierForm from "./components/IdentifierForm";
 import { useLoginPasswordlessSmsOtpManager } from "./hooks/useLoginPasswordlessSmsOtpManager";
 
 function LoginPasswordlessSmsOtpScreen() {
-  // Extracting attributes from hook made out of LoginPasswordInstance class of Auth0 JS SDK
+  // Extracting attributes from hook made out of LoginPasswordInstance class of Auth0 React ACUL SDK
   const { loginPasswordlessSmsOtp, texts } =
     useLoginPasswordlessSmsOtpManager();
 
