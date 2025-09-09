@@ -1,75 +1,52 @@
-name: Code Quality CI
+name: React CI
 
 on:
   pull_request:
     branches: [main]
+    paths:
+      - "react/**"
+      - ".github/workflows/react-ci.yml"
   push:
     branches: [main]
+    paths:
+      - "react/**"
+      - ".github/workflows/react-ci.yml"
 
 jobs:
-  validate-manifest:
-    name: Validate Manifest Structure
-    runs-on: ubuntu-22.04-2cpu-8ram-75ssd
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          
-      - name: Validate manifest
-        uses: ./.github/actions/validate-manifest
-        with:
-          manifest-path: './manifest.json'
-          strict-mode: 'true'
-
-  react-js-quality:
-    name: React-JS Quality Checks
-    runs-on: ubuntu-22.04-2cpu-8ram-75ssd
-    if: contains(github.event.head_commit.modified, 'react-js/') || contains(join(github.event.pull_request.changed_files.*.filename || '', ' '), 'react-js/') || github.event_name == 'pull_request'
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          
-      - name: Install dependencies
-        working-directory: react-js
-        run: npm ci
-        
-      - name: Lint check
-        working-directory: react-js
-        run: npm run lint:check
-        
-      - name: Type check
-        working-directory: react-js
-        run: npx tsc --noEmit
-        
-      - name: Test
-        working-directory: react-js
-        run: npm test -- --coverage --watchAll=false --passWithNoTests
-        
-      - name: Build
-        working-directory: react-js
-        run: npm run build
-
   react-quality:
-    name: React Quality Checks  
+    name: React Quality Checks
     runs-on: ubuntu-22.04-2cpu-8ram-75ssd
-    if: contains(github.event.head_commit.modified, 'react/') || contains(join(github.event.pull_request.changed_files.*.filename || '', ' '), 'react/') || github.event_name == 'pull_request'
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
-      - name: React sample status
-        run: |
-          echo "React sample is under development"
-          echo "Skipping quality checks until implementation is ready"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies (SKIPPED due to non availability of React SDK)
+        working-directory: react
+        if: false
+        run: npm ci
+
+      - name: Lint check (SKIPPED)
+        working-directory: react
+        if: false
+        run: npm run lint:check
+
+      - name: Type check (SKIPPED)
+        working-directory: react
+        if: false
+        run: npx tsc --noEmit
+
+      - name: Test (SKIPPED)
+        working-directory: react
+        if: false
+        run: npm test -- --coverage --watchAll=false --passWithNoTests
+
+      - name: Build (SKIPPED)
+        working-directory: react
+        if: false
+        run: npm run build
