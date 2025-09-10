@@ -5,16 +5,16 @@ import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import IdentifierForm from "./components/IdentifierForm";
-import { useLoginPasswordlessSmsOtpManager } from "./hooks/useLoginPasswordlessSmsOtpManager";
+import { useLoginPasswordlessEmailCodeManager } from "./hooks/useLoginPasswordlessEmailCodeManager";
 
-function LoginPasswordlessSmsOtpScreen() {
-  // Extracting attributes from hook made out of LoginPasswordInstance class of Auth0 React ACUL SDK
-  const { loginPasswordlessSmsOtp, texts } =
-    useLoginPasswordlessSmsOtpManager();
+function LoginPasswordlessEmailCodeScreen() {
+  // Extracting attributes from hook made out of useLoginPasswordlessEmailCode hook of Auth0 React SDK
+  const { loginPasswordlessEmailCode, texts } =
+    useLoginPasswordlessEmailCodeManager();
 
   // Apply theme from SDK instance when screen loads
-  applyAuth0Theme(loginPasswordlessSmsOtp);
-  document.title = texts?.pageTitle || "Enter your phone code to log in";
+  applyAuth0Theme(loginPasswordlessEmailCode);
+  document.title = texts?.pageTitle || "Enter your email code to log in";
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class
@@ -28,4 +28,4 @@ function LoginPasswordlessSmsOtpScreen() {
   );
 }
 
-export default LoginPasswordlessSmsOtpScreen;
+export default LoginPasswordlessEmailCodeScreen;
