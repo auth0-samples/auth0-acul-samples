@@ -9,6 +9,9 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   ),
   "reset-password-email": lazy(() => import("@/screens/reset-password-email")),
   "reset-password": lazy(() => import("@/screens/reset-password")),
+  "reset-password-success": lazy(
+    () => import("@/screens/reset-password-success")
+  ),
   "signup-id": lazy(() => import("@/screens/signup-id")),
 };
 
