@@ -1,12 +1,13 @@
 import ULThemeLink from "@/components/ULThemeLink";
 
-import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
+import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
 function Footer() {
-  const { texts, handleResendOTP } = useLoginPasswordlessSmsOtpManager();
+  const { texts, handleResendEmailCode } =
+    useLoginPasswordlessEmailCodeManager();
 
   // Handle text fallbacks in component
-  const footerText = texts?.resendText || "Didn't receive a code?";
+  const footerText = texts?.resendText || "Didn't receive an email?";
   const footerLinkText = texts?.resendActionText || "Resend";
 
   return (
@@ -17,7 +18,7 @@ function Footer() {
       {footerLinkText && (
         <ULThemeLink
           href="javascript:void(0)"
-          onClick={() => handleResendOTP()}
+          onClick={() => handleResendEmailCode()}
         >
           {footerLinkText}
         </ULThemeLink>

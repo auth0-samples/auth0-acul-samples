@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 
 import type { Error } from "@auth0/auth0-acul-react";
-import { SubmitOTPOptions } from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
+import { SubmitCodeOptions } from "@auth0/auth0-acul-react/login-passwordless-email-code";
 
 import Captcha from "@/components/Captcha";
 import {
@@ -15,31 +15,31 @@ import ULThemeLink from "@/components/ULThemeLink";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
-import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
+import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
 /**
  * IdentifierForm Component
  *
  * This component renders the login form for the LoginPassword screen.
- * It includes fields for username(phonenumber), password, and CAPTCHA (if required),
+ * It includes fields for username, password, and CAPTCHA (if required),
  * along with error handling and support for editing identifiers.
  */
 function IdentifierForm() {
   // Extract necessary methods and properties from the custom hook
   const {
-    handleSubmitOTP,
+    handleSubmitEmailCode,
     data,
     errors,
     isCaptchaAvailable,
     captchaImage,
     texts,
     links,
-  } = useLoginPasswordlessSmsOtpManager();
+  } = useLoginPasswordlessEmailCodeManager();
 
   // Initialize the form using react-hook-form
-  const form = useForm<SubmitOTPOptions>({
+  const form = useForm<SubmitCodeOptions>({
     defaultValues: {
-      username: data?.phone_number || "",
+      email: data?.username || "",
       code: "",
       captcha: "",
     },
@@ -51,7 +51,7 @@ function IdentifierForm() {
 
   // Handle text fallbacks for button and field labels
   const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the 6-digit code";
+  const codeLabelText = texts?.placeholder || "Enter the code";
   const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
 
@@ -60,18 +60,18 @@ function IdentifierForm() {
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
 
-  // Extract field-specific errors for username(phonenumber), code, and CAPTCHA
-  const phoneSDKError = getFieldError("username", errors);
+  // Extract field-specific errors for email, code, and CAPTCHA
+  const emailSDKError = getFieldError("email", errors);
   const codeSDKError = getFieldError("code", errors);
   const captchaSDKError = getFieldError("captcha", errors);
 
   /**
    * Handles form submission.
    *
-   * @param data - The form data containing username(phonenumber), password, and optional CAPTCHA.
+   * @param data - The form data containing email, code, and optional CAPTCHA.
    */
-  const onSubmit = async (data: SubmitOTPOptions) => {
-    await handleSubmitOTP(data.username || "", data.code, data.captcha);
+  const onSubmit = async (data: SubmitCodeOptions) => {
+    await handleSubmitEmailCode(String(data.code), data.captcha);
   };
 
   // Rebase the edit identifier link to the current origin
@@ -92,23 +92,23 @@ function IdentifierForm() {
           </div>
         )}
 
-        {/* Username input field */}
+        {/* Email input field */}
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field, fieldState }) => (
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
                 label=""
-                value={data?.phone_number || ""}
-                error={!!fieldState.error || !!phoneSDKError}
+                value={data?.username || ""}
+                error={!!fieldState.error || !!emailSDKError}
                 readOnly={true}
                 endAdornment={
                   <ULThemeLink
                     href={editIdentifierLink}
                     aria-label={
-                      texts?.editLinkScreenReadableText || "Edit phone number"
+                      texts?.editLinkScreenReadableText || "Edit email address"
                     }
                   >
                     {texts?.editText || "Edit"}
@@ -117,14 +117,14 @@ function IdentifierForm() {
                 className="pr-[16px]"
               />
               <ULThemeFormMessage
-                sdkError={phoneSDKError}
+                sdkError={emailSDKError}
                 hasFormError={!!fieldState.error}
               />
             </FormItem>
           )}
         />
 
-        {/* OTP input field */}
+        {/* Code input field */}
         <FormField
           control={form.control}
           name="code"

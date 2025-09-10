@@ -97,6 +97,12 @@
           "path": "react/src/screens/login-passwordless-sms-otp"
         },
         {
+          "id": "login-passwordless-email-code",
+          "name": "Login: Passwordless Email Code",
+          "description": "Passwordless Email Code entry screen for authentication",
+          "path": "react/src/screens/login-passwordless-email-code"
+        },
+        {
           "id": "reset-password-email",
           "name": "Reset Password: Email",
           "description": "Resend Email screen for password reset",
