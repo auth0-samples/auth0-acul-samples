@@ -109,6 +109,12 @@
           "path": "react/src/screens/reset-password"
         },
         {
+          "id": "reset-password-success",
+          "name": "Reset Password: Success",
+          "description": "Screen for successful password reset",
+          "path": "react/src/screens/reset-password-success"
+        },
+        {
           "id": "signup-id",
           "name": "Signup: Identifier First",
           "description": "Identifier-first signup flow for collecting user registration details with required and optional fields",
