@@ -6,7 +6,6 @@ import {
 
 /**
  * Handles successful password reset process
- * along with resend option
  *
  */
 export const useResetPasswordSuccessManager = () => {
