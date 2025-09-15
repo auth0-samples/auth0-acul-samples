@@ -1,0 +1,85 @@
+{
+  "client": {
+    "id": "cl_mock_preservedTexts_vbn789",
+    "name": "My App"
+  },
+  "prompt": { "name": "passkeys" },
+  "screen": {
+    "data": {
+      "passkey": {
+        "public_key": {
+          "user": {
+            "id": "mocked_id_client",
+            "name": "foo1@bar.com",
+            "displayName": "foo1@bar.com"
+          },
+          "rp": {
+            "id": "mocked_id_client",
+            "name": "mocked_id_client"
+          },
+          "challenge": "tMADz7Lh4eFKZMHxDfNZSuIHEktLA6SHqANN-fs3r_0",
+          "pubKeyCredParams": [
+            { "type": "public-key", "alg": -8 },
+            { "type": "public-key", "alg": -7 },
+            { "type": "public-key", "alg": -257 }
+          ],
+          "authenticatorSelection": {
+            "residentKey": "required",
+            "userVerification": "preferred"
+          }
+        }
+      }
+    },
+    "links": {
+      "login": "/u/login?state=mockedStateForPreservedTextsSignup_cl_mock_preservedTexts_vbn789_txId_lkj321",
+      "back": "/u/signup/identifier?state=mockedStateForPreservedTextsSignup_cl_mock_preservedTexts_vbn789_txId_lkj321"
+    },
+    "name": "passkey-enrollment",
+    "texts": {
+      "title": "Create a passkey for All Applications on this device",
+      "pageTitle": "Log in | All Applications",
+      "description": "Log in to dev-vy34wbm3newzqb7k to continue to All Applications.",
+      "passkeyBenefit1Title": "No need to remember a password",
+      "passkeyBenefit1ImgAltText": "Webauthn platform icon",
+      "passkeyBenefit1Description": "With passkeys, you can use things like your fingerprint or face to login.",
+      "passkeyBenefit2Title": "Works on all of your devices",
+      "passkeyBenefit2ImgAltText": "Device globe",
+      "passkeyBenefit2Description": "Passkeys will automatically be available across your synced devices.",
+      "passkeyBenefit3Title": "Keep your account safer",
+      "passkeyBenefit3ImgAltText": "Shield with check mark",
+      "passkeyBenefit3Description": "Passkeys offer state-of-the-art phishing resistance.",
+      "createButtonText": "Create a passkey",
+      "continueButtonText": "Continue without passkeys",
+      "createButtonResetText": "Create a new passkey",
+      "usePasswordButtonText": "Create a new password",
+      "backButtonText": "Go back",
+      "checkboxText": "Don't show me this again",
+      "passkeyWithoutCustomDomainsAlertTitle": "Passkeys without a custom domain",
+      "passkeyWithoutCustomDomainsAlertMessage": "A Custom Domain should be configured so your users connect their Passkeys with your organization's brand.",
+      "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+      "badgeAltText": "Link to the Auth0 website",
+      "error": "Error",
+      "qrCode": "QR Code",
+      "spinner_push_notification_label": "Waiting for push notification to be accepted"
+    }
+  },
+  "tenant": { "mfa_options": { "pick_authenticator_enabled": true } },
+  "transaction": {
+    "country_code": { "code": "IN", "prefix": "91", "country": "India" },
+    "connection": {
+      "name": "Username-Password-Authentication",
+      "strategy": "auth0",
+      "options": {
+        "signup_enabled": true,
+        "forgot_password_enabled": true,
+        "attributes": { "email": { "signup_status": "required" } },
+        "authentication_methods": {
+          "password": { "enabled": true, "policy": "good", "min_length": 7 },
+          "passkey": { "enabled": true }
+        }
+      }
+    },
+    "locale": "en",
+    "state": "mockedStateForPreservedTextsSignup_cl_mock_preservedTexts_vbn789_txId_lkj321"
+  }
+}
