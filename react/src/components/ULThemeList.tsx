@@ -10,32 +10,29 @@ interface ULThemeListProps extends ListProps {
     icon?: React.ReactNode;
     info?: React.ReactNode;
   }[];
-  onItemClick: (item: string) => void;
   className?: string;
+  variant?: "bullet" | "number" | "icon" | "plain";
+  spacing?: "default";
+  iconPosition?: "start";
 }
 
-const ULThemeList = ({ items, onItemClick, className }: ULThemeListProps) => {
-  // Base component styles
-  const baseStyles =
-    "text-link-focus text-(length:--ul-theme-font-links-size) font-(weight:--ul-theme-font-links-weight) focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80";
-
+const ULThemeList = (props: ULThemeListProps) => {
   // UL theme overrides
   const variantThemeOverrides =
-    "theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15"; // focus base color
+    "theme-universal:font-(weight:--ul-theme-font-body-text-weight)";
   return (
     <List
-      variant="icon"
-      spacing="default"
-      iconPosition="start"
-      className={cn(baseStyles, variantThemeOverrides, className)}
+      variant={props.variant}
+      spacing={props.spacing}
+      iconPosition={props.iconPosition}
     >
-      {items.map((item, index) => (
+      {props?.items?.map((item, index) => (
         <ListItem
           key={index}
           icon={item.icon}
           description={item.description}
           info={item.info}
-          onClick={() => onItemClick(item.label)}
+          className={cn(variantThemeOverrides, props.className)}
         >
           {item.label}
         </ListItem>

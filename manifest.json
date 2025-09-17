@@ -113,6 +113,12 @@
           "name": "Signup: Identifier First",
           "description": "Identifier-first signup flow for collecting user registration details with required and optional fields",
           "path": "react/src/screens/signup-id"
+        },
+        {
+          "id": "passkey-enrollment",
+          "name": "Passkey Enrollment",
+          "description": "Screen for passkey enrollment",
+          "path": "react/src/screens/passkey-enrollment"
         }
       ]
     }

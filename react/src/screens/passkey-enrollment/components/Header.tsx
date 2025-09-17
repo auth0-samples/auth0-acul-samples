@@ -12,7 +12,7 @@ function Header() {
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>
+      <ULThemeTitle className="mb-10">
         {texts?.title || "Create a passkey on this device"}
       </ULThemeTitle>
     </>
