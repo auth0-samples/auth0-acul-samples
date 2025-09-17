@@ -38,8 +38,8 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
                 class="relative w-15 h-10 left-1.5"
               >
                 <svg
-                  bgcolor=""
                   class="absolute inline-block"
+                  color=""
                   fill="none"
                   height="40"
                   viewBox="0 0 40 40"
@@ -84,8 +84,8 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
                 class="relative w-15 h-10 left-1.5"
               >
                 <svg
-                  bgcolor=""
                   class="absolute inline-block opacity-[0.5]"
+                  color=""
                   fill="none"
                   height="40"
                   viewBox="0 0 40 40"
@@ -98,8 +98,8 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
                   />
                 </svg>
                 <svg
-                  bgcolor=""
                   class="absolute inline-block"
+                  color=""
                   fill="none"
                   height="40"
                   viewBox="0 0 40 40"
@@ -156,8 +156,8 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
                 class="relative w-15 h-10 left-1.5"
               >
                 <svg
-                  bgcolor=""
                   class="absolute inline-block opacity-[0.5]"
+                  color=""
                   fill="none"
                   height="40"
                   viewBox="0 0 40 40"
@@ -172,8 +172,8 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
                   />
                 </svg>
                 <svg
-                  bgcolor=""
                   class="absolute inline-block"
+                  color=""
                   fill="none"
                   height="40"
                   viewBox="0 0 40 40"
