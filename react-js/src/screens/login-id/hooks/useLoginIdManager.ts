@@ -59,6 +59,7 @@ export const useLoginIdManager = () => {
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
     errors: loginIdInstance.getError(),
     captchaImage,
+    captcha: screen.captcha || null,
     signupLink,
     resetPasswordLink,
   };

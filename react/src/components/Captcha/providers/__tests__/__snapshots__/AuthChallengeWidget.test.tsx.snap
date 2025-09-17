@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AuthChallengeWidget matches snapshot (default) 1`] = `
+<div>
+  <form>
+    <div
+      class="space-y-2"
+    >
+      <div
+        class="rounded-sm inline-block none"
+        style="transform: scale(1.06); transform-origin: 0 0; overflow: hidden; display: inline-block; line-height: 0; font-size: 0px;"
+      >
+        <div
+          role="presentation"
+          sitekey="test-site-key"
+          theme="light"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`AuthChallengeWidget matches snapshot (with error) 1`] = `
+<div>
+  <form>
+    <div
+      class="space-y-2"
+    >
+      <div
+        class="rounded-sm inline-block border border-[#d93025]"
+        style="transform: scale(1.06); transform-origin: 0 0; overflow: hidden; display: inline-block; line-height: 0; font-size: 0px;"
+      >
+        <div
+          role="presentation"
+          sitekey="test-site-key"
+          theme="light"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+`;

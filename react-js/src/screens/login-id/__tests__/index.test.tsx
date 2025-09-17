@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import type { MockLoginIdInstance } from "@/__mocks__/@auth0/auth0-acul-js/login-id";
 import { createMockLoginIdInstance } from "@/__mocks__/@auth0/auth0-acul-js/login-id";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import { CommonTestData } from "@/test/fixtures/common-data";
 import {
   MockConfigUtils,
@@ -18,11 +19,20 @@ const MockedLoginIdInstance = LoginIdInstance as unknown as jest.Mock;
 jest.mock("@/utils/helpers/tokenUtils", () => ({
   extractTokenValue: jest.fn(() => "bottom"),
 }));
+jest.mock("@/hooks/useCaptcha", () => ({
+  useCaptcha: jest.fn(),
+}));
+const mockedUseCaptcha = useCaptcha as jest.Mock;
 
 describe("LoginIdScreen", () => {
   let mockInstance: MockLoginIdInstance;
 
   beforeEach(() => {
+    mockedUseCaptcha.mockReturnValue({
+      captchaConfig: { siteKey: "mock-key", theme: "light" },
+      captchaProps: { captchaImage: "data:image/png;base64,mockimage" },
+      captchaValue: "mock-value",
+    });
     MockedLoginIdInstance.mockClear();
     mockInstance = createMockLoginIdInstance();
     MockedLoginIdInstance.mockImplementation(() => mockInstance); // new LoginIdInstance() is replaced with the mockInstance object
@@ -172,12 +182,17 @@ describe("LoginIdScreen", () => {
   describe("CAPTCHA", () => {
     it("should SHOW the captcha when isCaptchaAvailable is true", () => {
       mockInstance.screen.isCaptchaAvailable = true;
-      mockInstance.screen.captchaImage = "data:image/png;base64,mockimage";
+      mockedUseCaptcha.mockReturnValue({
+        captchaConfig: {
+          siteKey: "mock-key",
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        },
+        captchaProps: { label: "<CAPTCHA>" },
+        captchaValue: "mock-value",
+      });
       render(<LoginIdScreen />);
       expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
-      expect(
-        screen.getByRole("textbox", { name: /enter the code shown above/i })
-      ).toBeInTheDocument();
     });
 
     it("should HIDE the captcha when isCaptchaAvailable is false", () => {
@@ -199,18 +214,29 @@ describe("LoginIdScreen", () => {
 
     it("should include the captcha value in the submission", async () => {
       mockInstance.screen.isCaptchaAvailable = true;
-      mockInstance.screen.captchaImage = "data:image/png;base64,mockimage";
+      mockedUseCaptcha.mockReturnValue({
+        captchaConfig: {
+          siteKey: "mock-key",
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        },
+        captchaProps: { label: "<CAPTCHA>" },
+        captchaValue: "mock-value",
+      });
       render(<LoginIdScreen />);
+      screen.debug();
+
       await ScreenTestUtils.fillInput(
         /username|email|phone/i,
         "test@example.com"
       );
-      await ScreenTestUtils.fillInput(/enter the code shown above/i, "ABC123");
+
+      await ScreenTestUtils.fillInput(/CAPTCHA*/i, "mock-value");
       await ScreenTestUtils.clickButton("Mock Continue");
 
       expect(mockInstance.login).toHaveBeenCalledWith({
         username: "test@example.com",
-        captcha: "ABC123",
+        captcha: "mock-value",
       });
     });
   });
@@ -306,7 +332,15 @@ describe("LoginIdScreen", () => {
       });
       // Enable CAPTCHA
       mockInstance.screen.isCaptchaAvailable = true;
-      mockInstance.screen.captchaImage = "data:image/png;base64,mockimage";
+      mockedUseCaptcha.mockReturnValue({
+        captchaConfig: {
+          siteKey: "mock-key",
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        },
+        captchaProps: { label: "<CAPTCHA>" },
+        captchaValue: "mock-value",
+      });
       render(<LoginIdScreen />);
 
       // Primary form
@@ -331,19 +365,27 @@ describe("LoginIdScreen", () => {
     it("should handle form submission correctly", async () => {
       // Enable CAPTCHA
       mockInstance.screen.isCaptchaAvailable = true;
-      mockInstance.screen.captchaImage = "data:image/png;base64,mockimage";
+      mockedUseCaptcha.mockReturnValue({
+        captchaConfig: {
+          siteKey: "mock-key",
+          provider: "auth0",
+          image: "data:image/png;base64,mockimage",
+        },
+        captchaProps: { label: "<CAPTCHA>" },
+        captchaValue: "mock-value",
+      });
       render(<LoginIdScreen />);
 
       await ScreenTestUtils.fillInput(
         /username|email|phone/i,
         "test@example.com"
       );
-      await ScreenTestUtils.fillInput(/enter the code shown above/i, "ABC123");
+      await ScreenTestUtils.fillInput(/CAPTCHA*/i, "mock-value");
       await ScreenTestUtils.clickButton("Mock Continue");
 
       expect(mockInstance.login).toHaveBeenCalledWith({
         username: "test@example.com",
-        captcha: "ABC123",
+        captcha: "mock-value",
       });
     });
   });

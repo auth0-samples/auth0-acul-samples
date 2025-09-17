@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ReCaptchaCombinedWidget matches snapshot (default) 1`] = `
+<div>
+  <form>
+    <div
+      class="space-y-2"
+    >
+      <div
+        class="flex w-full rounded box-border border border-[#d3d3d3]"
+        style="overflow: hidden; display: inline-block;"
+      >
+        <div
+          style="transform: scale(1.06); transform-origin: 0 0;"
+        >
+          <div
+            data-testid="recaptcha"
+            sitekey="test-site-key"
+            theme="light"
+          />
+        </div>
+      </div>
+      <input
+        id="hidden-recaptcha-v2"
+        name="g-recaptcha-response"
+        type="hidden"
+      />
+    </div>
+  </form>
+</div>
+`;
+
+exports[`ReCaptchaCombinedWidget matches snapshot (with error) 1`] = `
+<div>
+  <form>
+    <div
+      class="space-y-2"
+    >
+      <div
+        class="flex w-full rounded box-border border border-[#d93025]"
+        style="overflow: hidden; display: inline-block;"
+      >
+        <div
+          style="transform: scale(1.06); transform-origin: 0 0;"
+        >
+          <div
+            data-testid="recaptcha"
+            sitekey="test-site-key"
+            theme="light"
+          />
+        </div>
+      </div>
+      <input
+        id="hidden-recaptcha-v2"
+        name="g-recaptcha-response"
+        type="hidden"
+      />
+    </div>
+  </form>
+</div>
+`;
