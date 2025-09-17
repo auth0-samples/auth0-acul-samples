@@ -13,6 +13,6 @@ export const useResetPasswordErrorManager = () => {
 
   return {
     resetPasswordError: useResetPasswordError(),
-    texts: (texts || {}) as ScreenMembersOnResetPasswordError["texts"],
+    texts: texts as ScreenMembersOnResetPasswordError["texts"] | null,
   };
 };
