@@ -109,8 +109,7 @@ try {
   const generateLocalHTML = (screenName, cssFiles, jsFiles, port) => {
     const baseUrl = `http://localhost:${port}`;
     
-    let html = `<base target="${baseUrl}">\n`;
-    html += `<meta name="viewport" content="width=device-width, initial-scale=1">\n`;
+    let html = `<meta name="viewport" content="width=device-width, initial-scale=1">\n`;
     
     // Add CSS files (should be just one shared style file)
     cssFiles.forEach(cssFile => {

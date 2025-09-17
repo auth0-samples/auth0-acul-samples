@@ -52,7 +52,9 @@ function IdentifierForm() {
   // Handle text fallbacks for button and field labels
   const buttonText = texts?.buttonText || "Continue";
   const codeLabelText = texts?.placeholder || "Enter the 6-digit code";
-  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
 
   // Extract general errors (not field-specific) from the SDK

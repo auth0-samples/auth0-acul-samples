@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import type { ScreenMembersOnLogin } from "@auth0/auth0-acul-js";
+import type { ScreenMembersOnLogin } from "@auth0/auth0-acul-js/login";
 import LoginInstance from "@auth0/auth0-acul-js/login";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";

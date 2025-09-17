@@ -14,6 +14,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   ),
   "reset-password-error": lazy(() => import("@/screens/reset-password-error")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
+  "signup-password": lazy(() => import("@/screens/signup-password")),
 };
 
 export const getScreenComponent = (

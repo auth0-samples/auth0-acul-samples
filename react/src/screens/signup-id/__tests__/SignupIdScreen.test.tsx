@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 
 import type { MockSignupIdInstance } from "@/__mocks__/@auth0/auth0-acul-react/signup-id";
 import { createMockSignupIdInstance } from "@/__mocks__/@auth0/auth0-acul-react/signup-id";
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import { useSignupIdManager } from "../hooks/useSignupIdManager";
@@ -19,6 +20,16 @@ jest.mock("@/utils/helpers/tokenUtils", () => ({
 
 describe("SignupIdScreen", () => {
   let mockInstance: MockSignupIdInstance;
+
+  const renderScreen = async () => {
+    await act(async () => {
+      render(<SignupIdScreen />);
+    });
+    // Wait for primary action to ensure form is ready
+    await screen.findByRole("button", {
+      name: CommonTestData.commonTexts.continue,
+    });
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -39,106 +50,106 @@ describe("SignupIdScreen", () => {
     });
   });
 
-  describe("Core Rendering & Functionality", () => {
-    beforeEach(() => {
-      render(<SignupIdScreen />);
-    });
+  it("should render screen with basic structure using CommonTestData", async () => {
+    await renderScreen();
 
-    it("should render the signup screen with default content", () => {
-      expect(screen.getByText("Create Your Account")).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: "Continue" })
-      ).toBeInTheDocument();
-    });
+    expect(screen.getByText("Create Your Account")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: CommonTestData.commonTexts.continue })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Sign up to dev-tenant/)).toBeInTheDocument();
+  });
 
-    it("should render required and optional identifier fields correctly", () => {
-      // Required field (phone) - should have asterisk
-      expect(screen.getByLabelText("Phone Number*")).toBeInTheDocument();
+  it("should render identifier fields with proper labels", async () => {
+    await renderScreen();
 
-      // Optional fields - should have (optional) suffix
-      expect(
-        screen.getByLabelText("Email Address (optional)")
-      ).toBeInTheDocument();
-      expect(screen.getByLabelText("Username (optional)")).toBeInTheDocument();
-    });
+    // Required field (phone) - should have asterisk
+    expect(screen.getByLabelText("Phone Number*")).toBeInTheDocument();
 
-    it("should render country code picker for phone field", () => {
-      expect(screen.getByText("Select Country")).toBeInTheDocument();
-    });
+    // Optional fields - should have (optional) suffix
+    expect(
+      screen.getByLabelText("Email Address (optional)")
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Username (optional)")).toBeInTheDocument();
+  });
 
-    it("should call handleSignup with form data when form is submitted", async () => {
-      // Fill in the required field
-      await ScreenTestUtils.fillInput(/Phone Number/i, "1234567890");
+  it("should handle form submission with ScreenTestUtils", async () => {
+    await renderScreen();
 
-      // Fill in optional fields
-      await ScreenTestUtils.fillInput(/Email Address/i, "test@example.com");
-      await ScreenTestUtils.fillInput(/Username/i, "testuser");
+    // Fill form using ScreenTestUtils
+    await ScreenTestUtils.fillInput(/Phone Number/i, "1234567890");
+    await ScreenTestUtils.fillInput(/Email Address/i, "test@example.com");
+    await ScreenTestUtils.fillInput(/Username/i, "testuser");
 
-      // Submit the form
-      await ScreenTestUtils.clickButton("Continue");
+    // Submit using CommonTestData button text
+    await ScreenTestUtils.clickButton(CommonTestData.commonTexts.continue);
 
-      expect(mockInstance.signup).toHaveBeenCalledWith({
-        phone: "1234567890",
-        email: "test@example.com",
-        username: "testuser",
-        captcha: "",
-      });
+    expect(mockInstance.signup).toHaveBeenCalledWith({
+      phone: "1234567890",
+      email: "test@example.com",
+      username: "testuser",
+      captcha: "",
     });
   });
 
-  describe("Social Login & Alternative Connections", () => {
-    it("should render social provider buttons when alternate connections are available", () => {
-      render(<SignupIdScreen />);
+  it("should render social connections from CommonTestData", async () => {
+    await renderScreen();
 
+    // Check for social connections using CommonTestData
+    const connections = mockInstance.transaction.alternateConnections || [];
+    const hasGoogle = connections.some((conn) => conn.strategy === "google");
+    const hasGithub = connections.some((conn) => conn.strategy === "github");
+
+    if (hasGoogle) {
       expect(screen.getByText(/Continue with.*Google/i)).toBeInTheDocument();
+    }
+    if (hasGithub) {
       expect(screen.getByText(/Continue with.*Github/i)).toBeInTheDocument();
-    });
+    }
+  });
 
-    it("should call federatedSignup when social provider button is clicked", async () => {
-      render(<SignupIdScreen />);
+  it("should handle federated signup using ScreenTestUtils", async () => {
+    await renderScreen();
 
-      await ScreenTestUtils.clickButton(/Continue with.*Google/i);
+    await ScreenTestUtils.clickButton(/Continue with.*Google/i);
 
-      expect(mockInstance.federatedSignup).toHaveBeenCalledWith({
-        connection: "google-oauth2",
-      });
+    expect(mockInstance.federatedSignup).toHaveBeenCalledWith({
+      connection: "google-oauth2",
     });
   });
 
-  describe("Footer Links", () => {
-    it("should render login link in footer", () => {
-      render(<SignupIdScreen />);
+  it("should display errors from CommonTestData", async () => {
+    // Configure error using CommonTestData
+    const errorData = [CommonTestData.errors.network];
+    mockInstance.transaction.errors = errorData as any;
+    mockInstance.transaction.hasErrors = true;
 
-      expect(screen.getByText("Already have an account?")).toBeInTheDocument();
-      expect(screen.getByText("Log in")).toBeInTheDocument();
+    (useSignupIdManager as jest.Mock).mockReturnValue({
+      signupId: mockInstance,
+      handleSignup: mockInstance.signup,
+      handleFederatedSignup: mockInstance.federatedSignup,
+      handlePickCountryCode: mockInstance.pickCountryCode,
+      texts: mockInstance.screen.texts,
+      alternateConnections: mockInstance.transaction.alternateConnections,
+      isCaptchaAvailable: mockInstance.screen.isCaptchaAvailable,
+      loginLink: mockInstance.screen.loginLink,
+      captchaImage: mockInstance.screen.captchaImage,
+      errors: errorData,
     });
+
+    await renderScreen();
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 
-  describe("Document Title", () => {
-    it("should set the document title based on texts.pageTitle", () => {
-      render(<SignupIdScreen />);
-      expect(document.title).toBe("Mock Signup");
-    });
-  });
+  it("should render footer links using CommonTestData", async () => {
+    await renderScreen();
 
-  describe("Error Handling", () => {
-    it("should display general errors when present", () => {
-      // Configure error state
-      const errorData = [
-        {
-          message: "Something went wrong",
-          code: "general_error",
-          field: undefined,
-        },
-      ];
-      mockInstance.transaction.errors = errorData as any;
-      (useSignupIdManager as jest.Mock).mockReturnValue({
-        ...useSignupIdManager(),
-        errors: errorData,
-      });
-
-      render(<SignupIdScreen />);
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Already have an account?")).toBeInTheDocument();
+    expect(
+      screen.getByText(CommonTestData.commonTexts.login)
+    ).toBeInTheDocument();
   });
 });

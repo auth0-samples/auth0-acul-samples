@@ -128,9 +128,15 @@
         },
         {
           "id": "signup-id",
-          "name": "Signup: Identifier First",
+          "name": "Signup Identifier First",
           "description": "Identifier-first signup flow for collecting user registration details with required and optional fields",
           "path": "react/src/screens/signup-id"
+        },
+        {
+          "id": "signup-password",
+          "name": "Signup Password",
+          "description": "Password entry screen for user registration",
+          "path": "react/src/screens/signup-password"
         }
       ]
     }

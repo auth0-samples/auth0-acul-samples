@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-js/login";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -49,7 +49,9 @@ function LoginForm() {
 
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
-  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
@@ -60,7 +62,9 @@ function LoginForm() {
     autoComplete: usernameAutoComplete,
   } = getIdentifierDetails(allowedIdentifiers, texts);
 
-  const passwordLabel = texts?.passwordPlaceholder?.concat("*") || "Password*";
+  const passwordLabel = texts?.passwordPlaceholder
+    ? `${texts.passwordPlaceholder}*`
+    : "Password*";
 
   // Password visibility toggle
   const generalErrors =
