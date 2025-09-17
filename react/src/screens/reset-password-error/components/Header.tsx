@@ -20,14 +20,9 @@ function Header() {
         strokeWidth={1}
         className="flex flex-wrap justify-widget-logo ml-28"
       />
-      <ULThemeTitle>
-        {texts?.eventTitleUsed ||
-          texts?.eventTitleGeneric ||
-          "Please Try Again"}
-      </ULThemeTitle>
+      <ULThemeTitle>{texts?.eventTitle || "Please Try Again"}</ULThemeTitle>
       <ULThemeSubtitle className="mb-6">
-        {texts?.descriptionUsed ||
-          texts?.descriptionGeneric ||
+        {texts?.description ||
           'Something went wrong. Please return to the login page and select "Forgot Your Password" to try again.'}
       </ULThemeSubtitle>
     </>

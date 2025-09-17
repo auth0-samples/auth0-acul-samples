@@ -37,8 +37,9 @@ describe("ResetPasswordErrorScreen", () => {
   // Mock data for the hook's return value
   const mockTexts = {
     pageTitle: "Password Reset Failed",
-    title: "An Error Occurred",
-    eventTitle: "Please Try Again",
+    eventTitle: "An Error Occurred",
+    description:
+      "Something went wrong. Please return to the login page and select 'Forgot Your Password' to try again.",
   };
 
   const mockUseResetPasswordErrorManager =
@@ -62,8 +63,7 @@ describe("ResetPasswordErrorScreen", () => {
     it("should render the correct error messages", () => {
       render(<ResetPasswordErrorScreen />);
 
-      // Verify the header's title and subtitle
-      expect(screen.getByText(mockTexts.title)).toBeInTheDocument();
+      // Verify the header's title
       expect(screen.getByText(mockTexts.eventTitle)).toBeInTheDocument();
     });
 
@@ -88,12 +88,12 @@ describe("ResetPasswordErrorScreen", () => {
       render(<ResetPasswordErrorScreen />);
 
       // Check fallback for document title
-      expect(document.title).toBe("Password reset failed");
-
-      // Check fallback for title
-      expect(screen.getByText("Please Try Again")).toBeInTheDocument();
+      expect(document.title).toBe("Password reset error");
 
       // Check fallback for eventTitle
+      expect(screen.getByText("Please Try Again")).toBeInTheDocument();
+
+      // Check fallback for description
       expect(
         screen.getByText(
           'Something went wrong. Please return to the login page and select "Forgot Your Password" to try again.'
