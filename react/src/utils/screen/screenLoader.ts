@@ -4,9 +4,17 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "login-passwordless-sms-otp": lazy(
     () => import("@/screens/login-passwordless-sms-otp")
   ),
+  "login-passwordless-email-code": lazy(
+    () => import("@/screens/login-passwordless-email-code")
+  ),
   "reset-password-email": lazy(() => import("@/screens/reset-password-email")),
   "reset-password": lazy(() => import("@/screens/reset-password")),
+  "reset-password-success": lazy(
+    () => import("@/screens/reset-password-success")
+  ),
+  "reset-password-error": lazy(() => import("@/screens/reset-password-error")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
+  "signup-password": lazy(() => import("@/screens/signup-password")),
   "passkey-enrollment": lazy(() => import("@/screens/passkey-enrollment")),
 };
 

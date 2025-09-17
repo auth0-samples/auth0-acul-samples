@@ -13,7 +13,7 @@ import type {
   ScreenMembersOnLoginPassword,
   TransactionMembersOnLoginPassword,
   UsernamePolicy,
-} from "@auth0/auth0-acul-js";
+} from "@auth0/auth0-acul-js/login-password";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the main

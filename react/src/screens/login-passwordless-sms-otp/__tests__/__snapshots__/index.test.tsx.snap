@@ -3,7 +3,7 @@
 exports[`LoginPasswordlessSmsOtpScreen should render correctly and match snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="flex px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url) theme-universal"
+    class="flex items-center min-h-screen px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url) theme-universal"
   >
     <div
       class="bg-card text-card-foreground shadow-bevel-2xl flex flex-col rounded-4xl px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget) w-full max-w-[400px] gap-0"
@@ -39,7 +39,7 @@ exports[`LoginPasswordlessSmsOtpScreen should render correctly and match snapsho
           >
             <div>
               <div
-                class="bg-input aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] box-border inline-flex w-full shrink-0 cursor-text justify-center text-sm transition-[color,box-shadow] duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-input-foreground shadow-input-resting hover:shadow-input-hover focus-within:ring-ring focus-within:ring-4 h-14 rounded-2xl group relative items-end gap-0.5 pr-[16px] mb-2 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-(length:--ul-theme-border-input-border-weight) theme-universal:border-input-border theme-universal:rounded-input theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body-text theme-universal:placeholder:text-input-labels theme-universal:[&_input]:placeholder:text-input-labels theme-universal:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_input]:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:placeholder:font-input-label theme-universal:[&_input]:placeholder:font-input-label theme-universal:[&_label]:bg-input-bg theme-universal:[&_label]:text-input-labels theme-universal:[&_label]:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_label]:font-input-label theme-universal:focus-within:border-base-focus theme-universal:focus-within:ring-0 theme-universal:focus-within:[&_label]:text-base-focus"
+                class="bg-input aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] box-border inline-flex w-full shrink-0 cursor-text justify-center text-sm transition-[color,box-shadow] duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-input-foreground shadow-input-resting hover:shadow-input-hover focus-within:ring-ring focus-within:ring-4 h-14 rounded-2xl group relative items-end gap-0.5 pr-[16px] mb-2 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-(length:--ul-theme-border-input-border-weight) theme-universal:border-input-border theme-universal:rounded-input theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body-text theme-universal:placeholder:text-input-labels theme-universal:[&_input]:placeholder:text-input-labels theme-universal:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_input]:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:placeholder:font-input-label theme-universal:[&_input]:placeholder:font-input-label theme-universal:[&_label]:bg-input-bg theme-universal:[&_label]:text-input-labels theme-universal:[&_label]:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_label]:font-input-label theme-universal:focus-within:border-base-focus theme-universal:focus-within:ring-1 theme-universal:focus-within:ring-base-focus theme-universal:focus-within:[&_label]:text-base-focus"
               >
                 <label
                   class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
@@ -53,7 +53,7 @@ exports[`LoginPasswordlessSmsOtpScreen should render correctly and match snapsho
                     aria-labelledby="base-ui-«r1»"
                     class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 rounded-r-none pr-0"
                     id="«r0»-form-item"
-                    name="phonenumber"
+                    name="username"
                     readonly=""
                     value=""
                   />
@@ -83,7 +83,7 @@ exports[`LoginPasswordlessSmsOtpScreen should render correctly and match snapsho
           >
             <div>
               <div
-                class="bg-input aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] box-border inline-flex w-full shrink-0 cursor-text justify-center text-sm transition-[color,box-shadow] duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-input-foreground shadow-input-resting hover:shadow-input-hover focus-within:ring-ring focus-within:ring-4 h-14 rounded-2xl group relative items-end gap-0.5 mb-2 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-(length:--ul-theme-border-input-border-weight) theme-universal:border-input-border theme-universal:rounded-input theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body-text theme-universal:placeholder:text-input-labels theme-universal:[&_input]:placeholder:text-input-labels theme-universal:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_input]:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:placeholder:font-input-label theme-universal:[&_input]:placeholder:font-input-label theme-universal:[&_label]:bg-input-bg theme-universal:[&_label]:text-input-labels theme-universal:[&_label]:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_label]:font-input-label theme-universal:focus-within:border-base-focus theme-universal:focus-within:ring-0 theme-universal:focus-within:[&_label]:text-base-focus"
+                class="bg-input aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] box-border inline-flex w-full shrink-0 cursor-text justify-center text-sm transition-[color,box-shadow] duration-150 ease-in-out outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-input-foreground shadow-input-resting hover:shadow-input-hover focus-within:ring-ring focus-within:ring-4 h-14 rounded-2xl group relative items-end gap-0.5 mb-2 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-(length:--ul-theme-border-input-border-weight) theme-universal:border-input-border theme-universal:rounded-input theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body-text theme-universal:placeholder:text-input-labels theme-universal:[&_input]:placeholder:text-input-labels theme-universal:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_input]:placeholder:text-(length:--ul-theme-font-input-labels-size) theme-universal:placeholder:font-input-label theme-universal:[&_input]:placeholder:font-input-label theme-universal:[&_label]:bg-input-bg theme-universal:[&_label]:text-input-labels theme-universal:[&_label]:text-(length:--ul-theme-font-input-labels-size) theme-universal:[&_label]:font-input-label theme-universal:focus-within:border-base-focus theme-universal:focus-within:ring-1 theme-universal:focus-within:ring-base-focus theme-universal:focus-within:[&_label]:text-base-focus"
                 data-focused=""
               >
                 <label
@@ -121,7 +121,7 @@ exports[`LoginPasswordlessSmsOtpScreen should render correctly and match snapsho
         class="mt-4 text-center"
       >
         <span
-          class="text-sm pr-1"
+          class="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body"
         >
           Didn't receive a code?
         </span>

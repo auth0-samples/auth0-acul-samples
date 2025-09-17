@@ -97,6 +97,12 @@
           "path": "react/src/screens/login-passwordless-sms-otp"
         },
         {
+          "id": "login-passwordless-email-code",
+          "name": "Login: Passwordless Email Code",
+          "description": "Passwordless Email Code entry screen for authentication",
+          "path": "react/src/screens/login-passwordless-email-code"
+        },
+        {
           "id": "reset-password-email",
           "name": "Reset Password: Email",
           "description": "Resend Email screen for password reset",
@@ -109,10 +115,28 @@
           "path": "react/src/screens/reset-password"
         },
         {
+          "id": "reset-password-success",
+          "name": "Reset Password: Success",
+          "description": "Screen for successful password reset",
+          "path": "react/src/screens/reset-password-success"
+        },
+        {
+          "id": "reset-password-error",
+          "name": "Reset Password: Error",
+          "description": "Screen for failed password reset",
+          "path": "react/src/screens/reset-password-error"
+        },
+        {
           "id": "signup-id",
-          "name": "Signup: Identifier First",
+          "name": "Signup Identifier First",
           "description": "Identifier-first signup flow for collecting user registration details with required and optional fields",
           "path": "react/src/screens/signup-id"
+        },
+        {
+          "id": "signup-password",
+          "name": "Signup Password",
+          "description": "Password entry screen for user registration",
+          "path": "react/src/screens/signup-password"
         },
         {
           "id": "passkey-enrollment",

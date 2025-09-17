@@ -20,9 +20,9 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
 
 ### ⚡ [React Sample](./react/) (In Development)
 - **SDK**: Auth0 ACUL React SDK (`@auth0/auth0-acul-react`)
-- **Screens**: 3 authentication screens (login-passwordless-sms-otp, signup-id, reset-password-email) with ~30 total planned
+- **Screens**: 8 authentication screens with ~30 total planned
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
-- **Status**: 🚧 Under development for GA release
+- **Status**: 🚧 Under active development for GA release
 
 <div align="center">
   <img 
@@ -123,7 +123,7 @@ auth0 ul customize --rendering-mode advanced --prompt login-id --screen login-id
 The main screen implementations are located in:
 
 - **React-JS Sample**: [`react-js/src/screens/`](./react-js/src/screens/) - 3 screens (login, login-id, login-password)
-- **React Sample**: [`react/src/screens/`](./react/src/screens/) - 3 screens (login-passwordless-sms-otp, signup-id, reset-password-email) with more in development
+- **React Sample**: [`react/src/screens/`](./react/src/screens/) - 8 screens with more in development
 
 Each screen is designed to integrate with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login).
 

@@ -52,7 +52,7 @@ export const ULThemePasswordField = ({
           "transition-colors",
 
           // Focus States
-          "theme-universal:focus:bg-base-focus/15 theme-universal:focus-visible:ring-0 theme-universal:focus-visible:ring-offset-0",
+          "theme-universal:focus:bg-base-focus/15 theme-universal:focus-visible:ring-1 theme-universal:focus-visible:ring-base-focus theme-universal:focus-visible:ring-offset-0",
 
           // Layout
           "flex items-center justify-center",
