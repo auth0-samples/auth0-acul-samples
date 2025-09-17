@@ -2,29 +2,37 @@
 
 This sample will demonstrate how to build custom Auth0 Advanced Customizations for Universal Login (ACUL) screens using React, TypeScript, Tailwind CSS, and the **Auth0 ACUL React SDK**.
 
-## Coming Soon
+## Current Implementation
 
-This implementation will include ~30 authentication screens covering:
+This implementation currently includes 8 authentication screens:
 
-- Login flows (identifier-first, password, MFA)
-- Signup flows (identifier-first, password, verification)
-- Password reset flows
-- MFA enrollment and challenge screens
-- Social provider integration
-- And much more...
+- **Login Passwordless Email Code**: Email code verification flow
+- **Login Passwordless SMS OTP**: SMS OTP verification flow  
+- **Reset Password**: Password reset screen
+- **Reset Password Email**: Email-based password reset
+- **Reset Password Error**: Password reset error handling
+- **Reset Password Success**: Password reset confirmation
+- **Signup ID**: Identifier-first signup flow
+- **Signup Password**: Password signup screen
 
-## Tech Stack (Planned)
-
-- **Framework**: React 19 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS v4
-- **Auth SDK**: @auth0/auth0-acul-react (in development)
-- **Testing**: Jest + React Testing Library
-- **UI Components**: Auth0 UDS React Components
 
 ## Development Status
 
-🚧 **Under Development** - This sample is being developed alongside the Auth0 ACUL React SDK for the GA release.
+🚧 **Actively Developing** - This sample currently has 8 screens implemented and is being developed alongside the Auth0 ACUL React SDK for the GA release.
+
+## Available Screens
+
+```bash
+# Start development with any implemented screen
+npm run screen login-passwordless-sms-otp
+npm run screen login-passwordless-email-code
+npm run screen signup-id  
+npm run screen signup-password
+npm run screen reset-password
+npm run screen reset-password-email
+npm run screen reset-password-error
+npm run screen reset-password-success
+```
 
 ## Project Structure (Planned)
 

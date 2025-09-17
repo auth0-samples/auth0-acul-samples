@@ -1,8 +1,3 @@
-/**
- * @file Mock for Auth0 ACUL React signup-id hooks and methods.
- * This file provides a comprehensive mock for the Auth0 ACUL React signup-id hooks.
- *
- */
 import type {
   ScreenMembersOnSignupId,
   TransactionMembersOnSignupId,

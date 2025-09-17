@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnLoginPasswordlessEmailCode,
   TransactionMembersOnLoginPasswordlessEmailCode,
-} from "@auth0/auth0-acul-react";
+} from "@auth0/auth0-acul-react/login-passwordless-email-code";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the main
