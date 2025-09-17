@@ -48,9 +48,9 @@ function Details() {
     <div className="relative w-15 h-10 left-1.5">
       <IconMask
         className="absolute inline-block opacity-[0.5]"
-        bgColor={iconColor}
+        color={iconColor}
       />
-      <IconAccent className="absolute inline-block" bgColor={iconColor} />
+      <IconAccent className="absolute inline-block" color={iconColor} />
     </div>
   );
 
@@ -70,7 +70,7 @@ function Details() {
               <div className="relative w-15 h-10 left-1.5">
                 <WebAuthPlatform
                   className="absolute inline-block"
-                  bgColor={iconColor}
+                  color={iconColor}
                 />
               </div>
             ),
