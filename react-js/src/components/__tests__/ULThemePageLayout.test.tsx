@@ -48,7 +48,7 @@ describe("ULThemePageLayout Component Test Suite", () => {
     );
 
     expect(container.firstChild).toHaveClass(
-      "flex px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url)"
+      "flex px-10 py-20 justify-page-layout bg-(color:--ul-theme-page-bg-background-color) bg-(image:--ul-theme-page-bg-background-image-url)"
     );
   });
 
