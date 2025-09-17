@@ -1,9 +1,7 @@
 import {
+  CustomOptions,
   ScreenMembersOnPasskeyEnrollment,
   usePasskeyEnrollment,
-} from "@auth0/auth0-acul-react";
-import {
-  CustomOptions,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/passkey-enrollment";
