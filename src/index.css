@@ -186,10 +186,11 @@ Created to support alignment related utlities like justify, text-align etc with 
   --ul-theme-font-input-labels-weight: 400;
   --ul-theme-font-links-size: 0.875rem;
   --ul-theme-font-links-weight: 700;
+  --ul-theme-list-title-font-size: 1.025rem;
 
   /* Page Background */
   --ul-theme-page-bg-page-layout: center;
-  --ul-theme-page-bg-background-color: #bababa;
+  --ul-theme-page-bg-background-color: #000000;
   --ul-theme-page-bg-background-image-url: none;
 
   /* Widget */

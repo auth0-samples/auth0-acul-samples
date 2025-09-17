@@ -57,7 +57,6 @@ function Details() {
   return (
     <>
       <ULThemeList
-        className="mb-8"
         variant="icon"
         items={[
           {
