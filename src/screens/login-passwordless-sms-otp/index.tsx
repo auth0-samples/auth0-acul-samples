@@ -14,7 +14,7 @@ function LoginPasswordlessSmsOtpScreen() {
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginPasswordlessSmsOtp);
-  document.title = texts?.pageTitle || "Login";
+  document.title = texts?.pageTitle || "Enter your phone code to log in";
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

@@ -50,7 +50,9 @@ function SignupIdForm() {
 
   // Handle text fallbacks
   const buttonText = texts?.buttonText || "Continue";
-  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge";
 
   // Get general errors (not field-specific)
