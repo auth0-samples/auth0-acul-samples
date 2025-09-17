@@ -17,9 +17,9 @@ interface ULThemeListProps extends ListProps {
 }
 
 const ULThemeList = (props: ULThemeListProps) => {
-  // UL theme overrides
-  const variantThemeOverrides =
-    "theme-universal:font-(weight:--ul-theme-font-body-text-weight)";
+  // UL List item theme overrides
+  const listItemThemeOverrides =
+    "theme-universal:font-(weight:--ul-theme-font-body-text-weight) mb-4 last:mb-8";
   return (
     <List
       variant={props.variant}
@@ -32,7 +32,7 @@ const ULThemeList = (props: ULThemeListProps) => {
           icon={item.icon}
           description={item.description}
           info={item.info}
-          className={cn(variantThemeOverrides, props.className)}
+          className={cn(listItemThemeOverrides, props.className)}
         >
           {item.label}
         </ListItem>
