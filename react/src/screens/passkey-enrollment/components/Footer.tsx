@@ -1,10 +1,14 @@
 import ULThemeLink from "@/components/ULThemeLink";
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { usePasskeyEnrollmentManager } from "../hooks/usePasskeyEnrollmentManager";
 
 function Footer() {
   const { links, texts, abortPasskeyEnrollment } =
     usePasskeyEnrollmentManager();
+
+  // localize and rebase the back link to the current origin
+  const localizedBackButtonLink = rebaseLinkToCurrentOrigin(links?.back);
 
   // Handle text fallbacks in component
   const continueButtonText =
@@ -24,8 +28,10 @@ function Footer() {
         )}
       </div>
       <div className="mt-4 text-center">
-        {backButtonText && (
-          <ULThemeLink href={links?.back}>{backButtonText}</ULThemeLink>
+        {localizedBackButtonLink && (
+          <ULThemeLink href={localizedBackButtonLink}>
+            {backButtonText}
+          </ULThemeLink>
         )}
       </div>
     </>
