@@ -26,10 +26,14 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
           {icon && (
             <div className="text-muted-foreground mt-1 shrink-0">{icon}</div>
           )}
-          <div className="min-w-0 flex-1">
-            <div className="text-primary text-sm">{children}</div>
+          <div className="min-w-0 flex flex-col gap-1">
+            <div className="text-header text-(length:--list-title-font-size) leading-(height:--list-title-font-size)">
+              {children}
+            </div>
             {description && (
-              <p className="text-muted-foreground text-sm">{description}</p>
+              <p className="text-body-text text-(length:--list-subtitle-font-size) leading-(height:--list-subtitle-font-size)">
+                {description}
+              </p>
             )}
           </div>
         </div>

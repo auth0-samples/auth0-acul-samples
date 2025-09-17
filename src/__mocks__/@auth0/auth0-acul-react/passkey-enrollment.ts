@@ -1,5 +1,5 @@
 /**
- * @file This file provides a comprehensive mock for the Auth0 ACUL React login-passwordless-sms-otp hooks.
+ * @file This file provides a comprehensive mock for the Auth0 ACUL React Passkey Enrollment hooks.
  * It is designed to be structurally aligned with the official React SDK, enabling robust
  * and isolated testing of our components.
  *
@@ -71,7 +71,7 @@ export const createMockPasskeyEnrollmentInstance =
     },
   });
 
-// Mock the login-passwordless-sms-otp hooks and methods
+// Mock the passkey-enrollment hooks and methods
 const mockPasskeyEnrollmentInstance = createMockPasskeyEnrollmentInstance();
 
 export const usePasske = jest.fn(() => ({
