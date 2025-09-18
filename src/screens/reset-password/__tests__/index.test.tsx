@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import {
   createMockResetPasswordInstance,
   MockResetPasswordInstance,
-} from "@/__mocks__/reset-password";
+} from "@/__mocks__/@auth0/auth0-acul-react/reset-password";
 
 import { useResetPasswordManager } from "../hooks/useResetPasswordManager";
 import ResetPasswordScreen from "../index";
