@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-js/login-password";
 
 import Captcha from "@/components/Captcha";
 import {
@@ -62,7 +62,9 @@ function IdentifierForm() {
   // Handle text fallbacks for button and field labels
   const buttonText = texts?.buttonText || "Continue";
   const passwordLabelText = texts?.passwordPlaceholder || "Password";
-  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
   const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 

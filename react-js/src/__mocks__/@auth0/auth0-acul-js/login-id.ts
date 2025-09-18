@@ -11,7 +11,7 @@
 import type {
   ScreenMembersOnLoginId,
   TransactionMembersOnLoginId,
-} from "@auth0/auth0-acul-js";
+} from "@auth0/auth0-acul-js/login-id";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the main

@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 
-import type { Error, TransactionMembersOnLoginId } from "@auth0/auth0-acul-js";
+import type {
+  Error,
+  TransactionMembersOnLoginId,
+} from "@auth0/auth0-acul-js/login-id";
 
 import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -67,7 +70,9 @@ function IdentifierForm() {
 
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
-  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : "CAPTCHA*";
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
   // Get general errors (not field-specific)
