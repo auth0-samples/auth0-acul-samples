@@ -29,8 +29,12 @@ describe("LoginIdScreen", () => {
 
   beforeEach(() => {
     mockedUseCaptcha.mockReturnValue({
-      captchaConfig: { siteKey: "mock-key", theme: "light" },
-      captchaProps: { captchaImage: "data:image/png;base64,mockimage" },
+      captchaConfig: {
+        siteKey: "mock-key",
+        provider: "auth0",
+        image: "data:image/png;base64,mockimage",
+      },
+      captchaProps: { label: "<CAPTCHA>" },
       captchaValue: "mock-value",
     });
     MockedLoginIdInstance.mockClear();
@@ -182,15 +186,6 @@ describe("LoginIdScreen", () => {
   describe("CAPTCHA", () => {
     it("should SHOW the captcha when isCaptchaAvailable is true", () => {
       mockInstance.screen.isCaptchaAvailable = true;
-      mockedUseCaptcha.mockReturnValue({
-        captchaConfig: {
-          siteKey: "mock-key",
-          provider: "auth0",
-          image: "data:image/png;base64,mockimage",
-        },
-        captchaProps: { label: "<CAPTCHA>" },
-        captchaValue: "mock-value",
-      });
       render(<LoginIdScreen />);
       expect(screen.getByAltText("CAPTCHA challenge")).toBeInTheDocument();
     });
@@ -205,7 +200,12 @@ describe("LoginIdScreen", () => {
 
     it("should not show the CAPTCHA when the captcha image is an empty string", () => {
       mockInstance.screen.isCaptchaAvailable = true; // Still "available"
-      mockInstance.screen.captchaImage = ""; // But the component should handle empty image
+      mockedUseCaptcha.mockReturnValue({
+        // But the component should handle empty image
+        captchaConfig: {
+          image: "",
+        },
+      });
       render(<LoginIdScreen />);
       expect(
         screen.queryByAltText("CAPTCHA challenge")
@@ -214,17 +214,7 @@ describe("LoginIdScreen", () => {
 
     it("should include the captcha value in the submission", async () => {
       mockInstance.screen.isCaptchaAvailable = true;
-      mockedUseCaptcha.mockReturnValue({
-        captchaConfig: {
-          siteKey: "mock-key",
-          provider: "auth0",
-          image: "data:image/png;base64,mockimage",
-        },
-        captchaProps: { label: "<CAPTCHA>" },
-        captchaValue: "mock-value",
-      });
       render(<LoginIdScreen />);
-      screen.debug();
 
       await ScreenTestUtils.fillInput(
         /username|email|phone/i,
@@ -332,15 +322,6 @@ describe("LoginIdScreen", () => {
       });
       // Enable CAPTCHA
       mockInstance.screen.isCaptchaAvailable = true;
-      mockedUseCaptcha.mockReturnValue({
-        captchaConfig: {
-          siteKey: "mock-key",
-          provider: "auth0",
-          image: "data:image/png;base64,mockimage",
-        },
-        captchaProps: { label: "<CAPTCHA>" },
-        captchaValue: "mock-value",
-      });
       render(<LoginIdScreen />);
 
       // Primary form
@@ -365,15 +346,6 @@ describe("LoginIdScreen", () => {
     it("should handle form submission correctly", async () => {
       // Enable CAPTCHA
       mockInstance.screen.isCaptchaAvailable = true;
-      mockedUseCaptcha.mockReturnValue({
-        captchaConfig: {
-          siteKey: "mock-key",
-          provider: "auth0",
-          image: "data:image/png;base64,mockimage",
-        },
-        captchaProps: { label: "<CAPTCHA>" },
-        captchaValue: "mock-value",
-      });
       render(<LoginIdScreen />);
 
       await ScreenTestUtils.fillInput(

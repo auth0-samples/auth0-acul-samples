@@ -21,6 +21,7 @@ import {
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+import { getCaptchaThemeFromSDK } from "@/utils/theme/themeEngine";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
@@ -53,21 +54,6 @@ function IdentifierForm() {
     formState: { isSubmitting },
   } = form;
 
-  const getCaptchaTheme = (): "light" | "dark" | "auto" => {
-    const allowedThemes = ["light", "dark", "auto"] as const;
-    const rawTheme =
-      loginIdInstance?.branding?.themes?.default?.colors?.captcha_widget_theme;
-
-    // Type guard to check if the raw theme is a valid theme
-    const isValidTheme = (
-      theme: unknown
-    ): theme is "light" | "dark" | "auto" => {
-      return allowedThemes.includes(theme as "light" | "dark" | "auto");
-    };
-
-    return isValidTheme(rawTheme) ? rawTheme : "auto";
-  };
-
   // Handle text fallbacks in component
   const buttonText = texts?.buttonText || "Continue";
   const captchaLabel = texts?.captchaCodePlaceholder
@@ -91,7 +77,7 @@ function IdentifierForm() {
   const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
     captcha || undefined,
     captchaLabel,
-    getCaptchaTheme()
+    getCaptchaThemeFromSDK(loginIdInstance)
   );
 
   // Get allowed identifiers directly from SDK
