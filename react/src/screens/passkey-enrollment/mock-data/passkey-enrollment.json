@@ -49,7 +49,7 @@
     "texts": {
       "title": "Create a passkey for All Applications on this device",
       "pageTitle": "Log in | All Applications",
-      "description": "Log in to dev-vy34wbm3newzqb7k to continue to All Applications.",
+      "description": "Log in to your-tenant-name to continue to All Applications.",
       "passkeyBenefit1Title": "No need to remember a password",
       "passkeyBenefit1ImgAltText": "Webauthn platform icon",
       "passkeyBenefit1Description": "With passkeys, you can use things like your fingerprint or face to login.",

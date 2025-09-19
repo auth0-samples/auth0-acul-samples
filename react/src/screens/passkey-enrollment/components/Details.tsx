@@ -1,4 +1,4 @@
-import { CustomOptions } from "@auth0/auth0-acul-js/passkey-enrollment";
+import { CustomOptions } from "@auth0/auth0-acul-react/passkey-enrollment";
 
 import {
   CheckMarkShieldAccent,
@@ -8,7 +8,13 @@ import {
   WebAuthPlatform,
 } from "@/assets/icons";
 import { ULThemeButton } from "@/components/ULThemeButton";
-import ULThemeList from "@/components/ULThemeList";
+import {
+  ULThemeList,
+  ULThemeListDescription,
+  ULThemeListItem,
+  ULThemeListTitle,
+} from "@/components/ULThemeList";
+import { cn } from "@/lib/utils";
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 
 import { usePasskeyEnrollmentManager } from "../hooks/usePasskeyEnrollmentManager";
@@ -30,67 +36,77 @@ function Details() {
   /**
    * Handles form submission.
    *
-   * @param data - The form data containing username, password, and optional CAPTCHA.
+   * @param data - (Optional) Form custom data
    */
-  const onCreateClick = async (data: CustomOptions) => {
-    try {
-      await continuePasskeyEnrollment(data);
-    } catch (error) {
-      console.error("Error during passkey enrollment:", error);
-    }
+  const onCreateClick = async (data?: CustomOptions) => {
+    continuePasskeyEnrollment(data);
   };
 
   // Helper function to render icons dynamically
   const renderIcon = (
     IconMask: React.ElementType,
-    IconAccent: React.ElementType
+    IconAccent?: React.ElementType,
+    className?: string
   ) => (
     <div className="relative w-15 h-10 left-1.5">
       <IconMask
-        className="absolute inline-block opacity-[0.5]"
+        className={cn("absolute inline-block opacity-[0.5]", className)}
         color={iconColor}
       />
-      <IconAccent className="absolute inline-block" color={iconColor} />
+      {IconAccent && (
+        <IconAccent className="absolute inline-block" color={iconColor} />
+      )}
     </div>
   );
 
   return (
     <>
-      <ULThemeList
-        variant="icon"
-        items={[
-          {
-            label:
-              texts?.passkeyBenefit1Title || "No need to remember a password",
-            description:
+      <ULThemeList variant="icon">
+        <ULThemeListItem
+          icon={renderIcon(WebAuthPlatform, undefined, "opacity-[1]")}
+        >
+          <ULThemeListTitle
+            children={
+              texts?.passkeyBenefit1Title || "No need to remember a password"
+            }
+          ></ULThemeListTitle>
+          <ULThemeListDescription
+            children={
               texts?.passkeyBenefit1Description ||
-              "With passkeys, you can use things like your fingerprint or face to login.",
-            icon: (
-              <div className="relative w-15 h-10 left-1.5">
-                <WebAuthPlatform
-                  className="absolute inline-block"
-                  color={iconColor}
-                />
-              </div>
-            ),
-          },
-          {
-            label:
-              texts?.passkeyBenefit2Title || "Works on all of your devices",
-            description:
+              "With passkeys, you can use things like your fingerprint or face to login."
+            }
+          ></ULThemeListDescription>
+        </ULThemeListItem>
+
+        <ULThemeListItem icon={renderIcon(DeviceGlobeMask, DeviceGlobeAccent)}>
+          <ULThemeListTitle
+            children={
+              texts?.passkeyBenefit2Title || "Works on all of your devices"
+            }
+          ></ULThemeListTitle>
+          <ULThemeListDescription
+            children={
               texts?.passkeyBenefit2Description ||
-              "Passkeys will automatically be available across your synced devices.",
-            icon: renderIcon(DeviceGlobeMask, DeviceGlobeAccent),
-          },
-          {
-            label: texts?.passkeyBenefit3Title || "Keep your account safer",
-            description:
+              "Passkeys will automatically be available across your synced devices."
+            }
+          ></ULThemeListDescription>
+        </ULThemeListItem>
+
+        <ULThemeListItem
+          icon={renderIcon(CheckMarkShieldMask, CheckMarkShieldAccent)}
+        >
+          <ULThemeListTitle
+            children={texts?.passkeyBenefit3Title || "Keep your account safer"}
+          ></ULThemeListTitle>
+          <ULThemeListDescription
+            children={
               texts?.passkeyBenefit3Description ||
-              "Passkeys offer state-of-the-art phishing resistance.",
-            icon: renderIcon(CheckMarkShieldMask, CheckMarkShieldAccent),
-          },
-        ]}
-      />
+              "Passkeys offer state-of-the-art phishing resistance."
+            }
+          ></ULThemeListDescription>
+        </ULThemeListItem>
+      </ULThemeList>
+
       {/* Create Passkey button */}
       <ULThemeButton
         className="w-full"
