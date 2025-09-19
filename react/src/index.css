@@ -119,6 +119,10 @@ Created to support alignment related utlities like justify, text-align etc with 
   --font-weight-input-label: var(--ul-theme-font-input-labels-weight);
   --font-weight-link: var(--ul-theme-font-links-weight);
 
+  /** Font Sizes **/
+  --font-size-list-title: var(--ul-theme-font-list-text-size);
+  --font-size-list-subtitle: var(--ul-theme-font-body-text-size);
+
   /* Widget */
   --height-widget-logo: var(--ul-theme-widget-logo-height);
   --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
@@ -184,10 +188,11 @@ Created to support alignment related utlities like justify, text-align etc with 
   --ul-theme-font-input-labels-weight: 400;
   --ul-theme-font-links-size: 0.875rem;
   --ul-theme-font-links-weight: 700;
+  --ul-theme-font-list-size: 1.025rem;
 
   /* Page Background */
   --ul-theme-page-bg-page-layout: center;
-  --ul-theme-page-bg-background-color: #bababa;
+  --ul-theme-page-bg-background-color: #000000;
   --ul-theme-page-bg-background-image-url: none;
 
   /* Widget */
