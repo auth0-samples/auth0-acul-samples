@@ -137,6 +137,12 @@
           "name": "Signup Password",
           "description": "Password entry screen for user registration",
           "path": "react/src/screens/signup-password"
+        },
+        {
+          "id": "signup",
+          "name": "Signup",
+          "description": "Screen for user registration",
+          "path": "react/src/screens/signup"
         }
       ]
     }
