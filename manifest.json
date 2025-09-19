@@ -139,6 +139,12 @@
           "path": "react/src/screens/signup-password"
         },
         {
+          "id": "signup",
+          "name": "Signup",
+          "description": "Screen for user registration",
+          "path": "react/src/screens/signup"
+        },
+        {
           "id": "passkey-enrollment",
           "name": "Passkey Enrollment",
           "description": "Screen for passkey enrollment",

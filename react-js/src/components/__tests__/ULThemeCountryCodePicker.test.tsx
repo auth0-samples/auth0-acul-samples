@@ -48,12 +48,12 @@ describe("ULThemeCountryCodePicker Component", () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it("matches snapshot in loading state", () => {
+  it("matches snapshot in disabled state", () => {
     const { container } = render(
       <ULThemeCountryCodePicker
         selectedCountry={mockCountry}
         onClick={mockOnClick}
-        isLoading
+        disabled
       />
     );
     expect(container.firstChild).toMatchSnapshot();
@@ -116,12 +116,12 @@ describe("ULThemeCountryCodePicker Component", () => {
     expect(mockOnClick).toHaveBeenCalledTimes(1);
   });
 
-  it("is disabled when isLoading is true", () => {
+  it("is disabled when disabled prop is true", () => {
     render(
       <ULThemeCountryCodePicker
         selectedCountry={mockCountry}
         onClick={mockOnClick}
-        isLoading
+        disabled
       />
     );
 
@@ -139,10 +139,13 @@ describe("ULThemeCountryCodePicker Component", () => {
     );
 
     const button = screen.getByRole("button");
+    // Check for ULThemePrimaryButton outline variant classes with theme overrides
+    expect(button).toHaveClass("justify-between");
+    expect(button).toHaveClass("text-left");
+    expect(button).toHaveClass("font-medium");
     expect(button).toHaveClass("theme-universal:bg-input-bg");
     expect(button).toHaveClass("theme-universal:text-input-text");
     expect(button).toHaveClass("theme-universal:border-input-border");
-    expect(button).toHaveClass("theme-universal:rounded-input");
   });
 
   it("applies fullWidth styling when fullWidth is true", () => {
