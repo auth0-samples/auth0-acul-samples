@@ -9,13 +9,19 @@ export interface ListProps extends React.HTMLAttributes<HTMLUListElement> {
 }
 
 export interface ListItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  className?: string;
+  children: React.ReactNode;
   icon?: React.ReactNode;
-  description?: string;
   info?: React.ReactNode;
 }
 
+export interface ListElementProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
 const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
-  ({ className, children, icon, description, info, ...props }, ref) => {
+  ({ className, children, icon, info, ...props }, ref) => {
     return (
       <li
         ref={ref}
@@ -26,23 +32,13 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
           {icon && (
             <div className="text-muted-foreground mt-1 shrink-0">{icon}</div>
           )}
-          <div className="min-w-0 flex flex-col gap-1">
-            <div className="text-header font-bold text-(length:--list-title-font-size) leading-(height:--list-title-font-size)">
-              {children}
-            </div>
-            {description && (
-              <p className="text-body-text text-(length:--list-subtitle-font-size) leading-(height:--list-subtitle-font-size)">
-                {description}
-              </p>
-            )}
-          </div>
+          <div className="min-w-0 flex flex-col gap-1">{children}</div>
         </div>
         {info && <div className="shrink-0">{info}</div>}
       </li>
     );
   }
 );
-ListItem.displayName = "ListItem";
 
 const List = React.forwardRef<HTMLUListElement, ListProps>(
   (
@@ -79,6 +75,19 @@ const List = React.forwardRef<HTMLUListElement, ListProps>(
     );
   }
 );
+
+const ListTitle = ({ children, className }: ListElementProps) => {
+  return (
+    <div className={cn("text-primary text-sm", className)}>{children}</div>
+  );
+};
+
+const ListDescription = ({ children, className }: ListElementProps) => {
+  return (
+    <p className={cn("text-muted-foreground text-sm", className)}>{children}</p>
+  );
+};
+
 List.displayName = "List";
 
-export { List, ListItem };
+export { List, ListDescription, ListItem, ListTitle };

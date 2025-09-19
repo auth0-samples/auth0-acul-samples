@@ -1,44 +1,73 @@
-import React from "react";
-
-import { List, ListItem, ListProps } from "@/components/ui/list";
+import {
+  List,
+  ListDescription,
+  ListElementProps,
+  ListItem,
+  ListItemProps,
+  ListProps,
+  ListTitle,
+} from "@/components/ui/list";
 import { cn } from "@/lib/utils";
 
-interface ULThemeListProps extends ListProps {
-  items: {
-    label: string;
-    description?: string;
-    icon?: React.ReactNode;
-    info?: React.ReactNode;
-  }[];
-  className?: string;
-  variant?: "bullet" | "number" | "icon" | "plain";
-  spacing?: "default";
-  iconPosition?: "start";
-}
-
-const ULThemeList = (props: ULThemeListProps) => {
-  // UL List item theme overrides
-  const listItemThemeOverrides =
-    "theme-universal:font-(weight:--ul-theme-font-body-text-weight) mb-4 last:mb-8";
+const ULThemeList = ({ children, className, ...props }: ListProps) => {
   return (
-    <List
-      variant={props.variant}
-      spacing={props.spacing}
-      iconPosition={props.iconPosition}
-    >
-      {props?.items?.map((item, index) => (
-        <ListItem
-          key={index}
-          icon={item.icon}
-          description={item.description}
-          info={item.info}
-          className={cn(listItemThemeOverrides, props.className)}
-        >
-          {item.label}
-        </ListItem>
-      ))}
+    <List {...props} className={className}>
+      {children}
     </List>
   );
 };
 
-export default ULThemeList;
+const ULThemeListItem = ({
+  children,
+  icon,
+  info,
+  className,
+}: ListItemProps) => {
+  const listItemThemeOverrides =
+    "theme-universal:font-(weight:--ul-theme-font-body-text-weight) mb-4 last:mb-8";
+
+  return (
+    <ListItem
+      icon={icon}
+      info={info}
+      className={cn(listItemThemeOverrides, className)}
+    >
+      {children}
+    </ListItem>
+  );
+};
+
+const ULThemeListTitle = ({
+  children,
+  className,
+  ...props
+}: ListElementProps) => {
+  const ulThemeTitleOverrides =
+    "text-header font-bold text-(length:--font-size-list-title) leading-(height:--font-size-list-title)";
+  return (
+    <ListTitle {...props} className={cn(ulThemeTitleOverrides, className)}>
+      {children}
+    </ListTitle>
+  );
+};
+
+const ULThemeListDescription = ({
+  children,
+  className,
+  ...props
+}: ListElementProps) => {
+  const ulThemeDescOverrides =
+    "text-body-text text-(length:--font-size-list-subtitle) leading-(height:--font-size-list-subtitle)";
+  return (
+    <ListDescription {...props} className={cn(ulThemeDescOverrides, className)}>
+      {children}
+    </ListDescription>
+  );
+};
+
+export {
+  ULThemeList,
+  ULThemeListDescription,
+  ULThemeListItem,
+  ULThemeListTitle,
+};

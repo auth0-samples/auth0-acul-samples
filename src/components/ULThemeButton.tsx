@@ -1,5 +1,6 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 
 export type ULThemeButtonProps = ButtonProps;
 
@@ -9,6 +10,12 @@ export function ULThemeButton({
   className,
   ...props
 }: ULThemeButtonProps) {
+  // Using extractTokenValue utility to extract the link style variant type from the CSS variable
+  const linkStyleValue =
+    extractTokenValue("--ul-theme-font-links-style") === "normal"
+      ? "no-underline"
+      : "underline";
+
   // Variant-specific theme overrides for colors and states
   const variantThemeOverrides = {
     primary: cn(
@@ -34,7 +41,7 @@ export function ULThemeButton({
       "theme-universal:disabled:cursor-not-allowed"
     ),
     ghost: "", // Add ghost overrides if needed
-    link: "", // Add link overrides if needed
+    link: `text-link-focus hover:no-underline cursor-pointer focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80 theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15 ${linkStyleValue}`, // Add link overrides if needed
   };
 
   // Size-specific theme overrides for border radius and typography
@@ -60,6 +67,10 @@ export function ULThemeButton({
       "theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
     ),
     icon: cn("theme-universal:rounded-button"),
+    link: cn(
+      "theme-universal:text-(length:--ul-theme-font-links-size)",
+      "theme-universal:font-(weight:--ul-theme-font-links-weight)"
+    ),
   };
 
   // Combine all theme classes with proper type safety

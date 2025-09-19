@@ -38,7 +38,7 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
                 class="relative w-15 h-10 left-1.5"
               >
                 <svg
-                  class="absolute inline-block"
+                  class="absolute inline-block opacity-[1]"
                   color=""
                   fill="none"
                   height="40"
@@ -59,12 +59,12 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
               class="min-w-0 flex flex-col gap-1"
             >
               <div
-                class="text-header font-bold text-(length:--list-title-font-size) leading-(height:--list-title-font-size)"
+                class="text-header font-bold text-(length:--font-size-list-title) leading-(height:--font-size-list-title)"
               >
                 No need to remember a password
               </div>
               <p
-                class="text-body-text text-(length:--list-subtitle-font-size) leading-(height:--list-subtitle-font-size)"
+                class="text-body-text text-(length:--font-size-list-subtitle) leading-(height:--font-size-list-subtitle)"
               >
                 With passkeys, you can use things like your fingerprint or face to login.
               </p>
@@ -131,12 +131,12 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
               class="min-w-0 flex flex-col gap-1"
             >
               <div
-                class="text-header font-bold text-(length:--list-title-font-size) leading-(height:--list-title-font-size)"
+                class="text-header font-bold text-(length:--font-size-list-title) leading-(height:--font-size-list-title)"
               >
                 Works on all of your devices
               </div>
               <p
-                class="text-body-text text-(length:--list-subtitle-font-size) leading-(height:--list-subtitle-font-size)"
+                class="text-body-text text-(length:--font-size-list-subtitle) leading-(height:--font-size-list-subtitle)"
               >
                 Passkeys will automatically be available across your synced devices.
               </p>
@@ -193,12 +193,12 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
               class="min-w-0 flex flex-col gap-1"
             >
               <div
-                class="text-header font-bold text-(length:--list-title-font-size) leading-(height:--list-title-font-size)"
+                class="text-header font-bold text-(length:--font-size-list-title) leading-(height:--font-size-list-title)"
               >
                 Keep your account safer
               </div>
               <p
-                class="text-body-text text-(length:--list-subtitle-font-size) leading-(height:--list-subtitle-font-size)"
+                class="text-body-text text-(length:--font-size-list-subtitle) leading-(height:--font-size-list-subtitle)"
               >
                 Passkeys offer state-of-the-art phishing resistance.
               </p>
@@ -214,13 +214,11 @@ exports[`PasskeyEnrollmentScreen should render correctly and match snapshot 1`] 
       <div
         class="mt-4 text-center"
       >
-        <a
-          aria-disabled="false"
-          class="focus-within:ring-ring inline-flex items-center gap-2 rounded-md py-0.5 underline-offset-4 transition-colors focus:ring-3 focus-visible:outline-hidden underline text-link-focus text-(length:--ul-theme-font-links-size) font-(weight:--ul-theme-font-links-weight) focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80 theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15"
-          href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')"
+        <button
+          class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden text-sm font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 underline-offset-4 text-link-focus hover:no-underline cursor-pointer focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80 theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15 underline theme-universal:text-(length:--ul-theme-font-links-size) theme-universal:font-(weight:--ul-theme-font-links-weight)"
         >
           Continue without passkeys
-        </a>
+        </button>
       </div>
       <div
         class="mt-4 text-center"

@@ -256,9 +256,10 @@ export function flattenFonts(fonts: FontData): Record<string, string> {
   if (fonts.links_style)
     result["--ul-theme-font-links-style"] = fonts.links_style;
 
-  // Set Custom Font for List Titles
+  // Set Custom Font Size for Lists based on body_text size
+  // If body_text size is defined, calculate list font size as (body_text.size + 15) / 100 rem
   if (fonts?.body_text?.size !== undefined) {
-    result["--ul-theme-list-title-font-size"] =
+    result["--ul-theme-font-list-text-size"] =
       `${(fonts.body_text.size + 15) / 100}rem`;
   }
 
