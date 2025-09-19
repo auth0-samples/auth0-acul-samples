@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -16,7 +15,10 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
 import { ULThemePasswordValidator } from "@/components/ULThemePasswordValidator";
 import { getFieldError } from "@/utils/helpers/errorUtils";
-import { isPasswordValid } from "@/utils/helpers/passwordValidator";
+import {
+  createPasswordValidator,
+  shouldShowValidation,
+} from "@/utils/validations";
 
 import { useSignupPasswordManager } from "../hooks/useSignupPasswordManager";
 
@@ -50,25 +52,14 @@ function SignupPasswordForm() {
   const passwordValue = watch("password");
   const validationRules = usePasswordValidation(passwordValue);
 
-  // Password validation state
-  const isPasswordValidState = useMemo(
-    () => isPasswordValid(validationRules),
-    [validationRules]
-  );
-
   // Show validation when user has typed something
-  const shouldShowValidation = Boolean(
-    passwordValue && passwordValue.length > 0
-  );
+  const showPasswordValidation = shouldShowValidation(passwordValue);
 
   // Custom validation function for React Hook Form
-  const validatePasswordRule = (value: string) => {
-    if (!value) return "Password is required";
-    if (value && shouldShowValidation) {
-      return isPasswordValidState || "Password does not meet requirements";
-    }
-    return true;
-  };
+  const validatePasswordRule = createPasswordValidator(
+    validationRules,
+    showPasswordValidation
+  );
 
   // Get user data from screen data for readonly fields
   const screenData = signupPassword?.screen?.data;
@@ -200,10 +191,6 @@ function SignupPasswordForm() {
             sdkError={captchaSDKError}
             rules={{
               required: "Please complete the CAPTCHA",
-              maxLength: {
-                value: 15,
-                message: "CAPTCHA too long",
-              },
             }}
           />
         )}
@@ -214,7 +201,7 @@ function SignupPasswordForm() {
           passwordSecurityText={
             texts?.passwordSecurityText || "Your password must contain:"
           }
-          show={shouldShowValidation}
+          show={showPasswordValidation}
           className="mb-4"
         />
 
