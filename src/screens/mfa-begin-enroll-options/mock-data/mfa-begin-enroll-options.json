@@ -1,0 +1,56 @@
+{
+  "client": {
+    "id": "oTMeSBoJATvtOl2iW1glw4LmB9pWm4kC",
+    "name": "My-react-application"
+  },
+  "prompt": { "name": "mfa" },
+  "screen": {
+    "links": {
+      "ios": "https://itunes.apple.com/us/app/auth0-guardian/id1093447833",
+      "android": "https://play.google.com/store/apps/details?id=com.auth0.guardian"
+    },
+    "name": "mfa-begin-enroll-options",
+    "texts": {
+      "pageTitle": "Add another authentication method | My-react-application",
+      "backText": "Go back",
+      "title": "Keep Your Account Safe",
+      "description": "Add another authentication method.",
+      "logoAltText": "test3",
+      "authenticatorNamesSMS": "SMS",
+      "authenticatorNamesVoice": "Phone",
+      "authenticatorNamesPhone": "Phone",
+      "authenticatorNamesPushNotification": "Notification via Auth0 Guardian app",
+      "authenticatorNamesOTP": "Google Authenticator or similar",
+      "authenticatorNamesEmail": "Email",
+      "authenticatorNamesRecoveryCode": "Recovery code",
+      "authenticatorNamesDUO": "Notification via DUO app",
+      "authenticatorNamesWebauthnRoaming": "Security Key",
+      "authenticatorNamesWebauthnPlatform": "Fingerprint or Face Recognition",
+      "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+      "badgeAltText": "Link to the Auth0 website",
+      "error": "Error",
+      "qrCode": "QR Code",
+      "spinner_push_notification_label": "Waiting for push notification to be accepted"
+    }
+  },
+  "tenant": {
+    "enabled_factors": ["sms", "push-notification", "otp", "webauthn-roaming"],
+    "mfa_options": { "pick_authenticator_enabled": true }
+  },
+  "transaction": {
+    "country_code": { "code": "IN", "prefix": "91", "country": "India" },
+    "locale": "en",
+    "state": "hKFo2SBuMDJhU1hDdjVSZ0JRV0dremZxMUR5UHlMd3JxWlpsNaFuqm1mYS1lbnJvbGyjdGlk2SBQeEthaFJMdW1wRlFrWHlxaWFvcFYzM3JrMjk0YXdMcaNjaWTZIG9UTWVTQm9KQVR2dE9sMmlXMWdsdzRMbUI5cFdtNGtD"
+  },
+  "user": {
+    "id": "auth0|68d0c9432f06a21d5f7546a0",
+    "email": "tanyatest@atko.email",
+    "picture": "https://s.gravatar.com/avatar/27ae96d2af8133df20dad5f3fcb8cbcf?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fta.png",
+    "enrolled_factors": ["sms", "phone", "otp", "push-notification"]
+  },
+  "branding": {
+    "settings": {
+      "colors": { "page_background": "#000000", "primary": "#635dff" }
+    }
+  }
+}
