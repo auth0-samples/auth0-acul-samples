@@ -1,4 +1,4 @@
-import ULThemeLink from "@/components/ULThemeLink";
+import { ULThemeButton } from "@/components/ULThemeButton";
 
 import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
 
@@ -15,12 +15,13 @@ function Footer() {
         {footerText}
       </span>
       {footerLinkText && (
-        <ULThemeLink
-          href="javascript:void(0)"
+        <ULThemeButton
+          variant="link"
+          size="link"
           onClick={() => handleResendOTP()}
         >
           {footerLinkText}
-        </ULThemeLink>
+        </ULThemeButton>
       )}
     </div>
   );

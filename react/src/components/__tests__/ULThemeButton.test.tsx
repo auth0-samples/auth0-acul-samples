@@ -98,4 +98,17 @@ describe("ULThemeButton", () => {
       "theme-universal:border-(--ul-theme-color-secondary-button-border)"
     );
   });
+
+  it("supports link variant", () => {
+    render(
+      <ULThemeButton variant="link" size="link">
+        Link Button
+      </ULThemeButton>
+    );
+    const button = screen.getByRole("button", { name: "Link Button" });
+    expect(button.className).toContain("text-link-focus");
+    expect(button.className).toContain(
+      "theme-universal:text-(length:--ul-theme-font-links-size)"
+    );
+  });
 });

@@ -19,7 +19,7 @@ const ULThemePageLayout = ({
   ...rest
 }: ULThemePageLayoutProps) => {
   const themedStyles =
-    "flex items-center min-h-screen px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url)";
+    "flex items-center min-h-screen px-10 py-20 justify-page-layout bg-(color:--ul-theme-page-bg-background-color) bg-(image:--ul-theme-page-bg-background-image-url)";
   return (
     <div className={cn(themedStyles, className)} {...rest}>
       {children}
