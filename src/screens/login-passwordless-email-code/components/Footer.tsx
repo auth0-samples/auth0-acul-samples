@@ -1,4 +1,4 @@
-import ULThemeLink from "@/components/ULThemeLink";
+import { ULThemeButton } from "@/components/ULThemeButton";
 
 import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
@@ -16,12 +16,13 @@ function Footer() {
         {footerText}
       </span>
       {footerLinkText && (
-        <ULThemeLink
-          href="javascript:void(0)"
+        <ULThemeButton
+          variant="link"
+          size="link"
           onClick={() => handleResendEmailCode()}
         >
           {footerLinkText}
-        </ULThemeLink>
+        </ULThemeButton>
       )}
     </div>
   );

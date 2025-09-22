@@ -60,7 +60,7 @@ export const createMockSignupIdInstance = (): MockSignupIdInstance => ({
     countryPrefix: null,
     connectionStrategy: "database",
     currentConnection: null,
-    alternateConnections: CommonTestData.socialConnections.slice(0, 2), // Just Google and Github
+    alternateConnections: CommonTestData.socialConnections.slice(0, 2),
     isPasskeyEnabled: false,
     usernamePolicy: null,
   },
@@ -77,6 +77,20 @@ export const useSignupId = jest.fn(() => ({
 
 export const useScreen = jest.fn(() => mockSignupIdInstance.screen);
 export const useTransaction = jest.fn(() => mockSignupIdInstance.transaction);
+
+// Mock the useEnabledIdentifiers hook
+export const useEnabledIdentifiers = jest.fn(() => [
+  { type: "phone", required: true },
+  { type: "email", required: false },
+  { type: "username", required: false },
+]);
+
+// Mock the useUsernameValidation hook
+export const useUsernameValidation = jest.fn(() => ({
+  isValid: true,
+  errors: [],
+}));
+
 export const signup = mockSignupIdInstance.signup;
 export const federatedSignup = mockSignupIdInstance.federatedSignup;
 export const pickCountryCode = mockSignupIdInstance.pickCountryCode;
