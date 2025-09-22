@@ -137,6 +137,12 @@
           "name": "Signup Password",
           "description": "Password entry screen for user registration",
           "path": "react/src/screens/signup-password"
+        },
+        {
+          "id": "mfa-begin-enroll-options",
+          "name": "MFA Begin Enroll Options",
+          "description": "Screen to begin enrolling in multi-factor authentication (MFA) with various options",
+          "path": "react/src/screens/mfa-begin-enroll-options"
         }
       ]
     }
