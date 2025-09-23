@@ -2,18 +2,20 @@ import type { Error } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
 import { MfaEnrollFactorType } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
 import { ChevronRight } from "lucide-react";
 
-import { MFAGuardianIcon } from "@/assets/icons/MFAGuardianIcon";
-import { MFAOTPIcon } from "@/assets/icons/MFAOTPIcon";
-import { MFAPhoneIcon } from "@/assets/icons/MFAPhoneIcon";
-import { MFASmsIcon } from "@/assets/icons/MFASmsIcon";
-import { MFAWebAuthnRoamingIcon } from "@/assets/icons/MFAWebAuthnRoamingIcon";
+import {
+  MFAGuardianIcon,
+  MFAOTPIcon,
+  MFAPhoneIcon,
+  MFASmsIcon,
+  MFAWebAuthnRoamingIcon,
+} from "@/assets/icons";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
 
 import { useMfaBeginEnrollOptionsManager } from "../hooks/useMFABeginEnrollOptionsManager";
 
 function MFAEnrollOptions() {
-  // Extracting attributes from hook made out of ResetPasswordEmailInstance class of Auth0 React SDK
+  // Extracting attributes from hook made out of MFABeginEnrollOptionsInstance class of Auth0 React SDK
   const { texts, handleEnroll, errors, enrollmentOptions } =
     useMfaBeginEnrollOptionsManager();
 

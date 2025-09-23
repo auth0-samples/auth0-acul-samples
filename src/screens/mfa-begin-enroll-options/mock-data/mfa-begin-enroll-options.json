@@ -45,7 +45,7 @@
   "user": {
     "id": "auth0|mock-id",
     "email": "abc@xyz.email",
-    "picture": "https://s.gravatar.com/avatar/27ae96d2af8133df20dad5f3fcb8cbcf?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fta.png",
+    "picture": "dummy-picture.png",
     "enrolled_factors": ["sms", "phone", "otp", "push-notification"]
   },
   "branding": {
