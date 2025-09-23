@@ -1,5 +1,5 @@
-import { MfaEnrollFactorType } from "@auth0/auth0-acul-react";
-import type { Error } from "@auth0/auth0-acul-react/reset-password-email";
+import type { Error } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
+import { MfaEnrollFactorType } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
 import { ChevronRight } from "lucide-react";
 
 import { MFAGuardianIcon } from "@/assets/icons/MFAGuardianIcon";
@@ -33,9 +33,6 @@ function MFAEnrollOptions() {
     otp: texts?.authenticatorNamesOTP ?? "Google Authenticator or similar",
     "webauthn-roaming":
       texts?.authenticatorNamesWebauthnRoaming ?? "Security Key",
-    // email: texts?.authenticatorNamesEmail ?? "Email",
-    // "recovery-code": texts?.authenticatorNamesRecoveryCode ?? "Recovery Code",
-    // "duo": texts?.authenticatorNamesDuo ?? "Notification via DUO app",
   };
 
   const iconMap: Record<MfaEnrollFactorType, React.ReactNode> = {
@@ -45,9 +42,6 @@ function MFAEnrollOptions() {
     "push-notification": <MFAGuardianIcon />,
     otp: <MFAOTPIcon />,
     "webauthn-roaming": <MFAWebAuthnRoamingIcon />,
-    // email: <MFASmsIcon />,
-    // "recovery-code": <MFASmsIcon />,
-    // "duo": <MFASmsIcon />
   };
 
   function getDisplayName(factor: MfaEnrollFactorType) {
@@ -72,16 +66,16 @@ function MFAEnrollOptions() {
       )}
       {/* Render buttons for each enrollment option */}
       <div className="space-y-2">
-        {enrollOptions.map((option, index) => {
+        {enrollOptions.map((option) => {
           return (
             <ULThemeSocialProviderButton
-              key={index}
+              key={option}
               displayName={getDisplayName(option)}
               buttonText={getDisplayName(option)}
               iconEnd={<ChevronRight size={18} color="#6f7780" />}
               iconComponent={getIcon(option)}
               onClick={() => handleEnroll({ action: option })}
-              className="flex items-center gap-2 theme-universal:border-(--ul-theme-color-base-hover-color)"
+              className="flex items-center gap-2 border-black"
             ></ULThemeSocialProviderButton>
           );
         })}

@@ -1,7 +1,7 @@
 {
   "client": {
-    "id": "oTMeSBoJATvtOl2iW1glw4LmB9pWm4kC",
-    "name": "My-react-application"
+    "id": "mockId",
+    "name": "mockApplication"
   },
   "prompt": { "name": "mfa" },
   "screen": {
@@ -11,7 +11,7 @@
     },
     "name": "mfa-begin-enroll-options",
     "texts": {
-      "pageTitle": "Add another authentication method | My-react-application",
+      "pageTitle": "Add another authentication method | mockApplication",
       "backText": "Go back",
       "title": "Keep Your Account Safe",
       "description": "Add another authentication method.",
@@ -40,11 +40,11 @@
   "transaction": {
     "country_code": { "code": "IN", "prefix": "91", "country": "India" },
     "locale": "en",
-    "state": "hKFo2SBuMDJhU1hDdjVSZ0JRV0dremZxMUR5UHlMd3JxWlpsNaFuqm1mYS1lbnJvbGyjdGlk2SBQeEthaFJMdW1wRlFrWHlxaWFvcFYzM3JrMjk0YXdMcaNjaWTZIG9UTWVTQm9KQVR2dE9sMmlXMWdsdzRMbUI5cFdtNGtD"
+    "state": "mockState"
   },
   "user": {
-    "id": "auth0|68d0c9432f06a21d5f7546a0",
-    "email": "tanyatest@atko.email",
+    "id": "auth0|mock-id",
+    "email": "abc@xyz.email",
     "picture": "https://s.gravatar.com/avatar/27ae96d2af8133df20dad5f3fcb8cbcf?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fta.png",
     "enrolled_factors": ["sms", "phone", "otp", "push-notification"]
   },
