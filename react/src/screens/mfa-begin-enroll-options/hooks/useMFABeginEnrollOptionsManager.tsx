@@ -19,8 +19,8 @@ export const useMfaBeginEnrollOptionsManager = () => {
 
   const handleEnroll = async (payload: MfaEnrollOptions): Promise<void> => {
     executeSafely(
-      `Resent OTP with Custom options: ${JSON.stringify(payload)}`,
-      () => enroll(payload)
+      `Enroll into the MFA factor: ${JSON.stringify(payload)}`,
+      () => () => enroll(payload)
     );
   };
 
