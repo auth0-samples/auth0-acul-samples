@@ -62,15 +62,15 @@ console.log(
 try {
   // Run the build
   execSync("npm run build", { stdio: "inherit", cwd: projectRoot });
-  
+
   console.log(
     `${ANSI_GREEN}%s${ANSI_RESET}`,
     `Build completed. Generating local development HTML for screen: ${screenName}...`
   );
-  
+
   // Find all generated assets
   const assetsDir = path.join(distDir, "assets");
-  
+
   if (!fs.existsSync(assetsDir)) {
     console.error(
       `${ANSI_RED}%s${ANSI_RESET}`,
@@ -78,33 +78,33 @@ try {
     );
     process.exit(1);
   }
-  
+
   // Function to recursively find files
   const findFiles = (dir, extension) => {
     const files = [];
     const items = fs.readdirSync(dir);
-    
+
     for (const item of items) {
       const fullPath = path.join(dir, item);
       const stat = fs.statSync(fullPath);
-      
+
       if (stat.isDirectory()) {
         files.push(...findFiles(fullPath, extension));
       } else if (item.endsWith(extension)) {
         files.push(path.relative(distDir, fullPath));
       }
     }
-    
+
     return files;
   };
-  
+
   // Find all CSS and JS files
-  const cssFiles = findFiles(assetsDir, '.css');
-  const jsFiles = findFiles(assetsDir, '.js');
-  
+  const cssFiles = findFiles(assetsDir, ".css");
+  const jsFiles = findFiles(assetsDir, ".js");
+
   console.log(`Found CSS files:`, cssFiles);
   console.log(`Found JS files:`, jsFiles);
-  
+
   // Generate the local development HTML format
   const generateLocalHTML = (screenName, cssFiles, jsFiles, port) => {
     const baseUrl = `http://localhost:${port}`;
@@ -112,28 +112,32 @@ try {
     let html = `<meta name="viewport" content="width=device-width, initial-scale=1">\n`;
     
     // Add CSS files (should be just one shared style file)
-    cssFiles.forEach(cssFile => {
+    cssFiles.forEach((cssFile) => {
       html += `<link rel="stylesheet" href="${baseUrl}/${cssFile}">\n`;
     });
-    
+
     // Find and order JS files: main, common, vendor, screen-specific
-    const mainFile = jsFiles.find(file => file.includes('main.') && !file.includes('shared/'));
-    const commonFile = jsFiles.find(file => file.includes('shared/common.'));
-    const vendorFile = jsFiles.find(file => file.includes('shared/vendor.'));
-    const screenFile = jsFiles.find(file => file.includes(`${screenName}/index.`));
-    
+    const mainFile = jsFiles.find(
+      (file) => file.includes("main.") && !file.includes("shared/")
+    );
+    const commonFile = jsFiles.find((file) => file.includes("shared/common."));
+    const vendorFile = jsFiles.find((file) => file.includes("shared/vendor."));
+    const screenFile = jsFiles.find((file) =>
+      file.includes(`${screenName}/index.`)
+    );
+
     // Add scripts in the specified order
-    [mainFile, commonFile, vendorFile, screenFile].forEach(file => {
+    [mainFile, commonFile, vendorFile, screenFile].forEach((file) => {
       if (file) {
         html += `<script src="${baseUrl}/${file}" type="module"></script>\n`;
       }
     });
-    
+
     return html;
   };
-  
+
   const localHTML = generateLocalHTML(screenName, cssFiles, jsFiles, port);
-  
+
   // Output the result
   console.log(
     `${ANSI_YELLOW}%s${ANSI_RESET}`,
@@ -142,7 +146,6 @@ try {
   console.log("=====================================");
   console.log(localHTML);
   console.log("=====================================");
-  
 } catch (error) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,

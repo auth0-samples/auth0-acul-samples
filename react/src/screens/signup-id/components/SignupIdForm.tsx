@@ -6,6 +6,10 @@ import type {
   SignupOptions,
   TransactionMembersOnSignupId,
 } from "@auth0/auth0-acul-react/signup-id";
+import {
+  useEnabledIdentifiers,
+  useUsernameValidation,
+} from "@auth0/auth0-acul-react/signup-id";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -17,6 +21,7 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { transformAuth0CountryCode } from "@/utils/helpers/countryUtils";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIndividualIdentifierDetails } from "@/utils/helpers/identifierUtils";
+import { createUsernameValidator } from "@/utils/validations";
 
 import { useSignupIdManager } from "../hooks/useSignupIdManager";
 
@@ -38,15 +43,29 @@ function SignupIdForm() {
       username: "",
       captcha: "",
     },
+    reValidateMode: "onBlur",
   });
 
   const {
     formState: { isSubmitting },
+    watch,
   } = form;
 
+  // Get username validation
+  const userNameValue = watch("username");
+  const { isValid: isUsernameValid, errors: userNameErrors } =
+    useUsernameValidation(userNameValue || "");
+
   // Get identifiers from transaction
-  const requiredIdentifiers = signupId?.transaction?.requiredIdentifiers || [];
-  const optionalIdentifiers = signupId?.transaction?.optionalIdentifiers || [];
+  const enabledIdentifiers = useEnabledIdentifiers();
+
+  // Extract required and optional identifiers from the hook data
+  const requiredIdentifiers = (enabledIdentifiers || [])
+    .filter((identifier) => identifier.required)
+    .map((identifier) => identifier.type);
+  const optionalIdentifiers = (enabledIdentifiers || [])
+    .filter((identifier) => !identifier.required)
+    .map((identifier) => identifier.type);
 
   // Handle text fallbacks
   const buttonText = texts?.buttonText || "Continue";
@@ -59,6 +78,12 @@ function SignupIdForm() {
   const generalErrors =
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
+
+  // Create validation function using utility
+  const validateUsernameRule = createUsernameValidator(
+    isUsernameValid,
+    userNameErrors
+  );
 
   // Get field-specific errors
   const getIdentifierError = (identifierType: IdentifierType) =>
@@ -116,10 +141,9 @@ function SignupIdForm() {
         name={identifierType}
         rules={{
           required: isRequired ? "This field is required" : false,
-          maxLength: {
-            value: 100,
-            message: "Maximum 100 characters allowed",
-          },
+          ...(identifierType === "username" && {
+            validate: validateUsernameRule(isRequired),
+          }),
         }}
         render={({ field, fieldState }) => (
           <FormItem>

@@ -3,7 +3,7 @@
 exports[`LoginPasswordlessEmailCodeScreen should render correctly and match snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="flex items-center min-h-screen px-10 py-20 justify-page-layout bg-background-page bg-(image:--ul-theme-page-bg-background-image-url) theme-universal"
+    class="flex items-center min-h-screen px-10 py-20 justify-page-layout bg-(color:--ul-theme-page-bg-background-color) bg-(image:--ul-theme-page-bg-background-image-url) theme-universal"
   >
     <div
       class="bg-card text-card-foreground shadow-bevel-2xl flex flex-col rounded-4xl px-10 py-10 theme-universal:bg-widget-bg theme-universal:border-(--color-widget-border) theme-universal:rounded-widget theme-universal:shadow-widget theme-universal:border-(length:--border-widget) w-full max-w-[400px] gap-0"
@@ -65,7 +65,6 @@ exports[`LoginPasswordlessEmailCodeScreen should render correctly and match snap
                     aria-disabled="false"
                     aria-label="Edit email address"
                     class="focus-within:ring-ring inline-flex items-center gap-2 rounded-md py-0.5 underline-offset-4 transition-colors focus:ring-3 focus-visible:outline-hidden underline text-link-focus text-(length:--ul-theme-font-links-size) font-(weight:--ul-theme-font-links-weight) focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80 theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15"
-                    href=""
                   >
                     Edit
                   </a>
@@ -125,13 +124,11 @@ exports[`LoginPasswordlessEmailCodeScreen should render correctly and match snap
         >
           Didn't receive an email?
         </span>
-        <a
-          aria-disabled="false"
-          class="focus-within:ring-ring inline-flex items-center gap-2 rounded-md py-0.5 underline-offset-4 transition-colors focus:ring-3 focus-visible:outline-hidden underline text-link-focus text-(length:--ul-theme-font-links-size) font-(weight:--ul-theme-font-links-weight) focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80 theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15"
-          href="javascript:throw new Error('React has blocked a javascript: URL as a security precaution.')"
+        <button
+          class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden text-sm font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 underline-offset-4 text-link-focus hover:no-underline cursor-pointer focus:rounded-(--ul-theme-border-links-border-radius) hover:text-link-focus/80 theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15 underline theme-universal:text-(length:--ul-theme-font-links-size) theme-universal:font-(weight:--ul-theme-font-links-weight)"
         >
           Resend
-        </a>
+        </button>
       </div>
     </div>
   </div>

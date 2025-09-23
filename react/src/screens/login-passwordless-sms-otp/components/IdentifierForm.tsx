@@ -13,7 +13,6 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { getFieldError } from "@/utils/helpers/errorUtils";
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
 
@@ -76,10 +75,6 @@ function IdentifierForm() {
     await handleSubmitOTP(data.username || "", data.code, data.captcha);
   };
 
-  // Rebase the edit identifier link to the current origin
-  const editIdentifierLink =
-    rebaseLinkToCurrentOrigin(links?.edit_identifier) || "";
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
@@ -108,7 +103,7 @@ function IdentifierForm() {
                 readOnly={true}
                 endAdornment={
                   <ULThemeLink
-                    href={editIdentifierLink}
+                    href={links?.edit_identifier}
                     aria-label={
                       texts?.editLinkScreenReadableText || "Edit phone number"
                     }
