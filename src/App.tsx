@@ -6,8 +6,7 @@ import { getScreenComponent } from "@/utils/screen/screenLoader";
 
 const App = () => {
   const currentScreen = useCurrentScreen();
-  const screenName =
-    currentScreen?.screen?.name || "login-passwordless-sms-otp";
+  const screenName = currentScreen?.screen?.name;
   const ScreenComponent = getScreenComponent(screenName);
 
   return (

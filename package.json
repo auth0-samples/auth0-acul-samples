@@ -8,6 +8,7 @@
     "screen": "node ./scripts/dev-screen.js",
     "build": "tsc && vite build --logLevel info",
     "build:local": "PORT=8080 node ./scripts/build-local.js",
+    "generate:screenLoader": "node ./scripts/generate-screen-loader.js",
     "test": "jest",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --no-error-on-unmatched-pattern",
     "lint:check": "eslint \"src/**/*.{ts,tsx}\" --no-error-on-unmatched-pattern",
