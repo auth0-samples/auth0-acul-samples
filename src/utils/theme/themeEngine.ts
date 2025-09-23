@@ -220,3 +220,18 @@ function updateThemeCache(changedVars: Record<string, string>): void {
 export function clearThemeCache(): void {
   currentThemeCache = {};
 }
+
+export const getCaptchaTheme = (
+  theme: "light" | "dark" | "auto" | undefined
+) => {
+  if (theme === "auto") {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "dark";
+    }
+    return "light";
+  }
+  return theme || "light";
+};

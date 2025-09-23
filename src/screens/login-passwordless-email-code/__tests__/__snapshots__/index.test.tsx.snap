@@ -27,9 +27,7 @@ exports[`LoginPasswordlessEmailCodeScreen should render correctly and match snap
       >
         We've sent an email with your code to:
       </p>
-      <form
-        class="space-y-2"
-      >
+      <form>
         <div
           class="grid"
           data-slot="form-item"
