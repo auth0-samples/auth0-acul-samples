@@ -109,7 +109,7 @@ function SignupPasswordForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General alerts at the top */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
