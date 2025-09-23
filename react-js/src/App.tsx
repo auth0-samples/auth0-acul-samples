@@ -5,7 +5,7 @@ import { getCurrentScreen } from "@auth0/auth0-acul-js";
 import { getScreenComponent } from "@/utils/screen/screenLoader";
 
 const App = () => {
-  const [screen, setScreen] = useState("login-id");
+  const [screen, setScreen] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const currentScreenDetails = getCurrentScreen();

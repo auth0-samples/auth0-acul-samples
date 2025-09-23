@@ -61,7 +61,7 @@ function ResetPasswordForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General error messages */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
