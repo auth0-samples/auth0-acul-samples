@@ -21,7 +21,6 @@ import {
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
-import { getCaptchaThemeFromSDK } from "@/utils/theme/themeEngine";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
@@ -76,8 +75,7 @@ function IdentifierForm() {
 
   const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
     captcha || undefined,
-    captchaLabel,
-    getCaptchaThemeFromSDK(loginIdInstance)
+    captchaLabel
   );
 
   // Get allowed identifiers directly from SDK

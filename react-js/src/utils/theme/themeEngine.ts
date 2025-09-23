@@ -221,21 +221,6 @@ export function clearThemeCache(): void {
   currentThemeCache = {};
 }
 
-export const getCaptchaThemeFromSDK = (
-  screenInstance: Auth0ScreenInstance
-): "light" | "dark" | "auto" => {
-  const allowedThemes = ["light", "dark", "auto"] as const;
-  const rawTheme =
-    screenInstance?.branding?.themes?.default?.colors?.captcha_widget_theme;
-
-  // Type guard to check if the raw theme is a valid theme
-  const isValidTheme = (theme: unknown): theme is "light" | "dark" | "auto" => {
-    return allowedThemes.includes(theme as "light" | "dark" | "auto");
-  };
-
-  return isValidTheme(rawTheme) ? rawTheme : "auto";
-};
-
 export const getCaptchaTheme = (
   theme: "light" | "dark" | "auto" | undefined
 ) => {
