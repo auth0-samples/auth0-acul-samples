@@ -20,6 +20,10 @@ export interface ULThemeSocialProviderButtonProps
    * Optional class names for additional styling or overriding default styles.
    */
   className?: string;
+  /**
+   * The icon to be displayed at the end of the social login button component
+   */
+  iconEnd?: React.ReactNode | null;
 }
 
 const ULThemeSocialProviderButton = ({
@@ -27,6 +31,7 @@ const ULThemeSocialProviderButton = ({
   variant = "outline",
   size = "default",
   iconComponent,
+  iconEnd,
   displayName,
   buttonText,
   disabled = false,
@@ -87,9 +92,10 @@ const ULThemeSocialProviderButton = ({
           {iconComponent}
         </span>
       )}
-      <span className="overflow-hidden whitespace-nowrap text-ellipsis text-base">
+      <span className="break-words text-base whitespace-normal text-left">
         {buttonText}
       </span>
+      {iconEnd && <span className="shrink-0 ml-auto">{iconEnd}</span>}
     </Button>
   );
 };
