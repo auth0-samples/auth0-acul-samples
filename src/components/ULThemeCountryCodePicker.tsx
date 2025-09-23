@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 
 import { ChevronRight } from "lucide-react";
 
+import { ULThemeButton } from "@/components/ULThemeButton";
 import { cn } from "@/lib/utils";
 
 export interface ULThemeCountryCodePickerProps
@@ -22,10 +23,6 @@ export interface ULThemeCountryCodePickerProps
    */
   placeholder?: string;
   /**
-   * Loading state
-   */
-  isLoading?: boolean;
-  /**
    * Full width styling
    */
   fullWidth?: boolean;
@@ -39,7 +36,6 @@ const ULThemeCountryCodePicker = forwardRef<
     {
       selectedCountry,
       placeholder = "Select Country",
-      isLoading = false,
       fullWidth = false,
       className,
       disabled,
@@ -47,32 +43,31 @@ const ULThemeCountryCodePicker = forwardRef<
     },
     ref
   ) => {
-    // Base styles with theme overrides
-    const baseStyles = cn(
-      "inline-flex items-center justify-between px-4 py-4 text-left font-medium transition-colors duration-150 ease-in-out",
-      "theme-universal:bg-input-bg",
-      "theme-universal:text-input-text",
-      "theme-universal:border",
-      "theme-universal:border-input-border",
-      "theme-universal:text-(length:--ul-theme-font-body-text-size)",
-      "theme-universal:font-body",
-      "theme-universal:rounded-input",
-      "theme-universal:hover:border-base-focus",
-      "theme-universal:focus:outline-none theme-universal:focus:ring-2 theme-universal:focus:ring-base-focus/20"
-    );
-
     const widthStyles = fullWidth ? "w-full" : "";
-    const disabledStyles =
-      disabled || isLoading
-        ? "disabled:opacity-70 cursor-not-allowed"
-        : "cursor-pointer";
+    const disabledStyles = disabled
+      ? "disabled:opacity-70 cursor-not-allowed"
+      : "cursor-pointer";
 
     return (
-      <button
+      <ULThemeButton
         ref={ref}
         type="button"
-        disabled={disabled || isLoading}
-        className={cn(baseStyles, widthStyles, disabledStyles, className)}
+        variant="outline"
+        disabled={disabled}
+        className={cn(
+          // Override ULThemeButton styles for country picker specific styling
+          "justify-between text-left font-medium",
+          "theme-universal:bg-input-bg",
+          "theme-universal:text-input-text",
+          "theme-universal:border-input-border",
+          "theme-universal:text-(length:--ul-theme-font-body-text-size)",
+          "theme-universal:font-body",
+          "theme-universal:rounded-input",
+          "theme-universal:hover:border-base-focus",
+          widthStyles,
+          disabledStyles,
+          className
+        )}
         {...rest}
       >
         <div className="flex items-center space-x-3 flex-1 min-w-0">
@@ -87,7 +82,7 @@ const ULThemeCountryCodePicker = forwardRef<
                     className="w-6 h-4 object-cover rounded-sm"
                   />
                 ) : (
-                  <span className="text-lg">{selectedCountry.flag}</span>
+                  <span className="text-font-base">{selectedCountry.flag}</span>
                 )}
               </div>
 
@@ -111,15 +106,10 @@ const ULThemeCountryCodePicker = forwardRef<
         </div>
 
         {/* Chevron */}
-        <div className="flex-shrink-0 ml-2">
-          <ChevronRight
-            className={cn(
-              "w-4 h-4 theme-universal:text-input-labels transition-transform duration-200",
-              isLoading && "animate-pulse"
-            )}
-          />
-        </div>
-      </button>
+        <ChevronRight
+          className={cn("w-4 h-4 theme-universal:text-input-labels")}
+        />
+      </ULThemeButton>
     );
   }
 );
