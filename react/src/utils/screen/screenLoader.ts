@@ -15,8 +15,10 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "reset-password-error": lazy(() => import("@/screens/reset-password-error")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
   "signup-password": lazy(() => import("@/screens/signup-password")),
-  signup: lazy(() => import("@/screens/signup")),
-  "passkey-enrollment": lazy(() => import("@/screens/passkey-enrollment")),
+  // "mfa-begin-enroll-options": lazy(
+  //   () => import("@/screens/mfa-begin-enroll-options")
+  // ),
+  "mfa-email-challenge": lazy(() => import("@/screens/mfa-email-challenge")),
 };
 
 export const getScreenComponent = (

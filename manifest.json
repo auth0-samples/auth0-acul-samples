@@ -149,6 +149,18 @@
           "name": "Passkey Enrollment",
           "description": "Screen for passkey enrollment",
           "path": "react/src/screens/passkey-enrollment"
+        },
+        {
+          "id": "mfa-begin-enroll-options",
+          "name": "MFA Begin Enroll Options",
+          "description": "Screen to begin enrolling in multi-factor authentication (MFA) with various options",
+          "path": "react/src/screens/mfa-begin-enroll-options"
+        },
+        {
+          "id": "mfa-email-challenge",
+          "name": "MFA Email Challenge",
+          "description": "Screen for MFA email challenge",
+          "path": "react/src/screens/mfa-email-challenge"
         }
       ]
     }
