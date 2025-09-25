@@ -88,7 +88,7 @@ export const ULThemePasswordValidator = ({
   return (
     <div
       className={cn(
-        "bg-widget-bg border border-input rounded-input p-4 space-y-2",
+        "bg-widget-bg border border-input rounded-input p-4 mb-4",
         className
       )}
     >

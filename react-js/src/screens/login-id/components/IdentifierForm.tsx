@@ -5,7 +5,7 @@ import type {
   TransactionMembersOnLoginId,
 } from "@auth0/auth0-acul-js/login-id";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -13,6 +13,7 @@ import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import {
   isPhoneNumberSupported,
   transformAuth0CountryCode,
@@ -33,7 +34,7 @@ function IdentifierForm() {
     handleLoginId,
     errors,
     isCaptchaAvailable,
-    captchaImage,
+    captcha,
     resetPasswordLink,
     isForgotPasswordEnabled,
     loginIdInstance,
@@ -57,7 +58,6 @@ function IdentifierForm() {
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
     : "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
   const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
 
   // Get general errors (not field-specific)
@@ -73,6 +73,11 @@ function IdentifierForm() {
 
   const captchaSDKError = getFieldError("captcha", errors);
 
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
+
   // Get allowed identifiers directly from SDK
   const allowedIdentifiers =
     loginIdInstance?.transaction?.allowedIdentifiers || [];
@@ -85,7 +90,7 @@ function IdentifierForm() {
 
   // Proper submit handler with form data
   const onSubmit = async (data: LoginIdFormData) => {
-    await handleLoginId(data.identifier, data.captcha);
+    await handleLoginId(data.identifier, captchaValue);
   };
 
   const localizedResetPasswordLink =
@@ -95,7 +100,7 @@ function IdentifierForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General alerts at the top */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
@@ -154,13 +159,12 @@ function IdentifierForm() {
         />
 
         {/* CAPTCHA Box */}
-        {isCaptchaAvailable && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
               required: "Please complete the CAPTCHA",
