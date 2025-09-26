@@ -21,7 +21,7 @@ describe("MfaEmailChallengeForm", () => {
       handleResendEmail: mockInstance.handleResendEmail,
       handleTryAnotherMethod: mockInstance.handleTryAnotherMethod,
       data: {
-        show_remember_device: true,
+        showRememberDevice: true,
         email: "xyz*****@abc******",
       },
       errors: [], // no errors by default
@@ -39,7 +39,6 @@ describe("MfaEmailChallengeForm", () => {
 
   test("renders form with initial values", () => {
     render(<MfaEmailChallengeForm />);
-    screen.debug();
     // Email field (disabled)
     expect(screen.getByLabelText(/email/i)).toHaveValue(
       mockInstance.screen.data?.email
