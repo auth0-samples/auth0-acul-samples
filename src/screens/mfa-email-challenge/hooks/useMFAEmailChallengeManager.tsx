@@ -12,9 +12,9 @@ import {
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 /**
- * Handles the authentication using Email MFA factor
+ * Handles the login using Email
  *
- * @returns A promise that resolves when the MFA authentication process using Email is complete.
+ * @returns A promise that resolves when the authentication process using Email is complete.
  */
 export const useMfaEmailChallengeManager = () => {
   const { texts, data } = useScreen();

@@ -1,4 +1,4 @@
-import ULThemeLink from "@/components/ULThemeLink";
+import { ULThemeButton } from "@/components/ULThemeButton";
 
 import { useMfaEmailChallengeManager } from "../hooks/useMFAEmailChallengeManager";
 
@@ -18,20 +18,22 @@ function Footer() {
         {footerText}
       </span>
       {footerLinkResendText && (
-        <ULThemeLink
-          href="javascript:void(0)"
+        <ULThemeButton
           onClick={() => handleResendEmail()}
+          variant="link"
+          size="link"
         >
           {footerLinkResendText}
-        </ULThemeLink>
+        </ULThemeButton>
       )}
       {footerLinkTryAnotherMethodText && (
-        <ULThemeLink
-          href="javascript:void(0)"
+        <ULThemeButton
           onClick={() => handleTryAnotherMethod()}
+          variant="link"
+          size="link"
         >
           {footerLinkTryAnotherMethodText}
-        </ULThemeLink>
+        </ULThemeButton>
       )}
     </div>
   );
