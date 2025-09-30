@@ -13,8 +13,6 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
 
 /**
  * Handles the login using Email
- *
- * @returns A promise that resolves when the authentication process using Email is complete.
  */
 export const useMfaEmailChallengeManager = () => {
   const { texts, data } = useScreen();
@@ -32,8 +30,13 @@ export const useMfaEmailChallengeManager = () => {
       rememberDevice,
     };
 
+    const logOptions = {
+      ...options,
+      code: "[REDACTED]",
+    };
+
     await executeSafely(
-      `Continue MFA Email Challenge with options: ${JSON.stringify(options)}`,
+      `Continue MFA Email Challenge with options: ${JSON.stringify(logOptions)}`,
       () => continueMethod(options)
     );
   };
