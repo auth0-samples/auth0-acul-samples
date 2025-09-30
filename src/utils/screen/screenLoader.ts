@@ -10,6 +10,9 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
     () => import("@/screens/login-passwordless-sms-otp")
   ),
   "passkey-enrollment": lazy(() => import("@/screens/passkey-enrollment")),
+  "passkey-enrollment-local": lazy(
+    () => import("@/screens/passkey-enrollment-local")
+  ),
   "reset-password": lazy(() => import("@/screens/reset-password")),
   "reset-password-email": lazy(() => import("@/screens/reset-password-email")),
   "reset-password-error": lazy(() => import("@/screens/reset-password-error")),
