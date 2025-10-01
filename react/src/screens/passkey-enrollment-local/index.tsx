@@ -13,7 +13,7 @@ function PasskeyEnrollmentLocalScreen() {
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(passkeyEnrollmentLocalInstance);
-  document.title = texts?.pageTitle || "Login";
+  document.title = texts?.pageTitle || "Create Passkey";
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

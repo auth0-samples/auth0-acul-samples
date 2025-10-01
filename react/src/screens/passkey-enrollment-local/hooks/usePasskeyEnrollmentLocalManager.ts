@@ -7,7 +7,7 @@ import {
   AbortEnrollmentOptions,
   CustomOptions,
   ScreenMembersOnPasskeyEnrollmentLocal,
-} from "@auth0/auth0-acul-react/types";
+} from "@auth0/auth0-acul-react/passkey-enrollment-local";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
