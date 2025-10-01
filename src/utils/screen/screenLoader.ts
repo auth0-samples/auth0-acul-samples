@@ -25,6 +25,8 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "mfa-begin-enroll-options": lazy(
     () => import("@/screens/mfa-begin-enroll-options")
   ),
+  "mfa-sms-challenge": lazy(() => import("@/screens/mfa-sms-challenge")),
+  "mfa-sms-enrollment": lazy(() => import("@/screens/mfa-sms-enrollment")),
 };
 
 export const getScreenComponent = (
@@ -41,6 +43,7 @@ export const availableScreens = [
   "login-passwordless-email-code",
   "login-passwordless-sms-otp",
   "passkey-enrollment",
+  "passkey-enrollment-local",
   "reset-password",
   "reset-password-email",
   "reset-password-error",
