@@ -161,6 +161,16 @@
           "name": "MFA Email Challenge",
           "description": "Screen for MFA email challenge",
           "path": "react/src/screens/mfa-email-challenge"
+          "id": "mfa-sms-challenge",
+          "name": "MFA SMS Challenge",
+          "description": "MFA SMS challenge screen for authentication",
+          "path": "react/src/screens/mfa-sms-challenge"
+        },
+        {
+          "id": "mfa-sms-enrollment",
+          "name": "MFA SMS Enrollment",
+          "description": "Screen for enrolling in SMS-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-sms-enrollment"
         }
       ]
     }

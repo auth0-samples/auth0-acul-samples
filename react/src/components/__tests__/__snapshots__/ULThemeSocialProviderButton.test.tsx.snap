@@ -16,7 +16,7 @@ exports[`ULThemeSocialProviderButton Component renders correctly and matches sna
       </span>
     </span>
     <span
-      class="overflow-hidden whitespace-nowrap text-ellipsis text-base"
+      class="break-words text-base whitespace-normal text-left"
     >
       Sign in with Google
     </span>
