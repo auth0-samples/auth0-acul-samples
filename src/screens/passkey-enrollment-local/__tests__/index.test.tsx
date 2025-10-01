@@ -1,4 +1,9 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+
+import {
+  createMockPasskeyEnrollmentLocalInstance,
+  MockPasskeyEnrollmentLocalInstance,
+} from "@/__mocks__/@auth0/auth0-acul-react/passkey-enrollment-local";
 
 import { usePasskeyEnrollmentLocalManager } from "../hooks/usePasskeyEnrollmentLocalManager";
 import PasskeyEnrollmentLocalScreen from "../index";
@@ -8,25 +13,77 @@ jest.mock("../hooks/usePasskeyEnrollmentLocalManager", () => ({
   usePasskeyEnrollmentLocalManager: jest.fn(),
 }));
 
-describe("PasskeyEnrollmentLocalScreen", () => {
+describe("PasskeyEnrollmentLocalInstance", () => {
+  let mockInstance: MockPasskeyEnrollmentLocalInstance;
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should call usePasskeyEnrollmentLocalManager", () => {
-    (usePasskeyEnrollmentLocalManager as jest.Mock).mockReturnValue({
-      passkeyEnrollmentLocalInstance: {},
-      texts: {},
+  // eslint-disable-next-line prefer-const
+  mockInstance = createMockPasskeyEnrollmentLocalInstance();
+
+  (usePasskeyEnrollmentLocalManager as jest.Mock).mockReturnValue({
+    passkeyEnrollmentLocalInstance: mockInstance,
+    continuePasskeyEnrollment: mockInstance.continuePasskeyEnrollment,
+    abortPasskeyEnrollment: mockInstance.abortPasskeyEnrollment,
+    texts: mockInstance.screen.texts,
+    errors: mockInstance.transaction.errors || [],
+    data: mockInstance.screen.data,
+  });
+
+  it("renders correctly with header, form", () => {
+    render(<PasskeyEnrollmentLocalScreen />);
+
+    // Verify the page title is set properly
+    expect(document.title).toBe(mockInstance.screen.texts?.pageTitle);
+    expect(
+      screen.getByText(/Create a passkey for All Applications on this device/i)
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", {
+        name: mockInstance.screen.texts?.createButtonText,
+      })
+    ).toBeInTheDocument();
+  });
+
+  it("displays the Create a new passkey action text and triggers continuePasskeyEnrollment on click", async () => {
+    render(<PasskeyEnrollmentLocalScreen />);
+
+    const createClickButton = screen.getByText(
+      mockInstance.screen.texts?.createButtonText || "Create a new passkey"
+    );
+
+    fireEvent.click(createClickButton);
+
+    await waitFor(() => {
+      expect(mockInstance.continuePasskeyEnrollment).toHaveBeenCalled();
     });
 
+    expect(mockInstance.continuePasskeyEnrollment).toHaveBeenCalled();
+  });
+
+  it("displays the Create without a new passkey action text and triggers abortPasskeyEnrollment on click", async () => {
     render(<PasskeyEnrollmentLocalScreen />);
-    expect(usePasskeyEnrollmentLocalManager).toHaveBeenCalled();
+
+    const abortClickButton = screen.getByText(
+      mockInstance.screen.texts?.continueButtonText ||
+        "Continue without a new passkey"
+    );
+
+    fireEvent.click(abortClickButton);
+
+    await waitFor(() => {
+      expect(mockInstance.abortPasskeyEnrollment).toHaveBeenCalled();
+    });
+
+    expect(mockInstance.abortPasskeyEnrollment).toHaveBeenCalled();
   });
 
   it("should render correctly and match snapshot", () => {
     // Mocking the hook return values
     (usePasskeyEnrollmentLocalManager as jest.Mock).mockReturnValue({
-      passkeyEnrollmentLocalInstance: {},
+      passkeyEnrollmentInstance: {},
       texts: { pageTitle: "Enroll Passkey" },
     });
 
@@ -34,34 +91,5 @@ describe("PasskeyEnrollmentLocalScreen", () => {
 
     // Snapshot test
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  it("should set the document title based on texts.pageTitle", () => {
-    (usePasskeyEnrollmentLocalManager as jest.Mock).mockReturnValue({
-      passkeyEnrollmentLocalInstance: {},
-      texts: { pageTitle: "Enroll Passkey" },
-    });
-
-    render(<PasskeyEnrollmentLocalScreen />);
-
-    // Verify document title
-    expect(document.title).toBe("Enroll Passkey");
-  });
-
-  it("should render the Create a new Passkey button and call onCreateClick when clicked", () => {
-    const mockOnCreateClick = jest.fn();
-
-    (usePasskeyEnrollmentLocalManager as jest.Mock).mockReturnValue({
-      continuePasskeyEnrollment: mockOnCreateClick,
-      texts: { createButtonText: "Create a new passkey" },
-    });
-
-    render(<PasskeyEnrollmentLocalScreen />);
-
-    const button = screen.getByText("Create a new passkey");
-    expect(button).toBeInTheDocument();
-
-    fireEvent.click(button);
-    expect(mockOnCreateClick).toHaveBeenCalledWith({ key: "passkey" });
   });
 });

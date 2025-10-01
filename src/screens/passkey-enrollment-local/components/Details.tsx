@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 
+import type { Error } from "@auth0/auth0-acul-react";
 import {
   AbortEnrollmentOptions,
   CustomOptions,
-  Error,
-} from "@auth0/auth0-acul-react/types";
+} from "@auth0/auth0-acul-react/passkey-enrollment-local";
 
 import {
   LockHeavyAccent,
@@ -33,18 +33,13 @@ import { usePasskeyEnrollmentLocalManager } from "../hooks/usePasskeyEnrollmentL
  */
 function Details() {
   // Extract necessary methods and properties from the custom hook
-  const {
-    data,
-    texts,
-    errors,
-    continuePasskeyEnrollment,
-    abortPasskeyEnrollment,
-  } = usePasskeyEnrollmentLocalManager();
+  const { texts, errors, continuePasskeyEnrollment, abortPasskeyEnrollment } =
+    usePasskeyEnrollmentLocalManager();
 
   // Initialize the form using react-hook-form
   const form = useForm<CustomOptions>({
     defaultValues: {
-      doNotShowAgain: false,
+      doNotShowAgain: false, // Default value for the checkbox
     },
   });
   const {
@@ -55,7 +50,7 @@ function Details() {
   const buttonText = texts?.createButtonText || "Create a new passkey";
   const continueButtonText =
     texts?.continueButtonText || "Continue without a new passkey";
-  const showHideCheckboxText =
+  const showHideLocalEnrollmentCheckboxText =
     texts?.checkboxText || "Don't show me this again";
 
   // Using extractTokenValue utility to extract the Icons Color Value from CSS variable
@@ -67,18 +62,20 @@ function Details() {
     [];
 
   /**
-   * Handles form submission.
+   * This method handles form submission when user clicks on creating passkey.
    *
-   * @param data - The form data
+   * @param data - The form data containing user preferences
    */
   const onCreateClick = async (data: CustomOptions) => {
-    await continuePasskeyEnrollment(data);
+    await continuePasskeyEnrollment(
+      data?.doNotShowAgain ? { doNotShowAgain: true } : {}
+    );
   };
 
   /**
-   * Handles form submission.
+   * This method handles form submission when user clicks on canceling passkey enrollment.
    *
-   * @param data - The form data
+   * @param formData - The form data containing user preferences
    */
   const onCancelClick = async (formData: AbortEnrollmentOptions) => {
     await abortPasskeyEnrollment(
@@ -86,7 +83,13 @@ function Details() {
     );
   };
 
-  // Helper function to render icons dynamically
+  /**
+   * Helper function to render icons dynamically with optional accent
+   *
+   * @param IconMask - The main icon component
+   * @param IconAccent - Optional accent icon component
+   * @param className - Additional class names for styling
+   */
   const renderIcon = (
     IconMask: React.ElementType,
     IconAccent?: React.ElementType,
@@ -94,7 +97,7 @@ function Details() {
   ) => (
     <div className="relative w-15 h-10 left-1.5">
       <IconMask
-        className={cn("absolute inline-block opacity-[0.5]", className)}
+        className={cn("absolute inline-block", className)}
         color={iconColor}
       />
       {IconAccent && (
@@ -117,7 +120,9 @@ function Details() {
           </div>
         )}
         <ULThemeList variant="icon">
-          <ULThemeListItem icon={renderIcon(LockHeavyMask, LockHeavyAccent)}>
+          <ULThemeListItem
+            icon={renderIcon(LockHeavyMask, LockHeavyAccent, "opacity-[0.5]")}
+          >
             <ULThemeListTitle
               children={
                 texts?.passkeyBenefit1Title ||
@@ -147,32 +152,30 @@ function Details() {
           </ULThemeListItem>
         </ULThemeList>
 
-        {/* Show/Hide this option checkbox*/}
-        {data?.doNotShowAgain && (
-          <FormField
-            control={form.control}
-            name="doNotShowAgain"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center space-x-2 my-4">
-                  <ULThemeCheckbox
-                    id="doNotShowAgain"
-                    checked={Boolean(field.value)}
-                    onCheckedChange={field.onChange}
-                  />
-                  <Label
-                    htmlFor="doNotShowAgain"
-                    className="text-(length:--ul-theme-font-body-text-size) cursor-pointer"
-                  >
-                    {showHideCheckboxText}
-                  </Label>
-                </div>
-              </FormItem>
-            )}
-          />
-        )}
+        {/* Show/Hide Local Enrollment Checkbox */}
+        <FormField
+          control={form.control}
+          name="doNotShowAgain"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-center ml-2 space-x-2 mb-6 justify-center">
+                <ULThemeCheckbox
+                  id="doNotShowAgain"
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                  className="size-4.5 border-black mr-3"
+                />
+                <Label
+                  htmlFor="doNotShowAgain"
+                  className="text-(length:--ul-theme-font-body-text-size) cursor-pointer"
+                >
+                  {showHideLocalEnrollmentCheckboxText}
+                </Label>
+              </div>
+            </FormItem>
+          )}
+        />
 
-        {/* Create Passkey button */}
         <ULThemeButton
           type="submit"
           variant="primary"
