@@ -155,6 +155,12 @@
           "name": "Passkey Enrollment",
           "description": "Screen for passkey enrollment",
           "path": "react/src/screens/passkey-enrollment"
+        },
+        {
+          "id": "mfa-sms-challenge",
+          "name": "MFA SMS Challenge",
+          "description": "MFA SMS challenge screen for authentication",
+          "path": "react/src/screens/mfa-sms-challenge"
         }
       ]
     }
