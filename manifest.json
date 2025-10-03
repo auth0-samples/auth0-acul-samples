@@ -161,6 +161,8 @@
           "name": "MFA Email Challenge",
           "description": "Screen for MFA email challenge",
           "path": "react/src/screens/mfa-email-challenge"
+        },
+        {
           "id": "mfa-sms-challenge",
           "name": "MFA SMS Challenge",
           "description": "MFA SMS challenge screen for authentication",
