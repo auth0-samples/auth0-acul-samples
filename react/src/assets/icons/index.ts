@@ -4,6 +4,8 @@ export * from "./DefaultConnectionIcon";
 export * from "./DeviceGlobeAccent";
 export * from "./DeviceGlobeMask";
 export * from "./ErrorCircleIcon";
+export * from "./LockHeavyAccent";
+export * from "./LockHeavyMask";
 export * from "./MFAGuardianIcon";
 export * from "./MFAOTPIcon";
 export * from "./MFAPhoneIcon";
