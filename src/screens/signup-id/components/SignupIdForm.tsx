@@ -195,10 +195,6 @@ function SignupIdForm() {
             sdkError={captchaSDKError}
             rules={{
               required: "Please complete the CAPTCHA",
-              maxLength: {
-                value: 15,
-                message: "CAPTCHA too long",
-              },
             }}
           />
         )}

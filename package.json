@@ -16,8 +16,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@auth0/auth0-acul-js": "file:../../universal-login/packages/auth0-acul-js",
-    "@auth0/auth0-acul-react": "file:../../universal-login/packages/auth0-acul-react",
+    "@auth0/auth0-acul-react": "file:../../../sdk/universal-login/packages/auth0-acul-react",
     "@base-ui-components/react": "^1.0.0-beta.1",
     "@hcaptcha/react-hcaptcha": "^1.12.1",
     "class-variance-authority": "^0.7.1",

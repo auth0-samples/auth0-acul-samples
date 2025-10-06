@@ -1,0 +1,49 @@
+{
+  "client": {
+    "id": "mock-id",
+    "name": "MockApplication"
+  },
+  "prompt": { "name": "mfa-email" },
+  "screen": {
+    "data": { "show_remember_device": true, "email": "xyz*****@abc******" },
+    "name": "mfa-email-challenge",
+    "texts": {
+      "pageTitle": "Enter your email code to log in | MockApplication",
+      "backText": "Go Back",
+      "buttonText": "Continue",
+      "description": "We've sent an email with your code to",
+      "pickAuthenticatorText": "Try another method",
+      "placeholder": "Enter the code",
+      "rememberMeText": "Remember this device for 30 days",
+      "resendActionText": "Resend",
+      "resendText": "Didn't receive an email?",
+      "title": "Verify Your Identity",
+      "logoAltText": "test3",
+      "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+      "badgeAltText": "Link to the Auth0 website",
+      "error": "Error",
+      "qrCode": "QR Code",
+      "spinner_push_notification_label": "Waiting for push notification to be accepted"
+    }
+  },
+  "tenant": {
+    "enabled_factors": ["otp", "recovery-code", "email"],
+    "mfa_options": { "pick_authenticator_enabled": true }
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "mockState"
+  },
+  "user": {
+    "id": "auth0|mock-id",
+    "email": "xyz@abc.email",
+    "picture": "https://mock-image.png",
+    "enrolled_emails": [{ "id": 0, "email": "xyz*****@abc******" }],
+    "enrolled_factors": ["otp", "recovery-code", "email"]
+  },
+  "branding": {
+    "settings": {
+      "colors": { "page_background": "#000000", "primary": "#635dff" }
+    }
+  }
+}

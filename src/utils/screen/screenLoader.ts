@@ -10,6 +10,9 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
     () => import("@/screens/login-passwordless-sms-otp")
   ),
   "passkey-enrollment": lazy(() => import("@/screens/passkey-enrollment")),
+  "passkey-enrollment-local": lazy(
+    () => import("@/screens/passkey-enrollment-local")
+  ),
   "reset-password": lazy(() => import("@/screens/reset-password")),
   "reset-password-email": lazy(() => import("@/screens/reset-password-email")),
   "reset-password-error": lazy(() => import("@/screens/reset-password-error")),
@@ -19,10 +22,13 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   signup: lazy(() => import("@/screens/signup")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
   "signup-password": lazy(() => import("@/screens/signup-password")),
+  "mfa-email-challenge": lazy(() => import("@/screens/mfa-email-challenge")),
   "mfa-begin-enroll-options": lazy(
     () => import("@/screens/mfa-begin-enroll-options")
   ),
   "mfa-login-options": lazy(() => import("@/screens/mfa-login-options")),
+  "mfa-sms-challenge": lazy(() => import("@/screens/mfa-sms-challenge")),
+  "mfa-sms-enrollment": lazy(() => import("@/screens/mfa-sms-enrollment")),
 };
 
 export const getScreenComponent = (
@@ -39,6 +45,7 @@ export const availableScreens = [
   "login-passwordless-email-code",
   "login-passwordless-sms-otp",
   "passkey-enrollment",
+  "passkey-enrollment-local",
   "reset-password",
   "reset-password-email",
   "reset-password-error",
