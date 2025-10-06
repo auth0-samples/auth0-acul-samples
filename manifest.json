@@ -139,12 +139,6 @@
           "path": "react/src/screens/signup-password"
         },
         {
-          "id": "mfa-begin-enroll-options",
-          "name": "MFA Begin Enroll Options",
-          "description": "Screen to begin enrolling in multi-factor authentication (MFA) with various options",
-          "path": "react/src/screens/mfa-begin-enroll-options"
-        },
-        {
           "id": "signup",
           "name": "Signup",
           "description": "Screen for user registration",
@@ -161,6 +155,18 @@
           "name": "Passkey Enrollment Local",
           "description": "Screen for passkey enrollment local",
           "path": "react/src/screens/passkey-enrollment-local"
+        },
+        {
+          "id": "mfa-begin-enroll-options",
+          "name": "MFA Begin Enroll Options",
+          "description": "Screen to begin enrolling in multi-factor authentication (MFA) with various options",
+          "path": "react/src/screens/mfa-begin-enroll-options"
+        },
+        {
+          "id": "mfa-email-challenge",
+          "name": "MFA Email Challenge",
+          "description": "Screen for MFA email challenge",
+          "path": "react/src/screens/mfa-email-challenge"
         },
         {
           "id": "mfa-sms-challenge",
