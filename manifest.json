@@ -145,6 +145,12 @@
           "path": "react/src/screens/mfa-begin-enroll-options"
         },
         {
+          "id": "mfa-login-options",
+          "name": "MFA Login Options",
+          "description": "Screen to login via multi-factor authentication (MFA) factors with various options",
+          "path": "react/src/screens/mfa-login-options"
+        },
+        {
           "id": "signup",
           "name": "Signup",
           "description": "Screen for user registration",
