@@ -14,6 +14,7 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  */
 export const useMfaLoginOptionsManager = () => {
   const { texts } = useScreen();
+  const mfaLoginOptions = useMfaLoginOptions();
 
   const handleEnroll = async (payload: LoginEnrollOptions): Promise<void> => {
     executeSafely(
@@ -23,10 +24,10 @@ export const useMfaLoginOptionsManager = () => {
   };
 
   return {
-    mfaLoginOptions: useMfaLoginOptions(),
+    mfaLoginOptions,
     handleEnroll,
     texts: (texts || {}) as ScreenMembersOnMfaLoginOptions["texts"],
     errors: useTransaction().errors || [],
-    enrolledFactors: useMfaLoginOptions().user?.enrolledFactors || [],
+    enrolledFactors: mfaLoginOptions.user?.enrolledFactors || [],
   };
 };
