@@ -1,3 +1,5 @@
+import React from "react";
+
 import type {
   Error,
   MfaLoginFactorType,
@@ -11,7 +13,7 @@ import {
   MFASmsIcon,
   MFAWebAuthnRoamingIcon,
 } from "@/assets/icons";
-import { MFAEDuoIcon } from "@/assets/icons/MFADuoIcon";
+import { MFADuoIcon } from "@/assets/icons/MFADuoIcon";
 import { MFAEmailIcon } from "@/assets/icons/MFAEmailIcon";
 import { MFARecoveryCodeIcon } from "@/assets/icons/MFARecoveryCodeIcon";
 import { MFAWebAuthnPlatformIcon } from "@/assets/icons/MFAWebAuthnPlatformIcon";
@@ -45,7 +47,8 @@ function MFALoginOptionsList() {
     email: texts?.authenticatorNamesEmail ?? "Email",
     "recovery-code": texts?.authenticatorNamesRecoveryCode ?? "Recovery code",
     "webauthn-platform":
-      texts?.authenticatorNamesWebauthnRoaming ?? "Security Key",
+      texts?.authenticatorNamesWebauthnPlatform ??
+      "Fingerprint or Face Recognition",
     duo: texts?.authenticatorNamesDUO ?? "Notification via DUO app",
   };
 
@@ -59,7 +62,7 @@ function MFALoginOptionsList() {
     email: <MFAEmailIcon />,
     "recovery-code": <MFARecoveryCodeIcon />,
     "webauthn-platform": <MFAWebAuthnPlatformIcon />,
-    duo: <MFAEDuoIcon />,
+    duo: <MFADuoIcon />,
   };
 
   function getDisplayName(factor: MfaLoginFactorType) {
@@ -76,7 +79,7 @@ function MFALoginOptionsList() {
       {generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: Error, index: number) => (
-            <ULThemeAlert key={index}>
+            <ULThemeAlert key={`${error.message}-${index}`}>
               <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
             </ULThemeAlert>
           ))}
@@ -86,9 +89,8 @@ function MFALoginOptionsList() {
       <div className="space-y-2">
         {enrollOptions.map((option) => {
           return (
-            <>
+            <React.Fragment key={option}>
               <ULThemeSocialProviderButton
-                key={option}
                 displayName={getDisplayName(option)}
                 buttonText={getDisplayName(option)}
                 iconEnd={<ChevronRight size={18} color="#6f7780" />}
@@ -98,7 +100,7 @@ function MFALoginOptionsList() {
                 variant="ghost"
               ></ULThemeSocialProviderButton>
               <ULThemeSeparator className="my-[2px]" />
-            </>
+            </React.Fragment>
           );
         })}
       </div>

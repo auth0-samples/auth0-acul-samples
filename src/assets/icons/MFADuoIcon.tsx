@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export const MFAEDuoIcon = (props: SVGProps<SVGSVGElement>) => (
+export const MFADuoIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="1334px"
     height="1334px"
