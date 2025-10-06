@@ -167,6 +167,12 @@
           "name": "MFA SMS Enrollment",
           "description": "Screen for enrolling in SMS-based multi-factor authentication (MFA)",
           "path": "react/src/screens/mfa-sms-enrollment"
+        },
+        {
+          "id": "mfa-push-challenge-push",
+          "name": "MFA Push Challenge Push",
+          "description": "Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-push-challenge-push"
         }
       ]
     }
