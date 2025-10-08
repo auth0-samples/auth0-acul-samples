@@ -1,5 +1,6 @@
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
+import ULThemeSeparator from "@/components/ULThemeSeparator";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 import Header from "./components/Header";
@@ -19,6 +20,7 @@ function MFALoginOptions() {
     <ULThemePageLayout className="theme-universal">
       <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
+        <ULThemeSeparator />
         <MFALoginOptionsList />
       </ULThemeCard>
     </ULThemePageLayout>
