@@ -1,13 +1,16 @@
 import { render } from "@testing-library/react";
 
+// Import the mocked hook and jest mock function from your mock file
+import { useMfaLoginOptionsManager } from "@/__mocks__/@auth0/auth0-acul-react/mfa-login-options";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
-import { useMfaLoginOptionsManager } from "../hooks/useMFALoginOptionsManager";
 import MFALoginOptions from "../index";
 
-// Mock the hook
+// Mock the hook by forwarding the mock from the mock file
 jest.mock("../hooks/useMFALoginOptionsManager", () => ({
-  useMfaLoginOptionsManager: jest.fn(),
+  useMfaLoginOptionsManager: jest.requireActual(
+    "@/__mocks__/@auth0/auth0-acul-react/mfa-login-options"
+  ).useMfaLoginOptionsManager,
 }));
 
 // Mock the theme application function
