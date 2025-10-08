@@ -1,4 +1,7 @@
-import type { ScreenMembersOnMfaPushChallengePush } from "@auth0/auth0-acul-react/types";
+import type {
+  ScreenMembersOnMfaPushChallengePush,
+  UserMembers,
+} from "@auth0/auth0-acul-react";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the mfa-push-challenge-push screen
@@ -17,6 +20,7 @@ export interface MockMfaPushChallengeInstance {
     state: string;
     locale: string;
   };
+  user: UserMembers;
 }
 
 /**
@@ -31,17 +35,27 @@ export const createMockMfaPushChallengeInstance =
     enterCodeManually: jest.fn(),
     tryAnotherMethod: jest.fn(),
     screen: {
-      name: "mfa-sms-enrollment",
+      name: "mfa-push-challenge-push",
       texts: {
-        pageTitle: "Secure Your Account - MFA",
-        title: "Add Phone Number",
+        pageTitle: "Accept the push notification to log in | My App",
+        title: "Verify Your Identity",
         description:
-          "Enter your phone number below. An SMS will be sent to that number with a code to enter on the next screen.",
-        placeholder: "Enter your phone number",
-        buttonText: "Continue",
-        tryAnotherMethodText: "Try another method",
-        errorTitleText: "Error",
-        logoAltText: "Application Logo",
+          "We’ve sent a notification to the following device via the Auth0 Guardian app:",
+        buttonText: "I've responded on my device",
+        pickAuthenticatorText: "Try another method",
+        rememberMeText: "Remember this device for 30 days",
+        resendActionText: "Resend",
+        resendText: "Didn't receive a notification?",
+        enterOtpCode: "Manually Enter Code",
+        separatorText: "OR",
+        logoAltText: "dev-vy34wbm3newzqb7k",
+        badgeUrl:
+          "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+        badgeAltText: "Link to the Auth0 website",
+        error: "Error",
+        qrCode: "QR Code",
+        spinner_push_notification_label:
+          "Waiting for push notification to be accepted",
       },
       isCaptchaAvailable: false,
       captchaProvider: null,
@@ -59,6 +73,20 @@ export const createMockMfaPushChallengeInstance =
       state: "mock-mfa-push-challenge-push-state",
       locale: "en",
     },
+    user: {
+      id: "dummy_id",
+      email: null,
+      username: null,
+      phoneNumber: null,
+      picture: null,
+      enrolledFactors: ["phone_notification", "otp"],
+      enrolledEmails: null,
+      enrolledPhoneNumbers: null,
+      enrolledDevices: null,
+      organizations: null,
+      userMetadata: null,
+      appMetadata: null,
+    },
   });
 
 // Mock the mfa-push-challenge hooks and methods
@@ -72,6 +100,7 @@ export const useMfaSmsEnrollment = jest.fn(() => ({
 }));
 
 export const useScreen = jest.fn(() => mockMfaSmsEnrollmentInstance.screen);
+export const useUser = jest.fn(() => mockMfaSmsEnrollmentInstance.user);
 export const useTransaction = jest.fn(
   () => mockMfaSmsEnrollmentInstance.transaction
 );

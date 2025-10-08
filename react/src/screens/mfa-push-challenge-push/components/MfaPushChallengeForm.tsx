@@ -1,19 +1,16 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react/types";
-import { WithRememberOptions } from "@auth0/auth0-acul-react/types";
+import type { Error, WithRememberOptions } from "@auth0/auth0-acul-react";
 
-import {
-  ULThemeFloatingLabelField,
-  ULThemeFormMessage,
-} from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeCheckbox } from "@/components/ULThemeCheckbox";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { getFieldError } from "@/utils/helpers/errorUtils";
+import ULThemeSeparator from "@/components/ULThemeSeparator";
+import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
+import ULThemeSpinner from "@/components/ULThemeSpinner";
 
 import { useMfaPushChallengeManager } from "../hooks/useMfaPushChallengeManager";
 
@@ -22,12 +19,13 @@ function MfaSmsChallengeForm() {
     data,
     errors,
     texts,
+    enrolledFactors,
     useMfaPolling,
+    handleEnterCodeManually,
+    handleTryAnotherMethod,
     handleContinueMfaPushChallenge,
     handleResendPushNotification,
   } = useMfaPushChallengeManager();
-
-  const { startPolling } = useMfaPolling();
 
   // Initialize the form using react-hook-form
   const form = useForm<WithRememberOptions>({
@@ -36,30 +34,37 @@ function MfaSmsChallengeForm() {
     },
   });
 
-  const {
-    formState: { isSubmitting },
-  } = form;
-
-  const buttonText = texts?.buttonText || "I've responded on my device";
   const rememberDeviceText =
     texts?.rememberMeText || "Remember this device for 30 days";
+  const enterOtpCodeText = texts?.enterOtpCode || "Manually Enter Code";
   const resendText = texts?.resendText || "Didn't receive a code?";
   const resendLinkText = texts?.resendActionText || "Resend";
-  const deviceName = data?.deviceName || "";
+  const tryAnotherMethodText =
+    texts?.pickAuthenticatorText || "Try another method";
+  const { deviceName, showRememberDevice } = data || {};
+  const separatorText = texts?.separatorText || "OR";
+  const shouldShowTryAnotherMethod = enrolledFactors?.length
+    ? enrolledFactors.length > 1
+    : false;
 
   // Extract general errors (not field-specific) from the SDK
   const generalErrors =
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
 
-  // Extract field-specific errors for email, code, and CAPTCHA
-  const deviceSDKError = getFieldError("email", errors);
-
-  const onContinueClick = async (formData: WithRememberOptions) => {
-    await handleContinueMfaPushChallenge(
-      formData?.rememberDevice ? { rememberDevice: true } : {}
-    );
-  };
+  // Automatically start polling when the page loads
+  const { isRunning, startPolling, stopPolling } = useMfaPolling({
+    intervalMs: 3000,
+    onCompleted: () => {
+      console.log("Push approved | declined");
+      handleContinueMfaPushChallenge({
+        rememberDevice: form.getValues().rememberDevice,
+      });
+    },
+    onError: (error: unknown) => {
+      console.error("Polling error:", error);
+    },
+  });
 
   const onResendActionClick = async (formData: WithRememberOptions) => {
     await handleResendPushNotification(
@@ -69,11 +74,12 @@ function MfaSmsChallengeForm() {
 
   useEffect(() => {
     startPolling();
-  }, [startPolling]);
+    return () => stopPolling();
+  }, [startPolling, stopPolling]);
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onContinueClick)}>
+      <form>
         {/* General error messages */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
@@ -89,35 +95,35 @@ function MfaSmsChallengeForm() {
         <FormField
           control={form.control}
           name="device"
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <FormItem>
-              <ULThemeFloatingLabelField
-                {...field}
-                label=""
-                value={deviceName}
-                error={!!fieldState.error || !!deviceSDKError}
-                readOnly={true}
-              />
-              <ULThemeFormMessage
-                sdkError={deviceSDKError}
-                hasFormError={!!fieldState.error}
+              <ULThemeSocialProviderButton
+                displayName={""}
+                key={deviceName}
+                buttonText={deviceName || "Your Device"}
+                iconComponent={isRunning && <ULThemeSpinner />}
+                disabled
+                name={field.name}
+                value={field.value as string | undefined}
+                className="theme-universal:border-input-border theme-universal:bg-disabled theme-universal:opacity-100"
               />
             </FormItem>
           )}
         />
 
         {/* Remember device checkbox */}
-        {data?.showRememberDevice && (
+        {showRememberDevice && (
           <FormField
             control={form.control}
             name="rememberDevice"
             render={({ field }) => (
               <FormItem>
-                <div className="flex items-center space-x-2 my-4">
+                <div className="flex items-center space-x-2 my-4 gap-1">
                   <ULThemeCheckbox
                     id="rememberDevice"
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    className="w-5 h-5 border-input-border border-radius-[1]"
                   />
                   <Label
                     htmlFor="rememberDevice"
@@ -131,17 +137,18 @@ function MfaSmsChallengeForm() {
           />
         )}
 
-        {/* Submit button */}
-        <ULThemeButton
-          type="submit"
-          variant="primary"
-          className="w-full"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Verifying..." : buttonText}
-        </ULThemeButton>
+        <ULThemeSeparator text={separatorText} className="my-1" />
 
-        <div className="text-center space-y-2 mt-4">
+        <div className="text-center space-y-2 mt-6">
+          {/* Enter manual code button */}
+          <ULThemeButton
+            onClick={() => handleEnterCodeManually()}
+            variant="outline"
+            className="w-full mb-4"
+          >
+            {enterOtpCodeText}
+          </ULThemeButton>
+
           {/* Resend code link with optional get a call */}
           <span className="text-(length:--ul-theme-font-body-text-size) font-body">
             {resendText}{" "}
@@ -157,6 +164,17 @@ function MfaSmsChallengeForm() {
           >
             {resendLinkText}
           </ULThemeButton>
+
+          {/* Try another method link */}
+          {shouldShowTryAnotherMethod && (
+            <ULThemeButton
+              onClick={() => handleTryAnotherMethod()}
+              variant="link"
+              size="link"
+            >
+              {tryAnotherMethodText}
+            </ULThemeButton>
+          )}
         </div>
       </form>
     </Form>

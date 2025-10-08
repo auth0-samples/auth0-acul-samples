@@ -6,7 +6,6 @@ import { useMfaPushChallengeManager } from "../hooks/useMfaPushChallengeManager"
 
 function Header() {
   const { texts } = useMfaPushChallengeManager();
-
   // Handle text fallbacks in component
   const logoAltText = texts?.logoAltText || "Application Logo";
 
