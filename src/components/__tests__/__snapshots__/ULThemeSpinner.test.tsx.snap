@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemeSpinner renders correctly and matches snapshot 1`] = `
+<div>
+  <div
+    class="text-surface inline-block rounded-full duration-[5000] ease-linear border-primary animate-spin border-2 border-e-transparent size-4"
+    data-testid="ul-theme-spinner"
+  >
+    <span
+      class="sr-only"
+    >
+      Loading...
+    </span>
+  </div>
+</div>
+`;

@@ -1,36 +1,36 @@
 {
   "client": {
     "id": "mocked_data_client_id",
-    "name": "my app"
+    "name": "My App"
   },
   "organization": {
     "usage": "deny"
   },
   "prompt": {
-    "name": "mfa-sms"
+    "name": "mfa-push"
   },
   "screen": {
     "data": {
-      "show_link_voice": true,
       "show_remember_device": true,
-      "phone_number": "XXXXXXXXX1360"
+      "device_name": "mocked_device_name"
     },
-    "name": "mfa-sms-challenge",
+    "links": {
+      "ios": "mocked_ios_link",
+      "android": "mocked_android_link"
+    },
+    "name": "mfa-push-challenge-push",
     "texts": {
-      "pageTitle": "Enter your phone code to log in | my app",
+      "pageTitle": "Accept the push notification to log in | My App",
       "title": "Verify Your Identity",
-      "description": "We've sent a text message to:",
-      "buttonText": "Continue",
-      "editText": "Edit",
-      "editLinkScreenReadableText": "Edit phone number",
+      "description": "We’ve sent a notification to the following device via the Auth0 Guardian app:",
+      "buttonText": "I've responded on my device",
       "pickAuthenticatorText": "Try another method",
-      "placeholder": "Enter the 6-digit code",
       "rememberMeText": "Remember this device for 30 days",
       "resendActionText": "Resend",
-      "resendText": "Didn't receive a code?",
-      "resendVoiceActionSeparatorTextBefore": "or",
-      "resendVoiceActionText": "get a call",
-      "logoAltText": "dev-mock",
+      "resendText": "Didn't receive a notification?",
+      "enterOtpCode": "Manually Enter Code",
+      "separatorText": "OR",
+      "logoAltText": "dev-vy34wbm3newzqb7k",
       "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
       "badgeAltText": "Link to the Auth0 website",
       "error": "Error",
@@ -39,24 +39,30 @@
     }
   },
   "tenant": {
-    "enabled_factors": ["sms"],
+    "enabled_factors": [
+      "push-notification",
+      "otp"
+    ],
     "mfa_options": {
       "pick_authenticator_enabled": false
     }
   },
   "transaction": {
     "locale": "en",
-    "state": "mocked_state"
+    "state": "mockedStateForPreservedTextsSignup_cl_mock_preservedTexts_vbn789_txId_lkj321"
   },
   "user": {
-    "id": "auth0|68ccffe4cf5fc6dd850c4a6a",
-    "email": "mockuser@gmail.com",
-    "picture": "https://s.gravatar.com/avatar/avatar.png",
-    "enrolled_factors": ["sms"],
-    "enrolled_phone_numbers": [
+    "id": "mocked_id_client",
+    "email": "foo1@bar.com",
+    "picture": "mocked_picture_url",
+    "enrolled_factors": [
+      "push-notification",
+      "otp"
+    ],
+    "enrolled_devices": [
       {
         "id": 0,
-        "phoneNumber": "XXXXXXXXX1360"
+        "device": "mocked_device_name"
       }
     ]
   },
@@ -75,10 +81,10 @@
           "show_widget_shadow": true
         },
         "colors": {
-          "primary_button": "#120aff",
+          "primary_button": "#635dff",
           "primary_button_label": "#ffffff",
           "secondary_button_border": "#c9cace",
-          "secondary_button_label": "#1e212a",
+          "secondary_button_label": "#809fff",
           "base_focus_color": "#635dff",
           "base_hover_color": "#000000",
           "links_focused_components": "#635dff",
@@ -88,7 +94,7 @@
           "widget_border": "#c9cace",
           "input_labels_placeholders": "#65676e",
           "input_filled_text": "#000000",
-          "input_border": "#c9cace",
+          "input_border": "#686868",
           "input_background": "#ffffff",
           "icons": "#65676e",
           "error": "#d03c38",
@@ -129,18 +135,11 @@
         },
         "widget": {
           "logo_position": "center",
-          "logo_url": "https://cdn.auth0.com/blog/auth0_by_okta_logo_black.png",
           "logo_height": 52,
           "header_text_alignment": "center",
           "social_buttons_layout": "bottom"
         },
         "displayName": "Unnamed Theme"
-      }
-    },
-    "settings": {
-      "colors": {
-        "page_background": "#000000",
-        "primary": "#635dff"
       }
     }
   }
