@@ -191,6 +191,12 @@
           "name": "MFA Push Challenge Push",
           "description": "Screen for enrolling in Push-based multi-factor authentication (MFA)",
           "path": "react/src/screens/mfa-push-challenge-push"
+        },
+        {
+          "id": "mfa-sms-list",
+          "name": "MFA SMS List",
+          "description": "Screen to list and manage SMS-based multi-factor authentication (MFA) methods",
+          "path": "react/src/screens/mfa-sms-list"
         }
       ]
     }
