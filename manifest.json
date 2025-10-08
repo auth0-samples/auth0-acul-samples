@@ -179,6 +179,12 @@
           "name": "MFA SMS Enrollment",
           "description": "Screen for enrolling in SMS-based multi-factor authentication (MFA)",
           "path": "react/src/screens/mfa-sms-enrollment"
+        },
+        {
+          "id": "mfa-enroll-result",
+          "name": "MFA Enroll Result",
+          "description": "Screen displaying response of MFA Enrollment",
+          "path": "react/src/screens/mfa-enroll-result"
         }
       ]
     }
