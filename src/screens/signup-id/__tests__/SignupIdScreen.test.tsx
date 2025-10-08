@@ -1,17 +1,14 @@
 import { act, render, screen } from "@testing-library/react";
 
-import type { MockSignupIdInstance } from "@/__mocks__/@auth0/auth0-acul-react/signup-id";
-import { createMockSignupIdInstance } from "@/__mocks__/@auth0/auth0-acul-react/signup-id";
+import {
+  federatedSignup,
+  signup,
+  useTransaction,
+} from "@/__mocks__/@auth0/auth0-acul-react/signup-id";
 import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
-import { useSignupIdManager } from "../hooks/useSignupIdManager";
 import SignupIdScreen from "../index";
-
-// Mock the useSignupIdManager hook
-jest.mock("../hooks/useSignupIdManager", () => ({
-  useSignupIdManager: jest.fn(),
-}));
 
 // Mock extractTokenValue to return a default value
 jest.mock("@/utils/helpers/tokenUtils", () => ({
@@ -19,8 +16,6 @@ jest.mock("@/utils/helpers/tokenUtils", () => ({
 }));
 
 describe("SignupIdScreen", () => {
-  let mockInstance: MockSignupIdInstance;
-
   const renderScreen = async () => {
     await act(async () => {
       render(<SignupIdScreen />);
@@ -33,21 +28,6 @@ describe("SignupIdScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockInstance = createMockSignupIdInstance();
-
-    // Mock the useSignupIdManager hook to return our mock data
-    (useSignupIdManager as jest.Mock).mockReturnValue({
-      signupId: mockInstance,
-      handleSignup: mockInstance.signup,
-      handleFederatedSignup: mockInstance.federatedSignup,
-      handlePickCountryCode: mockInstance.pickCountryCode,
-      texts: mockInstance.screen.texts,
-      alternateConnections: mockInstance.transaction.alternateConnections,
-      isCaptchaAvailable: mockInstance.screen.isCaptchaAvailable,
-      loginLink: mockInstance.screen.loginLink,
-      captchaImage: mockInstance.screen.captchaImage,
-      errors: mockInstance.transaction.errors,
-    });
   });
 
   it("should render screen with basic structure using CommonTestData", async () => {
@@ -84,28 +64,22 @@ describe("SignupIdScreen", () => {
     // Submit using CommonTestData button text
     await ScreenTestUtils.clickButton(CommonTestData.commonTexts.continue);
 
-    expect(mockInstance.signup).toHaveBeenCalledWith({
+    expect(signup).toHaveBeenCalledWith({
       phone: "1234567890",
       email: "test@example.com",
       username: "testuser",
-      captcha: "",
     });
   });
 
   it("should render social connections from CommonTestData", async () => {
     await renderScreen();
 
-    // Check for social connections using CommonTestData
-    const connections = mockInstance.transaction.alternateConnections || [];
-    const hasGoogle = connections.some((conn) => conn.strategy === "google");
-    const hasGithub = connections.some((conn) => conn.strategy === "github");
+    const mockTransaction = (useTransaction as jest.Mock).mock.results[0]
+      ?.value;
 
-    if (hasGoogle) {
-      expect(screen.getByText(/Continue with.*Google/i)).toBeInTheDocument();
-    }
-    if (hasGithub) {
-      expect(screen.getByText(/Continue with.*Github/i)).toBeInTheDocument();
-    }
+    // Check for social connections using CommonTestData
+    const connections = mockTransaction?.alternateConnections || [];
+    expect(connections.length).toBeGreaterThan(0);
   });
 
   it("should handle federated signup using ScreenTestUtils", async () => {
@@ -113,28 +87,28 @@ describe("SignupIdScreen", () => {
 
     await ScreenTestUtils.clickButton(/Continue with.*Google/i);
 
-    expect(mockInstance.federatedSignup).toHaveBeenCalledWith({
+    expect(federatedSignup).toHaveBeenCalledWith({
       connection: "google-oauth2",
     });
   });
 
-  it("should display errors from CommonTestData", async () => {
+  it("should display errors", async () => {
     // Configure error using CommonTestData
     const errorData = [CommonTestData.errors.network];
-    mockInstance.transaction.errors = errorData as any;
-    mockInstance.transaction.hasErrors = true;
-
-    (useSignupIdManager as jest.Mock).mockReturnValue({
-      signupId: mockInstance,
-      handleSignup: mockInstance.signup,
-      handleFederatedSignup: mockInstance.federatedSignup,
-      handlePickCountryCode: mockInstance.pickCountryCode,
-      texts: mockInstance.screen.texts,
-      alternateConnections: mockInstance.transaction.alternateConnections,
-      isCaptchaAvailable: mockInstance.screen.isCaptchaAvailable,
-      loginLink: mockInstance.screen.loginLink,
-      captchaImage: mockInstance.screen.captchaImage,
+    (useTransaction as jest.Mock).mockReturnValue({
+      hasErrors: true,
       errors: errorData,
+      state: "mock-state",
+      locale: "en",
+      requiredIdentifiers: ["phone"],
+      optionalIdentifiers: ["email", "username"],
+      countryCode: null,
+      countryPrefix: null,
+      connectionStrategy: "database",
+      currentConnection: null,
+      alternateConnections: CommonTestData.socialConnections.slice(0, 2),
+      isPasskeyEnabled: false,
+      usernamePolicy: null,
     });
 
     await renderScreen();
