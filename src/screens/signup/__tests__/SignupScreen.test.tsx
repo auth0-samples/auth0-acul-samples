@@ -1,9 +1,7 @@
-// Import the mocked functions - they're already mocked by the __mocks__ folder
 import {
+  signup,
   useEnabledIdentifiers,
   usePasswordValidation,
-  useScreen,
-  useSignup,
   useTransaction,
   useUsernameValidation,
 } from "@auth0/auth0-acul-react/signup";
@@ -15,28 +13,11 @@ import {
   waitFor,
 } from "@testing-library/react";
 
-import { createMockSignupInstance } from "@/__mocks__/@auth0/auth0-acul-react/signup";
-
 import SignupScreen from "../index";
 
 describe("SignupScreen", () => {
-  let mockInstance: ReturnType<typeof createMockSignupInstance>;
-
   beforeEach(() => {
-    // Create a fresh mock instance for each test
-    mockInstance = createMockSignupInstance();
-
-    // Reset all mocks
     jest.clearAllMocks();
-
-    // Configure the hooks to return our mock instance data
-    (useSignup as jest.Mock).mockReturnValue({
-      signup: mockInstance.signup,
-      federatedSignup: mockInstance.federatedSignup,
-      pickCountryCode: mockInstance.pickCountryCode,
-    });
-    (useScreen as jest.Mock).mockReturnValue(mockInstance.screen);
-    (useTransaction as jest.Mock).mockReturnValue(mockInstance.transaction);
   });
 
   it("should render signup screen with all form elements", () => {
@@ -67,7 +48,7 @@ describe("SignupScreen", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(mockInstance.signup).not.toHaveBeenCalled();
+    expect(signup).not.toHaveBeenCalled();
 
     // Try with invalid email format
     const emailInput = screen.getByLabelText(/email address\*/i);
@@ -76,7 +57,7 @@ describe("SignupScreen", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(mockInstance.signup).not.toHaveBeenCalled();
+    expect(signup).not.toHaveBeenCalled();
   });
 
   it("should successfully submit form with valid data and call signup function", async () => {
@@ -102,14 +83,12 @@ describe("SignupScreen", () => {
     // Verify signup function was called with correct data
     await waitFor(
       () => {
-        if (mockInstance.signup.mock.calls.length > 0) {
-          expect(mockInstance.signup).toHaveBeenCalledWith(
-            expect.objectContaining({
-              email: "test@example.com",
-              password: "ValidPass123!",
-            })
-          );
-        }
+        expect(signup).toHaveBeenCalledWith(
+          expect.objectContaining({
+            email: "test@example.com",
+            password: "ValidPass123!",
+          })
+        );
       },
       { timeout: 3000 }
     );
@@ -142,18 +121,18 @@ describe("SignupScreen", () => {
   });
 
   it("should display API errors when signup fails", () => {
-    // Create error transaction from base mock
-    const errorTransaction = {
-      ...mockInstance.transaction,
+    const mockUseTransaction = useTransaction as jest.Mock;
+    const originalMock = mockUseTransaction();
+
+    mockUseTransaction.mockReturnValue({
+      ...originalMock,
       hasErrors: true,
       errors: [
         { message: "Email already exists", field: "email" },
         { message: "Password too weak", field: "password" },
         { message: "Network connection failed" },
       ],
-    };
-
-    (useTransaction as jest.Mock).mockReturnValue(errorTransaction);
+    });
 
     render(<SignupScreen />);
 

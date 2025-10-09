@@ -1,36 +1,19 @@
 // Import the mocked functions - they're already mocked by the __mocks__ folder
 import {
-  useMfaSmsEnrollment,
+  continueEnrollment,
+  pickCountryCode,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-sms-enrollment";
 import { render, screen, waitFor } from "@testing-library/react";
 
-import { createMockMfaSmsEnrollmentInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-sms-enrollment";
-// Test utilities
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
-// Component under test
 import MfaSmsEnrollmentScreen from "../index";
 
 describe("MfaSmsEnrollmentScreen", () => {
-  let mockInstance: ReturnType<typeof createMockMfaSmsEnrollmentInstance>;
-
   beforeEach(() => {
-    // Create a fresh mock instance for each test
-    mockInstance = createMockMfaSmsEnrollmentInstance();
-
-    // Reset all mocks
     jest.clearAllMocks();
-
-    // Configure the hooks to return our mock instance data
-    (useMfaSmsEnrollment as jest.Mock).mockReturnValue({
-      continueEnrollment: mockInstance.continueEnrollment,
-      pickCountryCode: mockInstance.pickCountryCode,
-      tryAnotherMethod: mockInstance.tryAnotherMethod,
-    });
-    (useScreen as jest.Mock).mockReturnValue(mockInstance.screen);
-    (useTransaction as jest.Mock).mockReturnValue(mockInstance.transaction);
   });
 
   it("should render MFA SMS enrollment screen with all required elements", () => {
@@ -63,7 +46,7 @@ describe("MfaSmsEnrollmentScreen", () => {
     render(<MfaSmsEnrollmentScreen />);
     await ScreenTestUtils.clickButton(/continue/i);
 
-    expect(mockInstance.continueEnrollment).not.toHaveBeenCalled();
+    expect(continueEnrollment).not.toHaveBeenCalled();
 
     await waitFor(() => {
       expect(
@@ -77,7 +60,7 @@ describe("MfaSmsEnrollmentScreen", () => {
     await ScreenTestUtils.fillInput(/enter your phone number\*/i, "1234567890");
     await ScreenTestUtils.clickButton(/continue/i);
     await waitFor(() => {
-      expect(mockInstance.continueEnrollment).toHaveBeenCalledWith({
+      expect(continueEnrollment).toHaveBeenCalledWith({
         phone: "1234567890",
       });
     });
@@ -88,22 +71,23 @@ describe("MfaSmsEnrollmentScreen", () => {
 
     await ScreenTestUtils.clickButton(/select country/i);
     await waitFor(() => {
-      expect(mockInstance.pickCountryCode).toHaveBeenCalledWith({});
+      expect(pickCountryCode).toHaveBeenCalledWith({});
     });
   });
 
   it("should display API errors when enrollment fails", () => {
-    const errorTransaction = {
-      ...mockInstance.transaction,
+    const mockUseTransaction = useTransaction as jest.Mock;
+    const originalMock = mockUseTransaction();
+
+    mockUseTransaction.mockReturnValue({
+      ...originalMock,
       hasErrors: true,
       errors: [
         { message: "Phone number is already enrolled", field: "phone" },
         { message: "Invalid phone number format", field: "phone" },
         { message: "Network connection failed" },
       ],
-    };
-
-    (useTransaction as jest.Mock).mockReturnValue(errorTransaction);
+    });
 
     render(<MfaSmsEnrollmentScreen />);
 
@@ -114,8 +98,11 @@ describe("MfaSmsEnrollmentScreen", () => {
   });
 
   it("should set fallback title when texts is missing", () => {
-    (useScreen as jest.Mock).mockReturnValue({
-      ...mockInstance.screen,
+    const mockUseScreen = useScreen as jest.Mock;
+    const originalMock = mockUseScreen();
+
+    mockUseScreen.mockReturnValue({
+      ...originalMock,
       texts: null,
     });
 

@@ -65,7 +65,15 @@ const ULThemeSocialProviderButton = ({
     primary: "", // Add primary overrides if needed
     secondary: "", // Add secondary overrides if needed
     destructive: "", // Add destructive overrides if needed
-    ghost: "", // Add ghost overrides if needed
+    ghost: cn(
+      "py-[2px]",
+      "px-[2px]",
+      "mb-[0px]",
+      "theme-universal:font-button",
+      "theme-universal:text-(--color-secondary-button-label)",
+      "theme-universal:hover:shadow-[var(--button-hover-shadow)]",
+      "theme-universal:focus:outline-none theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15"
+    ),
     link: "", // Add link overrides if needed
   };
 
