@@ -4,20 +4,10 @@ import { useMfaEnrollResultManager } from "@/__mocks__/@auth0/auth0-acul-react/m
 
 import Header from "../components/Header";
 
-// Rewire the hook inside the component to use our actual mock
 jest.mock("../hooks/useMfaEnrollResultManager", () => ({
   useMfaEnrollResultManager: jest.requireActual(
     "@/__mocks__/@auth0/auth0-acul-react/mfa-enroll-result"
   ).useMfaEnrollResultManager,
-}));
-
-// Mock helpers
-jest.mock("@/utils/helpers/tokenUtils", () => ({
-  extractTokenValue: (token: string) => {
-    if (token === "--ul-theme-color-success") return "green";
-    if (token === "--ul-theme-color-error") return "red";
-    return "black";
-  },
 }));
 
 describe("Header", () => {
@@ -87,14 +77,7 @@ describe("Header", () => {
         // Assert title is shown
         expect(screen.getByText(expectedTitle)).toBeInTheDocument();
 
-        // Assert description is shown if it exists
-        if (expectedDescription) {
-          expect(screen.getByText(expectedDescription)).toBeInTheDocument();
-        } else {
-          expect(
-            screen.queryByText(expectedDescription)
-          ).not.toBeInTheDocument();
-        }
+        expect(screen.getByText(expectedDescription)).toBeInTheDocument();
 
         // Assert correct icon is rendered
         expect(screen.getByTestId(expectedIconTestId)).toBeInTheDocument();
