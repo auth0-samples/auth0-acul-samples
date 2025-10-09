@@ -84,6 +84,12 @@ export const useMfaEmailChallenge = jest.fn(() => ({
   handleTryAnotherMethod: mockMfaEmailChallengeInstance.handleTryAnotherMethod,
 }));
 
+// Export SDK methods directly
+export const continueMethod = mockMfaEmailChallengeInstance.handleContinue;
+export const resendCode = mockMfaEmailChallengeInstance.handleResendEmail;
+export const tryAnotherMethod =
+  mockMfaEmailChallengeInstance.handleTryAnotherMethod;
+
 /**
  * Default export for Jest mock injection using `jest.mock(...)`.
  */
