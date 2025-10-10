@@ -34,6 +34,9 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
     () => import("@/screens/mfa-push-challenge-push")
   ),
   "mfa-sms-list": lazy(() => import("@/screens/mfa-sms-list")),
+  "email-identifier-challenge": lazy(
+    () => import("@/screens/email-identifier-challenge")
+  ),
 };
 
 export const getScreenComponent = (

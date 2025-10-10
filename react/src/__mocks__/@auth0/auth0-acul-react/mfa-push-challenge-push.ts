@@ -48,7 +48,7 @@ export const createMockMfaPushChallengeInstance =
         resendText: "Didn't receive a notification?",
         enterOtpCode: "Manually Enter Code",
         separatorText: "OR",
-        logoAltText: "dev-vy34wbm3newzqb7k",
+        logoAltText: "dev-abc",
         badgeUrl:
           "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
         badgeAltText: "Link to the Auth0 website",

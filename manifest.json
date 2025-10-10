@@ -203,6 +203,12 @@
           "name": "MFA SMS List",
           "description": "Screen to list and manage SMS-based multi-factor authentication (MFA) methods",
           "path": "react/src/screens/mfa-sms-list"
+        },
+        {
+          "id": "email-identifier-challenge",
+          "name": "Email Identifier Challenge",
+          "description": "Screen for collecting email identifier during authentication",
+          "path": "react/src/screens/email-identifier-challenge"
         }
       ]
     }
