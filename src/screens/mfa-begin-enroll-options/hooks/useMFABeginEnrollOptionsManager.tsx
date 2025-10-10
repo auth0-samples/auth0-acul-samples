@@ -18,9 +18,9 @@ export const useMfaBeginEnrollOptionsManager = () => {
   const { texts } = useScreen();
 
   const handleEnroll = async (payload: MfaEnrollOptions): Promise<void> => {
-    executeSafely(
+    await executeSafely(
       `Enroll into the MFA factor: ${JSON.stringify(payload)}`,
-      () => () => enroll(payload)
+      () => enroll(payload)
     );
   };
 

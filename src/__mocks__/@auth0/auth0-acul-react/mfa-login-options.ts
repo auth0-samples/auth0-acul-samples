@@ -10,9 +10,12 @@ import type { ScreenMembersOnMfaLoginOptions } from "@auth0/auth0-acul-react/mfa
  * Represents a mocked instance of the MFA Login Options state.
  */
 export interface MockMfaLoginOptionsInstance {
-  handleEnroll: jest.Mock;
+  enroll: jest.Mock;
   screen: ScreenMembersOnMfaLoginOptions;
   transaction: TransactionMembers;
+  user?: {
+    enrolledFactors?: string[];
+  };
 }
 
 /**
@@ -20,11 +23,12 @@ export interface MockMfaLoginOptionsInstance {
  */
 export const createMockMfaLoginOptionsInstance =
   (): MockMfaLoginOptionsInstance => ({
-    handleEnroll: jest.fn(),
+    enroll: jest.fn(),
     screen: {
       name: "mfa-login-options",
       texts: {
-        title: "Select a method to verify your identity",
+        pageTitle: "Choose authentication method | All Applications",
+        title: "Choose an authentication method",
         authenticatorNamesSMS: "SMS",
         authenticatorNamesOTP: "OTP App",
         authenticatorNamesWebauthnRoaming: "Security Key",
@@ -53,23 +57,18 @@ export const createMockMfaLoginOptionsInstance =
       currentConnection: null,
       alternateConnections: null,
     },
+    user: {
+      enrolledFactors: ["sms", "otp", "webauthn-roaming", "email"],
+    },
   });
 
 // Default instance used for Jest mocks
 const defaultMock = createMockMfaLoginOptionsInstance();
 
-// Hook mocks
-export const useMfaLoginOptionsManager = jest.fn(() => ({
-  texts: defaultMock.screen.texts,
-  errors: [],
-  enrolledFactors: ["sms", "otp", "webauthn-roaming", "email"],
-  handleEnroll: defaultMock.handleEnroll,
-}));
-
 export const useScreen = jest.fn(() => defaultMock.screen);
 export const useTransaction = jest.fn(() => defaultMock.transaction);
+export const useMfaLoginOptions = jest.fn(() => defaultMock);
 
-// Exports for direct access in tests
-export const handleEnroll = defaultMock.handleEnroll;
+export const enroll = defaultMock.enroll;
 
 export default jest.fn(() => createMockMfaLoginOptionsInstance());
