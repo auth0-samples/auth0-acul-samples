@@ -29,6 +29,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "mfa-login-options": lazy(() => import("@/screens/mfa-login-options")),
   "mfa-sms-challenge": lazy(() => import("@/screens/mfa-sms-challenge")),
   "mfa-sms-enrollment": lazy(() => import("@/screens/mfa-sms-enrollment")),
+  "mfa-enroll-result": lazy(() => import("@/screens/mfa-enroll-result")),
   "mfa-push-challenge-push": lazy(
     () => import("@/screens/mfa-push-challenge-push")
   ),

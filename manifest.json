@@ -187,6 +187,12 @@
           "path": "react/src/screens/mfa-sms-enrollment"
         },
         {
+          "id": "mfa-enroll-result",
+          "name": "MFA Enroll Result",
+          "description": "Screen displaying response of MFA Enrollment",
+          "path": "react/src/screens/mfa-enroll-result"
+        },
+        {
           "id": "mfa-push-challenge-push",
           "name": "MFA Push Challenge Push",
           "description": "Screen for enrolling in Push-based multi-factor authentication (MFA)",
