@@ -11,10 +11,6 @@ import {
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
-/**
- * Handles the login using Enrolled Emails
- *
- */
 export const useMfaEmailChallengeManager = () => {
   const { texts, data } = useScreen();
 
