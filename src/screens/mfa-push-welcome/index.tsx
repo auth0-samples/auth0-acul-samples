@@ -2,8 +2,8 @@ import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
-import MfaPushChallengeForm from "./components/Details";
 import Header from "./components/Header";
+import MfaPushWelcomeForm from "./components/MfaPushWelcomeForm";
 import { useMfaPushWelcomeManager } from "./hooks/useMfaPushWelcomeManager";
 
 function MfaPushWelcomeScreen() {
@@ -18,7 +18,7 @@ function MfaPushWelcomeScreen() {
     <ULThemePageLayout className="theme-universal">
       <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
-        <MfaPushChallengeForm />
+        <MfaPushWelcomeForm />
       </ULThemeCard>
     </ULThemePageLayout>
   );

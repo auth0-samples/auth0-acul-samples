@@ -5,20 +5,22 @@ import type {
   Error,
 } from "@auth0/auth0-acul-react/mfa-push-welcome";
 
+import { AppleIcon, GooglePlayIcon } from "@/assets/icons";
 import { Form } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
+import { cn } from "@/lib/utils";
 
 import { useMfaPushWelcomeManager } from "../hooks/useMfaPushWelcomeManager";
 
-function MfaSmsChallengeForm() {
+function MfaPushWelcomeForm() {
   const {
     links,
     errors,
     texts,
     enrolledFactors,
-    // handleMfaPushWelcomeEnroll,
+    handleMfaPushWelcomeEnroll,
     handlePickAuthenticator,
   } = useMfaPushWelcomeManager();
 
@@ -39,9 +41,16 @@ function MfaSmsChallengeForm() {
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
 
+  const onSubmit = async (formData?: CustomOptions) => {
+    await handleMfaPushWelcomeEnroll(formData);
+  };
+
+  const socialIconButtonClassNames =
+    "grow-1 border-1 theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 border-(--ul-theme-color-secondary-button-border) theme-universal:rounded-button theme-universal:font-button text-(length:--ul-theme-font-buttons-text-size) hover:shadow-[var(--button-hover-shadow)] theme-universal:text-(--ul-theme-color-secondary-button-label)";
+
   return (
     <Form {...form}>
-      <form>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General error messages */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
@@ -53,43 +62,61 @@ function MfaSmsChallengeForm() {
           </div>
         )}
 
-        <div className="text-center space-y-2 mt-6">
-          <div className="flex justify-content-stretch">
-            <ULThemeLink href={links?.ios} className="border grow-1">
+        <div className="text-center">
+          <div className="flex justify-stretch">
+            <ULThemeLink
+              href={links?.ios}
+              target="_blank"
+              className={cn(socialIconButtonClassNames, "mr-2")}
+            >
               {
-                <div className="inline-block p-4 mr-2">
-                  <span className="block m-auto h-7.5 w-7.5"></span>
+                <div className="p-4 w-full">
+                  <span className="table static my-0 mx-auto mb-2">
+                    {" "}
+                    <AppleIcon />
+                  </span>
                   <span>{iosButtonText}</span>
                 </div>
               }
             </ULThemeLink>
-            <ULThemeLink href={links?.android} className="border grow-1">
+            <ULThemeLink
+              href={links?.android}
+              target="_blank"
+              className={cn(socialIconButtonClassNames)}
+            >
               {
-                <div className="inline-block p-4">
-                  <span className="block m-auto h-7.5 w-7.5"></span>
+                <div className="p-4 w-full">
+                  <span className="table static my-0 mx-auto mb-2">
+                    <GooglePlayIcon />
+                  </span>
                   <span>{androidButtonText}</span>
                 </div>
               }
             </ULThemeLink>
           </div>
           {/* Continue Enroll Button */}
-          <ULThemeButton type="submit" variant="primary" className="w-full">
+          <ULThemeButton
+            type="submit"
+            variant="primary"
+            className="w-full mt-6"
+          >
             {continueEnrollButtonText}
           </ULThemeButton>
-          {/* Try another method link */}
-          {shouldShowTryAnotherMethod && (
-            <ULThemeButton
-              onClick={() => handlePickAuthenticator()}
-              variant="link"
-              size="link"
-            >
-              {pickAuthenticatorText}
-            </ULThemeButton>
-          )}
         </div>
       </form>
+      {/* Try another method link */}
+      {shouldShowTryAnotherMethod && (
+        <ULThemeButton
+          onClick={() => handlePickAuthenticator()}
+          variant="link"
+          size="link"
+          className="mt-4 text-center"
+        >
+          {pickAuthenticatorText}
+        </ULThemeButton>
+      )}
     </Form>
   );
 }
 
-export default MfaSmsChallengeForm;
+export default MfaPushWelcomeForm;

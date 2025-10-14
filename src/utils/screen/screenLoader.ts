@@ -59,5 +59,5 @@ export const availableScreens = [
   "signup-id",
   "signup-password",
   "mfa-push-challenge-push",
-  "mfa-welcome",
+  "mfa-push-welcome",
 ] as const;
