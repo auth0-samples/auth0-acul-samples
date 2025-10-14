@@ -32,6 +32,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "mfa-push-challenge-push": lazy(
     () => import("@/screens/mfa-push-challenge-push")
   ),
+  "mfa-push-welcome": lazy(() => import("@/screens/mfa-push-welcome")),
   "mfa-sms-list": lazy(() => import("@/screens/mfa-sms-list")),
 };
 
@@ -58,4 +59,5 @@ export const availableScreens = [
   "signup-id",
   "signup-password",
   "mfa-push-challenge-push",
+  "mfa-welcome",
 ] as const;
