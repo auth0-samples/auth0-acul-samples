@@ -2,18 +2,9 @@ import { act, render, screen } from "@testing-library/react";
 
 import type { MockMfaPushWelcomeInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome";
 import { createMockMfaPushWelcomeInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome";
-// Import the mocked hook and jest mock function from your mock file
-import { useMfaPushWelcomeManager } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaPusWelcomeScreen from "../index";
-
-// Mock the hook by forwarding the mock from the mock file
-jest.mock("../hooks/useMfaPushWelcomeManager", () => ({
-  useMfaPushWelcomeManager: jest.requireActual(
-    "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome"
-  ).useMfaPushWelcomeManager,
-}));
 
 describe("MFAPushWelcomeScreen", () => {
   let mockInstance: MockMfaPushWelcomeInstance;
@@ -27,18 +18,6 @@ describe("MFAPushWelcomeScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockInstance = createMockMfaPushWelcomeInstance();
-
-    // Mock the useMfaPushWelcomeManager hook to return our mock data
-    (useMfaPushWelcomeManager as jest.Mock).mockReturnValue({
-      mfaPushWelcome: mockInstance,
-      handleMfaPushWelcomeEnroll: mockInstance.enroll,
-      handlePickAuthenticator: mockInstance.pickAuthenticator,
-      texts: mockInstance.screen.texts,
-      errors: mockInstance.transaction.errors || [],
-      data: mockInstance.screen.data,
-      links: mockInstance.screen.links,
-      enrolledFactors: mockInstance.user.enrolledFactors,
-    });
   });
 
   it("should render screen with basic structure using CommonTestData", async () => {
