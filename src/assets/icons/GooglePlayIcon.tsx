@@ -24,10 +24,10 @@ export const GooglePlayIcon: React.FC<SvgIconProps> = ({ ...props }) => (
         y2="50%"
         id="linearGradient-1"
       >
-        <stop stop-color="#FFDF00" offset="0%"></stop>
-        <stop stop-color="#FBBC0E" offset="41%"></stop>
-        <stop stop-color="#F9A418" offset="78%"></stop>
-        <stop stop-color="#F89B1C" offset="100%"></stop>
+        <stop stopColor="#FFDF00" offset="0%"></stop>
+        <stop stopColor="#FBBC0E" offset="41%"></stop>
+        <stop stopColor="#F9A418" offset="78%"></stop>
+        <stop stopColor="#F89B1C" offset="100%"></stop>
       </linearGradient>
       <linearGradient
         x1="86.2404448%"
@@ -36,8 +36,8 @@ export const GooglePlayIcon: React.FC<SvgIconProps> = ({ ...props }) => (
         y2="194.794179%"
         id="linearGradient-2"
       >
-        <stop stop-color="#EE4447" offset="0%"></stop>
-        <stop stop-color="#C5166C" offset="100%"></stop>
+        <stop stopColor="#EE4447" offset="0%"></stop>
+        <stop stopColor="#C5166C" offset="100%"></stop>
       </linearGradient>
       <linearGradient
         x1="-50.7644197%"
@@ -46,24 +46,24 @@ export const GooglePlayIcon: React.FC<SvgIconProps> = ({ ...props }) => (
         y2="48.8842767%"
         id="linearGradient-3"
       >
-        <stop stop-color="#269E6F" offset="0%"></stop>
-        <stop stop-color="#2BA06F" offset="5%"></stop>
-        <stop stop-color="#53B26B" offset="47%"></stop>
-        <stop stop-color="#6BBD69" offset="80%"></stop>
-        <stop stop-color="#74C168" offset="100%"></stop>
+        <stop stopColor="#269E6F" offset="0%"></stop>
+        <stop stopColor="#2BA06F" offset="5%"></stop>
+        <stop stopColor="#53B26B" offset="47%"></stop>
+        <stop stopColor="#6BBD69" offset="80%"></stop>
+        <stop stopColor="#74C168" offset="100%"></stop>
       </linearGradient>
     </defs>
     <g
       id="Symbols"
       stroke="none"
-      stroke-width="1"
+      strokeWidth="1"
       fill="none"
-      fill-rule="evenodd"
+      fillRule="evenodd"
     >
       <g
         id="Google-Play"
         transform="translate(-1.000000, 0.000000)"
-        fill-rule="nonzero"
+        fillRule="nonzero"
       >
         <g transform="translate(1.000000, 0.000000)" id="Shape">
           <path
