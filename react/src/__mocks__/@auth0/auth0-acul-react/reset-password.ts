@@ -8,7 +8,7 @@ import type {
  * used in unit and integration tests.
  */
 export interface MockResetPasswordInstance {
-  handleSubmitPassword: jest.Mock;
+  resetPassword: jest.Mock;
   screen: ScreenMembersOnResetPassword;
   transaction: TransactionMembers;
 }
@@ -21,7 +21,7 @@ export interface MockResetPasswordInstance {
  */
 export const createMockResetPasswordInstance =
   (): MockResetPasswordInstance => ({
-    handleSubmitPassword: jest.fn(),
+    resetPassword: jest.fn(),
 
     screen: {
       name: "reset-password",
@@ -69,9 +69,16 @@ export const createMockResetPasswordInstance =
     },
   });
 
-/**
- * Default export for Jest mock injection using `jest.mock(...)`.
- */
+const mockResetPasswordInstance = createMockResetPasswordInstance();
+
+export const useScreen = jest.fn(() => mockResetPasswordInstance.screen);
+export const useTransaction = jest.fn(
+  () => mockResetPasswordInstance.transaction
+);
+export const useResetPassword = jest.fn(() => mockResetPasswordInstance);
+
+export const resetPassword = mockResetPasswordInstance.resetPassword;
+
 export default jest
   .fn()
   .mockImplementation(() => createMockResetPasswordInstance());
