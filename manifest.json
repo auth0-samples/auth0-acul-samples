@@ -199,6 +199,12 @@
           "path": "react/src/screens/mfa-push-challenge-push"
         },
         {
+          "id": "mfa-push-welcome",
+          "name": "MFA Push Welcome",
+          "description": "Welcome Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-push-welcome"
+        },
+        {
           "id": "mfa-sms-list",
           "name": "MFA SMS List",
           "description": "Screen to list and manage SMS-based multi-factor authentication (MFA) methods",
