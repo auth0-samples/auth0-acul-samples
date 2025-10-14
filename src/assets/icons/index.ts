@@ -6,6 +6,7 @@ export * from "./DeviceGlobeMask";
 export * from "./ErrorCircleIcon";
 export * from "./LockHeavyAccent";
 export * from "./LockHeavyMask";
+export * from "./MFADeviceIcon";
 export * from "./MFAGuardianIcon";
 export * from "./MFAOTPIcon";
 export * from "./MFAPhoneIcon";
