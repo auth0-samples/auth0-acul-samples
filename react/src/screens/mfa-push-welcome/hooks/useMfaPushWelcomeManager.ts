@@ -31,7 +31,7 @@ export const useMfaPushWelcomeManager = () => {
     payload?: CustomOptions
   ): Promise<void> => {
     await executeSafely(
-      `Resend MFA Push Welcome with options: ${JSON.stringify(payload)}`,
+      `Try Another Method on MFA Push Welcome with options: ${JSON.stringify(payload)}`,
       () => mfaPushWelcome.pickAuthenticator(payload)
     );
   };
