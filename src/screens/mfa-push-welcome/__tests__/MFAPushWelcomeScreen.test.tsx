@@ -2,13 +2,17 @@ import { act, render, screen } from "@testing-library/react";
 
 import type { MockMfaPushWelcomeInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome";
 import { createMockMfaPushWelcomeInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome";
+// Import the mocked hook and jest mock function from your mock file
+import { useMfaPushWelcomeManager } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
-import { useMfaPushWelcomeManager } from "../hooks/useMfaPushWelcomeManager";
 import MfaPusWelcomeScreen from "../index";
 
+// Mock the hook by forwarding the mock from the mock file
 jest.mock("../hooks/useMfaPushWelcomeManager", () => ({
-  useMfaPushWelcomeManager: jest.fn(),
+  useMfaPushWelcomeManager: jest.requireActual(
+    "@/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome"
+  ).useMfaPushWelcomeManager,
 }));
 
 describe("MFAPushWelcomeScreen", () => {
