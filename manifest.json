@@ -215,6 +215,12 @@
           "name": "Email Identifier Challenge",
           "description": "Screen for collecting email identifier during authentication",
           "path": "react/src/screens/email-identifier-challenge"
+        },
+        {
+          "id": "mfa-email-list",
+          "name": "MFA Email List",
+          "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
+          "path": "react/src/screens/mfa-email-list"
         }
       ]
     }
