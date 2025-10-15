@@ -1,10 +1,11 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-
 import {
   enroll,
   useScreen,
   useTransaction,
-} from "@/__mocks__/@auth0/auth0-acul-react/mfa-begin-enroll-options";
+} from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
+import { act, render, screen } from "@testing-library/react";
+
+import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 import MfaBeginEnrollOptionsScreen from "../index";
@@ -12,12 +13,19 @@ import MfaBeginEnrollOptionsScreen from "../index";
 jest.mock("@/utils/theme/themeEngine");
 
 describe("MfaBeginEnrollOptionsScreen", () => {
+  const renderScreen = async () => {
+    await act(async () => {
+      render(<MfaBeginEnrollOptionsScreen />);
+    });
+    await screen.findByText(/SMS/i);
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders correctly with MFA enrollment options", () => {
-    render(<MfaBeginEnrollOptionsScreen />);
+  it("renders correctly with MFA enrollment options", async () => {
+    await renderScreen();
 
     // Verify the page title is set properly
     expect(document.title).toBe(
@@ -30,42 +38,37 @@ describe("MfaBeginEnrollOptionsScreen", () => {
     expect(screen.getByText(/Security Key/i)).toBeInTheDocument();
   });
 
-  it("applies theme on load", () => {
-    render(<MfaBeginEnrollOptionsScreen />);
+  it("applies theme on load", async () => {
+    await renderScreen();
 
     expect(applyAuth0Theme).toHaveBeenCalled();
   });
 
   it("calls enroll SDK method when SMS option is clicked", async () => {
-    render(<MfaBeginEnrollOptionsScreen />);
+    await renderScreen();
 
-    const smsButton = screen.getByText(/SMS/i).closest("button");
-    fireEvent.click(smsButton!);
+    await ScreenTestUtils.clickButton(/SMS/i);
 
     expect(enroll).toHaveBeenCalledWith({ action: "sms" });
   });
 
   it("calls enroll SDK method when OTP option is clicked", async () => {
-    render(<MfaBeginEnrollOptionsScreen />);
+    await renderScreen();
 
-    const otpButton = screen.getByText(/Authenticator App/i).closest("button");
-    fireEvent.click(otpButton!);
+    await ScreenTestUtils.clickButton(/Authenticator App/i);
 
     expect(enroll).toHaveBeenCalledWith({ action: "otp" });
   });
 
   it("calls enroll SDK method when Security Key option is clicked", async () => {
-    render(<MfaBeginEnrollOptionsScreen />);
+    await renderScreen();
 
-    const securityKeyButton = screen
-      .getByText(/Security Key/i)
-      .closest("button");
-    fireEvent.click(securityKeyButton!);
+    await ScreenTestUtils.clickButton(/Security Key/i);
 
     expect(enroll).toHaveBeenCalledWith({ action: "webauthn-roaming" });
   });
 
-  it("displays general errors when present", () => {
+  it("displays general errors when present", async () => {
     const mockErrors = [
       { message: "Network error occurred", field: null },
       { message: "Service unavailable", field: undefined },
@@ -83,13 +86,13 @@ describe("MfaBeginEnrollOptionsScreen", () => {
       alternateConnections: null,
     });
 
-    render(<MfaBeginEnrollOptionsScreen />);
+    await renderScreen();
 
     expect(screen.getByText("Network error occurred")).toBeInTheDocument();
     expect(screen.getByText("Service unavailable")).toBeInTheDocument();
   });
 
-  it("sets fallback title when texts is missing", () => {
+  it("sets fallback title when texts is missing", async () => {
     (useScreen as jest.Mock).mockReturnValue({
       name: "mfa-begin-enroll-options",
       texts: null,
@@ -104,7 +107,9 @@ describe("MfaBeginEnrollOptionsScreen", () => {
       },
     });
 
-    render(<MfaBeginEnrollOptionsScreen />);
+    await act(async () => {
+      render(<MfaBeginEnrollOptionsScreen />);
+    });
 
     expect(document.title).toBe("Add another authentication method");
   });
