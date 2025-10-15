@@ -1,14 +1,33 @@
 // Auto-generated file
-// Generated on: 2025-09-23T09:18:28.509Z
+
 import { lazy } from "react";
 
 const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
+  login: lazy(() => import("@/screens/login")),
+  "login-id": lazy(() => import("@/screens/login-id")),
   "login-passwordless-email-code": lazy(
     () => import("@/screens/login-passwordless-email-code")
   ),
   "login-passwordless-sms-otp": lazy(
     () => import("@/screens/login-passwordless-sms-otp")
   ),
+  "email-identifier-challenge": lazy(
+    () => import("@/screens/email-identifier-challenge")
+  ),
+  "mfa-begin-enroll-options": lazy(
+    () => import("@/screens/mfa-begin-enroll-options")
+  ),
+  "mfa-email-challenge": lazy(() => import("@/screens/mfa-email-challenge")),
+  "mfa-enroll-result": lazy(() => import("@/screens/mfa-enroll-result")),
+  "mfa-login-options": lazy(() => import("@/screens/mfa-login-options")),
+  "mfa-push-challenge-push": lazy(
+    () => import("@/screens/mfa-push-challenge-push")
+  ),
+  "mfa-push-welcome": lazy(() => import("@/screens/mfa-push-welcome")),
+  "mfa-push-list": lazy(() => import("@/screens/mfa-push-list")),
+  "mfa-sms-challenge": lazy(() => import("@/screens/mfa-sms-challenge")),
+  "mfa-sms-enrollment": lazy(() => import("@/screens/mfa-sms-enrollment")),
+  "mfa-sms-list": lazy(() => import("@/screens/mfa-sms-list")),
   "passkey-enrollment": lazy(() => import("@/screens/passkey-enrollment")),
   "passkey-enrollment-local": lazy(
     () => import("@/screens/passkey-enrollment-local")
@@ -22,23 +41,6 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   signup: lazy(() => import("@/screens/signup")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
   "signup-password": lazy(() => import("@/screens/signup-password")),
-  "mfa-email-challenge": lazy(() => import("@/screens/mfa-email-challenge")),
-  "mfa-begin-enroll-options": lazy(
-    () => import("@/screens/mfa-begin-enroll-options")
-  ),
-  "mfa-login-options": lazy(() => import("@/screens/mfa-login-options")),
-  "mfa-sms-challenge": lazy(() => import("@/screens/mfa-sms-challenge")),
-  "mfa-sms-enrollment": lazy(() => import("@/screens/mfa-sms-enrollment")),
-  "mfa-enroll-result": lazy(() => import("@/screens/mfa-enroll-result")),
-  "mfa-push-challenge-push": lazy(
-    () => import("@/screens/mfa-push-challenge-push")
-  ),
-  "mfa-push-list": lazy(() => import("@/screens/mfa-push-list")),
-  "mfa-push-welcome": lazy(() => import("@/screens/mfa-push-welcome")),
-  "mfa-sms-list": lazy(() => import("@/screens/mfa-sms-list")),
-  "email-identifier-challenge": lazy(
-    () => import("@/screens/email-identifier-challenge")
-  ),
 };
 
 export const getScreenComponent = (
@@ -49,21 +51,3 @@ export const getScreenComponent = (
   }
   return SCREEN_COMPONENTS[screenName] || null;
 };
-
-// Available screens for reference
-export const availableScreens = [
-  "login-passwordless-email-code",
-  "login-passwordless-sms-otp",
-  "passkey-enrollment",
-  "passkey-enrollment-local",
-  "reset-password",
-  "reset-password-email",
-  "reset-password-error",
-  "reset-password-success",
-  "signup",
-  "signup-id",
-  "signup-password",
-  "mfa-push-challenge-push",
-  "mfa-push-list",
-  "mfa-push-welcome",
-] as const;
