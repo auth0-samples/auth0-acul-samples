@@ -39,25 +39,23 @@ function MfaPushList() {
       )}
 
       {/* Render list of enrolled mfa devices */}
-      <div className="space-y-0">
-        {enrolledDevices.map((device, index) => (
+      <div className="space-y-0 px-10 pb-10">
+        {enrolledDevices.map((device) => (
           <div key={device.id}>
             <ULThemeSocialProviderButton
               variant="ghost"
               displayName={device.device}
               buttonText={device.device}
-              iconComponent={<MFADeviceIcon />}
+              iconComponent={<MFADeviceIcon className="size-full" />}
               iconEnd={<ChevronRight size={24} color="#6f7780" />}
               onClick={() =>
                 handleSelectMFAPushDeviceAction({
                   deviceIndex: device.id,
                 })
               }
-              className="w-full justify-between px-0 [&>span:nth-child(2)]:font-semibold"
+              className="w-full justify-between px-0 py-4 pr-4"
             />
-            {index < enrolledDevices.length - 1 && (
-              <ULThemeSeparator className="my-2" />
-            )}
+            <ULThemeSeparator className="my-0" />
           </div>
         ))}
       </div>

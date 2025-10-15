@@ -1,11 +1,11 @@
-import { act, render, screen } from "@testing-library/react";
-
 import {
   goBack,
   selectMfaPushDevice,
   useTransaction,
   useUser,
-} from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-list";
+} from "@auth0/auth0-acul-react/mfa-push-list";
+import { act, render, screen } from "@testing-library/react";
+
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaPushListScreen from "../index";
@@ -61,6 +61,40 @@ describe("MFAPushListScreen", () => {
       secondDevice?.click();
     });
     expect(selectMfaPushDevice).toHaveBeenCalledWith({ deviceIndex: 1 });
+  });
+
+  it("should verify scenario with non-sequential device IDs to verify the correct value is passed", async () => {
+    (useUser as jest.Mock).mockReturnValue({
+      ...(useUser as jest.Mock)(),
+      enrolledDevices: [
+        {
+          id: 42,
+          device: "Test Device 1",
+        },
+        {
+          id: 99,
+          device: "Test Device 2",
+        },
+      ],
+    });
+
+    await renderScreen();
+
+    const firstDevice = screen.getByText("Test Device 1").closest("button");
+    const secondDevice = screen.getByText("Test Device 2").closest("button");
+
+    // Click first device
+    await act(async () => {
+      firstDevice?.click();
+    });
+
+    expect(selectMfaPushDevice).toHaveBeenCalledWith({ deviceIndex: 42 });
+
+    // Click second device
+    await act(async () => {
+      secondDevice?.click();
+    });
+    expect(selectMfaPushDevice).toHaveBeenCalledWith({ deviceIndex: 99 });
   });
 
   it("should display general errors from transaction and filter out field-specific errors", async () => {
