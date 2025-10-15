@@ -3,15 +3,16 @@
 import { lazy } from "react";
 
 const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
-  "email-identifier-challenge": lazy(
-    () => import("@/screens/email-identifier-challenge")
-  ),
   login: lazy(() => import("@/screens/login")),
+  "login-id": lazy(() => import("@/screens/login-id")),
   "login-passwordless-email-code": lazy(
     () => import("@/screens/login-passwordless-email-code")
   ),
   "login-passwordless-sms-otp": lazy(
     () => import("@/screens/login-passwordless-sms-otp")
+  ),
+  "email-identifier-challenge": lazy(
+    () => import("@/screens/email-identifier-challenge")
   ),
   "mfa-begin-enroll-options": lazy(
     () => import("@/screens/mfa-begin-enroll-options")
