@@ -1,0 +1,110 @@
+import type {
+  ScreenMembersOnMfaPushChallengePush,
+  UserMembers,
+} from "@auth0/auth0-acul-react";
+
+/**
+ * Defines the "contract" for our mock. It combines the methods from the mfa-push-challenge-push screen
+ * with the `screen` and `transaction` data structures.
+ * This provides a single, type-safe object to control in our tests.
+ */
+export interface MockMfaPushChallengeInstance {
+  continue: jest.Mock;
+  resendPushNotification: jest.Mock;
+  enterCodeManually: jest.Mock;
+  tryAnotherMethod: jest.Mock;
+  screen: ScreenMembersOnMfaPushChallengePush;
+  transaction: {
+    hasErrors: boolean;
+    errors: Array<{ message: string; field?: string }>;
+    state: string;
+    locale: string;
+  };
+  user: UserMembers;
+}
+
+/**
+ * Factory function to create a new mock instance for mfa-sms-enrollment functionality.
+ * This ensures each test gets a clean, isolated mock object that is
+ * structurally aligned with the official SDK documentation.
+ */
+export const createMockMfaPushChallengeInstance =
+  (): MockMfaPushChallengeInstance => ({
+    continue: jest.fn(),
+    resendPushNotification: jest.fn(),
+    enterCodeManually: jest.fn(),
+    tryAnotherMethod: jest.fn(),
+    screen: {
+      name: "mfa-push-challenge-push",
+      texts: {
+        pageTitle: "Accept the push notification to log in | My App",
+        title: "Verify Your Identity",
+        description:
+          "We’ve sent a notification to the following device via the Auth0 Guardian app:",
+        buttonText: "I've responded on my device",
+        pickAuthenticatorText: "Try another method",
+        rememberMeText: "Remember this device for 30 days",
+        resendActionText: "Resend",
+        resendText: "Didn't receive a notification?",
+        enterOtpCode: "Manually Enter Code",
+        separatorText: "OR",
+        logoAltText: "dev-abc",
+        badgeUrl:
+          "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+        badgeAltText: "Link to the Auth0 website",
+        error: "Error",
+        qrCode: "QR Code",
+        spinner_push_notification_label:
+          "Waiting for push notification to be accepted",
+      },
+      isCaptchaAvailable: false,
+      captchaProvider: null,
+      captchaSiteKey: null,
+      captchaImage: null,
+      captcha: null,
+      links: {
+        helpLink: "/test-help",
+      },
+      data: null,
+    },
+    transaction: {
+      hasErrors: false,
+      errors: [],
+      state: "mock-mfa-push-challenge-push-state",
+      locale: "en",
+    },
+    user: {
+      id: "dummy_id",
+      email: null,
+      username: null,
+      phoneNumber: null,
+      picture: null,
+      enrolledFactors: ["phone_notification", "otp"],
+      enrolledEmails: null,
+      enrolledPhoneNumbers: null,
+      enrolledDevices: null,
+      organizations: null,
+      userMetadata: null,
+      appMetadata: null,
+    },
+  });
+
+// Mock the mfa-push-challenge hooks and methods
+const mockMfaSmsEnrollmentInstance = createMockMfaPushChallengeInstance();
+
+export const useMfaSmsEnrollment = jest.fn(() => ({
+  continue: mockMfaSmsEnrollmentInstance.continue,
+  resendPushNotification: mockMfaSmsEnrollmentInstance.resendPushNotification,
+  enterCodeManually: mockMfaSmsEnrollmentInstance.enterCodeManually,
+  tryAnotherMethod: mockMfaSmsEnrollmentInstance.tryAnotherMethod,
+}));
+
+export const useScreen = jest.fn(() => mockMfaSmsEnrollmentInstance.screen);
+export const useUser = jest.fn(() => mockMfaSmsEnrollmentInstance.user);
+export const useTransaction = jest.fn(
+  () => mockMfaSmsEnrollmentInstance.transaction
+);
+
+export default jest
+  .fn()
+  .mockImplementation(() => createMockMfaPushChallengeInstance());

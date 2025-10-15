@@ -145,6 +145,12 @@
           "path": "react/src/screens/signup-password"
         },
         {
+          "id": "mfa-login-options",
+          "name": "MFA Login Options",
+          "description": "Screen to login via multi-factor authentication (MFA) factors with various options",
+          "path": "react/src/screens/mfa-login-options"
+        },
+        {
           "id": "signup",
           "name": "Signup",
           "description": "Screen for user registration",
@@ -185,6 +191,42 @@
           "name": "MFA SMS Enrollment",
           "description": "Screen for enrolling in SMS-based multi-factor authentication (MFA)",
           "path": "react/src/screens/mfa-sms-enrollment"
+        },
+        {
+          "id": "mfa-enroll-result",
+          "name": "MFA Enroll Result",
+          "description": "Screen displaying response of MFA Enrollment",
+          "path": "react/src/screens/mfa-enroll-result"
+        },
+        {
+          "id": "mfa-push-challenge-push",
+          "name": "MFA Push Challenge Push",
+          "description": "Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-push-challenge-push"
+        },
+        {
+          "id": "mfa-push-welcome",
+          "name": "MFA Push Welcome",
+          "description": "Welcome Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-push-welcome"
+        },
+        {
+          "id": "mfa-sms-list",
+          "name": "MFA SMS List",
+          "description": "Screen to list and manage SMS-based multi-factor authentication (MFA) methods",
+          "path": "react/src/screens/mfa-sms-list"
+        },
+        {
+          "id": "email-identifier-challenge",
+          "name": "Email Identifier Challenge",
+          "description": "Screen for collecting email identifier during authentication",
+          "path": "react/src/screens/email-identifier-challenge"
+        },
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "react/src/screens/login"
         }
       ]
     }

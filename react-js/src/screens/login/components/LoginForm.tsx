@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js/login";
+import type { Error, LoginOptions } from "@auth0/auth0-acul-js/login";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -16,12 +16,6 @@ import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginManager } from "../hooks/useLoginManager";
 
-interface LoginFormData {
-  username: string;
-  password: string;
-  captcha?: string;
-}
-
 function LoginForm() {
   const {
     handleLogin,
@@ -35,7 +29,7 @@ function LoginForm() {
     passwordPolicy,
   } = useLoginManager();
 
-  const form = useForm<LoginFormData>({
+  const form = useForm<LoginOptions>({
     defaultValues: {
       username: "",
       password: "",
@@ -78,7 +72,7 @@ function LoginForm() {
   const captchaSDKError = getFieldError("captcha", errors);
 
   // Proper submit handler with form data
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: LoginOptions) => {
     await handleLogin(data.username, data.password, data.captcha);
   };
 

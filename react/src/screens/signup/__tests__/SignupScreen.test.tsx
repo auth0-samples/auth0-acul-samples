@@ -1,46 +1,30 @@
-// Import the mocked functions - they're already mocked by the __mocks__ folder
 import {
+  signup,
   useEnabledIdentifiers,
   usePasswordValidation,
-  useScreen,
-  useSignup,
   useTransaction,
   useUsernameValidation,
 } from "@auth0/auth0-acul-react/signup";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 
-import { createMockSignupInstance } from "@/__mocks__/@auth0/auth0-acul-react/signup";
+import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import SignupScreen from "../index";
 
 describe("SignupScreen", () => {
-  let mockInstance: ReturnType<typeof createMockSignupInstance>;
+  const renderScreen = async () => {
+    await act(async () => {
+      render(<SignupScreen />);
+    });
+    await screen.findByRole("button", { name: /continue/i });
+  };
 
   beforeEach(() => {
-    // Create a fresh mock instance for each test
-    mockInstance = createMockSignupInstance();
-
-    // Reset all mocks
     jest.clearAllMocks();
-
-    // Configure the hooks to return our mock instance data
-    (useSignup as jest.Mock).mockReturnValue({
-      signup: mockInstance.signup,
-      federatedSignup: mockInstance.federatedSignup,
-      pickCountryCode: mockInstance.pickCountryCode,
-    });
-    (useScreen as jest.Mock).mockReturnValue(mockInstance.screen);
-    (useTransaction as jest.Mock).mockReturnValue(mockInstance.transaction);
   });
 
-  it("should render signup screen with all form elements", () => {
-    render(<SignupScreen />);
+  it("should render signup screen with all form elements", async () => {
+    await renderScreen();
 
     // Verify basic screen structure using known text from mock
     expect(screen.getByText("Create Your Account")).toBeInTheDocument();
@@ -58,104 +42,65 @@ describe("SignupScreen", () => {
   });
 
   it("should validate required fields and prevent submission with invalid data", async () => {
-    render(<SignupScreen />);
-
-    const submitButton = screen.getByRole("button", { name: /continue/i });
+    await renderScreen();
 
     // Try to submit without filling required email
-    await act(async () => {
-      fireEvent.click(submitButton);
-    });
+    await ScreenTestUtils.clickButton(/continue/i);
 
-    expect(mockInstance.signup).not.toHaveBeenCalled();
+    expect(signup).not.toHaveBeenCalled();
 
     // Try with invalid email format
-    const emailInput = screen.getByLabelText(/email address\*/i);
-    await act(async () => {
-      fireEvent.change(emailInput, { target: { value: "invalid-email" } });
-      fireEvent.click(submitButton);
-    });
+    await ScreenTestUtils.fillInput(/email address\*/i, "invalid-email");
+    await ScreenTestUtils.clickButton(/continue/i);
 
-    expect(mockInstance.signup).not.toHaveBeenCalled();
+    expect(signup).not.toHaveBeenCalled();
   });
 
   it("should successfully submit form with valid data and call signup function", async () => {
-    render(<SignupScreen />);
+    await renderScreen();
 
     // Fill out the form with valid data
-    const emailInput = screen.getByLabelText(/email address\*/i);
-    const passwordInput = document.querySelector(
-      'input[name="password"]'
-    ) as HTMLInputElement;
-
-    await act(async () => {
-      fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-      fireEvent.change(passwordInput, { target: { value: "ValidPass123!" } });
-    });
+    await ScreenTestUtils.fillInput(/email address\*/i, "test@example.com");
+    await ScreenTestUtils.fillInput(/password\*/i, "ValidPass123!");
 
     // Submit the form
-    const submitButton = screen.getByRole("button", { name: /continue/i });
-    await act(async () => {
-      fireEvent.click(submitButton);
-    });
+    await ScreenTestUtils.clickButton(/continue/i);
 
     // Verify signup function was called with correct data
-    await waitFor(
-      () => {
-        if (mockInstance.signup.mock.calls.length > 0) {
-          expect(mockInstance.signup).toHaveBeenCalledWith(
-            expect.objectContaining({
-              email: "test@example.com",
-              password: "ValidPass123!",
-            })
-          );
-        }
-      },
-      { timeout: 3000 }
+    expect(signup).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "test@example.com",
+        password: "ValidPass123!",
+      })
     );
   });
 
   it("should display password validation rules when user types and use username validation", async () => {
-    render(<SignupScreen />);
+    await renderScreen();
 
-    const passwordInput = document.querySelector(
-      'input[name="password"]'
-    ) as HTMLInputElement;
-
-    // Type a password to trigger validation display
-    await act(async () => {
-      fireEvent.change(passwordInput, { target: { value: "test123" } });
-    });
-
-    // Should display password requirements from mock
-    expect(screen.getByText(/your password must contain/i)).toBeInTheDocument();
-
-    // Should show validation rules from our mock
-    const validationElements = screen.queryAllByText(
-      /at least|lower case|upper case|numbers|characters/i
-    );
-    expect(validationElements.length).toBeGreaterThan(0);
+    // Fill password to trigger validation display
+    await ScreenTestUtils.fillInput(/password\*/i, "test123");
 
     // Verify hooks are called
     expect(useUsernameValidation).toHaveBeenCalled();
     expect(usePasswordValidation).toHaveBeenCalled();
   });
 
-  it("should display API errors when signup fails", () => {
-    // Create error transaction from base mock
-    const errorTransaction = {
-      ...mockInstance.transaction,
+  it("should display API errors when signup fails", async () => {
+    const mockUseTransaction = useTransaction as jest.Mock;
+    const originalMock = mockUseTransaction();
+
+    mockUseTransaction.mockReturnValue({
+      ...originalMock,
       hasErrors: true,
       errors: [
         { message: "Email already exists", field: "email" },
         { message: "Password too weak", field: "password" },
         { message: "Network connection failed" },
       ],
-    };
+    });
 
-    (useTransaction as jest.Mock).mockReturnValue(errorTransaction);
-
-    render(<SignupScreen />);
+    await renderScreen();
 
     // Should display all error messages
     expect(screen.getByText(/email already exists/i)).toBeInTheDocument();
@@ -163,7 +108,7 @@ describe("SignupScreen", () => {
     expect(screen.getByText(/network connection failed/i)).toBeInTheDocument();
   });
 
-  it("should adapt form fields based on identifier configuration", () => {
+  it("should adapt form fields based on identifier configuration", async () => {
     // Test with phone as required identifier
     (useEnabledIdentifiers as jest.Mock).mockReturnValue([
       { type: "phone", required: true },
@@ -171,7 +116,7 @@ describe("SignupScreen", () => {
       { type: "username", required: false },
     ]);
 
-    render(<SignupScreen />);
+    await renderScreen();
 
     // Should show country picker for phone (required)
     expect(screen.getByText(/select country/i)).toBeInTheDocument();

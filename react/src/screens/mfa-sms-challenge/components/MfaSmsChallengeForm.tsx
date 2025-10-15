@@ -87,7 +87,6 @@ function MfaSmsChallengeForm() {
                 label={`${codeLabelText}*`}
                 type="text"
                 inputMode="numeric"
-                maxLength={6}
                 placeholder=""
                 autoComplete="one-time-code"
                 autoFocus
