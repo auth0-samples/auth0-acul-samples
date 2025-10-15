@@ -29,7 +29,7 @@ export const useMfaPushListManager = () => {
     payload?: SelectMfaPushDeviceOptions
   ): Promise<void> => {
     const options: SelectMfaPushDeviceOptions = {
-      deviceIndex: Number(payload?.deviceIndex) || 0,
+      deviceIndex: payload?.deviceIndex ?? 0,
     };
 
     await executeSafely(

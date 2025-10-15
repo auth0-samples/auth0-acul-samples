@@ -1,5 +1,6 @@
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
+import ULThemeSeparator from "@/components/ULThemeSeparator";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 import MfaPushList from "./components/MfaPushList";
@@ -15,8 +16,9 @@ function MfaPushListScreen() {
 
   return (
     <ULThemePageLayout className="theme-universal">
-      <ULThemeCard className="w-full max-w-[400px] gap-0">
+      <ULThemeCard className="p-0 pt-4 gap-0 w-(--prompt-width) min-h-(--prompt-min-height)">
         <MfaPushListHeader />
+        <ULThemeSeparator className="grow-0" />
         <MfaPushList />
       </ULThemeCard>
     </ULThemePageLayout>

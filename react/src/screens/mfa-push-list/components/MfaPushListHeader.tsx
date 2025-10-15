@@ -5,7 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import ULThemeSeparator from "@/components/ULThemeSeparator";
 import ULThemeTitle from "@/components/ULThemeTitle";
 
 import { useMfaPushListManager } from "../hooks/useMfaPushListManager";
@@ -19,7 +18,7 @@ function MfaPushListHeader() {
   return (
     <>
       {/* Header with back button and title */}
-      <span className="flex items-center justify-start gap-6">
+      <span className="flex items-center justify-start gap-14 px-7">
         <Tooltip>
           <TooltipTrigger
             onClick={() => handleBackAction()}
@@ -36,10 +35,8 @@ function MfaPushListHeader() {
             {backText}
           </TooltipContent>
         </Tooltip>
-
-        <ULThemeTitle className="text-lg mt-0 mb-0">{titleText}</ULThemeTitle>
+        <ULThemeTitle className="mt-0 mb-0">{titleText}</ULThemeTitle>
       </span>
-      <ULThemeSeparator />
     </>
   );
 }
