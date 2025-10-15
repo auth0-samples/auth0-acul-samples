@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react";
-import {
+import type {
   AbortEnrollmentOptions,
   CustomOptions,
+  Error,
 } from "@auth0/auth0-acul-react/passkey-enrollment-local";
 
 import {

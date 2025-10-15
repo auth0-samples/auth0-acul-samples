@@ -66,7 +66,6 @@ function generateScreenLoader() {
     .join(",\n");
 
   const content = `// Auto-generated file
-// Generated on: ${new Date().toISOString()}
 
 import { lazy } from "react";
 
@@ -82,11 +81,6 @@ export const getScreenComponent = (
   }
   return SCREEN_COMPONENTS[screenName] || null;
 };
-
-// Available screens for reference
-export const availableScreens = [
-  ${existingScreens.map((screen) => `"${screen}"`).join(",\n  ")}
-] as const;
 `;
 
   // Write the file
