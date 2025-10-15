@@ -215,6 +215,12 @@
           "name": "Email Identifier Challenge",
           "description": "Screen for collecting email identifier during authentication",
           "path": "react/src/screens/email-identifier-challenge"
+        },
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "react/src/screens/login"
         }
       ]
     }

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 
 import type {
   Error,
+  LoginOptions,
   TransactionMembersOnLoginId,
 } from "@auth0/auth0-acul-js/login-id";
 
@@ -24,11 +25,6 @@ import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
-interface LoginIdFormData {
-  identifier: string;
-  captcha?: string;
-}
-
 function IdentifierForm() {
   const {
     handleLoginId,
@@ -42,7 +38,7 @@ function IdentifierForm() {
     handlePickCountryCode,
   } = useLoginIdManager();
 
-  const form = useForm<LoginIdFormData>({
+  const form = useForm<LoginOptions>({
     defaultValues: {
       identifier: "",
       captcha: "",
@@ -89,8 +85,8 @@ function IdentifierForm() {
   } = getIdentifierDetails(allowedIdentifiers, texts);
 
   // Proper submit handler with form data
-  const onSubmit = async (data: LoginIdFormData) => {
-    await handleLoginId(data.identifier, captchaValue);
+  const onSubmit = async (data: LoginOptions) => {
+    await handleLoginId(String(data.identifier || ""), captchaValue);
   };
 
   const localizedResetPasswordLink =
@@ -144,6 +140,7 @@ function IdentifierForm() {
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
+                value={String(field.value || "")}
                 label={identifierLabel}
                 type={identifierType}
                 autoFocus={true}

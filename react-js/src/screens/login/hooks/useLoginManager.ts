@@ -1,6 +1,9 @@
 import { useMemo } from "react";
 
-import type { ScreenMembersOnLogin } from "@auth0/auth0-acul-js/login";
+import type {
+  LoginOptions,
+  ScreenMembersOnLogin,
+} from "@auth0/auth0-acul-js/login";
 import LoginInstance from "@auth0/auth0-acul-js/login";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
@@ -19,7 +22,7 @@ export const useLoginManager = () => {
     password: string,
     captcha?: string
   ): Promise<void> => {
-    const options: { username: string; password: string; captcha?: string } = {
+    const options: LoginOptions = {
       username: username?.trim() || "",
       password: password || "",
     };
