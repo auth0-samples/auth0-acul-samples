@@ -241,6 +241,12 @@
           "path": "react/src/screens/email-identifier-challenge"
         },
         {
+          "id": "mfa-email-list",
+          "name": "MFA Email List",
+          "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
+          "path": "react/src/screens/mfa-email-list"
+        },
+        {
           "id": "mfa-country-codes",
           "name": "MFA Country Codes",
           "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
