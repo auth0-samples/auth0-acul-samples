@@ -7,7 +7,6 @@ import { MFAEmailIcon } from "@/assets/icons/MFAEmailIcon";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeSeparator from "@/components/ULThemeSeparator";
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
-import { cn } from "@/lib/utils";
 
 import { useMfaEmailListManager } from "../hooks/useMFAEmailListManager";
 
@@ -34,7 +33,7 @@ function MFAEmailList() {
         </div>
       )}
       {/* Render buttons for each email option */}
-      <div className="space-y-2">
+      <div className="space-y-0 px-10 pb-10">
         {enrolledEmails.map((option) => {
           return (
             <React.Fragment key={option.id}>
@@ -42,13 +41,11 @@ function MFAEmailList() {
                 displayName={option.email}
                 buttonText={option.email}
                 iconEnd={
-                  <ChevronRight
-                    className={cn("w-4 h-4 theme-universal:text-input-labels")}
-                  />
+                  <ChevronRight className="w-4 h-4 theme-universal:text-input-labels" />
                 }
                 iconComponent={<MFAEmailIcon />}
                 onClick={() => handleSelectEmail({ index: option.id })}
-                className="flex items-center gap-2"
+                className="w-full justify-between px-0 py-4 pr-4"
                 variant="ghost"
               ></ULThemeSocialProviderButton>
               <ULThemeSeparator className="my-[2px]" />

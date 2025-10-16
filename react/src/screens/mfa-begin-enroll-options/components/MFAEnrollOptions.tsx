@@ -11,7 +11,6 @@ import {
 } from "@/assets/icons";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
-import { cn } from "@/lib/utils";
 
 import { useMfaBeginEnrollOptionsManager } from "../hooks/useMFABeginEnrollOptionsManager";
 
@@ -76,9 +75,7 @@ function MFAEnrollOptions() {
               displayName={getDisplayName(option)}
               buttonText={getDisplayName(option)}
               iconEnd={
-                <ChevronRight
-                  className={cn("w-4 h-4 theme-universal:text-input-labels")}
-                />
+                <ChevronRight className="w-4 h-4 theme-universal:text-input-labels" />
               }
               iconComponent={getIcon(option)}
               onClick={() => handleEnroll({ action: option })}

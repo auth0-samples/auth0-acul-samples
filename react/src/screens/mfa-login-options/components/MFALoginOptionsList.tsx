@@ -20,7 +20,6 @@ import { MFAWebAuthnPlatformIcon } from "@/assets/icons/MFAWebAuthnPlatformIcon"
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeSeparator from "@/components/ULThemeSeparator";
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
-import { cn } from "@/lib/utils";
 
 import { useMfaLoginOptionsManager } from "../hooks/useMFALoginOptionsManager";
 
@@ -95,9 +94,7 @@ function MFALoginOptionsList() {
                 displayName={getDisplayName(option)}
                 buttonText={getDisplayName(option)}
                 iconEnd={
-                  <ChevronRight
-                    className={cn("w-4 h-4 theme-universal:text-input-labels")}
-                  />
+                  <ChevronRight className="w-4 h-4 theme-universal:text-input-labels" />
                 }
                 iconComponent={getIcon(option)}
                 onClick={() => handleEnroll({ action: option })}

@@ -3,7 +3,7 @@ import ULThemePageLayout from "@/components/ULThemePageLayout";
 import ULThemeSeparator from "@/components/ULThemeSeparator";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
-import Header from "./components/Header";
+import MFAEmailListHeader from "./components/MFAEmailListHeader";
 import MFAEmailListOptions from "./components/MFAEmailListOptions";
 import { useMfaEmailListManager } from "./hooks/useMFAEmailListManager";
 
@@ -18,9 +18,9 @@ function MFAEmailList() {
   return (
     // Applying UDS theme overrides using the "theme-universal" class
     <ULThemePageLayout className="theme-universal">
-      <ULThemeCard className="w-full max-w-[400px] gap-0">
-        <Header />
-        <ULThemeSeparator />
+      <ULThemeCard className="p-0 pt-4 gap-0 w-(--prompt-width) min-h-(--prompt-min-height)">
+        <MFAEmailListHeader />
+        <ULThemeSeparator className="grow-0" />
         <MFAEmailListOptions />
       </ULThemeCard>
     </ULThemePageLayout>
