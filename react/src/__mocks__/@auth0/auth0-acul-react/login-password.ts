@@ -3,7 +3,7 @@
  * It is designed to be structurally aligned with the official React SDK, enabling robust
  * and isolated testing of our components.
  */
-import type { PasswordPolicy } from "@auth0/auth0-acul-react";
+import type { PasswordPolicy } from "@auth0/auth0-acul-react/login-password";
 import {
   type ScreenMembersOnLoginPassword,
   TransactionMembersOnLoginPassword,
