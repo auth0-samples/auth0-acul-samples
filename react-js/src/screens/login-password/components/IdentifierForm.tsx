@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js/login-password";
+import type {
+  Error,
+  LoginPasswordOptions,
+} from "@auth0/auth0-acul-js/login-password";
 
 import Captcha from "@/components/Captcha";
 import {
@@ -17,12 +20,6 @@ import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
-
-interface LoginPasswordFormData {
-  username: string;
-  password: string;
-  captcha?: string;
-}
 
 /**
  * IdentifierForm Component
@@ -47,7 +44,7 @@ function IdentifierForm() {
   } = useLoginPasswordManager();
 
   // Initialize the form using react-hook-form
-  const form = useForm<LoginPasswordFormData>({
+  const form = useForm<LoginPasswordOptions>({
     defaultValues: {
       username: data?.username || "",
       password: "",
@@ -98,7 +95,7 @@ function IdentifierForm() {
    *
    * @param data - The form data containing username, password, and optional CAPTCHA.
    */
-  const onSubmit = async (data: LoginPasswordFormData) => {
+  const onSubmit = async (data: LoginPasswordOptions) => {
     await handleLoginPassword(data.username, data.password, data.captcha);
   };
 

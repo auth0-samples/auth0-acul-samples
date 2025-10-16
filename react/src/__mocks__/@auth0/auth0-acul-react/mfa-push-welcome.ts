@@ -93,6 +93,14 @@ export const createMockMfaPushWelcomeInstance =
 // Mock the mfa-push-welcome hooks and methods
 const mockMfaWelcomeInstance = createMockMfaPushWelcomeInstance();
 
+export const enroll = mockMfaWelcomeInstance.enroll;
+export const pickAuthenticator = mockMfaWelcomeInstance.pickAuthenticator;
+
+export const useMfaPushWelcome = jest.fn(() => ({
+  enroll: mockMfaWelcomeInstance.enroll,
+  pickAuthenticator: mockMfaWelcomeInstance.pickAuthenticator,
+}));
+
 export const useScreen = jest.fn(() => mockMfaWelcomeInstance.screen);
 export const useUser = jest.fn(() => mockMfaWelcomeInstance.user);
 export const useTransaction = jest.fn(() => mockMfaWelcomeInstance.transaction);

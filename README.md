@@ -2,27 +2,23 @@
 
 This monorepo provides production-ready templates for creating custom Auth0 Advanced Customizations for Universal Login (ACUL) screens. Each sample demonstrates different implementation approaches and SDK integrations while following Auth0's design language and user experience patterns.
 
-**What is ACUL?** Advanced Customizations for Universal Login (ACUL) is an Early Access capability that allows you to build custom, client-rendered versions of Universal Login screens, giving you control over every pixel of your authentication experience. ACUL uses a client/server model where you have full control over the client-side interface while leveraging the security, extensibility, and flexibility of Universal Login's hosted authentication on the server side.
+**What is ACUL?** Advanced Customizations for Universal Login (ACUL) allows you to build custom, client-rendered versions of Universal Login screens, giving you complete control over your authentication experience. ACUL uses a client/server model where you have full control over the client-side interface while leveraging the security, extensibility, and flexibility of Universal Login's hosted authentication on the server side.
 
 > **⚠️ Important Notes**
 >
-> - **Early Access Feature**: ACUL is currently in Early Access (EA) and not yet Generally Available (GA)
 > - **Enterprise Feature**: Requires Enterprise Auth0 plan and verified custom domain
-> - **Work in Progress**: This template repository is actively being developed
 
 ## Available Samples
 
-### 🚀 [React-JS Sample](./react-js/) (Ready)
+### 🚀 [React-JS Sample](./react-js/)
 - **SDK**: Auth0 ACUL JS SDK (`@auth0/auth0-acul-js`)
 - **Screens**: 3 authentication screens (login, login-id, login-password)
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
-- **Status**: ✅ Production ready
 
-### ⚡ [React Sample](./react/) (In Development)
+### ⚡ [React Sample](./react/)
 - **SDK**: Auth0 ACUL React SDK (`@auth0/auth0-acul-react`)
-- **Screens**: 8 authentication screens with ~30 total planned
+- **Screens**: 31 authentication screens covering the complete authentication flow
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
-- **Status**: 🚧 Under active development for GA release
 
 <div align="center">
   <img 
@@ -122,8 +118,8 @@ auth0 ul customize --rendering-mode advanced --prompt login-id --screen login-id
 
 The main screen implementations are located in:
 
-- **React-JS Sample**: [`react-js/src/screens/`](./react-js/src/screens/) - 3 screens (login, login-id, login-password)
-- **React Sample**: [`react/src/screens/`](./react/src/screens/) - 8 screens with more in development
+- **React-JS Sample**: [`react-js/src/screens/`](./react-js/src/screens/) - 3 screens
+- **React Sample**: [`react/src/screens/`](./react/src/screens/) - 31 screens
 
 Each screen is designed to integrate with the [Auth0 ACUL SDK](https://github.com/auth0/universal-login).
 

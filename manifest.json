@@ -91,6 +91,12 @@
       ],
       "screens": [
         {
+          "id": "login-id",
+          "name": "Login Identifier First",
+          "description": "Screen for displaying identifier-first login flow",
+          "path": "react/src/screens/login-id"
+        },
+        {
           "id": "login-passwordless-sms-otp",
           "name": "Login: Passwordless SMS OTP",
           "description": "Passwordless SMS OTP entry screen for authentication",
@@ -199,6 +205,12 @@
           "path": "react/src/screens/mfa-push-challenge-push"
         },
         {
+          "id": "mfa-push-list",
+          "name": "MFA Push List",
+          "description": "Screen to list and manage Push multi-factor authentication (MFA) devices",
+          "path": "react/src/screens/mfa-push-list"
+        },
+        {
           "id": "mfa-push-welcome",
           "name": "MFA Push Welcome",
           "description": "Welcome Screen for enrolling in Push-based multi-factor authentication (MFA)",
@@ -219,8 +231,26 @@
         {
           "id": "phone-identifier-challenge",
           "name": "Phone Identifier Challenge",
-          "description": "Phone Identifier Challenge Screen for authentication",
+          "description": "Screen for collecting phone number identifier during authentication",
           "path": "react/src/screens/phone-identifier-challenge"
+        },
+        {
+          "id": "mfa-email-list",
+          "name": "MFA Email List",
+          "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
+          "path": "react/src/screens/mfa-email-list"
+        },
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "react/src/screens/login"
+        },
+        {
+          "id": "mfa-country-codes",
+          "name": "MFA Country Codes",
+          "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-country-codes"
         }
       ]
     }

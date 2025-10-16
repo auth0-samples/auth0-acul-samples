@@ -1,9 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-
 import {
   continueMethod,
   resendCode,
-} from "@/__mocks__/@auth0/auth0-acul-react/mfa-email-challenge";
+} from "@auth0/auth0-acul-react/mfa-email-challenge";
+import { act, render, screen } from "@testing-library/react";
+
+import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 import MFAEmailChallengeScreen from "../index";
@@ -11,12 +12,19 @@ import MFAEmailChallengeScreen from "../index";
 jest.mock("@/utils/theme/themeEngine");
 
 describe("MFAEmailChallengeInstance", () => {
+  const renderScreen = async () => {
+    await act(async () => {
+      render(<MFAEmailChallengeScreen />);
+    });
+    await screen.findByRole("button", { name: /continue/i });
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders correctly with header, form, and footer", () => {
-    render(<MFAEmailChallengeScreen />);
+  it("renders correctly with header, form, and footer", async () => {
+    await renderScreen();
 
     // Verify the page title is set properly
     expect(document.title).toBe(
@@ -39,32 +47,26 @@ describe("MFAEmailChallengeInstance", () => {
     ).toBeInTheDocument();
   });
 
-  it("applies theme on load", () => {
-    render(<MFAEmailChallengeScreen />);
+  it("applies theme on load", async () => {
+    await renderScreen();
 
     // Just verify theme was applied - actual instance structure is tested in hook
     expect(applyAuth0Theme).toHaveBeenCalled();
   });
 
   it("displays the resend action text and triggers resendCode on click", async () => {
-    render(<MFAEmailChallengeScreen />);
+    await renderScreen();
 
-    const resendButton = screen.getByText("Resend");
+    await ScreenTestUtils.clickButton("Resend");
 
-    fireEvent.click(resendButton);
-
-    await waitFor(() => {
-      expect(resendCode).toHaveBeenCalled();
-    });
+    expect(resendCode).toHaveBeenCalled();
   });
 
   it("validates code input is required before submission", async () => {
-    render(<MFAEmailChallengeScreen />);
-
-    const submitButton = screen.getByRole("button", { name: /Continue/i });
+    await renderScreen();
 
     // Try to submit without entering code
-    fireEvent.click(submitButton);
+    await ScreenTestUtils.clickButton(/Continue/i);
 
     // Should show validation error
     await screen.findByText(/please enter the verification code/i);
@@ -74,49 +76,41 @@ describe("MFAEmailChallengeInstance", () => {
   });
 
   it("successfully submits form with valid code", async () => {
-    render(<MFAEmailChallengeScreen />);
-
-    const codeInput = screen.getByLabelText(/Enter the code/i);
-    const submitButton = screen.getByRole("button", { name: /Continue/i });
+    await renderScreen();
 
     // Fill the code field
-    fireEvent.change(codeInput, { target: { value: "654321" } });
+    await ScreenTestUtils.fillInput(/Enter the code/i, "654321");
 
     // Submit form
-    fireEvent.click(submitButton);
+    await ScreenTestUtils.clickButton(/Continue/i);
 
-    await waitFor(() => {
-      expect(continueMethod).toHaveBeenCalledTimes(1);
-      expect(continueMethod).toHaveBeenCalledWith({
-        code: "654321",
-        rememberDevice: false,
-      });
+    expect(continueMethod).toHaveBeenCalledTimes(1);
+    expect(continueMethod).toHaveBeenCalledWith({
+      code: "654321",
+      rememberDevice: false,
     });
   });
 
   it("submits form with remember device option when checkbox is checked", async () => {
-    render(<MFAEmailChallengeScreen />);
-
-    const codeInput = screen.getByLabelText(/Enter the code/i);
-    const rememberDeviceCheckbox = screen.getByLabelText(
-      /Remember this device for 30 days/i
-    );
-    const submitButton = screen.getByRole("button", { name: /Continue/i });
+    await renderScreen();
 
     // Fill the code field
-    fireEvent.change(codeInput, { target: { value: "123456" } });
+    await ScreenTestUtils.fillInput(/Enter the code/i, "123456");
 
-    // Check remember device
-    fireEvent.click(rememberDeviceCheckbox);
+    // Check remember device checkbox
+    const checkbox = screen.getByRole("checkbox", {
+      name: /Remember this device for 30 days/i,
+    });
+    await act(async () => {
+      checkbox.click();
+    });
 
     // Submit form
-    fireEvent.click(submitButton);
+    await ScreenTestUtils.clickButton(/Continue/i);
 
-    await waitFor(() => {
-      expect(continueMethod).toHaveBeenCalledWith({
-        code: "123456",
-        rememberDevice: true,
-      });
+    expect(continueMethod).toHaveBeenCalledWith({
+      code: "123456",
+      rememberDevice: true,
     });
   });
 });
