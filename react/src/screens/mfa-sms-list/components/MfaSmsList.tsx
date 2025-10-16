@@ -5,6 +5,7 @@ import { MFAPhoneIcon } from "@/assets/icons";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeSeparator from "@/components/ULThemeSeparator";
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
+import { cn } from "@/lib/utils";
 
 import { useMfaSmsListManager } from "../hooks/useMfaSmsListManager";
 
@@ -47,7 +48,11 @@ function MfaSmsList() {
               displayName={phone.phoneNumber}
               buttonText={phone.phoneNumber}
               iconComponent={<MFAPhoneIcon />}
-              iconEnd={<ChevronRight size={24} color="#6f7780" />}
+              iconEnd={
+                <ChevronRight
+                  className={cn("w-4 h-4 theme-universal:text-input-labels")}
+                />
+              }
               onClick={() => handleSelectPhoneNumber(phone.id)}
               className="w-full justify-between px-0 [&>span:nth-child(2)]:font-semibold"
             />
