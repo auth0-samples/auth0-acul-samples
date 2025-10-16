@@ -91,6 +91,12 @@
       ],
       "screens": [
         {
+          "id": "login-id",
+          "name": "Login Identifier First",
+          "description": "Screen for displaying identifier-first login flow",
+          "path": "react/src/screens/login-id"
+        },
+        {
           "id": "login-passwordless-sms-otp",
           "name": "Login: Passwordless SMS OTP",
           "description": "Passwordless SMS OTP entry screen for authentication",
@@ -221,6 +227,12 @@
           "name": "MFA Email List",
           "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
           "path": "react/src/screens/mfa-email-list"
+        },
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "react/src/screens/login"
         }
       ]
     }

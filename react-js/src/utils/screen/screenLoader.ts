@@ -1,5 +1,4 @@
 // Auto-generated file
-// Generated on: 2025-09-23T09:21:11.687Z
 
 import { lazy } from "react";
 
@@ -17,10 +16,3 @@ export const getScreenComponent = (
   }
   return SCREEN_COMPONENTS[screenName] || null;
 };
-
-// Available screens for reference
-export const availableScreens = [
-  "login",
-  "login-id",
-  "login-password",
-] as const;

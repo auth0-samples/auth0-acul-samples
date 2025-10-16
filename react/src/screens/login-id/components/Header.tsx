@@ -1,0 +1,24 @@
+import ULThemeLogo from "@/components/ULThemeLogo";
+import ULThemeSubtitle from "@/components/ULThemeSubtitle";
+import ULThemeTitle from "@/components/ULThemeTitle";
+
+import { useLoginIdManager } from "../hooks/useLoginIdManager";
+
+function Header() {
+  const { texts } = useLoginIdManager();
+
+  // Handle text fallbacks in component
+  const logoAltText = texts?.logoAltText || "Application Logo";
+
+  return (
+    <>
+      <ULThemeLogo altText={logoAltText}></ULThemeLogo>
+      <ULThemeTitle>{texts?.title || "Welcome"}</ULThemeTitle>
+      <ULThemeSubtitle>
+        {texts?.description || "Log in to continue"}
+      </ULThemeSubtitle>
+    </>
+  );
+}
+
+export default Header;
