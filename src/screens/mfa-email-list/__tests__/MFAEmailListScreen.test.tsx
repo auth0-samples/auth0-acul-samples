@@ -10,8 +10,6 @@ import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaEmailListScreen from "../index";
 
-jest.mock("@auth0/auth0-acul-react/mfa-email-list");
-
 describe("MfaEmailListScreen", () => {
   const renderScreen = async () => {
     await act(async () => {
