@@ -1,5 +1,6 @@
 import {
   login,
+  PasswordPolicy,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-password";
@@ -71,7 +72,7 @@ describe("LoginPasswordScreen", () => {
   it("should submit form and call login with credentials", async () => {
     await renderScreen();
 
-    await ScreenTestUtils.fillInput("Password", "test123");
+    await ScreenTestUtils.fillInput("Password", "testpassword123");
     await ScreenTestUtils.fillInput("Enter the code shown above*", "ABC123");
 
     await ScreenTestUtils.clickButton(/^continue$/i);
@@ -79,10 +80,60 @@ describe("LoginPasswordScreen", () => {
     expect(login).toHaveBeenCalledWith(
       expect.objectContaining({
         username: "testuser@testdomain.com",
-        password: "test123",
+        password: "testpassword123",
         captcha: "ABC123",
       })
     );
+  });
+
+  it("should have reset password link", async () => {
+    await renderScreen();
+
+    const resetPasswordLink = screen.getByRole("link", {
+      name: /Forgot password\?/i,
+    });
+
+    expect(resetPasswordLink).toHaveAttribute(
+      "href",
+      expect.stringContaining("/u/login/password-reset-start/")
+    );
+  });
+
+  it("should have a signup link", async () => {
+    await renderScreen();
+
+    const signUpLink = screen.getByRole("link", {
+      name: /Sign up/i,
+    });
+
+    expect(signUpLink).toHaveAttribute(
+      "href",
+      expect.stringContaining("/u/signup?state=mocked_state123")
+    );
+  });
+
+  it("should render captcha when available", async () => {
+    await renderScreen();
+
+    const captchaField = screen.getByRole("textbox", {
+      name: /enter the code shown above/i,
+    });
+    expect(captchaField).toBeInTheDocument();
+
+    const captchaImage = screen.getByAltText("CAPTCHA challenge");
+    expect(captchaImage).toBeInTheDocument();
+  });
+
+  it("should display error when password does not meet minimum length", async () => {
+    await renderScreen();
+
+    await ScreenTestUtils.fillInput("Password", "test123");
+    await ScreenTestUtils.fillInput("Enter the code shown above*", "ABC123");
+    await ScreenTestUtils.clickButton(/^continue$/i);
+
+    expect(
+      screen.getByText("Password must be at least 8 characters")
+    ).toBeInTheDocument();
   });
 
   it("should display error messages when authentication fails", async () => {
@@ -104,23 +155,17 @@ describe("LoginPasswordScreen", () => {
           },
         },
       ],
+      getPasswordPolicy: function (): PasswordPolicy | null {
+        return {
+          minLength: 8,
+          policy: "good",
+        };
+      },
     });
 
     await renderScreen();
 
     expect(screen.getByText("Invalid password")).toBeInTheDocument();
-  });
-
-  it("should render captcha when available", async () => {
-    await renderScreen();
-
-    const captchaField = screen.getByRole("textbox", {
-      name: /enter the code shown above/i,
-    });
-    expect(captchaField).toBeInTheDocument();
-
-    const captchaImage = screen.getByAltText("CAPTCHA challenge");
-    expect(captchaImage).toBeInTheDocument();
   });
 
   it("should disable captcha rendering when not available", async () => {
@@ -135,16 +180,5 @@ describe("LoginPasswordScreen", () => {
       name: /enter the code shown above/i,
     });
     expect(captchaField).not.toBeInTheDocument();
-  });
-
-  it("should display error when password does not meet minimum length", async () => {
-    await renderScreen();
-
-    await ScreenTestUtils.fillInput("Password*", "123");
-    await ScreenTestUtils.clickButton(/^continue$/i);
-
-    expect(
-      screen.getByText("Password must be at least 8 characters")
-    ).toBeInTheDocument();
   });
 });

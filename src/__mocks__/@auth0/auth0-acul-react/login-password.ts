@@ -59,7 +59,7 @@ export const createMockLoginPasswordInstance =
         invitationTitle: "You've Been Invited!",
         invitationDescription:
           "Log in to accept 's invitation to join test3 on My-react-application.",
-        captchaCodePlaceholder: "Enter the code shown above*",
+        captchaCodePlaceholder: "Enter the code shown above",
         logoAltText: "test3",
         useBiometricsText: "Use Fingerprint or Face Recognition",
         showPasswordText: "Show password",
