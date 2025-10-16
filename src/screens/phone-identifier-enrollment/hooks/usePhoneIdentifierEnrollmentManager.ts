@@ -1,5 +1,6 @@
 import {
   continuePhoneEnrollment,
+  PhoneEnrollmentOptions,
   returnToPrevious,
   ScreenMembersOnPhoneIdentifierEnrollment,
   usePhoneIdentifierEnrollment,
@@ -17,7 +18,7 @@ export const usePhoneIdentifierEnrollmentManager = () => {
   const { texts, data } = screen;
 
   const handleContinueEnrollment = async (type: "text" | "voice") => {
-    const options: { type: "text" | "voice" } = {
+    const options: PhoneEnrollmentOptions = {
       type: type || "text",
     };
     await executeSafely(
@@ -38,6 +39,6 @@ export const usePhoneIdentifierEnrollmentManager = () => {
     handleReturnToPrevious,
     texts: (texts || {}) as ScreenMembersOnPhoneIdentifierEnrollment["texts"],
     errors: transaction.errors || [],
-    data: (data || {}) as ScreenMembersOnPhoneIdentifierEnrollment["data"],
+    data: data,
   };
 };
