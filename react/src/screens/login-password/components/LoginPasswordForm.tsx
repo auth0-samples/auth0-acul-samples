@@ -30,7 +30,7 @@ function LoginPasswordForm() {
 
   const form = useForm<LoginPasswordOptions>({
     defaultValues: {
-      username: "",
+      username: data?.username || "",
       password: "",
       captcha: "",
     },
