@@ -233,6 +233,12 @@
           "name": "Login",
           "description": "Universal login screen with social providers and form authentication",
           "path": "react/src/screens/login"
+        },
+        {
+          "id": "mfa-country-codes",
+          "name": "MFA Country Codes",
+          "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-country-codes"
         }
       ]
     }
