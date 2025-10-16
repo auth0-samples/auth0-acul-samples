@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react";
+import type { Error } from "@auth0/auth0-acul-react/login-password";
 import type { LoginPasswordOptions } from "@auth0/auth0-acul-react/login-password";
 
 import Captcha from "@/components/Captcha";
