@@ -10,17 +10,20 @@ function Header() {
   // Handle text fallbacks in component
   const logoAltText = texts?.logoAltText || "Application Logo";
   const phoneNumber = data?.phone || "your phone";
-  const descriptionText =
-    data?.messageType === "text"
-      ? texts?.smsDescription || `We've sent a text message to: ${phoneNumber}`
-      : texts?.voiceDescription ||
-        `We've sent a 6-digit code via voice phone call to the following phone number: ${phoneNumber}`;
+  const descriptionText = texts?.smsDescription
+    ? `${texts.smsDescription} ${phoneNumber}`
+    : `We've sent a text message to: ${phoneNumber}`;
+  const descriptionVoice = texts?.voiceDescription
+    ? `${texts.voiceDescription} ${phoneNumber}`
+    : `We've sent a 6-digit code via voice phone call to the following phone number: ${phoneNumber}`;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
       <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
+      <ULThemeSubtitle className="mb-6">
+        {data?.messageType === "text" ? descriptionText : descriptionVoice}
+      </ULThemeSubtitle>
     </>
   );
 }

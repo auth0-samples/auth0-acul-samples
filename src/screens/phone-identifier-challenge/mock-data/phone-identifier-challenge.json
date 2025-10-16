@@ -3,7 +3,7 @@
   "organization": { "usage": "deny" },
   "prompt": { "name": "phone-identifier-challenge" },
   "screen": {
-    "data": { "message_type": "text", "phone_number": "your phone number" },
+    "data": { "message_type": "text", "phone_number": "+91234567890" },
     "name": "phone-identifier-challenge",
     "texts": {
       "pageTitle": "Enter your phone code to log in | My App",
