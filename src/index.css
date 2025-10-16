@@ -126,6 +126,10 @@ Created to support alignment related utlities like justify, text-align etc with 
   --height-widget-logo: var(--ul-theme-widget-logo-height);
   --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
 
+  /** Custom Height/Width **/
+  --prompt-min-height: calc(8px*67.5);
+  --prompt-width: calc(8px*50);
+
   /* Layout */
   --size-4: 1rem;
   --size-5: 1.25rem;
