@@ -74,7 +74,9 @@ function MFAEnrollOptions() {
               key={option}
               displayName={getDisplayName(option)}
               buttonText={getDisplayName(option)}
-              iconEnd={<ChevronRight size={18} color="#6f7780" />}
+              iconEnd={
+                <ChevronRight className="w-4 h-4 theme-universal:text-input-labels" />
+              }
               iconComponent={getIcon(option)}
               onClick={() => handleEnroll({ action: option })}
               className="flex items-center gap-2 border-black"
