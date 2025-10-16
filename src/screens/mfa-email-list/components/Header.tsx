@@ -12,6 +12,7 @@ function Header() {
       <ULThemeTitle>
         <span className="flex items-center gap-6">
           <button
+            type="button"
             onClick={handleBackAction}
             aria-label={texts?.backText || "Go back"}
             className="p-1"

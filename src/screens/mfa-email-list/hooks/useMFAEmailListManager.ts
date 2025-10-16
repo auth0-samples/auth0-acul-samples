@@ -22,11 +22,13 @@ export const useMfaEmailListManager = () => {
   const handleSelectEmail = async (
     payload: SelectMfaEmailOptions
   ): Promise<void> => {
-    executeSafely(`Enroll using the email`, () => selectMfaEmail(payload));
+    await executeSafely(`Enroll using the email`, () =>
+      selectMfaEmail(payload)
+    );
   };
 
   const handleBackAction = async (): Promise<void> => {
-    executeSafely("Go Back", () => goBack());
+    await executeSafely("Go Back", () => goBack());
   };
 
   return {

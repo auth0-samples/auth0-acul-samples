@@ -7,6 +7,7 @@ import { MFAEmailIcon } from "@/assets/icons/MFAEmailIcon";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeSeparator from "@/components/ULThemeSeparator";
 import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
+import { cn } from "@/lib/utils";
 
 import { useMfaEmailListManager } from "../hooks/useMFAEmailListManager";
 
@@ -26,7 +27,7 @@ function MFAEmailList() {
       {generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
           {generalErrors.map((error: Error, index: number) => (
-            <ULThemeAlert key={`${error.message}-${index}`}>
+            <ULThemeAlert key={index}>
               <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
             </ULThemeAlert>
           ))}
@@ -34,15 +35,19 @@ function MFAEmailList() {
       )}
       {/* Render buttons for each email option */}
       <div className="space-y-2">
-        {enrolledEmails.map((option, index) => {
+        {enrolledEmails.map((option) => {
           return (
             <React.Fragment key={option.id}>
               <ULThemeSocialProviderButton
                 displayName={option.email}
                 buttonText={option.email}
-                iconEnd={<ChevronRight size={18} color="#6f7780" />}
+                iconEnd={
+                  <ChevronRight
+                    className={cn("w-4 h-4 theme-universal:text-input-labels")}
+                  />
+                }
                 iconComponent={<MFAEmailIcon />}
-                onClick={() => handleSelectEmail({ index: index })}
+                onClick={() => handleSelectEmail({ index: option.id })}
                 className="flex items-center gap-2"
                 variant="ghost"
               ></ULThemeSocialProviderButton>
