@@ -105,7 +105,10 @@ export const useScreen = jest.fn(() => mockMfaEmailListInstance.screen);
 export const useTransaction = jest.fn(
   () => mockMfaEmailListInstance.transaction
 );
-export const useUser = jest.fn(() => mockMfaEmailListInstance.user);
+export const useUser = jest.fn(() => ({
+  ...mockMfaEmailListInstance.user,
+  enrolledEmails: mockMfaEmailListInstance.user.enrolled_emails,
+}));
 
 // Export named functions for direct use in test
 export const goBack = mockMfaEmailListInstance.goBack;
