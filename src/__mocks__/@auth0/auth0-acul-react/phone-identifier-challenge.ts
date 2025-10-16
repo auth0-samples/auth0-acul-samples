@@ -91,7 +91,6 @@ export const createMockPhoneIdentifierChallengeManagerInstance =
 
 const mockInstance = createMockPhoneIdentifierChallengeManagerInstance();
 
-export const usePhoneIdentifierChallengeManager = jest.fn(() => mockInstance);
 export const useScreen = jest.fn(() => mockInstance.screen);
 export const useTransaction = jest.fn(() => mockInstance.transaction);
 
@@ -104,12 +103,8 @@ export const usePhoneIdentifierChallenge = jest.fn(() => ({
   submitPhoneChallenge,
 }));
 
-export default {
-  usePhoneIdentifierChallengeManager,
-  resendCode,
-  returnToPrevious,
-  submitPhoneChallenge,
-  useScreen,
-  useTransaction,
-  usePhoneIdentifierChallenge,
-};
+export default jest
+  .fn()
+  .mockImplementation(() =>
+    createMockPhoneIdentifierChallengeManagerInstance()
+  );
