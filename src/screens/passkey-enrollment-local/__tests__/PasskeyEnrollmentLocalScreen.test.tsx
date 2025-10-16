@@ -1,19 +1,27 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-
 import {
   abortPasskeyEnrollment,
   continuePasskeyEnrollment,
-} from "@/__mocks__/@auth0/auth0-acul-react/passkey-enrollment-local";
+} from "@auth0/auth0-acul-react/passkey-enrollment-local";
+import { act, render, screen } from "@testing-library/react";
+
+import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import PasskeyEnrollmentLocalScreen from "../index";
 
 describe("PasskeyEnrollmentLocalInstance", () => {
+  const renderScreen = async () => {
+    await act(async () => {
+      render(<PasskeyEnrollmentLocalScreen />);
+    });
+    await screen.findByRole("button", { name: /Create a new passkey/i });
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders correctly with header, form", () => {
-    render(<PasskeyEnrollmentLocalScreen />);
+  it("renders correctly with header, form", async () => {
+    await renderScreen();
 
     // Verify the page title is set properly
     expect(document.title).toBe("Log in | All Applications");
@@ -29,26 +37,18 @@ describe("PasskeyEnrollmentLocalInstance", () => {
   });
 
   it("displays the Create a new passkey action text and triggers continuePasskeyEnrollment on click", async () => {
-    render(<PasskeyEnrollmentLocalScreen />);
+    await renderScreen();
 
-    const createClickButton = screen.getByText("Create a new passkey");
+    await ScreenTestUtils.clickButton("Create a new passkey");
 
-    fireEvent.click(createClickButton);
-
-    await waitFor(() => {
-      expect(continuePasskeyEnrollment).toHaveBeenCalled();
-    });
+    expect(continuePasskeyEnrollment).toHaveBeenCalled();
   });
 
   it("displays the Create without a new passkey action text and triggers abortPasskeyEnrollment on click", async () => {
-    render(<PasskeyEnrollmentLocalScreen />);
+    await renderScreen();
 
-    const abortClickButton = screen.getByText("Continue without a new passkey");
+    await ScreenTestUtils.clickButton("Continue without a new passkey");
 
-    fireEvent.click(abortClickButton);
-
-    await waitFor(() => {
-      expect(abortPasskeyEnrollment).toHaveBeenCalled();
-    });
+    expect(abortPasskeyEnrollment).toHaveBeenCalled();
   });
 });

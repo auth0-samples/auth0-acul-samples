@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "initialize": "npm install && npm run screen",
     "screen": "node ./scripts/dev-screen.js",
     "build": "tsc && vite build --logLevel info",
     "build:local": "PORT=8080 node ./scripts/build-local.js",
