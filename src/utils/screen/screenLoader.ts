@@ -38,6 +38,9 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "email-identifier-challenge": lazy(
     () => import("@/screens/email-identifier-challenge")
   ),
+  "phone-identifier-challenge": lazy(
+    () => import("@/screens/phone-identifier-challenge")
+  ),
 };
 
 export const getScreenComponent = (
