@@ -17,8 +17,8 @@ function Footer() {
   const backButtonText = texts?.backButtonText || "Go back";
 
   const handleResendClick = async () => {
-    await handleResendCode();
     setHasResent(true);
+    await handleResendCode();
   };
 
   const handleReturnClick = async () => {
@@ -50,11 +50,13 @@ function Footer() {
       </div>
 
       {/* Go back button */}
-      <div>
-        <ULThemeButton onClick={handleReturnClick} variant="link" size="link">
-          {backButtonText}
-        </ULThemeButton>
-      </div>
+      {hasResent && (
+        <div>
+          <ULThemeButton onClick={handleReturnClick} variant="link" size="link">
+            {backButtonText}
+          </ULThemeButton>
+        </div>
+      )}
     </div>
   );
 }
