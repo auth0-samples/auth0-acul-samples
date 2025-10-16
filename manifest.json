@@ -215,6 +215,12 @@
           "name": "Email Identifier Challenge",
           "description": "Screen for collecting email identifier during authentication",
           "path": "react/src/screens/email-identifier-challenge"
+        },
+        {
+          "id": "phone-identifier-challenge",
+          "name": "Phone Identifier Challenge",
+          "description": "Phone Identifier Challenge Screen for authentication",
+          "path": "react/src/screens/phone-identifier-challenge"
         }
       ]
     }
