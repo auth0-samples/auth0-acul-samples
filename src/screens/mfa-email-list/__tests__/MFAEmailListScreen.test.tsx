@@ -32,11 +32,11 @@ describe("MfaEmailListScreen", () => {
     const backButton = screen.getByRole("button", { name: /go back/i });
     expect(backButton).toBeInTheDocument();
 
-    expect(
-      screen.getByText(
-        (_, el) => !!el?.textContent?.includes("tany******@atko******")
-      )
-    ).toBeInTheDocument();
+    const matchingElement = screen.getAllByText(
+      (_, el) => !!el?.textContent?.includes("tany******@atko******")
+    )[0];
+
+    expect(matchingElement).toBeInTheDocument();
   });
 
   it("should call goBack SDK method when back button is clicked", async () => {
@@ -94,7 +94,7 @@ describe("MfaEmailListScreen", () => {
     const originalMock = mockUseUser();
     mockUseUser.mockReturnValue({
       ...originalMock,
-      enrolled_emails: [],
+      enrolledEmails: [],
     });
 
     await renderScreen();
