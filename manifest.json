@@ -217,6 +217,12 @@
           "path": "react/src/screens/mfa-push-challenge-push"
         },
         {
+          "id": "mfa-push-list",
+          "name": "MFA Push List",
+          "description": "Screen to list and manage Push multi-factor authentication (MFA) devices",
+          "path": "react/src/screens/mfa-push-list"
+        },
+        {
           "id": "mfa-push-welcome",
           "name": "MFA Push Welcome",
           "description": "Welcome Screen for enrolling in Push-based multi-factor authentication (MFA)",
@@ -233,6 +239,12 @@
           "name": "Email Identifier Challenge",
           "description": "Screen for collecting email identifier during authentication",
           "path": "react/src/screens/email-identifier-challenge"
+        },
+        {
+          "id": "mfa-country-codes",
+          "name": "MFA Country Codes",
+          "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
+          "path": "react/src/screens/mfa-country-codes"
         }
       ]
     }

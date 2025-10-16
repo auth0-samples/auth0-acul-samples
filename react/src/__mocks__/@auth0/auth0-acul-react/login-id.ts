@@ -3,8 +3,10 @@
  * It is designed to be structurally aligned with the official React SDK, enabling robust
  * and isolated testing of our components.
  */
-import type { TransactionMembers } from "@auth0/auth0-acul-react";
-import { type ScreenMembersOnLoginId } from "@auth0/auth0-acul-react/login-id";
+import type {
+  ScreenMembersOnLoginId,
+  TransactionMembers,
+} from "@auth0/auth0-acul-react/login-id";
 
 import { CommonTestData } from "@/test/fixtures/common-data";
 

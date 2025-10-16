@@ -18,6 +18,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "mfa-begin-enroll-options": lazy(
     () => import("@/screens/mfa-begin-enroll-options")
   ),
+  "mfa-country-codes": lazy(() => import("@/screens/mfa-country-codes")),
   "mfa-email-challenge": lazy(() => import("@/screens/mfa-email-challenge")),
   "mfa-enroll-result": lazy(() => import("@/screens/mfa-enroll-result")),
   "mfa-login-options": lazy(() => import("@/screens/mfa-login-options")),
@@ -25,6 +26,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
     () => import("@/screens/mfa-push-challenge-push")
   ),
   "mfa-push-welcome": lazy(() => import("@/screens/mfa-push-welcome")),
+  "mfa-push-list": lazy(() => import("@/screens/mfa-push-list")),
   "mfa-sms-challenge": lazy(() => import("@/screens/mfa-sms-challenge")),
   "mfa-sms-enrollment": lazy(() => import("@/screens/mfa-sms-enrollment")),
   "mfa-sms-list": lazy(() => import("@/screens/mfa-sms-list")),
