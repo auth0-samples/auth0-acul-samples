@@ -7,20 +7,26 @@ import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import SignupIdForm from "./components/SignupIdForm";
-import { useSignupIdManager } from "./hooks/useSignupIdManager";
+import LoginIdForm from "./components/LoginIdForm";
+import { useLoginIdManager } from "./hooks/useLoginIdManager";
 
-function SignupIdScreen() {
-  // Extracting attributes from hook made out of SignupIdInstance class of Auth0 React ACUL SDK
-  const { signupId, texts, alternateConnections } = useSignupIdManager();
+function LoginIdScreen() {
+  // Extracting attributes from hook made out of LoginIdInstance class of Auth0 React ACUL SDK
+  const { loginId, texts, isPasskeyEnabled, alternateConnections } =
+    useLoginIdManager();
 
-  const showSeparator = alternateConnections && alternateConnections.length > 0;
+  // Check whether separator component needs to be rendered based on passkey or other social connections
+  const showSeparator =
+    isPasskeyEnabled ||
+    (alternateConnections && alternateConnections.length > 0);
 
+  // Other Texts
   const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Signup Identifier";
+  document.title = texts?.pageTitle || "Login";
 
-  applyAuth0Theme(signupId);
+  applyAuth0Theme(loginId);
 
+  // Extracting Tenant setting for social login component alignment on the layout via theme token
   const socialLoginAlignment = extractTokenValue(
     "--ul-theme-widget-social-buttons-layout"
   );
@@ -43,7 +49,7 @@ function SignupIdScreen() {
       <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
         {socialLoginAlignment === "top" && renderSocialLogins("top")}
-        <SignupIdForm />
+        <LoginIdForm />
         <Footer />
         {socialLoginAlignment === "bottom" && renderSocialLogins("bottom")}
       </ULThemeCard>
@@ -51,4 +57,4 @@ function SignupIdScreen() {
   );
 }
 
-export default SignupIdScreen;
+export default LoginIdScreen;

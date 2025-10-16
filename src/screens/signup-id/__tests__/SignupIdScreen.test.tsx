@@ -1,10 +1,10 @@
-import { act, render, screen } from "@testing-library/react";
-
 import {
   federatedSignup,
   signup,
   useTransaction,
-} from "@/__mocks__/@auth0/auth0-acul-react/signup-id";
+} from "@auth0/auth0-acul-react/signup-id";
+import { act, render, screen } from "@testing-library/react";
+
 import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 

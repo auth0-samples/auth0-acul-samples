@@ -7,19 +7,19 @@ import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import SignupIdForm from "./components/SignupIdForm";
-import { useSignupIdManager } from "./hooks/useSignupIdManager";
+import LoginForm from "./components/LoginForm";
+import { useLoginManager } from "./hooks/useLoginManager";
 
-function SignupIdScreen() {
-  // Extracting attributes from hook made out of SignupIdInstance class of Auth0 React ACUL SDK
-  const { signupId, texts, alternateConnections } = useSignupIdManager();
+function LoginScreen() {
+  // Extracting attributes from hook made out of LoginInstance class of Auth0 React ACUL SDK
+  const { login, texts, alternateConnections } = useLoginManager();
 
   const showSeparator = alternateConnections && alternateConnections.length > 0;
 
   const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Signup Identifier";
+  document.title = texts?.pageTitle || "Login";
 
-  applyAuth0Theme(signupId);
+  applyAuth0Theme(login);
 
   const socialLoginAlignment = extractTokenValue(
     "--ul-theme-widget-social-buttons-layout"
@@ -43,12 +43,12 @@ function SignupIdScreen() {
       <ULThemeCard className="w-full max-w-[400px] gap-0">
         <Header />
         {socialLoginAlignment === "top" && renderSocialLogins("top")}
-        <SignupIdForm />
+        <LoginForm />
         <Footer />
-        {socialLoginAlignment === "bottom" && renderSocialLogins("bottom")}
+        {socialLoginAlignment !== "top" && renderSocialLogins("bottom")}
       </ULThemeCard>
     </ULThemePageLayout>
   );
 }
 
-export default SignupIdScreen;
+export default LoginScreen;
