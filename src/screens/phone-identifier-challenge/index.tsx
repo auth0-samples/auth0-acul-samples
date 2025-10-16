@@ -13,7 +13,7 @@ function PhoneIdentifierChallengeScreen() {
     usePhoneIdentifierChallengeManager();
 
   applyAuth0Theme(phoneIdentifierChallenge);
-  document.title = texts?.pageTitle || "Verify Your Identity - MFA";
+  document.title = texts?.pageTitle || "Enter your phone code to log in";
 
   return (
     <ULThemePageLayout className="theme-universal">

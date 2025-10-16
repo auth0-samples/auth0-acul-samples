@@ -74,7 +74,7 @@ describe("PhoneIdentifierChallengeScreen", () => {
   it("sets correct document title from SDK", () => {
     render(<PhoneIdentifierChallengeScreen />);
 
-    expect(document.title).toBe("Verify Your Identity - MFA");
+    expect(document.title).toBe("Enter your phone code to log in");
   });
 
   it("sets default title if texts are missing", () => {
