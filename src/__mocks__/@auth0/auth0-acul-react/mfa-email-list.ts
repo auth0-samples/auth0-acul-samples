@@ -2,7 +2,7 @@
  * @file This file provides a comprehensive mock for the Auth0 ACUL React mfa-email-list hooks.
  */
 
-import type { TransactionMembers } from "@auth0/auth0-acul-react";
+import type { TransactionMembers } from "@auth0/auth0-acul-react/mfa-email-list";
 
 export interface ScreenMembersOnMfaEmailList {
   name: string;
