@@ -19,10 +19,10 @@ export const usePhoneIdentifierEnrollmentManager = () => {
 
   const handleContinueEnrollment = async (type: "text" | "voice") => {
     const options: PhoneEnrollmentOptions = {
-      type: type || "text",
+      type: type,
     };
     await executeSafely(
-      `Continue MFA SMS Enrollment with options: ${JSON.stringify(options)}`,
+      `Continue Phone Identifier Enrollment with options: ${JSON.stringify(options)}`,
       () => continuePhoneEnrollment(options)
     );
   };
