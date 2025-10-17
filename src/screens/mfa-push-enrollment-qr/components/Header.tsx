@@ -13,7 +13,7 @@ function Header() {
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
       <ULThemeTitle>{texts?.title || "Secure Your Account"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
+      <ULThemeSubtitle className="mb-8">
         {texts?.description ||
           `Scan the QR Code below using the Guardian app on your mobile device.`}
       </ULThemeSubtitle>
