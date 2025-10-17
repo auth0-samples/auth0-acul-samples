@@ -1,7 +1,7 @@
 import {
   CustomOptions,
   ScreenMembersOnMfaPushEnrollmentQr,
-} from "@auth0/auth0-acul-react";
+} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 import {
   useMfaPushEnrollmentQr,
   useScreen,

@@ -5,12 +5,6 @@ import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaPushEnrollmentQRScreen from "../index";
 
-// jest.mock("@/components/qrcode", () => {
-//   return {
-//     QRCode: jest.fn(() => <div data-testid="mock-qr-code">Mock QR Code</div>),
-//   };
-// });
-
 describe("MfaPushEnrollmentQRScreen", () => {
   beforeAll(() => {
     Object.assign(window.navigator, {
@@ -56,12 +50,4 @@ describe("MfaPushEnrollmentQRScreen", () => {
 
     expect(pickAuthenticator).toHaveBeenCalled();
   });
-
-  // it("should render the mocked QR code", async () => {
-  //   await renderScreen();
-
-  //   const qrCode = screen.getByTestId("mock-qr-code");
-  //   expect(qrCode).toBeInTheDocument();
-  //   expect(qrCode).toHaveTextContent("Mock QR Code");
-  // });
 });
