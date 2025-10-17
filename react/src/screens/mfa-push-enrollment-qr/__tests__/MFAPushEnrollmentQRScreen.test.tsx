@@ -50,4 +50,13 @@ describe("MfaPushEnrollmentQRScreen", () => {
 
     expect(pickAuthenticator).toHaveBeenCalled();
   });
+
+  it("should render the mocked QR code", async () => {
+    await renderScreen();
+
+    expect(screen.getByRole("img")).toHaveAttribute(
+      "src",
+      "mocked_qr_data_url"
+    );
+  });
 });
