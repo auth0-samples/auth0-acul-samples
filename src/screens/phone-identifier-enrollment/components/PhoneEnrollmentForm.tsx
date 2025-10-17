@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 
 import type { Error } from "@auth0/auth0-acul-react/phone-identifier-enrollment";
@@ -11,7 +12,6 @@ import ULThemeSubtitle from "@/components/ULThemeSubtitle";
 import { usePhoneIdentifierEnrollmentManager } from "../hooks/usePhoneIdentifierEnrollmentManager";
 
 interface PhoneEnrollmentFormData {
-  phone: string;
   type: "text" | "voice";
 }
 
@@ -22,7 +22,6 @@ function PhoneIdentifierEnrollmentForm() {
   // Initialize the form using react-hook-form
   const form = useForm<PhoneEnrollmentFormData>({
     defaultValues: {
-      phone: data?.phone || "",
       type: "text",
     },
   });
@@ -40,6 +39,21 @@ function PhoneIdentifierEnrollmentForm() {
   const onSubmit = async (formData: PhoneEnrollmentFormData) => {
     await handleContinueEnrollment(formData.type);
   };
+
+  const selectedType = form.watch("type");
+
+  //Refs for both the buttons
+  const textButtonRef = React.useRef<HTMLButtonElement>(null);
+  const voiceButtonRef = React.useRef<HTMLButtonElement>(null);
+
+  //Focus the selected button when the selectedType changes
+  React.useEffect(() => {
+    if (selectedType === "text") {
+      textButtonRef.current?.focus();
+    } else {
+      voiceButtonRef.current?.focus();
+    }
+  }, [selectedType]);
 
   return (
     <Form {...form}>
@@ -62,12 +76,11 @@ function PhoneIdentifierEnrollmentForm() {
           autoFocus
           placeholder={data?.phone || ""}
           disabled={true}
-          className="text-black border border-black bg-[#bcb9b9]" //should I put theme:universal here ?
         />
 
         {/* Phone identifier enrollment options*/}
         <div>
-          <ULThemeSubtitle className="mb-6 theme-universal:text-start">
+          <ULThemeSubtitle className="mb-2 mt-4 theme-universal:text-start">
             {texts?.chooseMessageTypeText ||
               "How do you want to receive the code?"}
           </ULThemeSubtitle>
@@ -82,6 +95,7 @@ function PhoneIdentifierEnrollmentForm() {
                   variant="outline"
                   className="flex-1"
                   onClick={() => field.onChange("text")}
+                  ref={textButtonRef}
                 >
                   {texts?.smsButtonText || "Text Message"}
                 </ULThemeButton>
@@ -91,6 +105,7 @@ function PhoneIdentifierEnrollmentForm() {
                   variant="outline"
                   className="flex-1"
                   onClick={() => field.onChange("voice")}
+                  ref={voiceButtonRef}
                 >
                   {texts?.voiceButtonText || "Voice Call"}
                 </ULThemeButton>
@@ -103,7 +118,7 @@ function PhoneIdentifierEnrollmentForm() {
         <ULThemeButton
           type="submit"
           variant="primary"
-          className="w-full"
+          className="w-full mt-3"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Sending..." : buttonText}
