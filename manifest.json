@@ -251,6 +251,12 @@
           "name": "MFA Country Codes",
           "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
           "path": "react/src/screens/mfa-country-codes"
+        },
+        {
+          "id": "phone-identifier-enrollment",
+          "name": "Phone Identifier Enrollment",
+          "description": "Screen for enrolling phone identifier",
+          "path": "react/src/screens/phone-identifier-enrollment"
         }
       ]
     }

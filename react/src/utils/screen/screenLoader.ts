@@ -44,6 +44,9 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   signup: lazy(() => import("@/screens/signup")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
   "signup-password": lazy(() => import("@/screens/signup-password")),
+  "phone-identifier-enrollment": lazy(
+    () => import("@/screens/phone-identifier-enrollment")
+  ),
 };
 
 export const getScreenComponent = (
