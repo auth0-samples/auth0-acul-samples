@@ -164,6 +164,7 @@ Created to support alignment related utlities like justify, text-align etc with 
   --ul-theme-color-warning: #ffdb5f;
   --ul-theme-color-captcha-widget-theme: dark;
   --ul-theme-color-spinner: #6f7780;
+  --ul-theme-color-qrcode-border: #dee2e6;
 
   /* Borders */
   --ul-theme-border-buttons-style: rounded;
