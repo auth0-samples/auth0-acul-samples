@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnMfaPushEnrollmentQr,
   UserMembers,
-} from "@auth0/auth0-acul-react";
+} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the mfa-push-enrollment-qr screen
@@ -61,10 +61,9 @@ export const createMockMfaPushEnrollmentQRInstance =
         helpLink: "/test-help",
       },
       data: {
-        qrUri: "dummy-qr-uri",
+        qrUri: "mocked_qr_uri",
         showCodeCopy: true,
-        qrCode:
-          "https://dev-vy34wbm3newzqb7k.guardian.us.auth0.com/chart?cht=qr&chs=166x166&chld=L&chl=otpauth%3A%2F%2Ftotp%2Fdev-vy34wbm3newzqb7k%3Atestacme15%2540acmetest.org%3Fenrollment_tx_id%3DtDFTEpKZOkaAMSmvdQSWOPlbyvZ99TwJ%26base_url%3Dhttps%253A%252F%252Fdev-vy34wbm3newzqb7k.guardian.us.auth0.com",
+        qrCode: "mocked_qr_data_url",
       },
     },
     transaction: {

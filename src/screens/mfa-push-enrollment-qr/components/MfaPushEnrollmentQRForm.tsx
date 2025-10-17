@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import type { CustomOptions, Error } from "@auth0/auth0-acul-react";
+import type {
+  CustomOptions,
+  Error,
+} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 
 // import { QRCode } from "@/components/qrcode";
 import { Form } from "@/components/ui/form";
@@ -50,14 +53,9 @@ function MfaPushEnrollmentQRForm() {
   const handleCopyAsCode = (event: React.MouseEvent) => {
     event.preventDefault();
     if (qrUri) {
-      navigator.clipboard.writeText(qrUri).then(
-        () => {
-          console.log("QR code URI copied to clipboard");
-        },
-        (err) => {
-          console.error("Could not copy text: ", err);
-        }
-      );
+      navigator.clipboard.writeText(qrUri).then((err) => {
+        console.error("Could not copy text: ", err);
+      });
     }
   };
 

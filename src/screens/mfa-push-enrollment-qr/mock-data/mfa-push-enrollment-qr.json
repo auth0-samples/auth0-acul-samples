@@ -8,9 +8,9 @@
   },
   "screen": {
     "data": {
-      "qr_uri": "otpauth://totp/dev-vy34wbm3newzqb7k:testacme15%40acmetest.org?enrollment_tx_id=tDFTEpKZOkaAMSmvdQSWOPlbyvZ99TwJ&base_url=https%3A%2F%2Fdev-vy34wbm3newzqb7k.guardian.us.auth0.com",
+      "qr_uri": "mock_qr_uri",
       "show_code_copy": true,
-      "qr_code": "https://dev-vy34wbm3newzqb7k.guardian.us.auth0.com/chart?cht=qr&chs=166x166&chld=L&chl=otpauth%3A%2F%2Ftotp%2Fdev-vy34wbm3newzqb7k%3Atestacme15%2540acmetest.org%3Fenrollment_tx_id%3DtDFTEpKZOkaAMSmvdQSWOPlbyvZ99TwJ%26base_url%3Dhttps%253A%252F%252Fdev-vy34wbm3newzqb7k.guardian.us.auth0.com"
+      "qr_code": "mocked_qr_code_data_uri"
     },
     "links": {
       "ios": "mock_ios_link",
