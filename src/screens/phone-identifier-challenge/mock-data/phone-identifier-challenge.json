@@ -20,7 +20,7 @@
       "resendSmsActionText": "send a text",
       "resendVoiceActionText": "get a call",
       "captchaCodePlaceholder": "Enter the code shown above",
-      "logoAltText": "dev-vy34wbm3newzqb7k",
+      "logoAltText": "Application Logo",
       "resendLimitReachedText": "Code has been resent.",
       "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
       "badgeAltText": "Link to the Auth0 website",
