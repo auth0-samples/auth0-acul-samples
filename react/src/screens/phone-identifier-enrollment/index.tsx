@@ -3,8 +3,8 @@ import ULThemePageLayout from "@/components/ULThemePageLayout";
 import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 import PhoneIdentifierEnrollmentForm from "./components/PhoneEnrollmentForm";
-import PhoneEnrollmentHeader from "./components/PhoneEnrollmentHeader";
 import { usePhoneIdentifierEnrollmentManager } from "./hooks/usePhoneIdentifierEnrollmentManager";
 
 function PhoneIdentifierEnrollmentScreen() {
@@ -18,7 +18,7 @@ function PhoneIdentifierEnrollmentScreen() {
   return (
     <ULThemePageLayout className="theme-universal">
       <ULThemeCard className="w-full max-w-[400px] gap-0">
-        <PhoneEnrollmentHeader />
+        <Header />
         <PhoneIdentifierEnrollmentForm />
         <Footer />
       </ULThemeCard>

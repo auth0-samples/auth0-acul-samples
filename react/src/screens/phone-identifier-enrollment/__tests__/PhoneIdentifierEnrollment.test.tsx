@@ -7,8 +7,8 @@ import {
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 import PhoneIdentifierEnrollmentForm from "../components/PhoneEnrollmentForm";
-import PhoneEnrollmentHeader from "../components/PhoneEnrollmentHeader";
 
 describe("Phone Enrollment Components", () => {
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe("Phone Enrollment Components", () => {
       texts: undefined,
     });
 
-    render(<PhoneEnrollmentHeader />);
+    render(<Header />);
     expect(screen.getByText(/Verify Your Identity/i)).toBeInTheDocument();
     expect(
       screen.getByText(

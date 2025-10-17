@@ -18,7 +18,7 @@
       "chooseMessageTypeText": "How do you want to receive the code?",
       "backButtonText": "Go back",
       "placeholder": "Enter your phone number",
-      "logoAltText": "tanya-test",
+      "logoAltText": "Application Logo",
       "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
       "badgeAltText": "Link to the Auth0 website",
       "error": "Error",

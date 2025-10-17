@@ -4,7 +4,7 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 
 import { usePhoneIdentifierEnrollmentManager } from "../hooks/usePhoneIdentifierEnrollmentManager";
 
-function PhoneEnrollmentHeader() {
+function Header() {
   const { texts } = usePhoneIdentifierEnrollmentManager();
 
   // Handle text fallbacks in component
@@ -22,4 +22,4 @@ function PhoneEnrollmentHeader() {
   );
 }
 
-export default PhoneEnrollmentHeader;
+export default Header;
