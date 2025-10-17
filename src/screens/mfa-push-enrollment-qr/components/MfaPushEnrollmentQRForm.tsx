@@ -6,7 +6,6 @@ import type {
   Error,
 } from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 
-// import { QRCode } from "@/components/qrcode";
 import { Form } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
@@ -81,11 +80,6 @@ function MfaPushEnrollmentQRForm() {
         <div className="text-center">
           {/* QR Code Image */}
           <div className="flex justify-center">
-            {/* <QRCode
-              data={qrCode || ""}
-              robustness="H"
-              className="p-2.5 border-1 rounded-[3px] border-(--ul-theme-color-qrcode-border) w-41 h-41"
-            /> */}
             <img
               src={qrCode}
               className="border-1 rounded-[3px] border-(--ul-theme-color-qrcode-border) w-41 h-41"
