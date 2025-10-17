@@ -241,6 +241,12 @@
           "path": "react/src/screens/email-identifier-challenge"
         },
         {
+          "id": "phone-identifier-challenge",
+          "name": "Phone Identifier Challenge",
+          "description": "Screen for collecting phone number identifier during authentication",
+          "path": "react/src/screens/phone-identifier-challenge"
+        },
+        {
           "id": "mfa-email-list",
           "name": "MFA Email List",
           "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
