@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import type { CustomOptions, Error } from "@auth0/auth0-acul-react";
 
-import { QRCode } from "@/components/qrcode";
+// import { QRCode } from "@/components/qrcode";
 import { Form } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
@@ -47,7 +47,8 @@ function MfaPushEnrollmentQRForm() {
     },
   });
 
-  const handleCopyAsCode = () => {
+  const handleCopyAsCode = (event: React.MouseEvent) => {
+    event.preventDefault();
     if (qrUri) {
       navigator.clipboard.writeText(qrUri).then(
         () => {
@@ -82,14 +83,22 @@ function MfaPushEnrollmentQRForm() {
         <div className="text-center">
           {/* QR Code Image */}
           <div className="flex justify-center">
-            <QRCode data={qrCode || ""} size="default" robustness="H" />
+            {/* <QRCode
+              data={qrCode || ""}
+              robustness="H"
+              className="p-2.5 border-1 rounded-[3px] border-(--ul-theme-color-qrcode-border) w-41 h-41"
+            /> */}
+            <img
+              src={qrCode}
+              className="border-1 rounded-[3px] border-(--ul-theme-color-qrcode-border) w-41 h-41"
+            />
           </div>
           {/* Copy QR As Code Button */}
           {showCodeCopy && (
             <ULThemeButton
               variant="outline"
-              className="w-full mt-6"
-              onClick={() => handleCopyAsCode()}
+              className="w-full mt-4.5"
+              onClick={(event) => handleCopyAsCode(event)}
             >
               {copyAsCodeLinkText}
             </ULThemeButton>
@@ -102,7 +111,7 @@ function MfaPushEnrollmentQRForm() {
           onClick={() => handlePickAuthenticator()}
           variant="link"
           size="link"
-          className="mt-4 text-center"
+          className="mt-4.5 text-center"
         >
           {pickAuthenticatorText}
         </ULThemeButton>
