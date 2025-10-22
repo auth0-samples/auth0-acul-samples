@@ -1,13 +1,13 @@
 import {
-  CustomOptions,
-  ScreenMembersOnMfaPushEnrollmentQr,
-} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
-import {
   useMfaPushEnrollmentQr,
   useScreen,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
+import {
+  CustomOptions,
+  ScreenMembersOnMfaPushEnrollmentQr,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

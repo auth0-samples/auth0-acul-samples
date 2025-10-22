@@ -1,13 +1,15 @@
 import {
   continueMethod,
-  ContinueOptions,
   resendCode,
-  ScreenMembersOnMfaEmailChallenge,
   tryAnotherMethod,
   useMfaEmailChallenge,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-email-challenge";
+import {
+  ContinueOptions,
+  ScreenMembersOnMfaEmailChallenge,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

@@ -1,8 +1,8 @@
 import {
-  ScreenMembersOnResetPasswordError,
   useResetPasswordError,
   useScreen,
 } from "@auth0/auth0-acul-react/reset-password-error";
+import { ScreenMembersOnResetPasswordError } from "@auth0/auth0-acul-react/types";
 
 /**
  * Handles password reset error

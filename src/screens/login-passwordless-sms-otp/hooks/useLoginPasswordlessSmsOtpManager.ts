@@ -1,9 +1,9 @@
 import {
-  ScreenMembersOnLoginPasswordlessSmsOtp,
   useLoginPasswordlessSmsOtp,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
+import { ScreenMembersOnLoginPasswordlessSmsOtp } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

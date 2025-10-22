@@ -1,17 +1,17 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 
+import {
+  usePasswordValidation,
+  useSignupIdentifiers,
+  useUsernameValidation,
+} from "@auth0/auth0-acul-react/signup";
 import type {
   Error,
   IdentifierType,
   SignupOptions,
   TransactionMembersOnSignup,
-} from "@auth0/auth0-acul-react/signup";
-import {
-  useEnabledIdentifiers,
-  usePasswordValidation,
-  useUsernameValidation,
-} from "@auth0/auth0-acul-react/signup";
+} from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -47,7 +47,7 @@ function SignupForm() {
   const form = useForm<SignupOptions>({
     defaultValues: {
       email: "",
-      phoneNumber: "",
+      phone: "",
       username: "",
       password: "",
       captcha: "",
@@ -65,11 +65,11 @@ function SignupForm() {
     useUsernameValidation(userNameValue || "");
 
   // Get identifiers from transaction
-  const enabledIdentifiers = useEnabledIdentifiers();
+  const enabledIdentifiers = useSignupIdentifiers();
 
   // Extract required and optional identifiers from the hook data
   const requiredIdentifiers = (enabledIdentifiers || [])
-    .filter((identifier) => identifier.required)
+    .filter((identifier: { required: unknown }) => identifier.required)
     .map((identifier) => identifier.type);
   const optionalIdentifiers = (enabledIdentifiers || [])
     .filter((identifier) => !identifier.required)

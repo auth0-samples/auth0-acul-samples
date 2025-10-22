@@ -1,4 +1,7 @@
-import type { Connection, EnterpriseConnection } from "@auth0/auth0-acul-react";
+import type {
+  Connection,
+  EnterpriseConnection,
+} from "@auth0/auth0-acul-react/types";
 
 import { getIcon } from "./iconUtils";
 

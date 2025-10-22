@@ -1,11 +1,13 @@
 import {
   enroll,
-  LoginEnrollOptions,
-  ScreenMembersOnMfaLoginOptions,
   useMfaLoginOptions,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-login-options";
+import {
+  LoginEnrollOptions,
+  ScreenMembersOnMfaLoginOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

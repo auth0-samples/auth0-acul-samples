@@ -1,4 +1,4 @@
-import type { ScreenMembersOnMfaSmsEnrollment } from "@auth0/auth0-acul-react/mfa-sms-enrollment";
+import type { ScreenMembersOnMfaSmsEnrollment } from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the mfa-sms-enrollment

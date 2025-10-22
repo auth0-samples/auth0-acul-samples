@@ -1,10 +1,10 @@
-import type { MfaSmsListOptions } from "@auth0/auth0-acul-react/mfa-sms-list";
 import {
   useMfaSmsList,
   useScreen,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-sms-list";
+import type { MfaSmsListOptions } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

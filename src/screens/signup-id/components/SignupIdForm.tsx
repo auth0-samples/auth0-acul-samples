@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
 
+import {
+  useSignupIdentifiers,
+  useUsernameValidation,
+} from "@auth0/auth0-acul-react/signup-id";
 import type {
   Error,
   IdentifierType,
   SignupOptions,
   TransactionMembersOnSignupId,
-} from "@auth0/auth0-acul-react/signup-id";
-import {
-  useEnabledIdentifiers,
-  useUsernameValidation,
-} from "@auth0/auth0-acul-react/signup-id";
+} from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -57,7 +57,7 @@ function SignupIdForm() {
     useUsernameValidation(userNameValue || "");
 
   // Get identifiers from transaction
-  const enabledIdentifiers = useEnabledIdentifiers();
+  const enabledIdentifiers = useSignupIdentifiers();
 
   // Extract required and optional identifiers from the hook data
   const requiredIdentifiers = (enabledIdentifiers || [])

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import type { Error, WithRememberOptions } from "@auth0/auth0-acul-react";
+import type { Error, WithRememberOptions } from "@auth0/auth0-acul-react/types";
 
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";

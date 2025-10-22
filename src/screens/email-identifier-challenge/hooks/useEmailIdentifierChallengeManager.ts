@@ -1,10 +1,12 @@
-import type { EmailChallengeOptions } from "@auth0/auth0-acul-react/email-identifier-challenge";
 import {
-  ScreenMembersOnEmailIdentifierChallenge,
   useEmailIdentifierChallenge,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/email-identifier-challenge";
+import type {
+  EmailChallengeOptions,
+  ScreenMembersOnEmailIdentifierChallenge,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

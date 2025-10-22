@@ -1,13 +1,15 @@
 import {
   goBack,
-  ScreenMembersOnMfaEmailList,
   selectMfaEmail,
-  SelectMfaEmailOptions,
   useMfaEmailList,
   useScreen,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-email-list";
+import {
+  ScreenMembersOnMfaEmailList,
+  SelectMfaEmailOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

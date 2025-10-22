@@ -1,9 +1,9 @@
+import { useSignupId } from "@auth0/auth0-acul-react/signup-id";
+import { useScreen, useTransaction } from "@auth0/auth0-acul-react/signup-id";
 import type {
   FederatedSignupOptions,
   SignupOptions,
-} from "@auth0/auth0-acul-react/signup-id";
-import { useSignupId } from "@auth0/auth0-acul-react/signup-id";
-import { useScreen, useTransaction } from "@auth0/auth0-acul-react/signup-id";
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

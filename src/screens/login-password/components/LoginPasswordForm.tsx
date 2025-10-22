@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react/login-password";
-import type { LoginPasswordOptions } from "@auth0/auth0-acul-react/login-password";
+import type {
+  Error,
+  LoginPasswordOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";

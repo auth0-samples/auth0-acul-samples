@@ -5,7 +5,7 @@
 import {
   ScreenMembersOnPhoneIdentifierChallenge,
   TransactionMembers,
-} from "@auth0/auth0-acul-react/phone-identifier-challenge";
+} from "@auth0/auth0-acul-react/types";
 import { jest } from "@jest/globals";
 
 export interface PhoneIdentifierTexts {

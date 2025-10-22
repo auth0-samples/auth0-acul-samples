@@ -1,10 +1,12 @@
-import type { MfaSmsChallengeOptions } from "@auth0/auth0-acul-react/mfa-sms-challenge";
 import {
-  ScreenMembersOnMfaSmsChallenge,
   useMfaSmsChallenge,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-sms-challenge";
+import type {
+  MfaSmsChallengeOptions,
+  ScreenMembersOnMfaSmsChallenge,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

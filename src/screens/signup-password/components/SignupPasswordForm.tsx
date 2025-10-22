@@ -4,7 +4,7 @@ import {
   type Error,
   type SignupPasswordOptions,
   usePasswordValidation,
-} from "@auth0/auth0-acul-react/signup-password";
+} from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";

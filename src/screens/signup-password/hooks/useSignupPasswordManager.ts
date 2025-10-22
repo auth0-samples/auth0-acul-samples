@@ -1,9 +1,9 @@
-import type { SignupPasswordOptions } from "@auth0/auth0-acul-react/signup-password";
 import {
   useScreen,
   useSignupPassword,
   useTransaction,
 } from "@auth0/auth0-acul-react/signup-password";
+import type { SignupPasswordOptions } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -25,8 +25,8 @@ export const useSignupPasswordManager = () => {
     if (payload.email?.trim()) {
       options.email = payload.email.trim();
     }
-    if (payload.phone?.trim()) {
-      options.phone = payload.phone.trim();
+    if (payload.phone) {
+      options.phone = payload.phone;
     }
     if (payload.username?.trim()) {
       options.username = payload.username.trim();

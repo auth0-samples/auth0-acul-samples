@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react/phone-identifier-enrollment";
+import type { Error } from "@auth0/auth0-acul-react/types";
 
 import { ULThemeFloatingLabelField } from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";

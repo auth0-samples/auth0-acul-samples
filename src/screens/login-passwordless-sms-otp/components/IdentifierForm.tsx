@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react";
-import { SubmitOTPOptions } from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
+import type { Error, SubmitOTPOptions } from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import {
