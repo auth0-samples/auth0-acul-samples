@@ -6,7 +6,7 @@
 import type {
   ScreenMembersOnLoginId,
   TransactionMembers,
-} from "@auth0/auth0-acul-react/login-id";
+} from "@auth0/auth0-acul-react/types";
 
 import { CommonTestData } from "@/test/fixtures/common-data";
 

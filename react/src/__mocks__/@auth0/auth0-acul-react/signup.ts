@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnSignup,
   TransactionMembersOnSignup,
-} from "@auth0/auth0-acul-react/signup";
+} from "@auth0/auth0-acul-react/types";
 
 import { CommonTestData } from "@/test/fixtures/common-data";
 
@@ -86,8 +86,8 @@ export const useSignup = jest.fn(() => ({
 export const useScreen = jest.fn(() => mockSignupInstance.screen);
 export const useTransaction = jest.fn(() => mockSignupInstance.transaction);
 
-// Mock the useEnabledIdentifiers hook
-export const useEnabledIdentifiers = jest.fn(() => [
+// Mock the useSignupIdentifiers hook
+export const useSignupIdentifiers = jest.fn(() => [
   { type: "email", required: true },
   { type: "phone", required: false },
   { type: "username", required: false },

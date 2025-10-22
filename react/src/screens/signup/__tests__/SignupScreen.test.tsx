@@ -1,7 +1,7 @@
 import {
   signup,
-  useEnabledIdentifiers,
   usePasswordValidation,
+  useSignupIdentifiers,
   useTransaction,
   useUsernameValidation,
 } from "@auth0/auth0-acul-react/signup";
@@ -110,7 +110,7 @@ describe("SignupScreen", () => {
 
   it("should adapt form fields based on identifier configuration", async () => {
     // Test with phone as required identifier
-    (useEnabledIdentifiers as jest.Mock).mockReturnValue([
+    (useSignupIdentifiers as jest.Mock).mockReturnValue([
       { type: "phone", required: true },
       { type: "email", required: false },
       { type: "username", required: false },

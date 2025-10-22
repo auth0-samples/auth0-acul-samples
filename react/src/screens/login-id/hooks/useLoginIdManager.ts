@@ -1,13 +1,13 @@
-import type {
-  FederatedLoginOptions,
-  LoginOptions,
-} from "@auth0/auth0-acul-react/login-id";
 import {
-  useActiveIdentifiers,
   useLoginId,
+  useLoginIdentifiers,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-id";
+import type {
+  FederatedLoginOptions,
+  LoginOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -15,7 +15,7 @@ export const useLoginIdManager = () => {
   const loginId = useLoginId();
   const screen = useScreen();
   const transaction = useTransaction();
-  const activeIdentifiers = useActiveIdentifiers();
+  const activeIdentifiers = useLoginIdentifiers();
 
   const { alternateConnections } = transaction;
   const {

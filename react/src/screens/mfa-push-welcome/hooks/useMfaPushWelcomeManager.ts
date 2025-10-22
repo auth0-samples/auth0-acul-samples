@@ -1,11 +1,13 @@
 import {
-  CustomOptions,
-  ScreenMembersOnMfaPushWelcome,
   useMfaPushWelcome,
   useScreen,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-welcome";
+import {
+  CustomOptions,
+  ScreenMembersOnMfaPushWelcome,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

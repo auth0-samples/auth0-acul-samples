@@ -7,7 +7,7 @@
 import type {
   ScreenMembersOnPasskeyEnrollmentLocal,
   TransactionMembers,
-} from "@auth0/auth0-acul-react/passkey-enrollment-local";
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the passkey-enrollment-local

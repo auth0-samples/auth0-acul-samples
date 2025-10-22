@@ -1,4 +1,4 @@
-import { CustomOptions } from "@auth0/auth0-acul-react/passkey-enrollment";
+import { CustomOptions } from "@auth0/auth0-acul-react/types";
 
 import {
   CheckMarkShieldAccent,

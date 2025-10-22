@@ -1,9 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type {
-  ContinueOptions,
-  Error,
-} from "@auth0/auth0-acul-react/mfa-email-challenge";
+import type { ContinueOptions, Error } from "@auth0/auth0-acul-react/types";
 
 import {
   ULThemeFloatingLabelField,

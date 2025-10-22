@@ -1,9 +1,9 @@
 import {
   login,
-  PasswordPolicy,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-password";
+import type { PasswordPolicy } from "@auth0/auth0-acul-react/types";
 import { act, render, screen } from "@testing-library/react";
 
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";

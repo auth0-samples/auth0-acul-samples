@@ -1,6 +1,6 @@
 import React from "react";
 
-import type { Error } from "@auth0/auth0-acul-react/mfa-email-list";
+import type { Error } from "@auth0/auth0-acul-react/types";
 import { ChevronRight } from "lucide-react";
 
 import { MFAEmailIcon } from "@/assets/icons/MFAEmailIcon";

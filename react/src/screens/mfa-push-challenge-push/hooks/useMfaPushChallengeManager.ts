@@ -1,15 +1,15 @@
 import {
-  CustomOptions,
-  ScreenMembersOnMfaPushChallengePush,
-  WithRememberOptions,
-} from "@auth0/auth0-acul-react";
-import {
   // useMfaPolling,
   // useMfaPushChallengePush,
   useScreen,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-challenge-push";
+import {
+  CustomOptions,
+  ScreenMembersOnMfaPushChallengePush,
+  WithRememberOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

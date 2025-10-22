@@ -1,12 +1,12 @@
-import type {
-  FederatedSignupOptions,
-  SignupOptions,
-} from "@auth0/auth0-acul-react/signup";
 import {
   useScreen,
   useSignup,
   useTransaction,
 } from "@auth0/auth0-acul-react/signup";
+import type {
+  FederatedSignupOptions,
+  SignupOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

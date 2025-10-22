@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react";
-import { SubmitCodeOptions } from "@auth0/auth0-acul-react/login-passwordless-email-code";
+import type { Error, SubmitCodeOptions } from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import {

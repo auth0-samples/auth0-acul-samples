@@ -1,13 +1,15 @@
 import {
-  PhoneChallengeOptions,
   resendCode,
   returnToPrevious,
-  ScreenMembersOnPhoneIdentifierChallenge,
   submitPhoneChallenge,
   usePhoneIdentifierChallenge,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/phone-identifier-challenge";
+import {
+  PhoneChallengeOptions,
+  ScreenMembersOnPhoneIdentifierChallenge,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

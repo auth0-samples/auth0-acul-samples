@@ -1,9 +1,6 @@
 import { useMemo, useState } from "react";
 
-import type {
-  Error,
-  PhonePrefix,
-} from "@auth0/auth0-acul-react/mfa-country-codes";
+import type { Error, PhonePrefix } from "@auth0/auth0-acul-react/types";
 import { ChevronRight } from "lucide-react";
 
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";

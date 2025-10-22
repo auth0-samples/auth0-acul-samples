@@ -1,4 +1,4 @@
-import type { EnterpriseConnection } from "@auth0/auth0-acul-react";
+import type { EnterpriseConnection } from "@auth0/auth0-acul-react/types";
 
 /**
  * Common test data that can be reused across all screens

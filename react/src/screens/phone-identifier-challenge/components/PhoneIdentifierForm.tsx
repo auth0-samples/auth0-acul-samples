@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import type {
   Error,
   PhoneChallengeOptions,
-} from "@auth0/auth0-acul-react/phone-identifier-challenge";
+} from "@auth0/auth0-acul-react/types";
 
 import {
   ULThemeFloatingLabelField,

@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnSignupId,
   TransactionMembersOnSignupId,
-} from "@auth0/auth0-acul-react/signup-id";
+} from "@auth0/auth0-acul-react/types";
 
 import { CommonTestData } from "@/test/fixtures/common-data";
 
@@ -78,8 +78,8 @@ export const useSignupId = jest.fn(() => ({
 export const useScreen = jest.fn(() => mockSignupIdInstance.screen);
 export const useTransaction = jest.fn(() => mockSignupIdInstance.transaction);
 
-// Mock the useEnabledIdentifiers hook
-export const useEnabledIdentifiers = jest.fn(() => [
+// Mock the useSignupIdentifiers hook
+export const useSignupIdentifiers = jest.fn(() => [
   { type: "phone", required: true },
   { type: "email", required: false },
   { type: "username", required: false },

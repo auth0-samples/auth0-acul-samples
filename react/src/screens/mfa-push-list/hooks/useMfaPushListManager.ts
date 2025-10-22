@@ -1,13 +1,13 @@
-import type {
-  CustomOptions,
-  SelectMfaPushDeviceOptions,
-} from "@auth0/auth0-acul-react/mfa-push-list";
 import {
   useMfaPushList,
   useScreen,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-list";
+import type {
+  CustomOptions,
+  SelectMfaPushDeviceOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

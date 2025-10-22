@@ -1,9 +1,9 @@
-import type { SelectCountryCodeOptions } from "@auth0/auth0-acul-react/mfa-country-codes";
 import {
   useMfaCountryCodes,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-country-codes";
+import type { SelectCountryCodeOptions } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

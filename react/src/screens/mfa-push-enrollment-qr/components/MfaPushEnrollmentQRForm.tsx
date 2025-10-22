@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import type {
-  CustomOptions,
-  Error,
-} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
+import type { CustomOptions, Error } from "@auth0/auth0-acul-react/types";
 
 import { Form } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";

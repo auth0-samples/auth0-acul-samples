@@ -1,10 +1,10 @@
 import {
   resetPassword,
-  ScreenMembersOnResetPassword,
   useResetPassword,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/reset-password";
+import { ScreenMembersOnResetPassword } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
