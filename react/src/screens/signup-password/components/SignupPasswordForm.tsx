@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
 
-import {
-  type Error,
-  type SignupPasswordOptions,
-  usePasswordValidation,
+import { usePasswordValidation } from "@auth0/auth0-acul-react/signup-password";
+import type {
+  SignupPasswordOptions,
 } from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
@@ -64,7 +63,7 @@ function SignupPasswordForm() {
   // Get user data from screen data for readonly fields
   const screenData = signupPassword?.screen?.data;
   const userEmail = screenData?.email;
-  const userPhone = screenData?.phone;
+  const userPhone = screenData?.phoneNumber;
   const userUsername = screenData?.username;
 
   // Handle text fallbacks
@@ -84,7 +83,7 @@ function SignupPasswordForm() {
   if (userUsername) visibleFields.push("username");
 
   const generalErrors =
-    errors?.filter((error: Error) => {
+    errors?.filter((error: any) => {
       // Include errors with no field or null field
       if (!error.field || error.field === null) return true;
 
@@ -113,7 +112,7 @@ function SignupPasswordForm() {
         {/* General alerts at the top */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
+            {generalErrors.map((error: any, index: number) => (
               <ULThemeAlert key={index} variant="destructive">
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>

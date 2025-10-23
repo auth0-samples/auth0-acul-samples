@@ -1,4 +1,3 @@
-import type { PasswordRuleValidation } from "@auth0/auth0-acul-react";
 import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -8,7 +7,7 @@ export interface ULThemePasswordValidatorProps {
   /**
    * Array of password validation rules from usePasswordValidation hook
    */
-  validationRules: PasswordRuleValidation[];
+  validationRules: any;
   /**
    * Optional class names for additional styling
    */
@@ -30,14 +29,17 @@ export const ULThemePasswordValidator = ({
     return null;
   }
 
+  // Handle both array and object with rules property
+  const rules = Array.isArray(validationRules) ? validationRules : validationRules?.rules || [];
+
   // Check if we have a grouped structure with "contains-at-least"
-  const hasContainsAtLeastRule = validationRules.some((rule) =>
+  const hasContainsAtLeastRule = rules.some((rule: any) =>
     rule.code.includes("contains-at-least")
   );
 
   // Get sub-rules that should be nested under "contains-at-least" (only if grouped structure exists)
   const subRules = hasContainsAtLeastRule
-    ? validationRules.filter((rule) =>
+    ? rules.filter((rule: any) =>
         [
           "password-policy-lower-case",
           "password-policy-upper-case",
@@ -49,8 +51,8 @@ export const ULThemePasswordValidator = ({
 
   // Get main rules - if no grouped structure, show all rules; otherwise exclude sub-rules
   const mainRules = hasContainsAtLeastRule
-    ? validationRules.filter(
-        (rule) =>
+    ? rules.filter(
+        (rule: any) =>
           ![
             "password-policy-lower-case",
             "password-policy-upper-case",
@@ -58,10 +60,10 @@ export const ULThemePasswordValidator = ({
             "password-policy-special-characters",
           ].includes(rule.code)
       )
-    : validationRules;
+    : rules;
 
   const renderValidationItem = (
-    rule: PasswordRuleValidation,
+    rule: any,
     overrideValid?: boolean
   ) => {
     const isValid = overrideValid !== undefined ? overrideValid : rule.isValid;
@@ -97,7 +99,7 @@ export const ULThemePasswordValidator = ({
       </div>
 
       <ul className="space-y-2 pl-4 list-disc">
-        {mainRules.map((rule) => {
+        {mainRules.map((rule: any) => {
           // Handle the "contains-at-least" rule specially
           if (rule.code.includes("contains-at-least")) {
             const containsAtLeastValid = isGroupRuleValid(validationRules);
@@ -122,7 +124,7 @@ export const ULThemePasswordValidator = ({
                   <span>{rule.policy}</span>
                   {/* Render sub-rules nested under contains-at-least */}
                   <ul className="mt-1 space-y-1 pl-4 list-disc">
-                    {subRules.map((subRule) => renderValidationItem(subRule))}
+                    {subRules.map((subRule: any) => renderValidationItem(subRule))}
                   </ul>
                 </div>
               </li>

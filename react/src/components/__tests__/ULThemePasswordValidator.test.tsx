@@ -1,10 +1,9 @@
-import type { PasswordRuleValidation } from "@auth0/auth0-acul-react/signup-password";
 import { render, screen } from "@testing-library/react";
 
 import { ULThemePasswordValidator } from "@/components/ULThemePasswordValidator";
 
 // Mock validation rules for testing
-const mockValidationRules: PasswordRuleValidation[] = [
+const mockValidationRules: any[] = [
   {
     code: "password-policy-length-at-least",
     policy: "At least 8 characters",
@@ -42,7 +41,7 @@ const mockValidationRules: PasswordRuleValidation[] = [
   },
 ];
 
-const mockGroupedRulesOnly: PasswordRuleValidation[] = [
+const mockGroupedRulesOnly: any[] = [
   {
     code: "password-policy-contains-at-least",
     policy: "At least 2 of the following:",
