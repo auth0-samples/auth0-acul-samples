@@ -1,5 +1,3 @@
-import type { PasswordRuleValidation } from "@auth0/auth0-acul-react";
-
 /**
  * Extract required count from "contains-at-least" rule policy text
  * @param policy - The policy string to parse (can be null/undefined)
@@ -15,7 +13,7 @@ const extractRequiredCount = (policy: string | null | undefined): number => {
  * Check if grouped rules meet the "contains-at-least" requirement
  */
 export const isGroupRuleValid = (
-  validationRules: PasswordRuleValidation[] | null | undefined
+  validationRules: any[] | null | undefined
 ): boolean => {
   if (!validationRules || validationRules.length === 0) {
     return false;
@@ -52,9 +50,12 @@ export const isGroupRuleValid = (
  * Check if all password validation rules are satisfied
  */
 export const isPasswordValid = (
-  validationRules: PasswordRuleValidation[] | null | undefined
+  validationRules: any
 ): boolean => {
-  if (!validationRules || validationRules.length === 0) {
+  // Handle both array and object with rules property
+  const rules = Array.isArray(validationRules) ? validationRules : validationRules?.rules || [];
+  
+  if (!rules || rules.length === 0) {
     return false;
   }
 
@@ -66,34 +67,34 @@ export const isPasswordValid = (
     "password-policy-special-characters",
   ];
 
-  const individualRules = validationRules.filter(
-    (rule) =>
+  const individualRules = rules.filter(
+    (rule: any) =>
       !groupedRuleCodes.includes(rule.code) &&
       !rule.code.includes("contains-at-least")
   );
 
-  const groupedRules = validationRules.filter((rule) =>
+  const groupedRules = rules.filter((rule: any) =>
     groupedRuleCodes.includes(rule.code)
   );
 
-  const containsAtLeastRule = validationRules.find((rule) =>
+  const containsAtLeastRule = rules.find((rule: any) =>
     rule.code.includes("contains-at-least")
   );
 
   // Check individual rules (like minimum length, no identical characters, etc.)
-  const individualRulesValid = individualRules.every((rule) => rule.isValid);
+  const individualRulesValid = individualRules.every((rule: any) => rule.isValid);
 
   // Handle grouped rules validation
   let groupedRulesValid = true;
   if (containsAtLeastRule && groupedRules.length > 0) {
     const requiredCount = extractRequiredCount(containsAtLeastRule.policy);
     const validGroupedRulesCount = groupedRules.filter(
-      (rule) => rule.isValid
+      (rule: any) => rule.isValid
     ).length;
     groupedRulesValid = validGroupedRulesCount >= requiredCount;
   } else if (groupedRules.length > 0) {
     // If no "contains-at-least" rule but we have grouped rules, all must be valid
-    groupedRulesValid = groupedRules.every((rule) => rule.isValid);
+    groupedRulesValid = groupedRules.every((rule: any) => rule.isValid);
   }
 
   return individualRulesValid && groupedRulesValid;
