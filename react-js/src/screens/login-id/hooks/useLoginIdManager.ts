@@ -57,7 +57,7 @@ export const useLoginIdManager = () => {
     isForgotPasswordEnabled: isForgotPasswordEnabled === true,
     isPasskeyEnabled: isPasskeyEnabled === true,
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: loginIdInstance.getError(),
+    errors: loginIdInstance.getErrors(),
     captchaImage,
     captcha: screen.captcha || null,
     signupLink,

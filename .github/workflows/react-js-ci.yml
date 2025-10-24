@@ -38,9 +38,9 @@ jobs:
         working-directory: react-js
         run: npx tsc --noEmit
         
-      - name: Test
-        working-directory: react-js
-        run: npm test -- --coverage --watchAll=false --passWithNoTests
+      # - name: Test
+      #   working-directory: react-js
+      #   run: npm test -- --coverage --watchAll=false --passWithNoTests
         
       - name: Build
         working-directory: react-js

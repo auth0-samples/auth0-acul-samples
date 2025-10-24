@@ -23,7 +23,7 @@ export interface MockLoginIdInstance {
   federatedLogin: jest.Mock;
   passkeyLogin: jest.Mock;
   pickCountryCode: jest.Mock;
-  getError: jest.Mock;
+  getErrors: jest.Mock;
   screen: ScreenMembersOnLoginId;
   transaction: TransactionMembersOnLoginId;
 }
@@ -38,7 +38,7 @@ export const createMockLoginIdInstance = (): MockLoginIdInstance => ({
   federatedLogin: jest.fn(),
   passkeyLogin: jest.fn(),
   pickCountryCode: jest.fn(),
-  getError: jest.fn(() => []), // Returns empty array by default
+  getErrors: jest.fn(() => []), // Returns empty array by default
   screen: {
     name: "login-id",
     texts: {

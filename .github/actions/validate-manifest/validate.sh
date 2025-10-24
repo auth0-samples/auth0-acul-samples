@@ -143,24 +143,26 @@ for (const [templateId, template] of Object.entries(manifest.templates)) {
     continue;
   }
   
-  // Validate base files exist
+  // Validate base files exist (prepend template directory)
   if (template.base_files) {
     for (const filePath of template.base_files) {
-      if (!fs.existsSync(filePath)) {
-        console.log(\`❌ Base file not found: \${filePath}\`);
+      const fullPath = path.join(templateId, filePath);
+      if (!fs.existsSync(fullPath)) {
+        console.log(\`❌ Base file not found: \${fullPath}\`);
         errors++;
       }
     }
   }
   
-  // Validate base directories
+  // Validate base directories (prepend template directory)
   if (template.base_directories) {
     for (const dirPath of template.base_directories) {
-      if (!fs.existsSync(dirPath)) {
-        console.log(\`❌ Base directory not found: \${dirPath}\`);
+      const fullPath = path.join(templateId, dirPath);
+      if (!fs.existsSync(fullPath)) {
+        console.log(\`❌ Base directory not found: \${fullPath}\`);
         errors++;
-      } else if (!fs.statSync(dirPath).isDirectory()) {
-        console.log(\`❌ Base directory is not a directory: \${dirPath}\`);
+      } else if (!fs.statSync(fullPath).isDirectory()) {
+        console.log(\`❌ Base directory is not a directory: \${fullPath}\`);
         errors++;
       }
     }
@@ -183,14 +185,16 @@ for (const [templateId, template] of Object.entries(manifest.templates)) {
         continue;
       }
       
-      if (!fs.existsSync(screen.path)) {
-        console.log(\`❌ Screen path not found: \${screen.path}\`);
+      // Prepend template directory to screen path
+      const fullScreenPath = path.join(templateId, screen.path);
+      if (!fs.existsSync(fullScreenPath)) {
+        console.log(\`❌ Screen path not found: \${fullScreenPath}\`);
         errors++;
         continue;
       }
       
-      // Check mock data
-      const mockPath = path.join(screen.path, 'mock-data', \`\${screen.id}.json\`);
+      // Check mock data (prepend template directory)
+      const mockPath = path.join(templateId, screen.path, 'mock-data', \`\${screen.id}.json\`);
       if (!fs.existsSync(mockPath)) {
         console.log(\`❌ Mock data not found: \${mockPath}\`);
         errors++;
