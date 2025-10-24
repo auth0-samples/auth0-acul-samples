@@ -3,8 +3,10 @@
  * MFA Login Options flows via the Auth0 ACUL React SDK.
  */
 
-import type { TransactionMembers } from "@auth0/auth0-acul-react";
-import type { ScreenMembersOnMfaLoginOptions } from "@auth0/auth0-acul-react/mfa-login-options";
+import type {
+  ScreenMembersOnMfaLoginOptions,
+  TransactionMembers,
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Represents a mocked instance of the MFA Login Options state.

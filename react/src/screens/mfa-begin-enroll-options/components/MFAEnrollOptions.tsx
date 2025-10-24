@@ -1,5 +1,4 @@
-import type { Error } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
-import { MfaEnrollFactorType } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
+import type { Error, MfaEnrollFactorType } from "@auth0/auth0-acul-react/types";
 import { ChevronRight } from "lucide-react";
 
 import {

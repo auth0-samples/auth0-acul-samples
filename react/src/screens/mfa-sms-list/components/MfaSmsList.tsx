@@ -1,4 +1,4 @@
-import type { Error } from "@auth0/auth0-acul-react/mfa-sms-list";
+import type { Error } from "@auth0/auth0-acul-react/types";
 import { ChevronRight } from "lucide-react";
 
 import { MFAPhoneIcon } from "@/assets/icons";

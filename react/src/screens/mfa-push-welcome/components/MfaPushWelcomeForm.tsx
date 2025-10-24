@@ -1,9 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type {
-  CustomOptions,
-  Error,
-} from "@auth0/auth0-acul-react/mfa-push-welcome";
+import type { CustomOptions, Error } from "@auth0/auth0-acul-react/types";
 
 import { AppleIcon, GooglePlayIcon } from "@/assets/icons";
 import { Form } from "@/components/ui/form";

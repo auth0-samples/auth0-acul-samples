@@ -1,9 +1,9 @@
 import {
-  ScreenMembersOnMfaSmsEnrollment,
   useMfaSmsEnrollment,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-sms-enrollment";
+import { ScreenMembersOnMfaSmsEnrollment } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

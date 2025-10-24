@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnResetPassword,
   TransactionMembers,
-} from "@auth0/auth0-acul-react/reset-password";
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the full contract of a mocked reset-password instance

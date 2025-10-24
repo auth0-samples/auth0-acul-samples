@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnSignupPassword,
   TransactionMembersOnSignupPassword,
-} from "@auth0/auth0-acul-react/signup-password";
+} from "@auth0/auth0-acul-react/types";
 
 import { CommonTestData } from "@/test/fixtures/common-data";
 
@@ -58,7 +58,7 @@ export const createMockSignupPasswordInstance =
       data: {
         email: "test@example.com",
         username: "testuser",
-        phone: "+1234567890",
+        phoneNumber: "+1234567890",
       },
     },
     transaction: {

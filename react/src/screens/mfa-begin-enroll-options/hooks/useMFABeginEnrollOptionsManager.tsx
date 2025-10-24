@@ -1,11 +1,10 @@
 import {
   enroll,
-  MfaEnrollOptions,
-  ScreenMembers,
   useMfaBeginEnrollOptions,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
+import { MfaEnrollOptions, ScreenMembers } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

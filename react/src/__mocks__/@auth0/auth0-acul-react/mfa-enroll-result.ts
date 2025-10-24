@@ -1,5 +1,7 @@
-import type { TransactionMembers } from "@auth0/auth0-acul-react";
-import type { ScreenMembersOnMfaEnrollResult } from "@auth0/auth0-acul-react/mfa-enroll-result";
+import type {
+  ScreenMembersOnMfaEnrollResult,
+  TransactionMembers,
+} from "@auth0/auth0-acul-react/types";
 
 export interface MockMfaEnrollResultInstance {
   screen: ScreenMembersOnMfaEnrollResult;

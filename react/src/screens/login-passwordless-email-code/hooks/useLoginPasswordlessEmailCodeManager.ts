@@ -1,9 +1,9 @@
 import {
-  ScreenMembersOnLoginPasswordlessEmailCode,
   useLoginPasswordlessEmailCode,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-passwordless-email-code";
+import { ScreenMembersOnLoginPasswordlessEmailCode } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

@@ -1,8 +1,8 @@
 import {
-  ScreenMembersOnMfaEnrollResult,
   useMfaEnrollResult,
   useScreen,
 } from "@auth0/auth0-acul-react/mfa-enroll-result";
+import { ScreenMembersOnMfaEnrollResult } from "@auth0/auth0-acul-react/types";
 
 /**
  * Handles successful MFA Enrollment process

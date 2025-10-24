@@ -1,4 +1,4 @@
-import type { IdentifierType } from "@auth0/auth0-acul-react";
+import type { IdentifierType } from "@auth0/auth0-acul-react/types";
 
 interface IdentifierDetails {
   label: string;

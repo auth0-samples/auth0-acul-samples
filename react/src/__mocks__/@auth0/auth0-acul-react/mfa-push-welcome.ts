@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnMfaPushWelcome,
   UserMembers,
-} from "@auth0/auth0-acul-react/mfa-push-welcome";
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the mfa-push-welcome screen

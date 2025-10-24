@@ -1,12 +1,12 @@
-import type {
-  FederatedLoginOptions,
-  LoginPasswordOptions,
-} from "@auth0/auth0-acul-react/login-password";
 import {
   useLoginPassword,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-password";
+import type {
+  FederatedLoginOptions,
+  LoginPasswordOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

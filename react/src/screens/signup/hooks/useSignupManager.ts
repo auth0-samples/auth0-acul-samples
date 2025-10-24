@@ -1,12 +1,12 @@
-import type {
-  FederatedSignupOptions,
-  SignupOptions,
-} from "@auth0/auth0-acul-react/signup";
 import {
   useScreen,
   useSignup,
   useTransaction,
 } from "@auth0/auth0-acul-react/signup";
+import type {
+  FederatedSignupOptions,
+  SignupOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -26,8 +26,8 @@ export const useSignupManager = () => {
     if (payload.email?.trim()) {
       options.email = payload.email.trim();
     }
-    if (payload.phoneNumber?.trim()) {
-      options.phoneNumber = payload.phoneNumber.trim();
+    if (payload.phone?.trim()) {
+      options.phone = payload.phone.trim();
     }
     if (payload.username?.trim()) {
       options.username = payload.username.trim();

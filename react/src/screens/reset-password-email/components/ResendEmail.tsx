@@ -1,4 +1,4 @@
-import type { Error } from "@auth0/auth0-acul-react/reset-password-email";
+import type { Error } from "@auth0/auth0-acul-react/types";
 
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import type {
   EmailChallengeOptions,
   Error,
-} from "@auth0/auth0-acul-react/email-identifier-challenge";
+} from "@auth0/auth0-acul-react/types";
 
 import {
   ULThemeFloatingLabelField,

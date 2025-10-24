@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react";
+import type { Error } from "@auth0/auth0-acul-react/types";
 
 import { ULThemeFormMessage } from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";

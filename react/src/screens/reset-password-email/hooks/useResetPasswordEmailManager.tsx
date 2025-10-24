@@ -1,10 +1,10 @@
 import {
   resendEmail,
-  ScreenMembersOnResetPasswordEmail,
   useResetPasswordEmail,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/reset-password-email";
+import { ScreenMembersOnResetPasswordEmail } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

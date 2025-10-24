@@ -1,17 +1,15 @@
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 
-import type {
-  Error,
-  IdentifierType,
-  SignupOptions,
-  TransactionMembersOnSignup,
-} from "@auth0/auth0-acul-react/signup";
 import {
-  useEnabledIdentifiers,
   usePasswordValidation,
   useUsernameValidation,
 } from "@auth0/auth0-acul-react/signup";
+import type {
+  IdentifierType,
+  SignupOptions,
+  TransactionMembersOnSignup,
+} from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -47,10 +45,11 @@ function SignupForm() {
   const form = useForm<SignupOptions>({
     defaultValues: {
       email: "",
-      phoneNumber: "",
+      phone: "",
       username: "",
       password: "",
       captcha: "",
+      phoneNumber: "",
     },
     reValidateMode: "onBlur",
   });
@@ -64,23 +63,16 @@ function SignupForm() {
   const { isValid: isUsernameValid, errors: userNameErrors } =
     useUsernameValidation(userNameValue || "");
 
-  // Get identifiers from transaction
-  const enabledIdentifiers = useEnabledIdentifiers();
-
-  // Extract required and optional identifiers from the hook data
-  const requiredIdentifiers = (enabledIdentifiers || [])
-    .filter((identifier) => identifier.required)
-    .map((identifier) => identifier.type);
-  const optionalIdentifiers = (enabledIdentifiers || [])
-    .filter((identifier) => !identifier.required)
-    .map((identifier) => identifier.type);
+  // Default identifiers (SDK hook was removed)
+  const requiredIdentifiers: IdentifierType[] = ["email"];
+  const optionalIdentifiers: IdentifierType[] = ["username"];
 
   // Get password validation rules from Auth0 SDK
   const passwordValue = watch("password");
-  const validationRules = usePasswordValidation(passwordValue || "");
+  const validationRules = usePasswordValidation(String(passwordValue ?? ""));
 
   // Show validation when user has typed something
-  const showPasswordValidation = shouldShowValidation(passwordValue);
+  const showPasswordValidation = shouldShowValidation(String(passwordValue));
 
   // Create validation functions using utilities
   const validatePasswordRule = createPasswordValidator(
@@ -157,6 +149,7 @@ function SignupForm() {
                 <FormItem>
                   <ULThemeFloatingLabelField
                     {...field}
+                    value={String(field.value || "")}
                     label={label}
                     type={type}
                     autoComplete={autoComplete}
@@ -222,7 +215,7 @@ function SignupForm() {
 
   // Get general errors (not field-specific)
   const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
+    errors?.filter((error: any) => !error.field || error.field === null) ||
     [];
 
   return (
@@ -231,7 +224,7 @@ function SignupForm() {
         {/* Display general errors */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
+            {generalErrors.map((error: any, index: number) => (
               <ULThemeAlert key={index} variant="destructive">
                 <ULThemeAlertTitle>
                   {error.message || "An error occurred"}
@@ -252,12 +245,13 @@ function SignupForm() {
           control={form.control}
           name="password"
           rules={{
-            validate: validatePasswordRule,
+            validate: (value) => validatePasswordRule(String(value || "")),
           }}
           render={({ field, fieldState }) => (
             <FormItem>
               <ULThemePasswordField
                 {...field}
+                value={String(field.value || "")}
                 label={passwordLabel}
                 autoComplete="new-password"
                 error={!!fieldState.error || !!passwordSDKError}

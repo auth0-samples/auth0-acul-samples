@@ -1,12 +1,14 @@
 import {
   continuePhoneEnrollment,
-  PhoneEnrollmentOptions,
   returnToPrevious,
-  ScreenMembersOnPhoneIdentifierEnrollment,
   usePhoneIdentifierEnrollment,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/phone-identifier-enrollment";
+import {
+  PhoneEnrollmentOptions,
+  ScreenMembersOnPhoneIdentifierEnrollment,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 

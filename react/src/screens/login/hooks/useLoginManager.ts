@@ -1,13 +1,13 @@
-import type {
-  FederatedLoginOptions,
-  LoginOptions,
-} from "@auth0/auth0-acul-react/login";
 import {
-  useActiveIdentifiers,
   useLogin,
+  useLoginIdentifiers,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login";
+import type {
+  FederatedLoginOptions,
+  LoginPasswordOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -15,14 +15,14 @@ export const useLoginManager = () => {
   const login = useLogin();
   const screen = useScreen();
   const transaction = useTransaction();
-  const activeIdentifiers = useActiveIdentifiers();
+  const activeIdentifiers = useLoginIdentifiers();
 
   const { alternateConnections } = transaction;
   const { isCaptchaAvailable, texts, links, captchaImage } = screen;
 
-  const handleLogin = async (payload: LoginOptions): Promise<void> => {
+  const handleLogin = async (payload: LoginPasswordOptions): Promise<void> => {
     // Clean and prepare data
-    const options: LoginOptions = {
+    const options: LoginPasswordOptions = {
       username: payload.username.trim(),
       password: payload.password,
     };

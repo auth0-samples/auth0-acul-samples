@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnMfaEmailChallenge,
   TransactionMembers,
-} from "@auth0/auth0-acul-react/mfa-email-challenge";
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the full contract of a mocked MFA Email Challenge instance

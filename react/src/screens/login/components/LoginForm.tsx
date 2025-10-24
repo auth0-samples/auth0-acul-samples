@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 
-import type { IdentifierType } from "@auth0/auth0-acul-react";
-import type { LoginOptions } from "@auth0/auth0-acul-react/login";
+import type {
+  IdentifierType,
+  LoginPasswordOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import Captcha from "@/components/Captcha";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -27,7 +29,7 @@ function LoginForm() {
     errors,
   } = useLoginManager();
 
-  const form = useForm<LoginOptions>({
+  const form = useForm<LoginPasswordOptions>({
     defaultValues: {
       username: "",
       password: "",
@@ -40,7 +42,7 @@ function LoginForm() {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit = async (data: LoginOptions) => {
+  const onSubmit = async (data: LoginPasswordOptions) => {
     await handleLogin({
       username: data.username,
       password: data.password,

@@ -1,7 +1,7 @@
 import type {
   ScreenMembersOnMfaPushChallengePush,
   UserMembers,
-} from "@auth0/auth0-acul-react";
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the mfa-push-challenge-push screen

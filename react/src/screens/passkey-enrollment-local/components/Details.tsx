@@ -4,7 +4,7 @@ import type {
   AbortEnrollmentOptions,
   CustomOptions,
   Error,
-} from "@auth0/auth0-acul-react/passkey-enrollment-local";
+} from "@auth0/auth0-acul-react/types";
 
 import {
   LockHeavyAccent,

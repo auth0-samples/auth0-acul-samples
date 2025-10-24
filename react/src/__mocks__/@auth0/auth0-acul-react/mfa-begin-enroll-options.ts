@@ -1,7 +1,7 @@
 import type {
   ScreenMembers,
   TransactionMembers,
-} from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the full contract of a mocked MFA Begin Enroll Options instance
