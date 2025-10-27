@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 
 import type { CaptchaResponse, CaptchaWidgetProps } from "../index";
 
+import locales from "./locales/en.json";
+
 const SimpleCaptchaWidget = <T extends FieldValues = FieldValues>({
   config,
   onCaptchaResponse,
@@ -25,7 +27,7 @@ const SimpleCaptchaWidget = <T extends FieldValues = FieldValues>({
   }
 
   const imageUrl = config.image;
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
+  const captchaImageAlt = locales.captcha.simple.captchaImageAltText;
   // Image container styles with theme
   const imageContainerStyles = cn(
     "flex justify-center p-8 rounded",

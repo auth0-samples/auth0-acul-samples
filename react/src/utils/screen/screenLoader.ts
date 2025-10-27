@@ -44,6 +44,7 @@ const SCREEN_COMPONENTS: Record<string, React.ComponentType> = {
   "reset-password-success": lazy(
     () => import("@/screens/reset-password-success")
   ),
+  "reset-password-request": lazy(() => import("@/screens/reset-password-request")),
   signup: lazy(() => import("@/screens/signup")),
   "signup-id": lazy(() => import("@/screens/signup-id")),
   "signup-password": lazy(() => import("@/screens/signup-password")),

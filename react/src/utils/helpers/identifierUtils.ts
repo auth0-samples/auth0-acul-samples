@@ -4,6 +4,7 @@ interface IdentifierDetails {
   label: string;
   type: string; // HTML input type
   autoComplete: IdentifierType | string; // Prefer IdentifierType when applicable
+  description?: string;
 }
 
 // Specific keys for placeholder texts for better type safety in the config map
@@ -20,7 +21,8 @@ interface IdentifierConfig {
   labelKey: PlaceholderKey;
   labelFallback: string;
   type?: string; // HTML input type
-  autoComplete?: IdentifierType | string; // Prefer IdentifierType when applicable
+  autoComplete?: IdentifierType | string; // Prefer IdentifierType when applicable,
+  description?: string;
 }
 
 // Shared configuration for individual identifier types
@@ -30,18 +32,24 @@ const INDIVIDUAL_IDENTIFIER_CONFIG: Record<IdentifierType, IdentifierConfig> = {
     labelFallback: "Email Address",
     type: "email",
     autoComplete: "email",
+    description:
+      "Enter your Email address and we will send you instructions to reset your password.",
   },
   phone: {
     labelKey: "phonePlaceholder",
     labelFallback: "Phone Number",
     type: "tel",
     autoComplete: "tel",
+    description:
+      "Enter your Phone number and we will send you instructions to reset your password.",
   },
   username: {
     labelKey: "usernameOnlyPlaceholder",
     labelFallback: "Username",
     type: "text",
     autoComplete: "username",
+    description:
+      "Enter your Username and we will send you instructions to reset your password.",
   },
 };
 
@@ -84,6 +92,8 @@ export const getIndividualIdentifierDetails = (
       label: `${identifierType}${suffix}`,
       type: "text",
       autoComplete: "username",
+      description:
+        "Enter your Username and we will send you instructions to reset your password.",
     };
   }
 
@@ -93,18 +103,21 @@ export const getIndividualIdentifierDetails = (
     label: `${baseLabel}${suffix}`,
     type: config.type || "text",
     autoComplete: config.autoComplete || "username",
+    description:
+      config.description ||
+      "Enter your Username and we will send you instructions to reset your password.",
   };
 };
 
 /**
- * Determines the appropriate label, input type, and autocomplete attribute
+ * Determines the appropriate label, input type, autocomplete and description attribute
  * for an identifier field based on active connection attributes and screen texts.
- * This function is specifically designed for login screens where all identifier
+ * This function is specifically designed for login and reset password screens where all identifier
  * fields are required (using transaction.allowedIdentifiers).
  *
  * @param connectionAttributes - The connection attributes from the transaction object.
  * @param screenTexts - The screen.texts object from Auth0 SDK instance.
- * @returns An object containing the label, type, and autoComplete string for the identifier field.
+ * @returns An object containing the label, type, description and autoComplete string for the identifier field.
  */
 export const getIdentifierDetails = (
   connectionAttributes?: IdentifierType[],
@@ -115,6 +128,8 @@ export const getIdentifierDetails = (
     screenTexts?.usernameOrEmailPlaceholder || "Username or Email Address";
   let finalType = "text";
   let finalAutoComplete: IdentifierType | string = "username";
+  let finalDescription =
+    "Enter your Username or Email address and we will send you instructions to reset your password.";
 
   if (connectionAttributes) {
     const hasEmail = connectionAttributes.includes("email");
@@ -134,21 +149,29 @@ export const getIdentifierDetails = (
         labelKey: "phoneOrEmailPlaceholder",
         labelFallback: "Phone Number or Email Address",
         autoComplete: "username",
+        description:
+          "Enter your Phone number or Email address and we will send you instructions to reset your password.",
       },
       "email-username": {
         labelKey: "usernameOrEmailPlaceholder",
         labelFallback: "Username or Email Address",
         autoComplete: "username",
+        description:
+          "Enter your Username or Email address and we will send you instructions to reset your password.",
       },
       "phone-username": {
         labelKey: "phoneOrUsernamePlaceholder",
         labelFallback: "Phone Number or Username",
         autoComplete: "username",
+        description:
+          "Enter your Phone number or Username and we will send you instructions to reset your password.",
       },
       "email-phone-username": {
         labelKey: "phoneOrUsernameOrEmailPlaceholder",
         labelFallback: "Phone, Username, or Email",
         autoComplete: "username",
+        description:
+          "Enter your Phone number, Username, or Email address and we will send you instructions to reset your password.",
       },
     };
 
@@ -162,6 +185,9 @@ export const getIdentifierDetails = (
       if (config.autoComplete) {
         finalAutoComplete = config.autoComplete;
       }
+      if (config.description) {
+        finalDescription = config.description;
+      }
     }
   }
 
@@ -174,5 +200,6 @@ export const getIdentifierDetails = (
     label: finalLabel,
     type: finalType,
     autoComplete: finalAutoComplete,
+    description: finalDescription,
   };
 };

@@ -135,6 +135,12 @@
           "path": "src/screens/reset-password"
         },
         {
+          "id": "reset-password-request",
+          "name": "Reset Password: Request",
+          "description": "Screen for reset password request",
+          "path": "react/src/screens/reset-password-request"
+        },
+        {
           "id": "reset-password-success",
           "name": "Reset Password: Success",
           "description": "Screen for successful password reset",
