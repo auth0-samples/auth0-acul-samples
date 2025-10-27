@@ -6,25 +6,24 @@ import {
 } from "@auth0/auth0-acul-react/login-id";
 import type {
   FederatedLoginOptions,
+  LoginIdMembers,
   LoginOptions,
+  ScreenMembersOnLoginId,
+  TransactionMembersOnLoginId,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/login-id/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useLoginIdManager = () => {
-  const loginId = useLoginId();
-  const screen = useScreen();
-  const transaction = useTransaction();
+  const loginId: LoginIdMembers = useLoginId();
+  const screen: ScreenMembersOnLoginId = useScreen();
+  const transaction: TransactionMembersOnLoginId = useTransaction();
   const activeIdentifiers = useLoginIdentifiers();
 
   const { alternateConnections } = transaction;
-  const {
-    isCaptchaAvailable,
-    texts,
-    captchaImage,
-    signupLink,
-    resetPasswordLink,
-  } = screen;
+  const { isCaptchaAvailable, texts, captcha, signupLink, resetPasswordLink } =
+    screen;
   const {
     isSignupEnabled,
     isForgotPasswordEnabled,
@@ -47,26 +46,27 @@ export const useLoginIdManager = () => {
       ...options,
     };
 
-    executeSafely(`LoginId with options: ${JSON.stringify(logOptions)}`, () =>
-      loginId.login(options)
+    executeSafely(
+      `Perform Login operation with options: ${JSON.stringify(logOptions)}`,
+      () => loginId.login(options)
     );
   };
 
   const handleFederatedLogin = async (payload: FederatedLoginOptions) => {
     executeSafely(
-      `Federated login with connection: ${payload.connection}`,
+      `Perform Federated login with connection: ${payload.connection}`,
       () => loginId.federatedLogin(payload)
     );
   };
 
   const handlePasskeyLogin = async () => {
     if (isPasskeyEnabled) {
-      executeSafely(`Passkey login`, () => loginId.passkeyLogin());
+      executeSafely(`Perform passkey login`, () => loginId.passkeyLogin());
     }
   };
 
   const handlePickCountryCode = async () => {
-    executeSafely(`Pick country code`, () => loginId.pickCountryCode());
+    executeSafely(`Invoked Pick country code`, () => loginId.pickCountryCode());
   };
 
   return {
@@ -76,17 +76,18 @@ export const useLoginIdManager = () => {
     handlePasskeyLogin,
     handlePickCountryCode,
     texts,
+    locales,
     isSignupEnabled,
     isForgotPasswordEnabled,
     isPasskeyEnabled,
     isCaptchaAvailable,
-    errors: transaction.errors,
+    captcha,
     activeIdentifiers,
     alternateConnections,
-    captchaImage,
     signupLink,
     resetPasswordLink,
     countryCode,
     countryPrefix,
+    errors: transaction.errors,
   };
 };

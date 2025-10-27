@@ -5,7 +5,7 @@ import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 
 const AlternativeLogins = () => {
-  const { handleFederatedLogin, alternateConnections } =
+  const { locales, handleFederatedLogin, alternateConnections } =
     useLoginPasswordManager();
 
   if (!alternateConnections || alternateConnections.length === 0) {
@@ -30,7 +30,7 @@ const AlternativeLogins = () => {
           }
           const { displayName, iconComponent } =
             getSocialProviderDetails(connection);
-          const socialButtonText = `Continue with ${displayName}`;
+          const socialButtonText = `${locales?.alternativeLogins?.continueWithText} ${displayName}`;
           return (
             <ULThemeSocialProviderButton
               key={connection.name}

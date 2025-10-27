@@ -30,7 +30,9 @@ export const ULThemePasswordValidator = ({
   }
 
   // Handle both array and object with rules property
-  const rules = Array.isArray(validationRules) ? validationRules : validationRules?.rules || [];
+  const rules = Array.isArray(validationRules)
+    ? validationRules
+    : validationRules?.rules || [];
 
   // Check if we have a grouped structure with "contains-at-least"
   const hasContainsAtLeastRule = rules.some((rule: any) =>
@@ -62,10 +64,7 @@ export const ULThemePasswordValidator = ({
       )
     : rules;
 
-  const renderValidationItem = (
-    rule: any,
-    overrideValid?: boolean
-  ) => {
+  const renderValidationItem = (rule: any, overrideValid?: boolean) => {
     const isValid = overrideValid !== undefined ? overrideValid : rule.isValid;
 
     return (
@@ -124,7 +123,9 @@ export const ULThemePasswordValidator = ({
                   <span>{rule.policy}</span>
                   {/* Render sub-rules nested under contains-at-least */}
                   <ul className="mt-1 space-y-1 pl-4 list-disc">
-                    {subRules.map((subRule: any) => renderValidationItem(subRule))}
+                    {subRules.map((subRule: any) =>
+                      renderValidationItem(subRule)
+                    )}
                   </ul>
                 </div>
               </li>

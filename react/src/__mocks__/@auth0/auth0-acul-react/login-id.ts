@@ -19,9 +19,10 @@ export interface MockLoginIdInstance {
   login: jest.Mock;
   federatedLogin: jest.Mock;
   passkeyLogin: jest.Mock;
+  pickCountryCode: jest.Mock;
+  getLoginIdentifiers: jest.Mock;
   screen: ScreenMembersOnLoginId;
   transaction: TransactionMembers;
-  activeIdentifiers: string[];
 }
 
 /**
@@ -33,6 +34,8 @@ export const createMockLoginIdInstance = (): MockLoginIdInstance => ({
   login: jest.fn(),
   federatedLogin: jest.fn(),
   passkeyLogin: jest.fn(),
+  pickCountryCode: jest.fn(),
+  getLoginIdentifiers: jest.fn(),
   screen: {
     name: "login",
     texts: {
@@ -126,7 +129,6 @@ export const createMockLoginIdInstance = (): MockLoginIdInstance => ({
       },
     ],
   },
-  activeIdentifiers: ["email", "username"],
 });
 
 // Mock the login Id hooks and methods
@@ -136,13 +138,18 @@ export const useLoginId = jest.fn(() => ({
   login: mockLoginIdInstance.login,
   federatedLogin: mockLoginIdInstance.federatedLogin,
   passkeyLogin: mockLoginIdInstance.passkeyLogin,
+  pickCountryCode: mockLoginIdInstance.pickCountryCode,
 }));
+
+// Mock the useLoginIdentifiers hook - returns array of identifier objects
+export const useLoginIdentifiers = jest.fn(() => [
+  { type: "phone" as const, required: true },
+  { type: "email" as const, required: false },
+  { type: "username" as const, required: false },
+]);
 
 export const useScreen = jest.fn(() => mockLoginIdInstance.screen);
 export const useTransaction = jest.fn(() => mockLoginIdInstance.transaction);
-export const useActiveIdentifiers = jest.fn(
-  () => mockLoginIdInstance.activeIdentifiers
-);
 
 // Export named functions for direct access in tests
 export const login = mockLoginIdInstance.login;

@@ -6,7 +6,7 @@ import type {
   LoginOptions,
 } from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -14,6 +14,7 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import {
   isPhoneNumberSupported,
   transformAuth0CountryCode,
@@ -26,9 +27,10 @@ import { useLoginIdManager } from "../hooks/useLoginIdManager";
 function LoginIdForm() {
   const {
     texts,
+    locales,
     errors,
     isCaptchaAvailable,
-    captchaImage,
+    captcha,
     activeIdentifiers,
     resetPasswordLink,
     countryCode,
@@ -36,6 +38,15 @@ function LoginIdForm() {
     handlePickCountryCode,
     handleLoginId,
   } = useLoginIdManager();
+
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : locales?.loginIdForm?.captchaLabel;
+
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
 
   const form = useForm<LoginOptions>({
     defaultValues: {
@@ -53,7 +64,7 @@ function LoginIdForm() {
   const onSubmit = async (data: LoginOptions) => {
     await handleLoginId({
       username: data.username,
-      ...(isCaptchaAvailable && data.captcha && { captcha: data.captcha }),
+      captcha: isCaptchaAvailable && captchaValue ? captchaValue : undefined,
     });
   };
 
@@ -85,7 +96,7 @@ function LoginIdForm() {
             {generalErrors.map((error: Error, index: number) => (
               <ULThemeAlert key={index} variant="destructive">
                 <ULThemeAlertTitle>
-                  {error.message || "An error occurred"}
+                  {error.message || locales?.errors?.errorOccurred}
                 </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -102,7 +113,7 @@ function LoginIdForm() {
               )}
               onClick={handlePickCountryCode}
               fullWidth
-              placeholder="Select Country"
+              placeholder={locales?.loginIdForm?.selectCountryPlaceholder}
             />
           </div>
         )}
@@ -112,7 +123,7 @@ function LoginIdForm() {
           control={form.control}
           name="username"
           rules={{
-            required: "Identifier is required",
+            required: locales?.errors?.identifierRequired,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -133,20 +144,17 @@ function LoginIdForm() {
         />
 
         {/* CAPTCHA Box */}
-        {isCaptchaAvailable && captchaImage && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
-            name="captcha"
             control={form.control}
-            label={
-              texts?.captchaCodePlaceholder
-                ? `${texts.captchaCodePlaceholder}*`
-                : "Enter the code shown above*"
-            }
-            imageUrl={captchaImage}
-            imageAltText="CAPTCHA challenge"
+            name="captcha"
+            captcha={captchaConfig}
+            onValidationChange={captchaProps.onValidationChange}
+            label={captchaLabel}
+            theme={captchaProps.theme}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales?.errors?.captchaCompletionRequired,
             }}
           />
         )}
@@ -154,13 +162,14 @@ function LoginIdForm() {
         {resetPasswordLink && (
           <div className="mb-4 mt-2 text-left">
             <ULThemeLink href={resetPasswordLink}>
-              {texts?.forgotPasswordText || "Forgot password?"}
+              {texts?.forgotPasswordText ||
+                locales?.loginIdForm?.forgotPasswordLinkText}
             </ULThemeLink>
           </div>
         )}
 
         <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
-          {texts?.buttonText || "Continue"}
+          {texts?.buttonText || locales?.loginIdForm?.continueButtonText}
         </ULThemeButton>
       </form>
     </Form>

@@ -12,15 +12,15 @@ import { useLoginPasswordManager } from "./hooks/useLoginPasswordManager";
 
 function LoginPasswordScreen() {
   // Extracting attributes from hook made out of LoginPasswordInstance class of Auth0 React ACUL SDK
-  const { loginPassword, texts, alternateConnections } =
+  const { loginPassword, texts, locales, alternateConnections } =
     useLoginPasswordManager();
 
   // Check whether separator component needs to be rendered based on other social connections
   const showSeparator = alternateConnections && alternateConnections.length > 0;
 
-  // Other Texts
-  const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Login Password";
+  // Use locale strings as fallback to SDK texts
+  const separatorText = texts?.separatorText || locales?.page?.orText;
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginPassword);
