@@ -97,7 +97,7 @@ exports[`ULThemeFormMessage Component matches snapshot with form validation erro
       <p
         class="text-destructive text-sm theme-universal:text-error"
         data-slot="form-message"
-        id="«r1»-form-item-message"
+        id="_r_1_-form-item-message"
       >
         This field is required
       </p>

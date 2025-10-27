@@ -18,6 +18,7 @@ import { CommonTestData } from "@/test/fixtures/common-data";
 export interface MockLoginInstance {
   login: jest.Mock;
   federatedLogin: jest.Mock;
+  getLoginIdentifiers: jest.Mock;
   screen: ScreenMembersOnLogin;
   transaction: TransactionMembers;
   activeIdentifiers: string[];
@@ -31,6 +32,7 @@ export interface MockLoginInstance {
 export const createMockLoginInstance = (): MockLoginInstance => ({
   login: jest.fn(),
   federatedLogin: jest.fn(),
+  getLoginIdentifiers: jest.fn(),
   screen: {
     name: "login",
     texts: {
@@ -124,11 +126,15 @@ export const useLogin = jest.fn(() => ({
   federatedLogin: mockLoginInstance.federatedLogin,
 }));
 
+// Mock the useLoginIdentifiers hook - returns array of identifier objects
+export const useLoginIdentifiers = jest.fn(() => [
+  { type: "phone" as const, required: true },
+  { type: "email" as const, required: false },
+  { type: "username" as const, required: false },
+]);
+
 export const useScreen = jest.fn(() => mockLoginInstance.screen);
 export const useTransaction = jest.fn(() => mockLoginInstance.transaction);
-export const useActiveIdentifiers = jest.fn(
-  () => mockLoginInstance.activeIdentifiers
-);
 
 // Export named functions for direct access in tests
 export const login = mockLoginInstance.login;

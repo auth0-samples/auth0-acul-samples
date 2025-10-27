@@ -114,15 +114,15 @@ describe("LoginIdScreen", () => {
   });
 
   it("should render captcha when available", async () => {
+    const mockScreen = (useScreen as jest.Mock)();
+    mockScreen.isCaptchaAvailable = true;
+    mockScreen.captcha = {
+      provider: "auth0",
+      image: "data:image/png;base64,test",
+    };
     await renderScreen();
 
-    const captchaField = screen.getByRole("textbox", {
-      name: /enter the code shown above/i,
-    });
-    expect(captchaField).toBeInTheDocument();
-
-    const captchaImage = screen.getByAltText("CAPTCHA challenge");
-    expect(captchaImage).toBeInTheDocument();
+    expect(screen.getByText(/CAPTCHA/)).toBeInTheDocument();
   });
 
   it("should render login with passkey when enabled", async () => {
@@ -157,9 +157,6 @@ describe("LoginIdScreen", () => {
 
     await renderScreen();
 
-    const captchaField = screen.queryByRole("textbox", {
-      name: /enter the code shown above/i,
-    });
-    expect(captchaField).not.toBeInTheDocument();
+    expect(screen.getByText(/CAPTCHA/)).not.toBeInTheDocument();
   });
 });

@@ -10,13 +10,14 @@ const AlternativeLogins = () => {
     handleFederatedLogin,
     handlePasskeyLogin,
     texts,
+    locales,
     isPasskeyEnabled,
     alternateConnections,
   } = useLoginIdManager();
 
   // Handle text fallbacks in component
   const passkeyButtonText =
-    texts?.passkeyButtonText || "Continue with a passkey";
+    texts?.passkeyButtonText || locales?.alternativeLogins?.passkeyButtonText;
 
   if (!alternateConnections || alternateConnections.length === 0) {
     return null;
@@ -37,7 +38,7 @@ const AlternativeLogins = () => {
         {isPasskeyEnabled && (
           <ULThemeSocialProviderButton
             key="passkey"
-            displayName="Passkey"
+            displayName={locales?.alternativeLogins?.passkeyLabel}
             buttonText={passkeyButtonText}
             iconComponent={<span className="text-primary">{getIcon()}</span>}
             onClick={() => handlePasskeyLogin()}
@@ -50,7 +51,7 @@ const AlternativeLogins = () => {
 
           const { displayName, iconComponent } =
             getSocialProviderDetails(connection);
-          const socialButtonText = `Continue with ${displayName}`;
+          const socialButtonText = `${locales?.alternativeLogins?.continueWithText} ${displayName}`;
           return (
             <ULThemeSocialProviderButton
               key={connection.name}

@@ -6,25 +6,29 @@ import {
 } from "@auth0/auth0-acul-react/login";
 import type {
   FederatedLoginOptions,
-  LoginPasswordOptions,
+  LoginMembers,
+  LoginPayloadOptions,
+  ScreenMembersOnLogin,
+  TransactionMembersOnLogin,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/login/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useLoginManager = () => {
-  const login = useLogin();
-  const screen = useScreen();
-  const transaction = useTransaction();
+  const login: LoginMembers = useLogin();
+  const screen: ScreenMembersOnLogin = useScreen();
+  const transaction: TransactionMembersOnLogin = useTransaction();
   const activeIdentifiers = useLoginIdentifiers();
 
   const { alternateConnections } = transaction;
-  const { isCaptchaAvailable, texts, links, captchaImage } = screen;
+  const { isCaptchaAvailable, captcha, texts, links } = screen;
 
-  const handleLogin = async (payload: LoginPasswordOptions): Promise<void> => {
+  const handleLogin = async (payload: LoginPayloadOptions): Promise<void> => {
     // Clean and prepare data
-    const options: LoginPasswordOptions = {
+    const options: LoginPayloadOptions = {
       username: payload.username.trim(),
-      password: payload.password,
+      password: payload.password.trim(),
     };
 
     if (screen.isCaptchaAvailable && payload.captcha?.trim()) {
@@ -36,14 +40,15 @@ export const useLoginManager = () => {
       password: "[REDACTED]",
     };
 
-    executeSafely(`Login with options: ${JSON.stringify(logOptions)}`, () =>
-      login.login(options)
+    executeSafely(
+      `Perform Login operation with options: ${JSON.stringify(logOptions)}`,
+      () => login.login(options)
     );
   };
 
   const handleFederatedLogin = async (payload: FederatedLoginOptions) => {
     executeSafely(
-      `Federated login with connection: ${payload.connection}`,
+      `Perform federated login with connection: ${payload.connection}`,
       () => login.federatedLogin(payload)
     );
   };
@@ -53,9 +58,10 @@ export const useLoginManager = () => {
     handleLogin,
     handleFederatedLogin,
     texts,
+    locales,
     isCaptchaAvailable,
     alternateConnections,
-    captchaImage,
+    captcha,
     activeIdentifiers,
     resetPasswordLink: links?.reset_password,
     signupLink: links?.signup,

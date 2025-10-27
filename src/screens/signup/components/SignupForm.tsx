@@ -215,8 +215,7 @@ function SignupForm() {
 
   // Get general errors (not field-specific)
   const generalErrors =
-    errors?.filter((error: any) => !error.field || error.field === null) ||
-    [];
+    errors?.filter((error: any) => !error.field || error.field === null) || [];
 
   return (
     <Form {...form}>

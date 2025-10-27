@@ -5,17 +5,17 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 function Header() {
-  const { texts } = useLoginIdManager();
+  const { texts, locales } = useLoginIdManager();
 
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  // Use locale strings as fallback to SDK texts
+  const logoAltText = texts?.logoAltText || locales?.heading?.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Welcome"}</ULThemeTitle>
+      <ULThemeTitle>{texts?.title || locales?.heading?.title}</ULThemeTitle>
       <ULThemeSubtitle>
-        {texts?.description || "Log in to continue"}
+        {texts?.description || locales?.heading?.description}
       </ULThemeSubtitle>
     </>
   );

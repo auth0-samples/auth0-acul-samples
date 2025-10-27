@@ -5,7 +5,7 @@ import type {
   LoginPasswordOptions,
 } from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -13,6 +13,7 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
@@ -20,15 +21,25 @@ import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 function LoginPasswordForm() {
   const {
     texts,
+    locales,
     data,
     errors,
     isCaptchaAvailable,
-    captchaImage,
+    captcha,
     editIdentifierLink,
     resetPasswordLink,
     passwordPolicy,
     handleLoginPassword,
   } = useLoginPasswordManager();
+
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : locales?.loginPasswordForm?.captchaLabel;
+
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
 
   const form = useForm<LoginPasswordOptions>({
     defaultValues: {
@@ -48,7 +59,7 @@ function LoginPasswordForm() {
     await handleLoginPassword({
       username: data.username,
       password: data.password,
-      ...(isCaptchaAvailable && data.captcha && { captcha: data.captcha }),
+      captcha: isCaptchaAvailable && captchaValue ? captchaValue : undefined,
     });
   };
 
@@ -70,7 +81,7 @@ function LoginPasswordForm() {
             {generalErrors.map((error: Error, index: number) => (
               <ULThemeAlert key={index} variant="destructive">
                 <ULThemeAlertTitle>
-                  {error.message || "An error occurred"}
+                  {error.message || locales?.errors?.errorOccurred}
                 </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -91,10 +102,11 @@ function LoginPasswordForm() {
                 readOnly={true}
                 endAdornment={
                   <ULThemeLink href={editIdentifierLink || ""}>
-                    {texts?.editEmailText || "Edit"}
+                    {texts?.editEmailText ||
+                      locales?.loginPasswordForm?.editText}
                   </ULThemeLink>
                 }
-                className="pr-[16px]"
+                className="pr-4"
               />
               <ULThemeFormMessage hasFormError={!!fieldState.error} />
             </FormItem>
@@ -106,15 +118,15 @@ function LoginPasswordForm() {
           control={form.control}
           name="password"
           rules={{
-            required: "Password is required",
+            required: locales?.errors?.passwordRequired,
             maxLength: {
               value: 200,
-              message: "Maximum 200 characters allowed",
+              message: locales?.errors?.max200CharsAllowed,
             },
             minLength: passwordPolicy?.minLength
               ? {
                   value: passwordPolicy.minLength,
-                  message: `Password must be at least ${passwordPolicy.minLength} characters`,
+                  message: `${locales?.errors?.passwordMinLength} ${passwordPolicy.minLength} ${locales?.errors?.charactersText}`,
                 }
               : undefined,
           }}
@@ -122,7 +134,10 @@ function LoginPasswordForm() {
             <FormItem>
               <ULThemePasswordField
                 {...field}
-                label={texts?.passwordPlaceholder || "Password"}
+                label={
+                  texts?.passwordPlaceholder ||
+                  locales?.loginPasswordForm?.passwordLabel
+                }
                 autoFocus={true}
                 autoComplete="current-password"
                 error={!!fieldState.error || !!passwordSDKError}
@@ -136,24 +151,20 @@ function LoginPasswordForm() {
         />
 
         {/* CAPTCHA Box */}
-        {isCaptchaAvailable && captchaImage && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
-            name="captcha"
             control={form.control}
-            label={
-              texts?.captchaCodePlaceholder
-                ? `${texts.captchaCodePlaceholder}*`
-                : "Enter the code shown above*"
-            }
-            imageUrl={captchaImage}
-            imageAltText={"CAPTCHA challenge"}
-            className="mb-4"
+            name="captcha"
+            captcha={captchaConfig}
+            onValidationChange={captchaProps.onValidationChange}
+            label={captchaLabel}
+            theme={captchaProps.theme}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales?.errors?.captchaCompletionRequired,
               maxLength: {
                 value: 15,
-                message: "CAPTCHA too long",
+                message: locales?.errors?.captchaTooLong,
               },
             }}
           />
@@ -162,13 +173,14 @@ function LoginPasswordForm() {
         {resetPasswordLink && (
           <div className="mb-4 mt-2 text-left">
             <ULThemeLink href={resetPasswordLink}>
-              {texts?.forgotPasswordText || "Forgot password?"}
+              {texts?.forgotPasswordText ||
+                locales?.loginPasswordForm?.forgotPasswordLinkText}
             </ULThemeLink>
           </div>
         )}
 
         <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
-          {texts?.buttonText || "Continue"}
+          {texts?.buttonText || locales?.loginPasswordForm?.continueButtonText}
         </ULThemeButton>
       </form>
     </Form>
