@@ -129,7 +129,7 @@ export const useLogin = jest.fn(() => ({
 
 // Mock the useLoginIdentifiers hook - returns array of identifier objects
 export const useLoginIdentifiers = jest.fn(() => [
-  { type: "username" as const, required: false },
+  { type: "username" as const, required: true },
 ]);
 
 const mockErrors: ErrorItem[] = [];
