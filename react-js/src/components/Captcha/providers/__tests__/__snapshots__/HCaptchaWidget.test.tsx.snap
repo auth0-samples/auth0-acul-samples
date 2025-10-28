@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`HCaptchaWidget matches snapshot (default) 1`] = `
+<div>
+  <form>
+    <div
+      class="space-y-2"
+    >
+      <div
+        class="w-full rounded-sm none overflow-visible"
+      >
+        <div
+          style="transform: scale(1.06); transform-origin: 0 0;"
+        >
+          <div
+            data-testid="hcaptcha"
+            sitekey="test-site-key"
+            theme="light"
+          />
+        </div>
+      </div>
+      <input
+        id="hidden-h-captcha"
+        name="h-captcha-response"
+        type="hidden"
+        value=""
+      />
+    </div>
+  </form>
+</div>
+`;
+
+exports[`HCaptchaWidget matches snapshot (with error) 1`] = `
+<div>
+  <form>
+    <div
+      class="space-y-2"
+    >
+      <div
+        class="w-full rounded-sm border border-[#d93025] overflow-hidden"
+      >
+        <div
+          style="transform: scale(1.06); transform-origin: 0 0;"
+        >
+          <div
+            data-testid="hcaptcha"
+            sitekey="test-site-key"
+            theme="light"
+          />
+        </div>
+      </div>
+      <input
+        id="hidden-h-captcha"
+        name="h-captcha-response"
+        type="hidden"
+        value=""
+      />
+    </div>
+  </form>
+</div>
+`;

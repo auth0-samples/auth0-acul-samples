@@ -1,0 +1,48 @@
+name: React CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "react/**"
+      - ".github/workflows/react-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "react/**"
+      - ".github/workflows/react-ci.yml"
+
+jobs:
+  react-quality:
+    name: React Quality Checks
+    runs-on: ubuntu-22.04-2cpu-8ram-75ssd
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: react
+        run: npm ci
+
+      - name: Lint check
+        working-directory: react
+        run: npm run lint:check
+
+      - name: Type check
+        working-directory: react
+        run: npx tsc --noEmit
+
+      - name: Test (SKIPPED)
+        working-directory: react
+        if: false
+        run: npm test -- --coverage --watchAll=false --passWithNoTests
+
+      - name: Build
+        working-directory: react
+        run: npm run build

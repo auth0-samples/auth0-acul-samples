@@ -1,0 +1,40 @@
+{
+  "client": { "id": "clientID", "name": "My App" },
+  "prompt": { "name": "mfa-email" },
+  "screen": {
+    "data": { "show_remember_device": true },
+    "name": "mfa-email-list",
+    "texts": {
+      "pageTitle": "List of available email addresses | My App",
+      "backText": "Go back",
+      "title": "Enrolled Email Addresses",
+      "badgeUrl": "https://auth0.com/?utm_source=lock&utm_campaign=badge&utm_medium=widget",
+      "badgeAltText": "Link to the Auth0 website",
+      "error": "Error",
+      "qrCode": "QR Code",
+      "spinner_push_notification_label": "Waiting for push notification to be accepted"
+    }
+  },
+  "tenant": {
+    "enabled_factors": ["otp", "push-notification", "email"],
+    "mfa_options": { "pick_authenticator_enabled": true }
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "mockState"
+  },
+  "user": {
+    "id": "userID",
+    "email": "abc.xyz@atko.email",
+    "picture": "https://s.gravatar.com/avatar/27ae96d2af8133df20dad5f3fcb8cbcf?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fta.png",
+    "enrolled_emails": [
+      { "id": 0, "email": "tany******@atko******" },
+      { "id": 1, "email": "test*@atko******" },
+      { "id": 2, "email": "test*@atko******" },
+      { "id": 3, "email": "test*@atko******" },
+      { "id": 4, "email": "tany*****@atko******" }
+    ],
+    "enrolled_factors": ["otp", "push-notification", "email"],
+    "enrolled_devices": [{ "id": 0, "device": "XXXXXX" }]
+  }
+}

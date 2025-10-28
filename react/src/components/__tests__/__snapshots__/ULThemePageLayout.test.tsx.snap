@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemePageLayout Component Test Suite matches snapshot with additional props 1`] = `
+<div
+  class="flex items-center min-h-screen px-10 py-20 justify-page-layout bg-(color:--ul-theme-page-bg-background-color) bg-(image:--ul-theme-page-bg-background-image-url)"
+  data-testid="test-layout"
+  id="test-id"
+>
+  <div>
+    Test Content
+  </div>
+</div>
+`;
+
+exports[`ULThemePageLayout Component Test Suite matches snapshot with custom className 1`] = `
+<div
+  class="flex items-center min-h-screen px-10 py-20 justify-page-layout bg-(color:--ul-theme-page-bg-background-color) bg-(image:--ul-theme-page-bg-background-image-url) custom-class"
+>
+  <div>
+    Test Content
+  </div>
+</div>
+`;
+
+exports[`ULThemePageLayout Component Test Suite matches snapshot with default props 1`] = `
+<div
+  class="flex items-center min-h-screen px-10 py-20 justify-page-layout bg-(color:--ul-theme-page-bg-background-color) bg-(image:--ul-theme-page-bg-background-image-url)"
+>
+  <div>
+    Test Content
+  </div>
+</div>
+`;
