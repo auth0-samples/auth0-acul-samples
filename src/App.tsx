@@ -7,7 +7,7 @@ import { getScreenComponent } from "@/utils/screen/screenLoader";
 const App = () => {
   const screenOptions = useCurrentScreen();
   const screenName = screenOptions?.screen?.name;
-  
+
   const ScreenComponent = getScreenComponent(screenName);
 
   return (

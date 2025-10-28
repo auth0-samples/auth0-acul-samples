@@ -12,14 +12,14 @@ import { useSignupManager } from "./hooks/useSignupManager";
 
 function SignupScreen() {
   // Extracting attributes from hook made out of SignupInstance class of Auth0 React ACUL SDK
-  const { signup, texts, alternateConnections } = useSignupManager();
+  const { signup, texts, alternateConnections, locales } = useSignupManager();
 
   // Check whether separator component needs to be rendered based on social connections
   const showSeparator = alternateConnections && alternateConnections.length > 0;
 
   // Other Texts
-  const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Signup";
+  const separatorText = texts?.separatorText || locales.page.separator;
+  document.title = texts?.pageTitle || locales.page.title;
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(signup);

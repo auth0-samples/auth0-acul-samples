@@ -5,7 +5,8 @@ import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
 import { useSignupManager } from "../hooks/useSignupManager";
 
 const AlternativeLogins = () => {
-  const { alternateConnections, handleFederatedSignup } = useSignupManager();
+  const { alternateConnections, handleFederatedSignup, locales } =
+    useSignupManager();
 
   const handleConnectionSignup = (connection: SocialConnection) => {
     const federatedSignupOptions = {
@@ -32,7 +33,7 @@ const AlternativeLogins = () => {
 
         const { displayName, iconComponent } =
           getSocialProviderDetails(connection);
-        const socialButtonText = `Continue with ${displayName}`;
+        const socialButtonText = `${locales.social.continueWith} ${displayName}`;
 
         return (
           <ULThemeSocialProviderButton

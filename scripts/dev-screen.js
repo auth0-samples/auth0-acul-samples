@@ -14,6 +14,9 @@ const ANSI_RESET = "\x1b[0m";
 
 const screenName = process.argv[2];
 
+// Parse additional arguments (like --port)
+const additionalArgs = process.argv.slice(3).join(" ");
+
 if (!screenName) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,
@@ -63,7 +66,8 @@ console.log(
 );
 
 try {
-  execSync("vite", { stdio: "inherit" });
+  const viteCommand = additionalArgs ? `vite ${additionalArgs}` : "vite";
+  execSync(viteCommand, { stdio: "inherit" });
 } catch (error) {
   console.error(
     `${ANSI_RED}%s${ANSI_RESET}`,

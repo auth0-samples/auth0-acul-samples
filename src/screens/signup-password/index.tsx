@@ -9,9 +9,9 @@ import { useSignupPasswordManager } from "./hooks/useSignupPasswordManager";
 
 function SignupPasswordScreen() {
   // Extracting attributes from hook made out of SignupPasswordInstance class of Auth0 React ACUL SDK
-  const { signupPassword, texts } = useSignupPasswordManager();
+  const { signupPassword, texts, locales } = useSignupPasswordManager();
 
-  document.title = texts?.pageTitle || "Create Your Account to signup";
+  document.title = texts?.pageTitle || locales.page.title;
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(signupPassword);

@@ -2,19 +2,23 @@ import { useSignupId } from "@auth0/auth0-acul-react/signup-id";
 import { useScreen, useTransaction } from "@auth0/auth0-acul-react/signup-id";
 import type {
   FederatedSignupOptions,
+  ScreenMembersOnSignupId,
   SignupOptions,
+  TransactionMembersOnSignupId,
 } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const useSignupIdManager = () => {
   const signupId = useSignupId();
 
-  const screen = useScreen();
-  const transaction = useTransaction();
+  const screen: ScreenMembersOnSignupId = useScreen();
+  const transaction: TransactionMembersOnSignupId = useTransaction();
   const { alternateConnections } = transaction;
 
-  const { isCaptchaAvailable, texts, loginLink, captchaImage } = screen;
+  const { isCaptchaAvailable, texts, loginLink, captcha } = screen;
 
   const handleSignup = async (payload: SignupOptions): Promise<void> => {
     // Clean and prepare data like login-id pattern
@@ -50,6 +54,7 @@ export const useSignupIdManager = () => {
   };
 
   return {
+    transaction,
     signupId,
     handleSignup,
     handleFederatedSignup,
@@ -58,7 +63,7 @@ export const useSignupIdManager = () => {
     isCaptchaAvailable,
     loginLink,
     alternateConnections,
-    captchaImage,
-    errors: transaction.errors,
+    captcha,
+    locales,
   };
 };

@@ -8,6 +8,8 @@ module.exports = {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   // Allow transforming ESM modules from node_modules.
-  transformIgnorePatterns: ["/node_modules/(?!@auth0/auth0-acul-react/)"],
+  transformIgnorePatterns: [
+    "/node_modules/(?!(@auth0/auth0-acul-react|friendly-challenge)/)",
+  ],
   setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts"],
 };
