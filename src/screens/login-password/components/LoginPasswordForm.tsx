@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 
+import { useErrors } from "@auth0/auth0-acul-react/login-password";
 import type {
-  Error,
+  ErrorItem,
   LoginPasswordOptions,
 } from "@auth0/auth0-acul-react/types";
 
@@ -14,7 +15,6 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
 import { useCaptcha } from "@/hooks/useCaptcha";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 
@@ -23,23 +23,13 @@ function LoginPasswordForm() {
     texts,
     locales,
     data,
-    errors,
-    isCaptchaAvailable,
     captcha,
     editIdentifierLink,
     resetPasswordLink,
     passwordPolicy,
+    isCaptchaAvailable,
     handleLoginPassword,
   } = useLoginPasswordManager();
-
-  const captchaLabel = texts?.captchaCodePlaceholder
-    ? `${texts.captchaCodePlaceholder}*`
-    : locales?.loginPasswordForm?.captchaLabel;
-
-  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
-    captcha || undefined,
-    captchaLabel
-  );
 
   const form = useForm<LoginPasswordOptions>({
     defaultValues: {
@@ -54,6 +44,34 @@ function LoginPasswordForm() {
     formState: { isSubmitting },
   } = form;
 
+  // Use locales as fallback to SDK texts
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : locales?.loginPasswordForm?.captchaLabel;
+  const passwordLabel =
+    texts?.passwordPlaceholder || locales?.loginPasswordForm?.passwordLabel;
+  const forgotPasswordLinkText =
+    texts?.forgotPasswordText ||
+    locales?.loginPasswordForm?.forgotPasswordLinkText;
+  const continueButtonText =
+    texts?.buttonText || locales?.loginPasswordForm?.continueButtonText;
+
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
+
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get field-specific SDK errors
+  const passwordSDKError = errors.byField("password")[0]?.message;
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
+
   // Proper submit handler with form data
   const onSubmit = async (data: LoginPasswordOptions) => {
     await handleLoginPassword({
@@ -63,23 +81,18 @@ function LoginPasswordForm() {
     });
   };
 
-  // Extract field-specific errors for password, and CAPTCHA
-  const passwordSDKError = getFieldError("password", errors || []);
-  const captchaSDKError = getFieldError("captcha", errors || []);
-
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* Display general errors */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index} variant="destructive">
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>
                   {error.message || locales?.errors?.errorOccurred}
                 </ULThemeAlertTitle>
@@ -134,10 +147,7 @@ function LoginPasswordForm() {
             <FormItem>
               <ULThemePasswordField
                 {...field}
-                label={
-                  texts?.passwordPlaceholder ||
-                  locales?.loginPasswordForm?.passwordLabel
-                }
+                label={passwordLabel}
                 autoFocus={true}
                 autoComplete="current-password"
                 error={!!fieldState.error || !!passwordSDKError}
@@ -150,15 +160,13 @@ function LoginPasswordForm() {
           )}
         />
 
-        {/* CAPTCHA Box */}
+        {/* Captcha Field */}
         {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
             captcha={captchaConfig}
-            onValidationChange={captchaProps.onValidationChange}
-            label={captchaLabel}
-            theme={captchaProps.theme}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
               required: locales?.errors?.captchaCompletionRequired,
@@ -173,14 +181,13 @@ function LoginPasswordForm() {
         {resetPasswordLink && (
           <div className="mb-4 mt-2 text-left">
             <ULThemeLink href={resetPasswordLink}>
-              {texts?.forgotPasswordText ||
-                locales?.loginPasswordForm?.forgotPasswordLinkText}
+              {forgotPasswordLinkText}
             </ULThemeLink>
           </div>
         )}
 
         <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
-          {texts?.buttonText || locales?.loginPasswordForm?.continueButtonText}
+          {continueButtonText}
         </ULThemeButton>
       </form>
     </Form>

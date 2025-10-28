@@ -1,6 +1,5 @@
 import {
   useLogin,
-  useLoginIdentifiers,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login";
@@ -19,9 +18,8 @@ export const useLoginManager = () => {
   const login: LoginMembers = useLogin();
   const screen: ScreenMembersOnLogin = useScreen();
   const transaction: TransactionMembersOnLogin = useTransaction();
-  const activeIdentifiers = useLoginIdentifiers();
 
-  const { alternateConnections } = transaction;
+  const { alternateConnections, countryCode, countryPrefix } = transaction;
   const { isCaptchaAvailable, captcha, texts, links } = screen;
 
   const handleLogin = async (payload: LoginPayloadOptions): Promise<void> => {
@@ -53,18 +51,23 @@ export const useLoginManager = () => {
     );
   };
 
+  const handlePickCountryCode = async () => {
+    executeSafely(`Invoked Pick country code`, () => login.pickCountryCode());
+  };
+
   return {
     login,
     handleLogin,
     handleFederatedLogin,
+    handlePickCountryCode,
     texts,
     locales,
     isCaptchaAvailable,
     alternateConnections,
     captcha,
-    activeIdentifiers,
     resetPasswordLink: links?.reset_password,
     signupLink: links?.signup,
-    errors: transaction.errors,
+    countryCode,
+    countryPrefix,
   };
 };

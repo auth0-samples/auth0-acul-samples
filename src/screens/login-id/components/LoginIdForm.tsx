@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 
+import {
+  useErrors,
+  useLoginIdentifiers,
+} from "@auth0/auth0-acul-react/login-id";
 import type {
-  Error,
+  ErrorItem,
   IdentifierType,
   LoginOptions,
 } from "@auth0/auth0-acul-react/types";
@@ -19,7 +23,6 @@ import {
   isPhoneNumberSupported,
   transformAuth0CountryCode,
 } from "@/utils/helpers/countryUtils";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
@@ -28,24 +31,21 @@ function LoginIdForm() {
   const {
     texts,
     locales,
-    errors,
-    isCaptchaAvailable,
     captcha,
-    activeIdentifiers,
-    resetPasswordLink,
     countryCode,
     countryPrefix,
-    handlePickCountryCode,
+    resetPasswordLink,
+    isCaptchaAvailable,
     handleLoginId,
+    handlePickCountryCode,
   } = useLoginIdManager();
 
-  const captchaLabel = texts?.captchaCodePlaceholder
-    ? `${texts.captchaCodePlaceholder}*`
-    : locales?.loginIdForm?.captchaLabel;
+  const activeIdentifiers = useLoginIdentifiers();
 
-  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
-    captcha || undefined,
-    captchaLabel
+  // Use helper to determine placeholder based on active identifiers
+  const identifierDetails = getIdentifierDetails(
+    (activeIdentifiers || undefined) as IdentifierType[] | undefined,
+    texts
   );
 
   const form = useForm<LoginOptions>({
@@ -60,6 +60,35 @@ function LoginIdForm() {
     formState: { isSubmitting },
   } = form;
 
+  // Use locales as fallback to SDK texts
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : locales?.loginIdForm?.captchaLabel;
+  const forgotPasswordLinkText =
+    texts?.forgotPasswordText || locales?.loginIdForm?.forgotPasswordLinkText;
+  const continueButtonText =
+    texts?.buttonText || locales?.loginIdForm?.continueButtonText;
+
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
+
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get field-specific SDK errors
+  const usernameSDKError = errors.byField("username")[0]?.message;
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
+
+  const shouldShowCountryPicker = isPhoneNumberSupported(
+    activeIdentifiers || []
+  );
+
   // Proper submit handler with form data
   const onSubmit = async (data: LoginOptions) => {
     await handleLoginId({
@@ -68,33 +97,18 @@ function LoginIdForm() {
     });
   };
 
-  // Use helper to determine placeholder based on active identifiers
-  const identifierDetails = getIdentifierDetails(
-    (activeIdentifiers || undefined) as IdentifierType[] | undefined,
-    texts
-  );
-
-  const shouldShowCountryPicker = isPhoneNumberSupported(
-    activeIdentifiers || []
-  );
-
-  // Get SDK errors for specific fields
-  const usernameSDKError = getFieldError("username", errors || []);
-  const captchaSDKError = getFieldError("captcha", errors || []);
-
-  // Get general errors (not field-specific)
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* Display general errors */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index} variant="destructive">
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>
                   {error.message || locales?.errors?.errorOccurred}
                 </ULThemeAlertTitle>
@@ -143,15 +157,13 @@ function LoginIdForm() {
           )}
         />
 
-        {/* CAPTCHA Box */}
+        {/* Captcha Field */}
         {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
             captcha={captchaConfig}
-            onValidationChange={captchaProps.onValidationChange}
-            label={captchaLabel}
-            theme={captchaProps.theme}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
               required: locales?.errors?.captchaCompletionRequired,
@@ -162,14 +174,13 @@ function LoginIdForm() {
         {resetPasswordLink && (
           <div className="mb-4 mt-2 text-left">
             <ULThemeLink href={resetPasswordLink}>
-              {texts?.forgotPasswordText ||
-                locales?.loginIdForm?.forgotPasswordLinkText}
+              {forgotPasswordLinkText}
             </ULThemeLink>
           </div>
         )}
 
         <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
-          {texts?.buttonText || locales?.loginIdForm?.continueButtonText}
+          {continueButtonText}
         </ULThemeButton>
       </form>
     </Form>
