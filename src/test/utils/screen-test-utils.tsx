@@ -85,8 +85,8 @@ export class MockConfigUtils {
       mockInstance.transaction = {};
     }
     mockInstance.transaction.errors = errors;
-    // Also configure getError() method to return the same errors
-    mockInstance.getError = jest.fn(() => errors);
+    // Also configure getErrors() method to return the same errors
+    mockInstance.getErrors = jest.fn(() => errors);
   }
 
   /**

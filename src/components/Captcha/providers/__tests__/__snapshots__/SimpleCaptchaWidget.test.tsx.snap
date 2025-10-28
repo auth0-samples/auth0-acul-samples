@@ -28,8 +28,8 @@ exports[`SimpleCaptchaWidget matches snapshot (default) 1`] = `
             >
               <label
                 class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
-                for="«rc»-form-item"
-                id="base-ui-«rd»"
+                for="_r_c_-form-item"
+                id="base-ui-_r_d_"
               >
                 Enter CAPTCHA
               </label>
@@ -37,10 +37,10 @@ exports[`SimpleCaptchaWidget matches snapshot (default) 1`] = `
                 class="relative flex-1"
               >
                 <input
-                  aria-labelledby="base-ui-«rd»"
+                  aria-labelledby="base-ui-_r_d_"
                   autocomplete="off"
                   class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
-                  id="«rc»-form-item"
+                  id="_r_c_-form-item"
                   name="captcha"
                   type="text"
                 />
@@ -82,8 +82,8 @@ exports[`SimpleCaptchaWidget matches snapshot (with error) 1`] = `
             >
               <label
                 class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-destructive-foreground"
-                for="«rf»-form-item"
-                id="base-ui-«rg»"
+                for="_r_f_-form-item"
+                id="base-ui-_r_g_"
               >
                 Enter CAPTCHA
               </label>
@@ -91,10 +91,10 @@ exports[`SimpleCaptchaWidget matches snapshot (with error) 1`] = `
                 class="relative flex-1"
               >
                 <input
-                  aria-labelledby="base-ui-«rg»"
+                  aria-labelledby="base-ui-_r_g_"
                   autocomplete="off"
                   class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
-                  id="«rf»-form-item"
+                  id="_r_f_-form-item"
                   name="captcha"
                   type="text"
                 />

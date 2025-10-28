@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import type { ScreenMembersOnLoginPassword } from "@auth0/auth0-acul-js";
 import LoginPassword from "@auth0/auth0-acul-js/login-password";
+import type { ScreenMembersOnLoginPassword } from "@auth0/auth0-acul-js/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -71,7 +71,7 @@ export const useLoginPasswordManager = () => {
     isForgotPasswordEnabled: isForgotPasswordEnabled === true,
     isPasskeyEnabled: isPasskeyEnabled === true,
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: loginPasswordInstance.getError(),
+    errors: loginPasswordInstance.getErrors(),
     links,
     editIdentifierLink,
     signupLink,

@@ -11,7 +11,7 @@
 import type {
   ScreenMembersOnLogin,
   TransactionMembersOnLogin,
-} from "@auth0/auth0-acul-js";
+} from "@auth0/auth0-acul-js/types";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the main
@@ -21,7 +21,7 @@ import type {
 export interface MockLoginInstance {
   login: jest.Mock;
   federatedLogin: jest.Mock;
-  getError: jest.Mock;
+  getErrors: jest.Mock;
   screen: ScreenMembersOnLogin;
   transaction: TransactionMembersOnLogin;
 }
@@ -34,7 +34,7 @@ export interface MockLoginInstance {
 export const createMockLoginInstance = (): MockLoginInstance => ({
   login: jest.fn(),
   federatedLogin: jest.fn(),
-  getError: jest.fn(() => []), // Returns empty array by default
+  getErrors: jest.fn(() => []), // Returns empty array by default
   screen: {
     name: "login",
     texts: {

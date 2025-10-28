@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-js";
+import type { Error } from "@auth0/auth0-acul-js/types";
 
 import Captcha from "@/components/Captcha";
 import {

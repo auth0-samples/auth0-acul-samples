@@ -30,9 +30,6 @@ coverage/
 # Development tools
 .husky/
 
-# Documentation
-docs/
-
 # Operating system files
 .DS_Store
 .DS_Store?
