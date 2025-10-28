@@ -7,11 +7,12 @@ import { useResetPasswordSuccessManager } from "./hooks/resetPasswordSuccessMana
 
 function ResetPasswordSuccessScreen() {
   // Extracting attributes from hook made out of ResetPasswordSuccessInstance class of Auth0 React SDK
-  const { resetPasswordSuccess, texts } = useResetPasswordSuccessManager();
+  const { resetPasswordSuccess, texts, locales } =
+    useResetPasswordSuccessManager();
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(resetPasswordSuccess);
-  document.title = texts?.pageTitle || "Password reset successful";
+  document.title = texts?.pageTitle || locales.pageTitle;
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

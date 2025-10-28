@@ -7,7 +7,9 @@ import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 import { useResetPasswordSuccessManager } from "../hooks/resetPasswordSuccessManager";
 
 function Header() {
-  const { texts } = useResetPasswordSuccessManager();
+  const { texts, locales } = useResetPasswordSuccessManager();
+  const title = texts?.eventTitle || locales.header.title;
+  const description = texts?.description || locales.header.description;
   const themedLogoWidgetColorValue = extractTokenValue(
     "--ul-theme-color-success"
   );
@@ -20,10 +22,8 @@ function Header() {
         strokeWidth={1}
         className="flex flex-wrap justify-widget-logo ml-28"
       />
-      <ULThemeTitle>{texts?.eventTitle || "Password Changed!"}</ULThemeTitle>
-      <ULThemeSubtitle>
-        {texts?.description || "Your password has been changed successfully."}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
+      <ULThemeSubtitle>{description}</ULThemeSubtitle>
     </>
   );
 }
