@@ -12,12 +12,13 @@ import { useSignupIdManager } from "./hooks/useSignupIdManager";
 
 function SignupIdScreen() {
   // Extracting attributes from hook made out of SignupIdInstance class of Auth0 React ACUL SDK
-  const { signupId, texts, alternateConnections } = useSignupIdManager();
+  const { signupId, texts, alternateConnections, locales } =
+    useSignupIdManager();
 
   const showSeparator = alternateConnections && alternateConnections.length > 0;
 
-  const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Signup Identifier";
+  const separatorText = texts?.separatorText || locales.page.separator;
+  document.title = texts?.pageTitle || locales.page.title;
 
   applyAuth0Theme(signupId);
 

@@ -50,7 +50,7 @@ function generateScreenLoader() {
   const invalidScreens = existingScreens.filter(
     (screen) => !VALID_SCREENS.includes(screen)
   );
-  
+
   if (invalidScreens.length > 0) {
     console.warn(
       `${ANSI_YELLOW}Warning: Found screens not in VALID_SCREENS: ${invalidScreens.join(", ")}${ANSI_RESET}`
@@ -59,10 +59,7 @@ function generateScreenLoader() {
 
   // Generate TypeScript content with the simple format
   const screenEntries = existingScreens
-    .map(
-      (screen) =>
-        `  "${screen}": lazy(() => import("@/screens/${screen}"))`
-    )
+    .map((screen) => `  "${screen}": lazy(() => import("@/screens/${screen}"))`)
     .join(",\n");
 
   const content = `// Auto-generated file
@@ -105,45 +102,47 @@ export const getScreenComponent = (
  */
 function validateScreenStructure() {
   console.log(`${ANSI_BLUE}Validating screen structure...${ANSI_RESET}`);
-  
+
   const issues = [];
-  
+
   VALID_SCREENS.forEach((screenName) => {
     const screenPath = path.join(screensDir, screenName);
     const indexFile = path.join(screenPath, "index.tsx");
     const componentsDir = path.join(screenPath, "components");
     const hooksDir = path.join(screenPath, "hooks");
     const mockDataDir = path.join(screenPath, "mock-data");
-    
+
     if (!fs.existsSync(screenPath)) {
       // This is not an issue - screen might not be implemented yet
       return;
     }
-    
+
     if (!fs.existsSync(indexFile)) {
       issues.push(`Missing index.tsx for screen: ${screenName}`);
     }
-    
+
     if (!fs.existsSync(componentsDir)) {
       issues.push(`Missing components directory for screen: ${screenName}`);
     }
-    
+
     if (!fs.existsSync(hooksDir)) {
       issues.push(`Missing hooks directory for screen: ${screenName}`);
     }
-    
+
     if (!fs.existsSync(mockDataDir)) {
       issues.push(`Missing mock-data directory for screen: ${screenName}`);
     }
   });
-  
+
   if (issues.length > 0) {
     console.warn(`${ANSI_YELLOW}Structure issues found:${ANSI_RESET}`);
     issues.forEach((issue) => console.warn(`  ⚠️  ${issue}`));
   } else {
-    console.log(`${ANSI_GREEN}✅ Screen structure validation passed${ANSI_RESET}`);
+    console.log(
+      `${ANSI_GREEN}✅ Screen structure validation passed${ANSI_RESET}`
+    );
   }
-  
+
   return issues;
 }
 
@@ -151,11 +150,11 @@ function validateScreenStructure() {
 function main() {
   const args = process.argv.slice(2);
   const shouldValidate = args.includes("--validate");
-  
+
   if (shouldValidate) {
     validateScreenStructure();
   }
-  
+
   generateScreenLoader();
 }
 

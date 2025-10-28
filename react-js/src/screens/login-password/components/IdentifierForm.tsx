@@ -139,7 +139,7 @@ function IdentifierForm() {
                     {texts?.editEmailText || "Edit"}
                   </ULThemeLink>
                 }
-                className="pr-[16px]"
+                className="pr-4"
               />
               <ULThemeFormMessage
                 sdkError={usernameSDKError}

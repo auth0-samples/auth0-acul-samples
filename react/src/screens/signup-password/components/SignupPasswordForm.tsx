@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
 
-import { usePasswordValidation } from "@auth0/auth0-acul-react/signup-password";
-import type { SignupPasswordOptions } from "@auth0/auth0-acul-react/types";
+import {
+  useErrors,
+  usePasswordValidation,
+} from "@auth0/auth0-acul-react/signup-password";
+import type {
+  ErrorItem,
+  PasswordValidationResult,
+  SignupPasswordOptions,
+} from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -11,11 +18,7 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
 import { ULThemePasswordValidator } from "@/components/ULThemePasswordValidator";
-import { getFieldError } from "@/utils/helpers/errorUtils";
-import {
-  createPasswordValidator,
-  shouldShowValidation,
-} from "@/utils/validations";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 import { useSignupPasswordManager } from "../hooks/useSignupPasswordManager";
 
@@ -25,15 +28,17 @@ function SignupPasswordForm() {
     isCaptchaAvailable,
     signupPassword,
     texts,
-    captchaImage,
-    errors,
+    captcha,
+    locales,
   } = useSignupPasswordManager();
+
+  const { errors, hasError, dismiss } = useErrors();
 
   const form = useForm<SignupPasswordOptions>({
     defaultValues: {
       email: "",
       username: "",
-      phone: "",
+      phoneNumber: "",
       password: "",
       captcha: "",
     },
@@ -47,16 +52,10 @@ function SignupPasswordForm() {
 
   // Get password validation rules from Auth0 SDK
   const passwordValue = watch("password");
-  const validationRules = usePasswordValidation(passwordValue);
-
-  // Show validation when user has typed something
-  const showPasswordValidation = shouldShowValidation(passwordValue);
-
-  // Custom validation function for React Hook Form
-  const validatePasswordRule = createPasswordValidator(
-    validationRules,
-    showPasswordValidation
-  );
+  const {
+    isValid: isPasswordValid,
+    results: passwordResults,
+  }: PasswordValidationResult = usePasswordValidation(passwordValue);
 
   // Get user data from screen data for readonly fields
   const screenData = signupPassword?.screen?.data;
@@ -64,15 +63,26 @@ function SignupPasswordForm() {
   const userPhone = screenData?.phoneNumber;
   const userUsername = screenData?.username;
 
-  // Handle text fallbacks
-  const buttonText = texts?.buttonText || "Continue";
+  // Use locale strings with fallback to SDK texts
+  const buttonText = texts?.buttonText || locales.form.button;
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
-    : "CAPTCHA*";
+    : `${locales.form.fields.captcha.label}*`;
   const passwordLabel = texts?.passwordPlaceholder
     ? `${texts.passwordPlaceholder}*`
-    : "Password*";
-  const captchaImageAlt = "CAPTCHA challenge";
+    : `${locales.form.fields.password.label}*`;
+  const passwordSecurityText =
+    texts?.passwordSecurityText || locales.form.passwordSecurity;
+  const emailLabel = texts?.emailPlaceholder || locales.form.fields.email.label;
+  const phoneLabel = texts?.phonePlaceholder || locales.form.fields.phone.label;
+  const usernameLabel =
+    texts?.usernamePlaceholder || locales.form.fields.username.label;
+
+  // Setup captcha with useCaptcha hook
+  const { captchaConfig, captchaProps } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
 
   // Get general errors (not field-specific) and errors for hidden fields
   const visibleFields = ["password", "captcha"];
@@ -80,18 +90,17 @@ function SignupPasswordForm() {
   if (userPhone) visibleFields.push("phone", "phone_number");
   if (userUsername) visibleFields.push("username");
 
-  const generalErrors =
-    errors?.filter((error: any) => {
-      // Include errors with no field or null field
-      if (!error.field || error.field === null) return true;
+  const generalErrors: ErrorItem[] = errors.byKind("server").filter((error) => {
+    // Include errors with no field or null field
+    if (!error.field || error.field === null) return true;
 
-      // Include field errors for non-visible fields
-      return !visibleFields.includes(error.field);
-    }) || [];
+    // Include field errors for non-visible fields
+    return !visibleFields.includes(error.field);
+  });
 
   // Get field-specific errors
-  const passwordError = getFieldError("password", errors || []);
-  const captchaSDKError = getFieldError("captcha", errors || []);
+  const passwordError = errors.byField("password")[0]?.message;
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
 
   // Simplified submit handler
   const onSubmit = async (data: SignupPasswordOptions) => {
@@ -99,7 +108,7 @@ function SignupPasswordForm() {
       ...data,
       email: userEmail,
       username: userUsername,
-      phone: userPhone,
+      phoneNumber: userPhone,
     };
     await handleSignupPassword(submitData);
   };
@@ -108,10 +117,14 @@ function SignupPasswordForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General alerts at the top */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: any, index: number) => (
-              <ULThemeAlert key={index} variant="destructive">
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -122,7 +135,7 @@ function SignupPasswordForm() {
         {userEmail && (
           <ULThemeFloatingLabelField
             id="signup-email-field"
-            label={texts?.emailPlaceholder || "Email"}
+            label={emailLabel}
             type="email"
             value={userEmail}
             readOnly
@@ -134,7 +147,7 @@ function SignupPasswordForm() {
         {userPhone && (
           <ULThemeFloatingLabelField
             id="signup-phone-field"
-            label={texts?.phonePlaceholder || "Phone"}
+            label={phoneLabel}
             type="tel"
             value={userPhone}
             readOnly
@@ -146,7 +159,7 @@ function SignupPasswordForm() {
         {userUsername && (
           <ULThemeFloatingLabelField
             id="signup-username-field"
-            label={texts?.usernamePlaceholder || "Username"}
+            label={usernameLabel}
             type="text"
             value={userUsername}
             readOnly
@@ -159,7 +172,13 @@ function SignupPasswordForm() {
           control={form.control}
           name="password"
           rules={{
-            validate: validatePasswordRule,
+            required: locales.form.fields.password.required,
+            validate: (value) => {
+              if (!value) return locales.form.fields.password.required;
+              if (!isPasswordValid)
+                return locales.form.fields.password.doesNotMeetRequirements;
+              return true;
+            },
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -177,28 +196,25 @@ function SignupPasswordForm() {
           )}
         />
 
-        {/* CAPTCHA Box */}
-        {isCaptchaAvailable && (
+        {/* Captcha Field */}
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales.form.fields.captcha.required,
             }}
           />
         )}
 
         {/* Password Validation Rules */}
         <ULThemePasswordValidator
-          validationRules={validationRules}
-          passwordSecurityText={
-            texts?.passwordSecurityText || "Your password must contain:"
-          }
-          show={showPasswordValidation}
+          validationRules={passwordResults}
+          passwordSecurityText={passwordSecurityText}
+          show={!!passwordValue}
           className="mb-4"
         />
 

@@ -1,0 +1,34 @@
+{
+  "page": {
+    "title": "Signup Identifier",
+    "separator": "OR"
+  },
+  "header": {
+    "logoAlt": "Application Logo",
+    "title": "Welcome",
+    "description": "Sign up to dev-tenant to continue to All applications."
+  },
+  "form": {
+    "fields": {
+      "captcha": {
+        "label": "CAPTCHA",
+        "imageAlt": "CAPTCHA challenge",
+        "required": "Please complete the CAPTCHA"
+      },
+      "common": {
+        "required": "This field is required"
+      },
+      "countryCode": {
+        "placeholder": "Select Country"
+      }
+    },
+    "button": "Continue"
+  },
+  "footer": {
+    "text": "Already have an account?",
+    "linkText": "Log in"
+  },
+  "social": {
+    "continueWith": "Continue with"
+  }
+}

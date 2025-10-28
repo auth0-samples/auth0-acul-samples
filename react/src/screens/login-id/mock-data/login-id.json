@@ -67,10 +67,7 @@
       "pick_authenticator_enabled": true
     },
     "name": "dev-tenant",
-    "enabled_locales": [
-      "en",
-      "fr-CA"
-    ]
+    "enabled_locales": ["en", "fr-CA"]
   },
   "transaction": {
     "country_code": {

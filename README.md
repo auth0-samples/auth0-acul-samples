@@ -132,8 +132,8 @@ Each screen is designed to integrate with the [Auth0 ACUL SDK](https://github.co
 Vite compiles each screen as a separate entry point for optimized loading:
 
 ```bash
-# Navigate to the React-JS sample
-cd react-js
+# Navigate to the React or React-JS sample
+cd react  # or cd react-js
 
 # Build optimized assets
 npm run build
@@ -150,12 +150,19 @@ dist/
 └── assets/
     ├── main.[hash].js                   # Main application bundle
     ├── shared/
-    │   ├── style.[hash].css             # Global styles
-    │   ├── common.[hash].js             # Shared utilities
-    │   └── vendor.[hash].js             # Dependencies
+    │   ├── style.[hash].css             # Global styles (Tailwind + Auth0 theme)
+    │   ├── react-vendor.[hash].js       # React + ReactDOM (~324 kB)
+    │   ├── vendor.[hash].js             # Third-party dependencies (~196 kB)
+    │   └── common.[hash].js             # Shared app code (~87 kB)
     └── [screen-name]/
-        └── index.[hash].js              # Screen-specific code
+        └── index.[hash].js              # Screen-specific code (0.9-6 kB)
 ```
+
+**Bundle Strategy:**
+- **react-vendor**: Contains React and ReactDOM for better caching across deploys
+- **vendor**: Contains all other third-party packages (captcha providers, utilities)
+- **common**: Shared application code (components, hooks, utilities)
+- **Screen bundles**: Only screen-specific logic, optimized for fast loading
 
 Screen-specific bundles can be deployed independently for incremental rollouts.
 
@@ -204,7 +211,7 @@ When configuring Auth0 ACUL for a specific screen, your settings.json file will 
     {
       "tag": "script",
       "attributes": {
-        "src": "https://your-cdn-domain.com/assets/shared/common.[hash].js",
+        "src": "https://your-cdn-domain.com/assets/shared/react-vendor.[hash].js",
         "type": "module"
       }
     },
@@ -212,6 +219,13 @@ When configuring Auth0 ACUL for a specific screen, your settings.json file will 
       "tag": "script",
       "attributes": {
         "src": "https://your-cdn-domain.com/assets/shared/vendor.[hash].js",
+        "type": "module"
+      }
+    },
+    {
+      "tag": "script",
+      "attributes": {
+        "src": "https://your-cdn-domain.com/assets/shared/common.[hash].js",
         "type": "module"
       }
     },

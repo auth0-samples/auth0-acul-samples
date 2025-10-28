@@ -3,15 +3,15 @@ import ULThemeLink from "@/components/ULThemeLink";
 import { useSignupManager } from "../hooks/useSignupManager";
 
 function Footer() {
-  const { loginLink, texts } = useSignupManager();
+  const { loginLink, texts, locales } = useSignupManager();
 
   if (!loginLink) {
     return null;
   }
 
   // Handle text fallbacks in component
-  const footerText = texts?.footerText || "Already have an account?";
-  const footerLinkText = texts?.footerLinkText || "Log in";
+  const footerText = texts?.footerText || locales.footer.text;
+  const footerLinkText = texts?.footerLinkText || locales.footer.linkText;
 
   return (
     <div className="mt-4 text-left">
