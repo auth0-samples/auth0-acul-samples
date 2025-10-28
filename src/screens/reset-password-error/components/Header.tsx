@@ -7,7 +7,9 @@ import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 import { useResetPasswordErrorManager } from "../hooks/resetPasswordErrorManager";
 
 function Header() {
-  const { texts } = useResetPasswordErrorManager();
+  const { texts, locales } = useResetPasswordErrorManager();
+  const titleText = texts?.eventTitle || locales.header.title;
+  const descriptionText = texts?.description || locales.header.description;
   const themedLogoWidgetColorValue = extractTokenValue(
     "--ul-theme-color-error"
   );
@@ -20,11 +22,8 @@ function Header() {
         strokeWidth={1}
         className="flex flex-wrap justify-widget-logo ml-28"
       />
-      <ULThemeTitle>{texts?.eventTitle || "Please Try Again"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description ||
-          'Something went wrong. Please return to the login page and select "Forgot Your Password" to try again.'}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }
