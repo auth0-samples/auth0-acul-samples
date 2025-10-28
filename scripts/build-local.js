@@ -108,30 +108,35 @@ try {
   // Generate the local development HTML format
   const generateLocalHTML = (screenName, cssFiles, jsFiles, port) => {
     const baseUrl = `http://localhost:${port}`;
-    
+
     let html = `<meta name="viewport" content="width=device-width, initial-scale=1">\n`;
-    
+
     // Add CSS files (should be just one shared style file)
     cssFiles.forEach((cssFile) => {
       html += `<link rel="stylesheet" href="${baseUrl}/${cssFile}">\n`;
     });
 
-    // Find and order JS files: main, common, vendor, screen-specific
+    // Find and order JS files: main, react-vendor, vendor, common, screen-specific
     const mainFile = jsFiles.find(
       (file) => file.includes("main.") && !file.includes("shared/")
     );
-    const commonFile = jsFiles.find((file) => file.includes("shared/common."));
+    const reactVendorFile = jsFiles.find((file) =>
+      file.includes("shared/react-vendor.")
+    );
     const vendorFile = jsFiles.find((file) => file.includes("shared/vendor."));
+    const commonFile = jsFiles.find((file) => file.includes("shared/common."));
     const screenFile = jsFiles.find((file) =>
       file.includes(`${screenName}/index.`)
     );
 
-    // Add scripts in the specified order
-    [mainFile, commonFile, vendorFile, screenFile].forEach((file) => {
-      if (file) {
-        html += `<script src="${baseUrl}/${file}" type="module"></script>\n`;
+    // Add scripts in the correct dependency order
+    [mainFile, reactVendorFile, vendorFile, commonFile, screenFile].forEach(
+      (file) => {
+        if (file) {
+          html += `<script src="${baseUrl}/${file}" type="module"></script>\n`;
+        }
       }
-    });
+    );
 
     return html;
   };

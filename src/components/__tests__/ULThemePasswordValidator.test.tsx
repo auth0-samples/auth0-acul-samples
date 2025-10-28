@@ -6,37 +6,37 @@ import { ULThemePasswordValidator } from "@/components/ULThemePasswordValidator"
 const mockValidationRules: any[] = [
   {
     code: "password-policy-length-at-least",
-    policy: "At least 8 characters",
+    label: "At least 8 characters",
     isValid: true,
   },
   {
     code: "password-policy-contains-at-least",
-    policy: "At least 3 of the following:",
+    label: "At least 3 of the following:",
     isValid: true,
   },
   {
     code: "password-policy-lower-case",
-    policy: "Lower case letters (a-z)",
+    label: "Lower case letters (a-z)",
     isValid: true,
   },
   {
     code: "password-policy-upper-case",
-    policy: "Upper case letters (A-Z)",
+    label: "Upper case letters (A-Z)",
     isValid: true,
   },
   {
     code: "password-policy-numbers",
-    policy: "Numbers (0-9)",
+    label: "Numbers (0-9)",
     isValid: true,
   },
   {
     code: "password-policy-special-characters",
-    policy: "Special characters (e.g. !@#$%^&*)",
+    label: "Special characters (e.g. !@#$%^&*)",
     isValid: false,
   },
   {
     code: "password-policy-identical-chars",
-    policy: "No more than 2 identical characters in a row",
+    label: "No more than 2 identical characters in a row",
     isValid: true,
   },
 ];
@@ -44,22 +44,22 @@ const mockValidationRules: any[] = [
 const mockGroupedRulesOnly: any[] = [
   {
     code: "password-policy-contains-at-least",
-    policy: "At least 2 of the following:",
+    label: "At least 2 of the following:",
     isValid: true,
   },
   {
     code: "password-policy-lower-case",
-    policy: "Lower case letters (a-z)",
+    label: "Lower case letters (a-z)",
     isValid: true,
   },
   {
     code: "password-policy-upper-case",
-    policy: "Upper case letters (A-Z)",
+    label: "Upper case letters (A-Z)",
     isValid: false,
   },
   {
     code: "password-policy-numbers",
-    policy: "Numbers (0-9)",
+    label: "Numbers (0-9)",
     isValid: true,
   },
 ];

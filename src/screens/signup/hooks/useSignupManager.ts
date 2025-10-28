@@ -5,29 +5,34 @@ import {
 } from "@auth0/auth0-acul-react/signup";
 import type {
   FederatedSignupOptions,
-  SignupOptions,
+  ScreenMembersOnSignup,
+  SignupPayloadOptions,
+  TransactionMembersOnSignup,
 } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const useSignupManager = () => {
   const signup = useSignup();
 
-  const screen = useScreen();
-  const transaction = useTransaction();
+  const screen: ScreenMembersOnSignup = useScreen();
+  const transaction: TransactionMembersOnSignup = useTransaction();
   const { alternateConnections } = transaction;
 
-  const { isCaptchaAvailable, texts, loginLink, captchaImage } = screen;
+  const { isCaptchaAvailable, texts, loginLink, captcha } = screen;
 
-  const handleSignup = async (payload: SignupOptions): Promise<void> => {
-    // Clean and prepare data like login-id pattern
-    const options: SignupOptions = {};
+  const handleSignup = async (payload: SignupPayloadOptions): Promise<void> => {
+    // Clean and prepare data, transforming phoneNumber to phone for SDK
+    const options: SignupPayloadOptions = {};
 
     if (payload.email?.trim()) {
       options.email = payload.email.trim();
     }
-    if (payload.phone?.trim()) {
-      options.phone = payload.phone.trim();
+    // Transform phoneNumber to phone for SDK
+    if (payload.phoneNumber?.trim()) {
+      options.phoneNumber = payload.phoneNumber.trim();
     }
     if (payload.username?.trim()) {
       options.username = payload.username.trim();
@@ -39,10 +44,10 @@ export const useSignupManager = () => {
       options.password = payload.password;
     }
 
-    // ✅ Password redacted from logs
+    // Password redacted from logs
     const logOptions = {
       ...options,
-      password: "[REDACTED]",
+      password: options.password ? "[REDACTED]" : undefined,
     };
 
     executeSafely(`Signup with options: ${JSON.stringify(logOptions)}`, () =>
@@ -63,6 +68,7 @@ export const useSignupManager = () => {
 
   return {
     signup,
+    transaction,
     handleSignup,
     handleFederatedSignup,
     handlePickCountryCode,
@@ -70,7 +76,7 @@ export const useSignupManager = () => {
     isCaptchaAvailable,
     loginLink,
     alternateConnections,
-    captchaImage,
-    errors: transaction.errors,
+    captcha,
+    locales,
   };
 };

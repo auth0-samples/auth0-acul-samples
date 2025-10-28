@@ -39,10 +39,7 @@
     }
   },
   "tenant": {
-    "enabled_factors": [
-      "push-notification",
-      "otp"
-    ],
+    "enabled_factors": ["push-notification", "otp"],
     "mfa_options": {
       "pick_authenticator_enabled": false
     }
@@ -55,10 +52,7 @@
     "id": "mocked_id_client",
     "email": "foo1@bar.com",
     "picture": "mocked_picture_url",
-    "enrolled_factors": [
-      "push-notification",
-      "otp"
-    ],
+    "enrolled_factors": ["push-notification", "otp"],
     "enrolled_devices": [
       {
         "id": 0,

@@ -1,25 +1,27 @@
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import {
+  useErrors,
   useSignupIdentifiers,
   useUsernameValidation,
 } from "@auth0/auth0-acul-react/signup-id";
 import type {
-  Error,
+  ErrorItem,
   IdentifierType,
   SignupOptions,
-  TransactionMembersOnSignupId,
+  UsernameValidationResult,
 } from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import { transformAuth0CountryCode } from "@/utils/helpers/countryUtils";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIndividualIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { createUsernameValidator } from "@/utils/validations";
 
@@ -27,20 +29,22 @@ import { useSignupIdManager } from "../hooks/useSignupIdManager";
 
 function SignupIdForm() {
   const {
+    transaction,
     handleSignup,
     handlePickCountryCode,
     isCaptchaAvailable,
-    signupId,
     texts,
-    captchaImage,
-    errors,
+    captcha,
+    locales,
   } = useSignupIdManager();
+
+  const { errors, hasError, dismiss } = useErrors();
 
   const form = useForm<SignupOptions>({
     defaultValues: {
       email: "",
-      phone: "",
       username: "",
+      phone: "",
       captcha: "",
     },
     reValidateMode: "onBlur",
@@ -53,74 +57,54 @@ function SignupIdForm() {
 
   // Get username validation
   const userNameValue = watch("username");
-  const { isValid: isUsernameValid, errors: userNameErrors } =
-    useUsernameValidation(userNameValue || "");
+  const {
+    isValid: isUsernameValid,
+    errors: userNameErrors,
+  }: UsernameValidationResult = useUsernameValidation(userNameValue || "");
 
   // Get identifiers from transaction
   const enabledIdentifiers = useSignupIdentifiers();
 
   // Extract required and optional identifiers from the hook data
-  const requiredIdentifiers = (enabledIdentifiers || [])
-    .filter((identifier) => identifier.required)
-    .map((identifier) => identifier.type);
-  const optionalIdentifiers = (enabledIdentifiers || [])
-    .filter((identifier) => !identifier.required)
-    .map((identifier) => identifier.type);
-
-  // Handle text fallbacks
-  const buttonText = texts?.buttonText || "Continue";
-  const captchaLabel = texts?.captchaCodePlaceholder
-    ? `${texts.captchaCodePlaceholder}*`
-    : "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge";
-
-  // Get general errors (not field-specific)
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
-
-  // Create validation function using utility
-  const validateUsernameRule = createUsernameValidator(
-    isUsernameValid,
-    userNameErrors
+  const requiredIdentifiers = useMemo(
+    () =>
+      (enabledIdentifiers || [])
+        .filter((identifier) => identifier.required)
+        .map((identifier) => identifier.type),
+    [enabledIdentifiers]
   );
 
-  // Get field-specific errors
-  const getIdentifierError = (identifierType: IdentifierType) =>
-    getFieldError(identifierType, errors || []);
+  const optionalIdentifiers = useMemo(
+    () =>
+      (enabledIdentifiers || [])
+        .filter((identifier) => !identifier.required)
+        .map((identifier) => identifier.type),
+    [enabledIdentifiers]
+  );
 
-  const captchaSDKError = getFieldError("captcha", errors || []);
+  // Use locale strings with fallback to SDK texts
+  const buttonText = texts?.buttonText || locales.form.button;
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : `${locales.form.fields.captcha.label}*`;
+
+  // Setup captcha with useCaptcha hook
+  const { captchaConfig, captchaProps } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
+
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
 
   // Simplified submit handler matching login-id pattern
   const onSubmit = async (data: SignupOptions) => {
     await handleSignup(data);
   };
-
-  const renderFields = (identifiers: IdentifierType[], isRequired: boolean) =>
-    identifiers.map((identifierType) => {
-      if (identifierType === "phone") {
-        return (
-          <div
-            key={`${isRequired ? "required" : "optional"}-phone-container`}
-            className="space-y-2"
-          >
-            <ULThemeCountryCodePicker
-              selectedCountry={transformAuth0CountryCode(
-                (signupId?.transaction as TransactionMembersOnSignupId)
-                  ?.countryCode,
-                (signupId?.transaction as TransactionMembersOnSignupId)
-                  ?.countryPrefix
-              )}
-              onClick={handlePickCountryCode}
-              fullWidth
-              placeholder="Select Country"
-            />
-            {renderIdentifierField(identifierType, isRequired)}
-          </div>
-        );
-      }
-      return renderIdentifierField(identifierType, isRequired);
-    });
 
   const renderIdentifierField = (
     identifierType: IdentifierType,
@@ -132,7 +116,7 @@ function SignupIdForm() {
       texts
     );
 
-    const sdkError = getIdentifierError(identifierType);
+    const sdkError = errors.byField(identifierType)[0]?.message;
 
     return (
       <FormField
@@ -140,9 +124,14 @@ function SignupIdForm() {
         control={form.control}
         name={identifierType}
         rules={{
-          required: isRequired ? "This field is required" : false,
+          required: isRequired ? locales.form.fields.common.required : false,
           ...(identifierType === "username" && {
-            validate: validateUsernameRule(isRequired),
+            validate: createUsernameValidator(
+              isUsernameValid,
+              userNameErrors,
+              isRequired,
+              locales.form.fields.common.required
+            ),
           }),
         }}
         render={({ field, fieldState }) => (
@@ -164,14 +153,44 @@ function SignupIdForm() {
     );
   };
 
+  const renderFields = (identifiers: IdentifierType[], isRequired: boolean) =>
+    identifiers.map((identifierType) => {
+      if (identifierType === "phone") {
+        const phoneCountryCode = transformAuth0CountryCode(
+          transaction?.countryCode,
+          transaction?.countryPrefix
+        );
+
+        return (
+          <div
+            key={`${isRequired ? "required" : "optional"}-phone-container`}
+            className="space-y-2"
+          >
+            <ULThemeCountryCodePicker
+              selectedCountry={phoneCountryCode}
+              onClick={handlePickCountryCode}
+              fullWidth
+              placeholder={locales.form.fields.countryCode.placeholder}
+            />
+            {renderIdentifierField(identifierType, isRequired)}
+          </div>
+        );
+      }
+      return renderIdentifierField(identifierType, isRequired);
+    });
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General alerts at the top */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index} variant="destructive">
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -185,16 +204,15 @@ function SignupIdForm() {
         {renderFields(optionalIdentifiers, false)}
 
         {/* CAPTCHA Box */}
-        {isCaptchaAvailable && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales.form.fields.captcha.required,
             }}
           />
         )}

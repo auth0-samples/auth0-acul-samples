@@ -26,10 +26,7 @@
     }
   },
   "tenant": {
-    "enabled_factors": [
-      "push-notification",
-      "recovery-code"
-    ],
+    "enabled_factors": ["push-notification", "recovery-code"],
     "mfa_options": {
       "pick_authenticator_enabled": true
     }
@@ -42,10 +39,7 @@
     "id": "mocked_id_client",
     "email": "foo1@bar.com",
     "picture": "mock_picture_url",
-    "enrolled_factors": [
-      "push-notification",
-      "recovery-code"
-    ],
+    "enrolled_factors": ["push-notification", "recovery-code"],
     "enrolled_devices": [
       {
         "id": 0,

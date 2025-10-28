@@ -1,0 +1,38 @@
+{
+  "page": {
+    "title": "Create Your Account"
+  },
+  "header": {
+    "logoAlt": "Application Logo",
+    "title": "Create Your Account",
+    "description": "Set your password for dev-xyz to continue to my application"
+  },
+  "form": {
+    "fields": {
+      "email": {
+        "label": "Email"
+      },
+      "phone": {
+        "label": "Phone"
+      },
+      "username": {
+        "label": "Username"
+      },
+      "password": {
+        "label": "Password",
+        "required": "Password is required",
+        "doesNotMeetRequirements": "Password does not meet requirements"
+      },
+      "captcha": {
+        "label": "CAPTCHA",
+        "imageAlt": "CAPTCHA challenge",
+        "required": "Please complete the CAPTCHA"
+      }
+    },
+    "button": "Continue",
+    "passwordSecurity": "Your password must contain:"
+  },
+  "footer": {
+    "backButton": "Go back"
+  }
+}

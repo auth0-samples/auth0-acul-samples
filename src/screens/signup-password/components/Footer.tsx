@@ -3,14 +3,14 @@ import ULThemeLink from "@/components/ULThemeLink";
 import { useSignupPasswordManager } from "../hooks/useSignupPasswordManager";
 
 function Footer() {
-  const { editLink, texts } = useSignupPasswordManager();
+  const { editLink, texts, locales } = useSignupPasswordManager();
 
   if (!editLink) {
     return null;
   }
 
-  // Handle text fallbacks in component
-  const backButtonText = texts?.backButtonText || "Go back";
+  // Use locale strings with fallback to SDK texts
+  const backButtonText = texts?.backButtonText || locales.footer.backButton;
 
   return (
     <div className="mt-4 text-center">
