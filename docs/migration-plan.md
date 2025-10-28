@@ -8,7 +8,6 @@ Each framework-specific sample now lives under its own folder at the repository 
 ```
 /react/           → React SDK sample
 /react-js/        → JS/TS SDK sample
-/shared/          → Common utilities (if applicable)
 /docs/            → Documentation and migration guides
 ```
 
