@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release of the Auth0 ACUL sample app.
-- Includes a single React SDK integration example.
+- Includes a single auth0-acul-js SDK integration example.
 - Basic documentation and setup instructions.
 
 ### Deprecated
