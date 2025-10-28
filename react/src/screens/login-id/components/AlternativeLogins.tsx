@@ -7,12 +7,12 @@ import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
 const AlternativeLogins = () => {
   const {
-    handleFederatedLogin,
-    handlePasskeyLogin,
     texts,
     locales,
     isPasskeyEnabled,
     alternateConnections,
+    handleFederatedLogin,
+    handlePasskeyLogin,
   } = useLoginIdManager();
 
   // Handle text fallbacks in component

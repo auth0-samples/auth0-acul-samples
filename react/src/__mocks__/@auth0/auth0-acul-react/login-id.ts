@@ -4,6 +4,7 @@
  * and isolated testing of our components.
  */
 import type {
+  ErrorItem,
   ScreenMembersOnLoginId,
   TransactionMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -143,10 +144,21 @@ export const useLoginId = jest.fn(() => ({
 
 // Mock the useLoginIdentifiers hook - returns array of identifier objects
 export const useLoginIdentifiers = jest.fn(() => [
-  { type: "phone" as const, required: true },
-  { type: "email" as const, required: false },
   { type: "username" as const, required: false },
 ]);
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
 
 export const useScreen = jest.fn(() => mockLoginIdInstance.screen);
 export const useTransaction = jest.fn(() => mockLoginIdInstance.transaction);

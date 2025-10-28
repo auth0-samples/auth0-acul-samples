@@ -16,6 +16,7 @@
         "continueWithText": "Continue with"
     },
     "loginForm": {
+        "selectCountryPlaceholder": "Select Country",
         "captchaLabel": "CAPTCHA*",
         "passwordLabel": "Password*",
         "forgotPasswordLinkText": "Forgot password?",

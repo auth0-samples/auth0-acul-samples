@@ -1,6 +1,5 @@
 import {
   useLoginId,
-  useLoginIdentifiers,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-id";
@@ -19,7 +18,6 @@ export const useLoginIdManager = () => {
   const loginId: LoginIdMembers = useLoginId();
   const screen: ScreenMembersOnLoginId = useScreen();
   const transaction: TransactionMembersOnLoginId = useTransaction();
-  const activeIdentifiers = useLoginIdentifiers();
 
   const { alternateConnections } = transaction;
   const { isCaptchaAvailable, texts, captcha, signupLink, resetPasswordLink } =
@@ -82,12 +80,10 @@ export const useLoginIdManager = () => {
     isPasskeyEnabled,
     isCaptchaAvailable,
     captcha,
-    activeIdentifiers,
     alternateConnections,
     signupLink,
     resetPasswordLink,
     countryCode,
     countryPrefix,
-    errors: transaction.errors,
   };
 };
