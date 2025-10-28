@@ -78,17 +78,28 @@ export const useSignupId = jest.fn(() => ({
 export const useScreen = jest.fn(() => mockSignupIdInstance.screen);
 export const useTransaction = jest.fn(() => mockSignupIdInstance.transaction);
 
-// Mock the useSignupIdentifiers hook
+// Mock the useSignupIdentifiers hook - returns array of identifier objects
 export const useSignupIdentifiers = jest.fn(() => [
-  { type: "phone", required: true },
-  { type: "email", required: false },
-  { type: "username", required: false },
+  { type: "phone" as const, required: true },
+  { type: "email" as const, required: false },
+  { type: "username" as const, required: false },
 ]);
 
-// Mock the useUsernameValidation hook
+// Mock the useUsernameValidation hook - returns validation result
 export const useUsernameValidation = jest.fn(() => ({
   isValid: true,
   errors: [],
+}));
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn(() => []),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
 }));
 
 export const signup = mockSignupIdInstance.signup;

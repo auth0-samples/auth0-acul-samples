@@ -1,19 +1,22 @@
 import {
   useScreen,
   useSignupPassword,
-  useTransaction,
 } from "@auth0/auth0-acul-react/signup-password";
-import type { SignupPasswordOptions } from "@auth0/auth0-acul-react/types";
+import type {
+  ScreenMembersOnSignupPassword,
+  SignupPasswordOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 export const useSignupPasswordManager = () => {
   const signupPassword = useSignupPassword();
 
-  const screen = useScreen();
-  const transaction = useTransaction();
+  const screen: ScreenMembersOnSignupPassword = useScreen();
 
-  const { isCaptchaAvailable, texts, editLink, captchaImage } = screen;
+  const { isCaptchaAvailable, texts, editLink, captcha } = screen;
 
   const handleSignupPassword = async (
     payload: SignupPasswordOptions
@@ -25,8 +28,8 @@ export const useSignupPasswordManager = () => {
     if (payload.email?.trim()) {
       options.email = payload.email.trim();
     }
-    if (payload.phone) {
-      options.phone = payload.phone;
+    if (payload.phoneNumber) {
+      options.phoneNumber = payload.phoneNumber;
     }
     if (payload.username?.trim()) {
       options.username = payload.username.trim();
@@ -34,7 +37,7 @@ export const useSignupPasswordManager = () => {
     if (screen.isCaptchaAvailable && payload.captcha?.trim()) {
       options.captcha = payload.captcha.trim();
     }
-    // ✅ Password redacted from logs
+    // Password redacted from logs
     const logOptions = {
       ...options,
       password: "[REDACTED]",
@@ -52,7 +55,7 @@ export const useSignupPasswordManager = () => {
     texts,
     isCaptchaAvailable,
     editLink,
-    captchaImage,
-    errors: transaction.errors,
+    captcha,
+    locales,
   };
 };

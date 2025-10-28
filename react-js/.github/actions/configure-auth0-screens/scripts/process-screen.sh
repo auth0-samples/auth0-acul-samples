@@ -43,15 +43,37 @@ for css_file in "${SHARED_CSS_FILES[@]}" "${SCREEN_CSS_FILES[@]}"; do
   fi
 done
 
-# Add JS files (non-entry first, then entry)
-NON_ENTRY_JS_FILES=()
-for js_file in "${SCREEN_JS_FILES[@]}"; do 
-  if [ "$js_file" != "$SCREEN_ENTRY_FILE" ]; then 
-    NON_ENTRY_JS_FILES+=("$js_file")
+# Add JS files in correct dependency order: main → react-vendor (React + React-DOM + Base UI) → vendor → common → screen-specific
+# First collect files by type
+MAIN_JS_FILE=""
+REACT_VENDOR_JS_FILE=""
+VENDOR_JS_FILE=""
+COMMON_JS_FILE=""
+
+# Find main.js in root assets
+for js_file in "${ROOT_JS_FILES[@]}"; do
+  js_basename=$(basename "$js_file")
+  if [[ "$js_basename" == main.*.js ]]; then
+    MAIN_JS_FILE="$js_file"
+    break
   fi
 done
 
-for js_file in "${ROOT_JS_FILES[@]}" "${SHARED_JS_FILES[@]}" "${NON_ENTRY_JS_FILES[@]}" "$SCREEN_ENTRY_FILE"; do 
+# Find react-vendor, vendor, and common in shared assets
+for js_file in "${SHARED_JS_FILES[@]}"; do
+  js_basename=$(basename "$js_file")
+  if [[ "$js_basename" == react-vendor.*.js ]]; then
+    REACT_VENDOR_JS_FILE="$js_file"
+  elif [[ "$js_basename" == vendor.*.js ]]; then
+    VENDOR_JS_FILE="$js_file"
+  elif [[ "$js_basename" == common.*.js ]]; then
+    COMMON_JS_FILE="$js_file"
+  fi
+done
+
+# Add scripts in dependency order: main → react-vendor (React + Base UI) → vendor → common → screen entry
+for js_file in "$MAIN_JS_FILE" "$REACT_VENDOR_JS_FILE" "$VENDOR_JS_FILE" "$COMMON_JS_FILE" "$SCREEN_ENTRY_FILE"; do
+  if [ -z "$js_file" ]; then continue; fi
   js_basename=$(basename "$js_file")
   if [[ ! "$js_basename" =~ ^[^a-zA-Z0-9] ]]; then 
     relative_path="${js_file#dist/}"

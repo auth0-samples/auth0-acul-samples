@@ -30,19 +30,23 @@ export default defineConfig({
   server: {
     port: 3000,
     strictPort: true,
+    fs: {
+      deny: ["dist"],
+    },
   },
   clearScreen: false,
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
       "@/components": resolve(__dirname, "./src/components"),
-      "@/common": resolve(__dirname, "./src/common"),
       "@/screens": resolve(__dirname, "./src/screens"),
       "@/utils": resolve(__dirname, "./src/utils"),
       "@/types": resolve(__dirname, "./src/types"),
       "@/constants": resolve(__dirname, "./src/constants"),
       "@/assets": resolve(__dirname, "./src/assets"),
       "@/lib": resolve(__dirname, "./src/lib"),
+      "@/hooks": resolve(__dirname, "./src/hooks"),
+      "@/test": resolve(__dirname, "./src/test"),
     },
   },
   build: {
@@ -86,13 +90,22 @@ export default defineConfig({
 
         // Simplified manual chunks strategy with forced common chunk
         manualChunks: (id) => {
-          // All node_modules dependencies go into a single vendor chunk
+          // React, React-DOM, and Base UI in a separate chunk (Base UI depends on React)
+          if (
+            id.includes("node_modules") &&
+            (id.includes("react") ||
+              id.includes("react-dom") ||
+              id.includes("@base-ui-components"))
+          ) {
+            return "react-vendor";
+          }
+
+          // All other node_modules dependencies go into vendor chunk
           if (id.includes("node_modules")) {
             return "vendor";
           }
 
           // Everything in src/ but NOT in src/screens/ goes to common
-          // Note: resolve(id) converts to absolute path for reliable checking
           const absoluteId = resolve(id);
           const absoluteSrcScreensDir = resolve(__dirname, "src/screens");
 

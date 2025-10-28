@@ -6,7 +6,7 @@ export const executeSafely = <R>(
   actionFn: () => R
 ): R | void => {
   if (process.env.NODE_ENV === "development") {
-    console.log(`[DEV ONLY] ${actionDescription}`);
+    alert(`[DEV ONLY] ${actionDescription}`);
   } else {
     return actionFn();
   }

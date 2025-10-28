@@ -7,6 +7,7 @@ This sample demonstrates how to build custom Auth0 Advanced Customizations for U
 This implementation includes 31 comprehensive authentication screens covering the complete authentication flow:
 
 ### Login & Authentication (5 screens)
+
 - **Login**: Universal login screen
 - **Login ID**: Identifier-first login flow
 - **Login Password**: Password entry screen
@@ -14,17 +15,20 @@ This implementation includes 31 comprehensive authentication screens covering th
 - **Login Passwordless SMS OTP**: SMS OTP verification flow
 
 ### Signup & Registration (3 screens)
+
 - **Signup**: Universal signup screen
 - **Signup ID**: Identifier-first signup flow
 - **Signup Password**: Password signup screen
 
 ### Password Reset (4 screens)
+
 - **Reset Password**: Password reset screen
 - **Reset Password Email**: Email-based password reset
 - **Reset Password Error**: Password reset error handling
 - **Reset Password Success**: Password reset confirmation
 
 ### Multi-Factor Authentication (15 screens)
+
 - **MFA Begin Enroll Options**: MFA enrollment options selection
 - **MFA Country Codes**: Country code selection for phone-based MFA
 - **MFA Email Challenge**: Email-based MFA verification
@@ -40,10 +44,12 @@ This implementation includes 31 comprehensive authentication screens covering th
 - **MFA SMS List**: List of enrolled phone numbers
 
 ### Passkey & WebAuthn (2 screens)
+
 - **Passkey Enrollment**: Passkey enrollment flow
 - **Passkey Enrollment Local**: Local passkey enrollment
 
 ### Identifier Management (2 screens)
+
 - **Email Identifier Challenge**: Email verification for identifier-first flow
 - **Phone Identifier Challenge**: Phone verification for identifier-first flow
 
@@ -66,7 +72,37 @@ npm test
 
 # Build for production
 npm run build
+
+# Serve built files locally for testing
+npx serve dist -p 8080 --cors
 ```
+
+## Build Output
+
+The Vite build process generates optimized bundles with code splitting:
+
+```
+dist/
+├── index.html                           # Main entry point
+└── assets/
+    ├── main.[hash].js                   # Main application bundle
+    ├── shared/
+    │   ├── style.[hash].css             # Global styles (Tailwind + Auth0 theme)
+    │   ├── react-vendor.[hash].js       # React + ReactDOM (~324 kB)
+    │   ├── vendor.[hash].js             # Third-party dependencies (~196 kB)
+    │   └── common.[hash].js             # Shared app code (~87 kB)
+    └── [screen-name]/
+        └── index.[hash].js              # Screen-specific code (0.9-6 kB)
+```
+
+**Bundle Strategy:**
+
+- **react-vendor**: React and ReactDOM for optimal caching
+- **vendor**: Third-party packages (captcha providers, form libraries, utilities)
+- **common**: Shared components, hooks, and utilities from src/
+- **Screen bundles**: Minimal screen-specific logic for fast loading
+
+Each screen can be deployed independently for incremental rollouts.
 
 ## Features
 
@@ -80,7 +116,7 @@ npm run build
 ## Tech Stack
 
 - **Framework**: React 19 with TypeScript
-- **Build Tool**: Vite with code splitting per screen
+- **Build Tool**: Vite with optimized code splitting (react-vendor, vendor, common, screen bundles)
 - **Styling**: Tailwind CSS v4 with Auth0 theme engine
 - **Auth SDK**: @auth0/auth0-acul-react
 - **Testing**: Jest + React Testing Library

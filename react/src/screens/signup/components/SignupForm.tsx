@@ -1,17 +1,21 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import {
+  useErrors,
   usePasswordValidation,
+  useSignupIdentifiers,
   useUsernameValidation,
 } from "@auth0/auth0-acul-react/signup";
 import type {
+  ErrorItem,
   IdentifierType,
-  SignupOptions,
-  TransactionMembersOnSignup,
+  PasswordValidationResult,
+  SignupPayloadOptions,
+  UsernameValidationResult,
 } from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -20,14 +24,10 @@ import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
 import { ULThemePasswordValidator } from "@/components/ULThemePasswordValidator";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import { transformAuth0CountryCode } from "@/utils/helpers/countryUtils";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIndividualIdentifierDetails } from "@/utils/helpers/identifierUtils";
-import {
-  createPasswordValidator,
-  createUsernameValidator,
-  shouldShowValidation,
-} from "@/utils/validations";
+import { createUsernameValidator } from "@/utils/validations";
 
 import { useSignupManager } from "../hooks/useSignupManager";
 
@@ -36,20 +36,21 @@ function SignupForm() {
     handleSignup,
     handlePickCountryCode,
     isCaptchaAvailable,
-    signup,
+    transaction,
     texts,
-    captchaImage,
-    errors,
+    captcha,
+    locales,
   } = useSignupManager();
 
-  const form = useForm<SignupOptions>({
+  const { errors, hasError, dismiss } = useErrors();
+
+  const form = useForm<SignupPayloadOptions>({
     defaultValues: {
       email: "",
-      phone: "",
+      phoneNumber: "",
       username: "",
       password: "",
       captcha: "",
-      phoneNumber: "",
     },
     reValidateMode: "onBlur",
   });
@@ -59,29 +60,38 @@ function SignupForm() {
     watch,
   } = form;
 
+  // Username validation
   const userNameValue = watch("username");
-  const { isValid: isUsernameValid, errors: userNameErrors } =
-    useUsernameValidation(userNameValue || "");
+  const {
+    isValid: isUsernameValid,
+    errors: userNameErrors,
+  }: UsernameValidationResult = useUsernameValidation(userNameValue || "");
 
-  // Default identifiers (SDK hook was removed)
-  const requiredIdentifiers: IdentifierType[] = ["email"];
-  const optionalIdentifiers: IdentifierType[] = ["username"];
-
-  // Get password validation rules from Auth0 SDK
+  // Password validation
   const passwordValue = watch("password");
-  const validationRules = usePasswordValidation(String(passwordValue ?? ""));
+  const {
+    isValid: isPasswordValid,
+    results: passwordResults,
+  }: PasswordValidationResult = usePasswordValidation(passwordValue || "");
 
-  // Show validation when user has typed something
-  const showPasswordValidation = shouldShowValidation(String(passwordValue));
+  // Get identifiers from transaction
+  const enabledIdentifiers = useSignupIdentifiers();
 
-  // Create validation functions using utilities
-  const validatePasswordRule = createPasswordValidator(
-    validationRules,
-    showPasswordValidation
+  // Extract required and optional identifiers from the hook data
+  const requiredIdentifiers = useMemo(
+    () =>
+      (enabledIdentifiers || [])
+        .filter((identifier) => identifier.required)
+        .map((identifier) => identifier.type),
+    [enabledIdentifiers]
   );
-  const validateUsernameRule = createUsernameValidator(
-    isUsernameValid,
-    userNameErrors
+
+  const optionalIdentifiers = useMemo(
+    () =>
+      (enabledIdentifiers || [])
+        .filter((identifier) => !identifier.required)
+        .map((identifier) => identifier.type),
+    [enabledIdentifiers]
   );
 
   // Handle country code selection for phone input
@@ -90,144 +100,176 @@ function SignupForm() {
   }, [handlePickCountryCode]);
 
   // Handle form submission
-  const onSubmit = async (values: SignupOptions) => {
+  const onSubmit = async (values: SignupPayloadOptions) => {
     await handleSignup(values);
   };
 
-  // Helper functions for field errors
-  const getIdentifierError = (identifierType: IdentifierType) =>
-    getFieldError(identifierType, errors || []);
+  // Get field-specific errors using SDK's errors helper
+  const getIdentifierError = useCallback(
+    (identifierType: IdentifierType) => {
+      const fieldErrors = errors.byField(identifierType);
+      return fieldErrors.length > 0 ? fieldErrors[0].message : undefined;
+    },
+    [errors]
+  );
 
-  const captchaSDKError = getFieldError("captcha", errors || []);
-  const passwordSDKError = getFieldError("password", errors || []);
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
+  const passwordSDKError = errors.byField("password")[0]?.message;
 
-  // Handle text fallbacks like in SignupPasswordForm
+  // Get general errors (errors without a specific field)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
+
+  // Use locale strings with fallback to SDK texts
   const passwordLabel = texts?.passwordPlaceholder
     ? `${texts.passwordPlaceholder}*`
-    : "Password*";
+    : `${locales.form.fields.password.label}*`;
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
-    : "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge";
-  const buttonText = texts?.buttonText || "Continue";
+    : `${locales.form.fields.captcha.label}*`;
+  const buttonText = texts?.buttonText || locales.form.button;
+  const passwordSecurityText =
+    texts?.passwordSecurityText || locales.form.passwordSecurity;
+
+  // Setup captcha with useCaptcha hook
+  const { captchaConfig, captchaProps } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
 
   // Transform the phone country code for display
   const phoneCountryCode = transformAuth0CountryCode(
-    (signup?.transaction as TransactionMembersOnSignup)?.countryCode,
-    (signup?.transaction as TransactionMembersOnSignup)?.countryPrefix
+    transaction?.countryCode,
+    transaction?.countryPrefix
   );
 
   // Render identifier fields helper function
-  const renderIdentifierField = (
-    identifierType: IdentifierType,
-    isRequired: boolean
-  ) => {
-    if (identifierType === "phone") {
+  const renderIdentifierField = useCallback(
+    (identifierType: IdentifierType, isRequired: boolean) => {
+      if (identifierType === "phone") {
+        return (
+          <div
+            key={`${isRequired ? "required" : "optional"}-phone-container`}
+            className="space-y-2"
+          >
+            <ULThemeCountryCodePicker
+              selectedCountry={phoneCountryCode}
+              onClick={handleCountryCodeSelect}
+              fullWidth
+              placeholder="Select Country"
+            />
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              rules={{
+                required: isRequired
+                  ? locales.form.fields.common.required
+                  : false,
+              }}
+              render={({ field, fieldState }) => {
+                const { label, type, autoComplete } =
+                  getIndividualIdentifierDetails("phone", isRequired, texts);
+                const sdkError = getIdentifierError("phone");
+
+                return (
+                  <FormItem>
+                    <ULThemeFloatingLabelField
+                      {...field}
+                      value={String(field.value || "")}
+                      label={label}
+                      type={type}
+                      autoComplete={autoComplete}
+                      error={!!fieldState.error || !!sdkError}
+                    />
+                    <ULThemeFormMessage
+                      sdkError={sdkError}
+                      hasFormError={!!fieldState.error}
+                    />
+                  </FormItem>
+                );
+              }}
+            />
+          </div>
+        );
+      }
+
+      // Handle other identifier types (email, username)
       return (
-        <div
-          key={`${isRequired ? "required" : "optional"}-phone-container`}
-          className="space-y-2"
-        >
-          <ULThemeCountryCodePicker
-            selectedCountry={phoneCountryCode}
-            onClick={handleCountryCodeSelect}
-            fullWidth
-            placeholder="Select Country"
-          />
-          <FormField
-            control={form.control}
-            name="phoneNumber"
-            rules={{
-              required: isRequired ? "This field is required" : false,
-            }}
-            render={({ field, fieldState }) => {
-              const { label, type, autoComplete } =
-                getIndividualIdentifierDetails("phone", isRequired, texts);
-              const sdkError = getIdentifierError("phone");
+        <FormField
+          key={identifierType}
+          control={form.control}
+          name={identifierType}
+          rules={{
+            required: isRequired ? locales.form.fields.common.required : false,
+            ...(identifierType === "username" && {
+              validate: createUsernameValidator(
+                isUsernameValid,
+                userNameErrors,
+                isRequired,
+                locales.form.fields.common.required
+              ),
+            }),
+          }}
+          render={({ field, fieldState }) => {
+            const { label, type, autoComplete } =
+              getIndividualIdentifierDetails(identifierType, isRequired, texts);
+            const sdkError = getIdentifierError(identifierType);
 
-              return (
-                <FormItem>
-                  <ULThemeFloatingLabelField
-                    {...field}
-                    value={String(field.value || "")}
-                    label={label}
-                    type={type}
-                    autoComplete={autoComplete}
-                    error={!!fieldState.error || !!sdkError}
-                  />
-                  <ULThemeFormMessage
-                    sdkError={sdkError}
-                    hasFormError={!!fieldState.error}
-                  />
-                </FormItem>
-              );
-            }}
-          />
-        </div>
+            return (
+              <FormItem>
+                <ULThemeFloatingLabelField
+                  {...field}
+                  label={label}
+                  type={type}
+                  autoComplete={autoComplete}
+                  error={!!fieldState.error || !!sdkError}
+                />
+                <ULThemeFormMessage
+                  sdkError={sdkError}
+                  hasFormError={!!fieldState.error}
+                />
+              </FormItem>
+            );
+          }}
+        />
       );
-    }
-
-    // Handle other identifier types (email, username)
-    return (
-      <FormField
-        key={identifierType}
-        control={form.control}
-        name={identifierType}
-        rules={{
-          required: isRequired ? "This field is required" : false,
-          ...(identifierType === "username" && {
-            validate: validateUsernameRule(isRequired),
-          }),
-        }}
-        render={({ field, fieldState }) => {
-          const { label, type, autoComplete } = getIndividualIdentifierDetails(
-            identifierType,
-            isRequired,
-            texts
-          );
-          const sdkError = getIdentifierError(identifierType);
-
-          return (
-            <FormItem>
-              <ULThemeFloatingLabelField
-                {...field}
-                label={label}
-                type={type}
-                autoComplete={autoComplete}
-                error={!!fieldState.error || !!sdkError}
-              />
-              <ULThemeFormMessage
-                sdkError={sdkError}
-                hasFormError={!!fieldState.error}
-              />
-            </FormItem>
-          );
-        }}
-      />
-    );
-  };
+    },
+    [
+      form.control,
+      texts,
+      errors,
+      isUsernameValid,
+      userNameErrors,
+      phoneCountryCode,
+      handleCountryCodeSelect,
+      getIdentifierError,
+    ]
+  );
 
   // Render fields helper function
-  const renderFields = (identifiers: IdentifierType[], isRequired: boolean) =>
-    identifiers.map((identifierType) =>
-      renderIdentifierField(identifierType, isRequired)
-    );
-
-  // Get general errors (not field-specific)
-  const generalErrors =
-    errors?.filter((error: any) => !error.field || error.field === null) ||
-    [];
+  const renderFields = useCallback(
+    (identifiers: IdentifierType[], isRequired: boolean) =>
+      identifiers.map((identifierType) =>
+        renderIdentifierField(identifierType, isRequired)
+      ),
+    [renderIdentifierField]
+  );
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* Display general errors */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: any, index: number) => (
-              <ULThemeAlert key={index} variant="destructive">
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>
-                  {error.message || "An error occurred"}
+                  {error.message || locales.errors.general}
                 </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -245,7 +287,12 @@ function SignupForm() {
           control={form.control}
           name="password"
           rules={{
-            validate: (value) => validatePasswordRule(String(value || "")),
+            required: locales.form.fields.password.required,
+            validate: () => {
+              if (!isPasswordValid)
+                return locales.form.fields.password.doesNotMeetRequirements;
+              return true;
+            },
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -265,27 +312,24 @@ function SignupForm() {
         />
 
         {/* Captcha Field */}
-        {isCaptchaAvailable && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales.form.fields.captcha.required,
             }}
           />
         )}
 
         {/* Password Validation Rules */}
         <ULThemePasswordValidator
-          validationRules={validationRules}
-          passwordSecurityText={
-            texts?.passwordSecurityText || "Your password must contain:"
-          }
-          show={showPasswordValidation}
+          validationRules={passwordResults}
+          passwordSecurityText={passwordSecurityText}
+          show={!!passwordValue}
         />
 
         {/* Submit Button */}

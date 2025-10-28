@@ -32,7 +32,36 @@ npm test
 
 # Build for production
 npm run build
+
+# Serve built files locally for testing
+npx serve dist -p 8080 --cors
 ```
+
+## Build Output
+
+The Vite build process generates optimized bundles with code splitting:
+
+```
+dist/
+├── index.html                           # Main entry point
+└── assets/
+    ├── main.[hash].js                   # Main application bundle
+    ├── shared/
+    │   ├── style.[hash].css             # Global styles (Tailwind + Auth0 theme)
+    │   ├── react-vendor.[hash].js       # React + ReactDOM (~324 kB)
+    │   ├── vendor.[hash].js             # Third-party dependencies (~196 kB)
+    │   └── common.[hash].js             # Shared app code (~87 kB)
+    └── [screen-name]/
+        └── index.[hash].js              # Screen-specific code (0.9-6 kB)
+```
+
+**Bundle Strategy:**
+- **react-vendor**: React and ReactDOM for optimal caching
+- **vendor**: Third-party packages (captcha providers, utilities)
+- **common**: Shared components and utilities from src/
+- **Screen bundles**: Minimal screen-specific logic for fast loading
+
+Each screen can be deployed independently for incremental rollouts.
 
 ## Available Screens
 
@@ -43,7 +72,7 @@ npm run build
 ## Tech Stack
 
 - **Framework**: React 19 with TypeScript
-- **Build Tool**: Vite
+- **Build Tool**: Vite with optimized code splitting (react-vendor, vendor, common, screen bundles)
 - **Styling**: Tailwind CSS v4
 - **Auth SDK**: @auth0/auth0-acul-js
 - **Testing**: Jest + React Testing Library
