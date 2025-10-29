@@ -4,6 +4,7 @@
  * and isolated testing of our components.
  */
 import type {
+  ErrorItem,
   ScreenMembersOnLogin,
   TransactionMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -18,6 +19,7 @@ import { CommonTestData } from "@/test/fixtures/common-data";
 export interface MockLoginInstance {
   login: jest.Mock;
   federatedLogin: jest.Mock;
+  getLoginIdentifiers: jest.Mock;
   screen: ScreenMembersOnLogin;
   transaction: TransactionMembers;
   activeIdentifiers: string[];
@@ -31,6 +33,7 @@ export interface MockLoginInstance {
 export const createMockLoginInstance = (): MockLoginInstance => ({
   login: jest.fn(),
   federatedLogin: jest.fn(),
+  getLoginIdentifiers: jest.fn(),
   screen: {
     name: "login",
     texts: {
@@ -124,11 +127,26 @@ export const useLogin = jest.fn(() => ({
   federatedLogin: mockLoginInstance.federatedLogin,
 }));
 
+// Mock the useLoginIdentifiers hook - returns array of identifier objects
+export const useLoginIdentifiers = jest.fn(() => [
+  { type: "username" as const, required: true },
+]);
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
 export const useScreen = jest.fn(() => mockLoginInstance.screen);
 export const useTransaction = jest.fn(() => mockLoginInstance.transaction);
-export const useActiveIdentifiers = jest.fn(
-  () => mockLoginInstance.activeIdentifiers
-);
 
 // Export named functions for direct access in tests
 export const login = mockLoginInstance.login;

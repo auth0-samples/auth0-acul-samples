@@ -5,7 +5,8 @@ import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
 import { useLoginManager } from "../hooks/useLoginManager";
 
 const AlternativeLogins = () => {
-  const { alternateConnections, handleFederatedLogin } = useLoginManager();
+  const { locales, alternateConnections, handleFederatedLogin } =
+    useLoginManager();
 
   const handleConnectionLogin = (connection: SocialConnection) => {
     const federatedLoginOptions = {
@@ -29,7 +30,7 @@ const AlternativeLogins = () => {
 
         const { displayName, iconComponent } =
           getSocialProviderDetails(connection);
-        const socialButtonText = `Continue with ${displayName}`;
+        const socialButtonText = `${locales?.alternativeLogins?.continueWithText} ${displayName}`;
 
         return (
           <ULThemeSocialProviderButton

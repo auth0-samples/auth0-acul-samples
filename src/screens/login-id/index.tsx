@@ -12,7 +12,7 @@ import { useLoginIdManager } from "./hooks/useLoginIdManager";
 
 function LoginIdScreen() {
   // Extracting attributes from hook made out of LoginIdInstance class of Auth0 React ACUL SDK
-  const { loginId, texts, isPasskeyEnabled, alternateConnections } =
+  const { loginId, texts, locales, isPasskeyEnabled, alternateConnections } =
     useLoginIdManager();
 
   // Check whether separator component needs to be rendered based on passkey or other social connections
@@ -21,8 +21,8 @@ function LoginIdScreen() {
     (alternateConnections && alternateConnections.length > 0);
 
   // Other Texts
-  const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Login";
+  const separatorText = texts?.separatorText || locales?.page?.orText;
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   applyAuth0Theme(loginId);
 
