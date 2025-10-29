@@ -9,12 +9,12 @@ import { useLoginPasswordlessSmsOtpManager } from "./hooks/useLoginPasswordlessS
 
 function LoginPasswordlessSmsOtpScreen() {
   // Extracting attributes from hook made out of LoginPasswordInstance class of Auth0 React ACUL SDK
-  const { loginPasswordlessSmsOtp, texts } =
+  const { texts, locales, loginPasswordlessSmsOtp } =
     useLoginPasswordlessSmsOtpManager();
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginPasswordlessSmsOtp);
-  document.title = texts?.pageTitle || "Enter your phone code to log in";
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

@@ -1,0 +1,28 @@
+{
+    "page": {
+        "title": "Enter your phone code to log in"
+    },
+    "heading": {
+        "title": "Verify Your Identity",
+        "description": "We've sent a text message to:",
+        "logoAltText": "Application Logo"
+    },
+    "footer": {
+        "resendActionText": "Didn't receive a code?",
+        "resendActionLinkText": "Resend"
+    },
+    "form": {
+        "selectCountryPlaceholder": "Select Country",
+        "captchaLabel": "CAPTCHA*",
+        "editIdentifierLinkText": "Edit phone number",
+        "editText": "Edit",
+        "continueButtonText": "Continue",
+        "codeLabelText": "Enter the 6-digit code"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred",
+        "codeIsRequired": "Please fill out this field.",
+        "captchaCompletionRequired": "Please complete the CAPTCHA",
+        "captchaTooLong": "CAPTCHA too long"
+    }
+}

@@ -1,10 +1,15 @@
 import {
   useLoginPasswordlessEmailCode,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/login-passwordless-email-code";
-import { ScreenMembersOnLoginPasswordlessEmailCode } from "@auth0/auth0-acul-react/types";
+import {
+  CustomOptions,
+  LoginPasswordlessEmailCodeMembers,
+  ScreenMembersOnLoginPasswordlessEmailCode,
+  SubmitCodeOptions,
+} from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/login-passwordless-email-code/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 /**
@@ -16,21 +21,23 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  * @returns A promise that resolves when the login process is complete.
  */
 export const useLoginPasswordlessEmailCodeManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const loginPasswordlessEmailCode = useLoginPasswordlessEmailCode();
+  const screen: ScreenMembersOnLoginPasswordlessEmailCode = useScreen();
+  const loginPasswordlessEmailCode: LoginPasswordlessEmailCodeMembers =
+    useLoginPasswordlessEmailCode();
 
-  const { texts, captchaImage, data, links } = screen;
+  const { texts, isCaptchaAvailable, captcha, data, links } = screen;
 
   const handleSubmitEmailCode = async (
-    code: string,
-    captcha?: string
+    payload: SubmitCodeOptions
   ): Promise<void> => {
     const options: { code: string; captcha?: string } = {
-      code: code?.trim() || "",
+      code:
+        typeof payload?.code === "string"
+          ? payload.code.trim()
+          : String(payload?.code || ""),
     };
-    if (screen.isCaptchaAvailable && captcha?.trim()) {
-      options.captcha = captcha.trim();
+    if (screen.isCaptchaAvailable && payload?.captcha?.trim()) {
+      options.captcha = payload?.captcha.trim();
     }
     executeSafely(
       `Submit Email Code with options: ${JSON.stringify(options)}`,
@@ -38,7 +45,9 @@ export const useLoginPasswordlessEmailCodeManager = () => {
     );
   };
 
-  const handleResendEmailCode = async (payload?: never): Promise<void> => {
+  const handleResendEmailCode = async (
+    payload?: CustomOptions
+  ): Promise<void> => {
     executeSafely(
       `Resent Email Code with Custom options: ${JSON.stringify(payload)}`,
       () => loginPasswordlessEmailCode.resendCode(payload)
@@ -46,14 +55,14 @@ export const useLoginPasswordlessEmailCodeManager = () => {
   };
 
   return {
+    locales,
+    captcha,
+    data,
+    links,
     loginPasswordlessEmailCode,
+    isCaptchaAvailable: isCaptchaAvailable,
     handleSubmitEmailCode,
     handleResendEmailCode,
     texts: (texts || {}) as ScreenMembersOnLoginPasswordlessEmailCode["texts"],
-    isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: transaction.errors || [],
-    captchaImage,
-    data,
-    links,
   };
 };

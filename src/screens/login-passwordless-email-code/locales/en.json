@@ -1,0 +1,28 @@
+{
+    "page": {
+        "title": "Enter your email code to log in"
+    },
+    "heading": {
+        "title": "Verify Your Identity",
+        "description": "We've sent an email with your code to:",
+        "logoAltText": "Application Logo"
+    },
+    "footer": {
+        "resendActionText": "Didn't receive an email?",
+        "resendActionLinkText": "Resend"
+    },
+    "form": {
+        "selectCountryPlaceholder": "Select Country",
+        "captchaLabel": "CAPTCHA*",
+        "editIdentifierLinkText": "Edit email address",
+        "editText": "Edit",
+        "continueButtonText": "Continue",
+        "codeLabelText": "Enter the code"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred",
+        "codeIsRequired": "Please fill out this field.",
+        "captchaCompletionRequired": "Please complete the CAPTCHA",
+        "captchaTooLong": "CAPTCHA too long"
+    }
+}
