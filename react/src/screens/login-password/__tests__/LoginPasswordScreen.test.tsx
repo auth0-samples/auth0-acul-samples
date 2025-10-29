@@ -1,11 +1,13 @@
 import {
   login,
+  useErrors,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-password";
-import type { PasswordPolicy } from "@auth0/auth0-acul-react/types";
 import { act, render, screen } from "@testing-library/react";
 
+import { useCaptcha } from "@/hooks/useCaptcha";
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 
@@ -13,6 +15,10 @@ import LoginPasswordScreen from "../index";
 
 jest.mock("@/utils/helpers/tokenUtils", () => ({
   extractTokenValue: jest.fn(),
+}));
+
+jest.mock("@/hooks/useCaptcha", () => ({
+  useCaptcha: jest.fn(),
 }));
 
 describe("LoginPasswordScreen", () => {
@@ -28,6 +34,19 @@ describe("LoginPasswordScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockExtractTokenValue.mockReset();
+  });
+
+  beforeEach(() => {
+    const mockedUseCaptcha = useCaptcha as jest.Mock;
+    mockedUseCaptcha.mockReturnValue({
+      captchaConfig: {
+        siteKey: "mock-key",
+        provider: "auth0",
+        image: "data:image/png;base64,mockimage",
+      },
+      captchaProps: { label: "CAPTCHA" },
+      captchaValue: "mock-value",
+    });
   });
 
   it("should render login-password screen with all form elements", async () => {
@@ -69,11 +88,23 @@ describe("LoginPasswordScreen", () => {
     ).toBeInTheDocument();
   });
 
+  it("should render captcha when available", async () => {
+    const mockScreen = (useScreen as jest.Mock)();
+    mockScreen.isCaptchaAvailable = true;
+    mockScreen.captcha = {
+      provider: "auth0",
+      image: "data:image/png;base64,test",
+    };
+    await renderScreen();
+
+    expect(screen.getByText(/CAPTCHA/)).toBeInTheDocument();
+  });
+
   it("should submit form and call login with credentials", async () => {
     await renderScreen();
 
     await ScreenTestUtils.fillInput("Password", "testpassword123");
-    await ScreenTestUtils.fillInput("Enter the code shown above*", "ABC123");
+    await ScreenTestUtils.fillInput("CAPTCHA", "mock-value");
 
     await ScreenTestUtils.clickButton(/^continue$/i);
 
@@ -81,7 +112,7 @@ describe("LoginPasswordScreen", () => {
       expect.objectContaining({
         username: "testuser@testdomain.com",
         password: "testpassword123",
-        captcha: "ABC123",
+        captcha: "mock-value",
       })
     );
   });
@@ -112,23 +143,11 @@ describe("LoginPasswordScreen", () => {
     );
   });
 
-  it("should render captcha when available", async () => {
-    await renderScreen();
-
-    const captchaField = screen.getByRole("textbox", {
-      name: /enter the code shown above/i,
-    });
-    expect(captchaField).toBeInTheDocument();
-
-    const captchaImage = screen.getByAltText("CAPTCHA challenge");
-    expect(captchaImage).toBeInTheDocument();
-  });
-
   it("should display error when password does not meet minimum length", async () => {
     await renderScreen();
 
     await ScreenTestUtils.fillInput("Password", "test123");
-    await ScreenTestUtils.fillInput("Enter the code shown above*", "ABC123");
+    await ScreenTestUtils.fillInput("CAPTCHA", "ABC123");
     await ScreenTestUtils.clickButton(/^continue$/i);
 
     expect(
@@ -136,36 +155,38 @@ describe("LoginPasswordScreen", () => {
     ).toBeInTheDocument();
   });
 
-  it("should display error messages when authentication fails", async () => {
-    (useTransaction as jest.Mock).mockReturnValue({
-      hasErrors: true,
-      errors: [
-        {
-          code: "invalid_credentials",
-          message: "Invalid password",
-        },
-      ],
-      alternateConnections: [
-        {
-          name: "google-oauth2",
-          strategy: "google",
-          options: {
-            displayName: "Google",
-            showAsButton: true,
-          },
-        },
-      ],
-      getPasswordPolicy: function (): PasswordPolicy | null {
-        return {
-          minLength: 8,
-          policy: "good",
-        };
+  it("should display general errors", async () => {
+    // Configure mock transaction to have general error
+    const mockTransaction = (useTransaction as jest.Mock)();
+    mockTransaction.errors = [CommonTestData.errors.network];
+    mockTransaction.hasErrors = true;
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
       },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     await renderScreen();
 
-    expect(screen.getByText("Invalid password")).toBeInTheDocument();
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 
   it("should disable captcha rendering when not available", async () => {
@@ -176,9 +197,6 @@ describe("LoginPasswordScreen", () => {
 
     await renderScreen();
 
-    const captchaField = screen.queryByRole("textbox", {
-      name: /enter the code shown above/i,
-    });
-    expect(captchaField).not.toBeInTheDocument();
+    expect(screen.queryByAltText("CAPTCHA challenge")).not.toBeInTheDocument();
   });
 });

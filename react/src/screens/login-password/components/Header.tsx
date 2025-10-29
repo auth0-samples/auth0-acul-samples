@@ -5,18 +5,17 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 
 function Header() {
-  const { texts } = useLoginPasswordManager();
+  const { texts, locales } = useLoginPasswordManager();
 
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  // Use locale strings as fallback to SDK texts
+  const logoAltText = texts?.logoAltText || locales?.heading?.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Welcome"}</ULThemeTitle>
+      <ULThemeTitle>{texts?.title || locales?.heading?.title}</ULThemeTitle>
       <ULThemeSubtitle>
-        {texts?.description ||
-          "Enter your password for My Company to continue to My App"}
+        {texts?.description || locales?.heading?.description}
       </ULThemeSubtitle>
     </>
   );

@@ -237,12 +237,12 @@ function SignupForm() {
     },
     [
       form.control,
-      texts,
-      errors,
+      locales.form.fields.common.required,
       isUsernameValid,
       userNameErrors,
       phoneCountryCode,
       handleCountryCodeSelect,
+      texts,
       getIdentifierError,
     ]
   );
