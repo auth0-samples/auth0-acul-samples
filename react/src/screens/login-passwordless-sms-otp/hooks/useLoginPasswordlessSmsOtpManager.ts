@@ -3,8 +3,15 @@ import {
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
-import { ScreenMembersOnLoginPasswordlessSmsOtp } from "@auth0/auth0-acul-react/types";
+import {
+  CustomOptions,
+  LoginPasswordlessSmsOtpMembers,
+  ScreenMembersOnLoginPasswordlessSmsOtp,
+  SubmitOTPOptions,
+  TransactionMembersOnLoginPasswordlessSmsOtp,
+} from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/login-passwordless-sms-otp/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 /**
@@ -17,45 +24,45 @@ import { executeSafely } from "@/utils/helpers/executeSafely";
  * @returns A promise that resolves when the login process is complete.
  */
 export const useLoginPasswordlessSmsOtpManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const loginPasswordlessSmsOtp = useLoginPasswordlessSmsOtp();
+  const screen: ScreenMembersOnLoginPasswordlessSmsOtp = useScreen();
+  const transaction: TransactionMembersOnLoginPasswordlessSmsOtp =
+    useTransaction();
+  const loginPasswordlessSmsOtp: LoginPasswordlessSmsOtpMembers =
+    useLoginPasswordlessSmsOtp();
 
-  const { texts, captchaImage, data, links } = screen;
+  const { texts, captcha, data, links } = screen;
 
-  const handleSubmitOTP = async (
-    username: string,
-    code: string,
-    captcha?: string
-  ): Promise<void> => {
+  const handleSubmitOTP = async (payload: SubmitOTPOptions): Promise<void> => {
     const options: { username: string; code: string; captcha?: string } = {
-      username: username?.trim() || "",
-      code: code?.trim() || "",
+      username: payload?.username?.trim() || "",
+      code: payload?.code?.trim() || "",
     };
-    if (screen.isCaptchaAvailable && captcha?.trim()) {
-      options.captcha = captcha.trim();
+    if (screen.isCaptchaAvailable && payload?.captcha?.trim()) {
+      options.captcha = payload?.captcha.trim();
     }
-    executeSafely(`Submit OTP with options: ${JSON.stringify(options)}`, () =>
-      loginPasswordlessSmsOtp.submitOTP(options)
+    executeSafely(
+      `Perform Submit OTP operation with options: ${JSON.stringify(options)}`,
+      () => loginPasswordlessSmsOtp.submitOTP(options)
     );
   };
 
-  const handleResendOTP = async (payload?: never): Promise<void> => {
+  const handleResendOTP = async (payload?: CustomOptions): Promise<void> => {
     executeSafely(
-      `Resent OTP with Custom options: ${JSON.stringify(payload)}`,
+      `Perform Resent OTP operation with Custom options: ${JSON.stringify(payload)}`,
       () => loginPasswordlessSmsOtp.resendOTP(payload)
     );
   };
 
   return {
-    loginPasswordlessSmsOtp,
-    handleSubmitOTP,
-    handleResendOTP,
-    texts: (texts || {}) as ScreenMembersOnLoginPasswordlessSmsOtp["texts"],
-    isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: transaction.errors || [],
-    captchaImage,
     data,
     links,
+    locales,
+    captcha,
+    loginPasswordlessSmsOtp,
+    isCaptchaAvailable: screen.isCaptchaAvailable === true,
+    errors: transaction.errors || [],
+    texts: (texts || {}) as ScreenMembersOnLoginPasswordlessSmsOtp["texts"],
+    handleSubmitOTP,
+    handleResendOTP,
   };
 };

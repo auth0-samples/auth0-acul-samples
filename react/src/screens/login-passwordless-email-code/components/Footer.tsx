@@ -3,12 +3,13 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
 function Footer() {
-  const { texts, handleResendEmailCode } =
+  const { texts, locales, handleResendEmailCode } =
     useLoginPasswordlessEmailCodeManager();
 
   // Handle text fallbacks in component
-  const footerText = texts?.resendText || "Didn't receive an email?";
-  const footerLinkText = texts?.resendActionText || "Resend";
+  const footerText = texts?.resendText || locales?.footer?.resendActionText;
+  const footerLinkText =
+    texts?.resendActionText || locales?.footer?.resendActionLinkText;
 
   return (
     <div className="mt-4 text-center">
