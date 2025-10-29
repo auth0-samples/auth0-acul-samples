@@ -1,3 +1,5 @@
+import { ErrorItem } from "@auth0/auth0-acul-react/types";
+
 export const resendEmail = jest.fn();
 
 export const useResetPasswordEmail = jest.fn(() => ({
@@ -35,4 +37,14 @@ export const useTransaction = jest.fn(() => ({
   connectionStrategy: null,
   currentConnection: null,
   alternateConnections: null,
+}));
+
+const mockErrors: ErrorItem[] = [];
+
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
 }));
