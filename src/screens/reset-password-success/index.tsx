@@ -1,6 +1,6 @@
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
-import { applyAuth0Theme } from "@/utils/theme/themeEngine";
+import { applyAuth0Theme } from "@/utils/theme";
 
 import Header from "./components/Header";
 import { useResetPasswordSuccessManager } from "./hooks/resetPasswordSuccessManager";

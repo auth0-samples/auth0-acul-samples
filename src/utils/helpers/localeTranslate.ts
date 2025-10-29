@@ -1,5 +1,5 @@
 // Represents either a final translation string, or a nested object that can be indexed by strings.
-type TranslationValue = string | TranslationObject;
+export type TranslationValue = string | TranslationObject;
 
 // Represents any object in your locales file structure.
 export type TranslationObject = {

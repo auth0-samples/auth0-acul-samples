@@ -5,18 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaBeginEnrollOptionsManager } from "../hooks/useMFABeginEnrollOptionsManager";
 
 function Header() {
-  const { texts } = useMfaBeginEnrollOptionsManager();
+  const { texts, locales } = useMfaBeginEnrollOptionsManager();
 
   // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const logoAltText = texts?.logoAltText || locales.header.logoAltText;
+  const title = texts?.title || locales.header.title;
+  const description = texts?.description || locales.header.description;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Keep Your Account Safe"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description || "Add another authentication method."}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{description}</ULThemeSubtitle>
     </>
   );
 }

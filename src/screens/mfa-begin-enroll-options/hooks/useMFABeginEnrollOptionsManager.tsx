@@ -1,12 +1,14 @@
 import {
   enroll,
+  useErrors,
   useMfaBeginEnrollOptions,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
 import { MfaEnrollOptions, ScreenMembers } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 /**
  * Handles the MFA enrollment process
@@ -27,7 +29,8 @@ export const useMfaBeginEnrollOptionsManager = () => {
     mfaBeginEnrollOptions: useMfaBeginEnrollOptions(),
     handleEnroll,
     texts: (texts || {}) as ScreenMembers["texts"],
-    errors: useTransaction().errors || [],
     enrollmentOptions: useMfaBeginEnrollOptions().user?.enrolledFactors || [],
+    useErrors: useErrors(),
+    locales,
   };
 };
