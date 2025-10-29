@@ -29,8 +29,8 @@ exports[`Captcha Component matches snapshot when imageUrl is provided 1`] = `
           >
             <label
               class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
-              for="«r0»-form-item"
-              id="base-ui-«r1»"
+              for="_r_0_-form-item"
+              id="base-ui-_r_1_"
             >
               Enter CAPTCHA
             </label>
@@ -38,10 +38,10 @@ exports[`Captcha Component matches snapshot when imageUrl is provided 1`] = `
               class="relative flex-1"
             >
               <input
-                aria-labelledby="base-ui-«r1»"
+                aria-labelledby="base-ui-_r_1_"
                 autocomplete="off"
                 class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
-                id="«r0»-form-item"
+                id="_r_0_-form-item"
                 name="captcha"
                 type="text"
               />
@@ -81,8 +81,8 @@ exports[`Captcha Component matches snapshot with custom className 1`] = `
           >
             <label
               class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
-              for="«r3»-form-item"
-              id="base-ui-«r4»"
+              for="_r_3_-form-item"
+              id="base-ui-_r_4_"
             >
               Enter CAPTCHA
             </label>
@@ -90,10 +90,10 @@ exports[`Captcha Component matches snapshot with custom className 1`] = `
               class="relative flex-1"
             >
               <input
-                aria-labelledby="base-ui-«r4»"
+                aria-labelledby="base-ui-_r_4_"
                 autocomplete="off"
                 class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
-                id="«r3»-form-item"
+                id="_r_3_-form-item"
                 name="captcha"
                 type="text"
               />

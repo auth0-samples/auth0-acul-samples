@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import type { ScreenMembersOnLogin } from "@auth0/auth0-acul-js";
 import LoginInstance from "@auth0/auth0-acul-js/login";
+import type { ScreenMembersOnLogin } from "@auth0/auth0-acul-js/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
@@ -47,7 +47,7 @@ export const useLoginManager = () => {
     isSignupEnabled: isSignupEnabled === true,
     isForgotPasswordEnabled: isForgotPasswordEnabled === true,
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: loginInstance.getError(),
+    errors: loginInstance.getErrors(),
     captchaImage,
     signupLink,
     resetPasswordLink,

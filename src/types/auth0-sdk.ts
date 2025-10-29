@@ -3,7 +3,7 @@ import type {
   OrganizationMembers,
   ScreenMembers,
   TransactionMembers,
-} from "@auth0/auth0-acul-js";
+} from "@auth0/auth0-acul-js/types";
 
 /**
  * Defines the core structure of the Auth0 Universal Login context object.

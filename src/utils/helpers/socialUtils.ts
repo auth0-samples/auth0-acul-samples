@@ -1,4 +1,7 @@
-import type { Connection, EnterpriseConnection } from "@auth0/auth0-acul-js";
+import type {
+  Connection,
+  EnterpriseConnection,
+} from "@auth0/auth0-acul-js/types";
 
 import { getIcon } from "./iconUtils";
 

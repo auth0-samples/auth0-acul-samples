@@ -30,7 +30,7 @@
 import type {
   BrandingMembers,
   OrganizationMembers,
-} from "@auth0/auth0-acul-js";
+} from "@auth0/auth0-acul-js/types";
 
 import {
   flattenBorders,
