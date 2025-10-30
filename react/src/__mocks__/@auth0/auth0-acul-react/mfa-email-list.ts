@@ -2,7 +2,10 @@
  * @file This file provides a comprehensive mock for the Auth0 ACUL React mfa-email-list hooks.
  */
 
-import type { TransactionMembers } from "@auth0/auth0-acul-react/types";
+import type {
+  ErrorItem,
+  TransactionMembers,
+} from "@auth0/auth0-acul-react/types";
 
 export interface ScreenMembersOnMfaEmailList {
   name: string;
@@ -108,6 +111,15 @@ export const useTransaction = jest.fn(
 export const useUser = jest.fn(() => ({
   ...mockMfaEmailListInstance.user,
   enrolledEmails: mockMfaEmailListInstance.user.enrolled_emails,
+}));
+const mockErrors: ErrorItem[] = [];
+
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
 }));
 
 // Export named functions for direct use in test

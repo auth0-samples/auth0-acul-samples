@@ -5,16 +5,16 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaEmailChallengeManager } from "../hooks/useMFAEmailChallengeManager";
 
 function Header() {
-  const { texts } = useMfaEmailChallengeManager();
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const { texts, locales } = useMfaEmailChallengeManager();
+  const logoAltText = texts?.logoAltText || locales.header.logoAltText;
+  const title = texts?.title || locales.header.title;
+  const description = texts?.description || locales.header.description;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description || "We've sent an email with your code to"}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{description}</ULThemeSubtitle>
     </>
   );
 }

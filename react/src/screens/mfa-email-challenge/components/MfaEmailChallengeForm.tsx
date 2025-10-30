@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import type { ContinueOptions, Error } from "@auth0/auth0-acul-react/types";
+import type { ContinueOptions, ErrorItem } from "@auth0/auth0-acul-react/types";
+import { ChevronRight } from "lucide-react";
 
 import {
   ULThemeFloatingLabelField,
@@ -11,12 +13,30 @@ import { Label } from "@/components/ui/label";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeCheckbox } from "@/components/ULThemeCheckbox";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { getFieldError } from "@/utils/helpers/errorUtils";
+import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButton";
 
 import { useMfaEmailChallengeManager } from "../hooks/useMFAEmailChallengeManager";
 
 function MfaEmailChallengeForm() {
-  const { handleContinue, data, errors, texts } = useMfaEmailChallengeManager();
+  const {
+    handleContinue,
+    data,
+    useErrors,
+    texts,
+    locales,
+    enrolledEmails,
+    handlePickEmail,
+  } = useMfaEmailChallengeManager();
+  const { errors, hasError, dismiss } = useErrors;
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    if (Array.isArray(enrolledEmails) && enrolledEmails.length > 1) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [enrolledEmails]);
 
   // Initialize the form using react-hook-form
   const form = useForm<ContinueOptions>({
@@ -30,17 +50,19 @@ function MfaEmailChallengeForm() {
     formState: { isSubmitting },
   } = form;
 
-  const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the code";
+  const buttonText = texts?.buttonText || locales.form.buttonText;
+  const codeLabelText =
+    texts?.codeLabelText || locales.form.fields.code.codeLabelText;
   const rememberDeviceText =
-    texts?.rememberMeText || "Remember this device for 30 days";
+    texts?.rememberDeviceText || locales.form.rememberDeviceText;
 
   // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const generalErrors: ErrorItem[] =
+    errors.byKind("server")?.filter((error) => {
+      return !error.field || error.field === null;
+    }) || [];
 
-  const codeSDKError = getFieldError("code", errors);
+  const codeSDKError = errors.byField("code")[0]?.message;
   const userEmail = data?.email || "";
 
   const onSubmit = async (formData: ContinueOptions) => {
@@ -51,30 +73,43 @@ function MfaEmailChallengeForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
+            {generalErrors.map((error: ErrorItem) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
           </div>
         )}
 
-        {/* Disabled User Email */}
-        <ULThemeFloatingLabelField
-          name="email"
-          label="Email"
-          value={userEmail}
-          disabled
-        />
+        {/* User Email */}
+        <ULThemeSocialProviderButton
+          type="button"
+          displayName={locales.form.fields.email.identifierLabelText}
+          buttonText={userEmail}
+          iconEnd={
+            !isDisabled && (
+              <ChevronRight className="w-4 h-4 theme-universal:text-input-labels" />
+            )
+          }
+          onClick={handlePickEmail}
+          className="flex items-center gap-2 mb-2"
+          variant="outline"
+          iconComponent={undefined}
+          disabled={isDisabled}
+        ></ULThemeSocialProviderButton>
 
         {/* Code input field */}
         <FormField
           control={form.control}
           name="code"
           rules={{
-            required: "Please enter the verification code.",
+            required: locales.form.fields.code.requiredText,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -129,7 +164,7 @@ function MfaEmailChallengeForm() {
           className="w-full"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Verifying..." : buttonText}
+          {isSubmitting ? `${locales.form.verificationText}...` : buttonText}
         </ULThemeButton>
       </form>
     </Form>

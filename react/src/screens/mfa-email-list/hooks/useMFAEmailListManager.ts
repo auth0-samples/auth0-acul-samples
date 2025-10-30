@@ -1,9 +1,9 @@
 import {
   goBack,
   selectMfaEmail,
+  useErrors,
   useMfaEmailList,
   useScreen,
-  useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-email-list";
 import {
@@ -12,6 +12,8 @@ import {
 } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 /**
  * Handles the user login via lists of Email associated with a user
@@ -38,7 +40,8 @@ export const useMfaEmailListManager = () => {
     handleSelectEmail,
     handleBackAction,
     texts: (texts || {}) as ScreenMembersOnMfaEmailList["texts"],
-    errors: useTransaction().errors || [],
+    useErrors: useErrors(),
     enrolledEmails: enrolledEmails || [],
+    locales,
   };
 };
