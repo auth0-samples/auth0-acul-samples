@@ -49,23 +49,22 @@ function Details() {
 
   // Use Locales as fallback to SDK texts
   const buttonText =
-    texts?.createButtonText || locales?.details?.createPasskeyButtonText;
+    texts?.createButtonText || locales.details.createPasskeyButtonText;
   const continueButtonText =
     texts?.continueButtonText ||
-    locales?.details?.continueWithoutPasskeyButtonText;
+    locales.details.continueWithoutPasskeyButtonText;
   const showHideLocalEnrollmentCheckboxText =
-    texts?.checkboxText ||
-    locales?.details?.showHideLocalEnrollmentCheckboxText;
+    texts?.checkboxText || locales.details.showHideLocalEnrollmentCheckboxText;
   const passkeyBenefit1Title =
-    texts?.passkeyBenefit1Title || locales?.details?.passkeyBenefit1Title;
+    texts?.passkeyBenefit1Title || locales.details.passkeyBenefit1Title;
   const passkeyBenefit1Description =
     texts?.passkeyBenefit1Description ||
-    locales?.details?.passkeyBenefit1Description;
+    locales.details.passkeyBenefit1Description;
   const passkeyBenefit2Title =
-    texts?.passkeyBenefit2Title || locales?.details?.passkeyBenefit2Title;
+    texts?.passkeyBenefit2Title || locales.details.passkeyBenefit2Title;
   const passkeyBenefit2Description =
     texts?.passkeyBenefit2Description ||
-    locales?.details?.passkeyBenefit2Description;
+    locales.details.passkeyBenefit2Description;
 
   // Using extractTokenValue utility to extract the Icons Color Value from CSS variable
   const iconColor = extractTokenValue("--ul-theme-color-icons");
@@ -135,7 +134,7 @@ function Details() {
                 onDismiss={() => dismiss(error.id)}
               >
                 <ULThemeAlertTitle>
-                  {error.message || locales?.errors?.errorOccurred}
+                  {error.message || locales.errors.errorOccurred}
                 </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
