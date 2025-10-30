@@ -1,4 +1,8 @@
-import type { Error } from "@auth0/auth0-acul-react/types";
+import { useErrors } from "@auth0/auth0-acul-react/mfa-sms-list";
+import type {
+  EnrolledPhoneNumber,
+  ErrorItem,
+} from "@auth0/auth0-acul-react/types";
 import { ChevronRight } from "lucide-react";
 
 import { MFAPhoneIcon } from "@/assets/icons";
@@ -8,18 +12,15 @@ import ULThemeSocialProviderButton from "@/components/ULThemeSocialProviderButto
 
 import { useMfaSmsListManager } from "../hooks/useMfaSmsListManager";
 
-interface EnrolledPhoneNumber {
-  id: number;
-  phoneNumber: string;
-}
-
 function MfaSmsList() {
-  const { errors, user, handleSelectPhoneNumber } = useMfaSmsListManager();
+  const { user, locales, handleSelectPhoneNumber } = useMfaSmsListManager();
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
 
   // Get enrolled phone numbers from user object
   const enrolledPhoneNumbers: EnrolledPhoneNumber[] =
@@ -27,12 +28,18 @@ function MfaSmsList() {
 
   return (
     <>
-      {/* General error messages */}
-      {generalErrors.length > 0 && (
+      {/* Display general errors */}
+      {hasError && generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
-          {generalErrors.map((error: Error, index: number) => (
-            <ULThemeAlert key={index}>
-              <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+          {generalErrors.map((error) => (
+            <ULThemeAlert
+              key={error.id}
+              variant="destructive"
+              onDismiss={() => dismiss(error.id)}
+            >
+              <ULThemeAlertTitle>
+                {error.message || locales?.errors?.errorOccurred}
+              </ULThemeAlertTitle>
             </ULThemeAlert>
           ))}
         </div>

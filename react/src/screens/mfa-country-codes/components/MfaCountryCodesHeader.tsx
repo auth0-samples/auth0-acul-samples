@@ -11,10 +11,11 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaCountryCodesManager } from "../hooks/useMfaCountryCodesManager";
 
 function MfaCountryCodesHeader() {
-  const { texts, handleBackAction } = useMfaCountryCodesManager();
+  const { texts, locales, handleBackAction } = useMfaCountryCodesManager();
 
-  const backText = texts?.backText || "Go back";
-  const titleText = texts?.title || "Select your country code";
+  // Use locales as fallback to SDK texts
+  const backText = texts?.backText || locales?.header?.backText;
+  const titleText = texts?.title || locales?.header?.title;
 
   return (
     <>

@@ -44,6 +44,25 @@ export const useScreen = jest.fn(() => ({
   loginLink: null,
 }));
 
+// Mock useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn(() => []),
+    byCode: jest.fn(() => []),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
+// Mock useResend hook
+export const useResend = jest.fn(() => ({
+  remaining: 0,
+  disabled: false,
+  startResend: jest.fn(),
+}));
+
 export const useTransaction = jest.fn(() => ({
   hasErrors: false,
   errors: [],

@@ -1,9 +1,7 @@
 import { useForm } from "react-hook-form";
 
-import type {
-  EmailChallengeOptions,
-  Error,
-} from "@auth0/auth0-acul-react/types";
+import { useErrors } from "@auth0/auth0-acul-react/email-identifier-challenge";
+import type { EmailChallengeOptions } from "@auth0/auth0-acul-react/types";
 
 import {
   ULThemeFloatingLabelField,
@@ -12,13 +10,14 @@ import {
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { useEmailIdentifierChallengeManager } from "../hooks/useEmailIdentifierChallengeManager";
 
 function EmailIdentifierChallengeForm() {
-  const { handleSubmitEmailChallenge, errors, texts } =
+  const { handleSubmitEmailChallenge, texts, locales } =
     useEmailIdentifierChallengeManager();
+
+  const { errors, dismiss } = useErrors();
 
   // Initialize the form using react-hook-form
   const form = useForm<EmailChallengeOptions>({
@@ -31,15 +30,13 @@ function EmailIdentifierChallengeForm() {
     formState: { isSubmitting },
   } = form;
 
-  const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the 6-digit code";
+  const buttonText = texts?.buttonText || locales?.form?.submitButton;
+  const codeLabelText = texts?.placeholder || locales?.form?.codeLabel;
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  // Extract general errors (not field-specific) from the SDK using useErrors hook
+  const generalErrors = errors.byKind("server").filter((err) => !err.field);
 
-  const codeSDKError = getFieldError("code", errors);
+  const codeSDKError = errors.byField("code")[0]?.message;
 
   const onSubmit = async (formData: EmailChallengeOptions) => {
     await handleSubmitEmailChallenge(formData.code);
@@ -51,8 +48,12 @@ function EmailIdentifierChallengeForm() {
         {/* General error messages */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -64,13 +65,13 @@ function EmailIdentifierChallengeForm() {
           control={form.control}
           name="code"
           rules={{
-            required: "Please enter the verification code.",
+            required: locales?.form?.codeRequired,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
-                label={`${codeLabelText}*`}
+                label={codeLabelText}
                 type="text"
                 inputMode="numeric"
                 placeholder=""
@@ -93,7 +94,7 @@ function EmailIdentifierChallengeForm() {
           className="w-full"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Verifying..." : buttonText}
+          {isSubmitting ? locales?.form?.submitting : buttonText}
         </ULThemeButton>
       </form>
     </Form>

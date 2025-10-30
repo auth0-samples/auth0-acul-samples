@@ -9,10 +9,10 @@ import { useMfaSmsChallengeManager } from "./hooks/useMfaSmsChallengeManager";
 
 function MfaSmsChallengeScreen() {
   // Extracting attributes from hook made out of MfaSmsChallenge instance of Auth0 React ACUL SDK
-  const { mfaSmsChallenge, texts } = useMfaSmsChallengeManager();
+  const { mfaSmsChallenge, texts, locales } = useMfaSmsChallengeManager();
 
   applyAuth0Theme(mfaSmsChallenge);
-  document.title = texts?.pageTitle || "Verify Your Identity - MFA";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

@@ -1,7 +1,6 @@
 import {
   useEmailIdentifierChallenge,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/email-identifier-challenge";
 import type {
   EmailChallengeOptions,
@@ -10,9 +9,10 @@ import type {
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const useEmailIdentifierChallengeManager = () => {
   const screen = useScreen();
-  const transaction = useTransaction();
   const emailIdentifierChallenge = useEmailIdentifierChallenge();
 
   const { texts, data, links } = screen;
@@ -47,8 +47,8 @@ export const useEmailIdentifierChallengeManager = () => {
     handleReturnToPrevious,
     texts: (texts || {}) as ScreenMembersOnEmailIdentifierChallenge["texts"],
     isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: transaction.errors || [],
     data,
     links,
+    locales,
   };
 };

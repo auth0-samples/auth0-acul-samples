@@ -1,0 +1,34 @@
+{
+  "page": {
+    "title": "Verify Your Identity - MFA"
+  },
+  "header": {
+    "logoAlt": "Application Logo",
+    "title": "Verify Your Identity",
+    "description": "We've sent a text message to:"
+  },
+  "form": {
+    "fields": {
+      "phoneNumber": {
+        "label": "Phone Number",
+        "fallback": "XXXXXXXXX"
+      },
+      "code": {
+        "label": "Enter the 6-digit code",
+        "required": "Please enter the verification code."
+      }
+    },
+    "button": "Continue",
+    "buttonSubmitting": "Verifying...",
+    "rememberDevice": "Remember this device for 30 days"
+  },
+  "footer": {
+    "resend": {
+      "text": "Didn't receive a code?",
+      "linkText": "Resend",
+      "separator": "or",
+      "getCall": "get a call"
+    },
+    "tryAnother": "Try another method"
+  }
+}

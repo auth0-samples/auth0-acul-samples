@@ -1,24 +1,27 @@
-import { useState } from "react";
+import { useResend } from "@auth0/auth0-acul-react/email-identifier-challenge";
 
 import { ULThemeButton } from "@/components/ULThemeButton";
+import { translate } from "@/utils/helpers/localeTranslate";
 
 import { useEmailIdentifierChallengeManager } from "../hooks/useEmailIdentifierChallengeManager";
 
 function Footer() {
-  const { texts, handleResendCode, handleReturnToPrevious } =
+  const { texts, handleResendCode, handleReturnToPrevious, locales } =
     useEmailIdentifierChallengeManager();
 
-  const [hasResent, setHasResent] = useState(false);
+  const { remaining, disabled, startResend } = useResend({
+    timeoutSeconds: 30,
+  });
 
-  const resendText = texts?.resendText || "Didn't receive a code?";
-  const resendLinkText = texts?.resendActionText || "Resend";
-  const resendLimitReachedText =
-    texts?.resendLimitReachedText || "Code has been resent.";
-  const backButtonText = texts?.backButtonText || "Go back";
+  const resendText = texts?.resendText || locales?.footer?.resendText;
+  const resendLinkText =
+    texts?.resendActionText || locales?.footer?.resendActionText;
+  const backButtonText =
+    texts?.backButtonText || locales?.footer?.backButtonText;
 
   const handleResendClick = async () => {
     await handleResendCode();
-    setHasResent(true);
+    startResend();
   };
 
   const handleReturnClick = async () => {
@@ -29,24 +32,23 @@ function Footer() {
     <div className="text-center space-y-4 mt-4">
       {/* Resend code section */}
       <div>
-        {!hasResent ? (
-          <>
-            <span className="text-(length:--ul-theme-font-body-text-size) font-body">
-              {resendText}{" "}
-            </span>
-            <ULThemeButton
-              onClick={handleResendClick}
-              variant="link"
-              size="link"
-            >
-              {resendLinkText}
-            </ULThemeButton>
-          </>
-        ) : (
-          <span className="text-(length:--ul-theme-font-body-text-size) font-body">
-            {resendLimitReachedText}
-          </span>
-        )}
+        <span className="text-(length:--ul-theme-font-body-text-size) font-body">
+          {resendText}{" "}
+        </span>
+        <ULThemeButton
+          onClick={handleResendClick}
+          variant="link"
+          size="link"
+          disabled={disabled}
+        >
+          {disabled
+            ? translate(
+                "footer.resendCooldown",
+                { seconds: String(remaining) },
+                locales
+              )
+            : resendLinkText}
+        </ULThemeButton>
       </div>
 
       {/* Go back button */}

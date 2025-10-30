@@ -3,10 +3,12 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { useMfaSmsEnrollmentManager } from "../hooks/useMfaSmsEnrollmentManager";
 
 function Footer() {
-  const { texts, handleTryAnotherMethod } = useMfaSmsEnrollmentManager();
+  const { texts, locales, handleTryAnotherMethod } =
+    useMfaSmsEnrollmentManager();
 
+  // Use locales as fallback to SDK texts
   const tryAnotherMethodText =
-    texts?.pickAuthenticatorText || "Try another method";
+    texts?.pickAuthenticatorText || locales?.footer?.tryAnotherMethodText;
 
   const handleTryAnotherMethodClick = async () => {
     await handleTryAnotherMethod();

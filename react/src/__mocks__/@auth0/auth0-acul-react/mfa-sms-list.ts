@@ -110,6 +110,17 @@ export const useMfaSmsList = jest.fn(() => ({
   selectPhoneNumber: mockMfaSmsListInstance.selectPhoneNumber,
 }));
 
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn(() => []),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
 export const useScreen = jest.fn(() => mockMfaSmsListInstance.screen);
 export const useTransaction = jest.fn(() => mockMfaSmsListInstance.transaction);
 export const useUser = jest.fn(() => mockMfaSmsListInstance.user);
