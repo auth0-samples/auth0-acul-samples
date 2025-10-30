@@ -5,18 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
 
 function Header() {
-  const { texts } = useLoginPasswordlessSmsOtpManager();
+  const { texts, locales } = useLoginPasswordlessSmsOtpManager();
 
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  // Use locales as fallback for SDK texts
+  const titleText = texts?.title || locales.heading.title;
+  const descriptionText = texts?.description || locales.heading.description;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description || "We've sent a text message to:"}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }
