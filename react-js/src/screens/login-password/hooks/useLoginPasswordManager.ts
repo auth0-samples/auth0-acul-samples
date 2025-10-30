@@ -1,17 +1,16 @@
 import { useMemo } from "react";
 
-import type {
-  LoginPasswordOptions,
-  ScreenMembersOnLoginPassword,
-} from "@auth0/auth0-acul-js/login-password";
 import LoginPassword from "@auth0/auth0-acul-js/login-password";
+import type { LoginPasswordOptions } from "@auth0/auth0-acul-js/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locale/en.json";
+
 /**
  * Custom hook to manage the LoginPassword screen functionality.
- * This hook provides methods and properties to handle login with password,
- * federated login, and other related functionalities like CAPTCHA and error handling.
+ * Returns only the SDK instance and essential handlers.
+ * Components access SDK primitives directly via loginPasswordInstance.
  */
 export const useLoginPasswordManager = () => {
   // Initialize the LoginPassword instance
@@ -20,47 +19,27 @@ export const useLoginPasswordManager = () => {
   // Extract transaction and screen properties from the LoginPassword instance
   const { transaction, screen } = loginPasswordInstance;
 
-  // Extract relevant flags from the transaction object
-  const { isSignupEnabled, isForgotPasswordEnabled, isPasskeyEnabled } =
-    transaction;
-
-  // Extract relevant properties from the screen object
-  const {
-    signupLink,
-    resetPasswordLink,
-    texts,
-    captchaImage,
-    editIdentifierLink,
-    links,
-    data,
-  } = screen;
-
   /**
    * Handles the login process using a username and password.
-   * Optionally includes a CAPTCHA value if required.
    *
-   * @param loginId - The username or email address of the user.
-   * @param password - The password of the user.
-   * @param captcha - (Optional) The CAPTCHA value if required.
+   * @param data - The form data containing username, password, and optional CAPTCHA.
    * @returns A promise that resolves when the login process is complete.
    */
   const handleLoginPassword = async (
-    loginId: string,
-    password: string,
-    captcha?: string
+    data: LoginPasswordOptions
   ): Promise<void> => {
     const options: LoginPasswordOptions = {
-      username: loginId?.trim() || "",
-      password: password?.trim() || "",
+      username: data.username?.trim() || "",
+      password: data.password?.trim() || "",
     };
 
     // Include CAPTCHA in the options if available and provided
-    if (screen.isCaptchaAvailable && captcha?.trim()) {
-      options.captcha = captcha.trim();
+    if (screen.isCaptchaAvailable && data.captcha?.trim()) {
+      options.captcha = data.captcha.trim();
     }
 
     // Execute the login process safely and log any errors
-    executeSafely(
+    await executeSafely(
       `LoginPassword with options: ${JSON.stringify(options)}`,
       () => loginPasswordInstance.login(options)
     );
@@ -69,17 +48,8 @@ export const useLoginPasswordManager = () => {
   return {
     loginPasswordInstance,
     handleLoginPassword,
-    texts: (texts || {}) as ScreenMembersOnLoginPassword["texts"],
-    isSignupEnabled: isSignupEnabled === true,
-    isForgotPasswordEnabled: isForgotPasswordEnabled === true,
-    isPasskeyEnabled: isPasskeyEnabled === true,
-    isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: loginPasswordInstance.getErrors(),
-    links,
-    editIdentifierLink,
-    signupLink,
-    resetPasswordLink,
-    captchaImage,
-    data,
+    screen,
+    transaction,
+    locales,
   };
 };

@@ -61,42 +61,6 @@ const createIdentifierKey = (
 };
 
 /**
- * Gets individual identifier field details for a specific identifier type.
- * This function is specifically designed for signup screens where identifiers
- * can be either required or optional based on transaction.requiredIdentifiers
- * and transaction.optionalIdentifiers.
- *
- * @param identifierType - The specific identifier type (email, phone, username)
- * @param isRequired - Whether this identifier is required or optional
- * @param screenTexts - The screen.texts object from Auth0 SDK instance
- * @returns An object containing the label, type, and autoComplete for the specific identifier field
- */
-export const getIndividualIdentifierDetails = (
-  identifierType: IdentifierType,
-  isRequired: boolean,
-  screenTexts?: Record<string, string> | null
-): IdentifierDetails => {
-  const suffix = isRequired ? "*" : " (optional)";
-  const config = INDIVIDUAL_IDENTIFIER_CONFIG[identifierType];
-
-  if (!config) {
-    return {
-      label: `${identifierType}${suffix}`,
-      type: "text",
-      autoComplete: "username",
-    };
-  }
-
-  const baseLabel = screenTexts?.[config.labelKey] || config.labelFallback;
-
-  return {
-    label: `${baseLabel}${suffix}`,
-    type: config.type || "text",
-    autoComplete: config.autoComplete || "username",
-  };
-};
-
-/**
  * Determines the appropriate label, input type, and autocomplete attribute
  * for an identifier field based on active connection attributes and screen texts.
  * This function is specifically designed for login screens where all identifier

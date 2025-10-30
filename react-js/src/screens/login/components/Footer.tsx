@@ -1,31 +1,26 @@
 import ULThemeLink from "@/components/ULThemeLink";
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginManager } from "../hooks/useLoginManager";
 
 function Footer() {
-  const { texts, signupLink, isSignupEnabled } = useLoginManager();
+  const { screen, transaction, locales } = useLoginManager();
+  const { texts, signupLink } = screen;
+  const { isSignupEnabled } = transaction;
 
-  if (!isSignupEnabled) {
+  if (!isSignupEnabled || !signupLink) {
     return null;
   }
 
-  const localizedSignupLink = rebaseLinkToCurrentOrigin(signupLink);
-
-  // Handle text fallbacks in component
-  const footerText =
-    texts?.footerText || texts?.signupActionText || "Don't have an account?";
-  const signupLinkText =
-    texts?.footerLinkText || texts?.signupActionLinkText || "Sign up";
+  // Use SDK texts with locale fallbacks
+  const footerText = texts?.footerText || locales.footer.text;
+  const footerLinkText = texts?.footerLinkText || locales.footer.linkText;
 
   return (
     <div className="mt-4 text-left">
       <span className="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body">
         {footerText}
       </span>
-      {localizedSignupLink && (
-        <ULThemeLink href={localizedSignupLink}>{signupLinkText}</ULThemeLink>
-      )}
+      <ULThemeLink href={signupLink}>{footerLinkText}</ULThemeLink>
     </div>
   );
 }
