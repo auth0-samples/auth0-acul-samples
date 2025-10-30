@@ -1,4 +1,9 @@
-import { enroll, useScreen } from "@auth0/auth0-acul-react/mfa-login-options";
+import {
+  enroll,
+  useErrors,
+  useScreen,
+  useTransaction,
+} from "@auth0/auth0-acul-react/mfa-login-options";
 import { act, render, screen } from "@testing-library/react";
 
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
@@ -61,6 +66,51 @@ describe("MfaLoginOptionsScreen", () => {
     await ScreenTestUtils.clickButton(/Security Key/i);
 
     expect(enroll).toHaveBeenCalledWith({ action: "webauthn-roaming" });
+  });
+
+  it("displays general errors when present", async () => {
+    const mockErrors = [
+      { message: "Network error occurred", field: null },
+      { message: "Service unavailable", field: undefined },
+    ];
+
+    // Configure mock transaction to have general error
+    (useTransaction as jest.Mock).mockReturnValue({
+      hasErrors: true,
+      errors: mockErrors,
+    });
+
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "network-error",
+                message: "Network error occurred",
+                kind: "server",
+              },
+              {
+                id: "service-unavailable",
+                message: "Service unavailable",
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    await renderScreen();
+
+    expect(screen.getByText("Network error occurred")).toBeInTheDocument();
+    expect(screen.getByText("Service unavailable")).toBeInTheDocument();
   });
 
   it("sets fallback title when texts is missing", async () => {

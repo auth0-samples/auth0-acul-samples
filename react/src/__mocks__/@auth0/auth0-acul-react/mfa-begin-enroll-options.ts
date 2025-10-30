@@ -1,4 +1,5 @@
 import type {
+  ErrorItem,
   ScreenMembers,
   TransactionMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -75,6 +76,16 @@ export const useMfaBeginEnrollOptions = jest.fn(
 
 // Export SDK method directly
 export const enroll = mockMfaBeginEnrollOptionsInstance.enroll;
+
+const mockErrors: ErrorItem[] = [];
+
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+}));
 
 /**
  * Default export for Jest mock injection using `jest.mock(...)`.
