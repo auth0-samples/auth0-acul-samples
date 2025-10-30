@@ -9,9 +9,8 @@ function Footer() {
 
   // Use Locales as fallback to SDK texts
   const continueButtonText =
-    texts?.continueButtonText || locales?.footer?.continueButtonText;
-  const backButtonText =
-    texts?.backButtonText || locales?.footer?.backButtonText;
+    texts?.continueButtonText || locales.footer.continueButtonText;
+  const backButtonText = texts?.backButtonText || locales.footer.backButtonText;
 
   return (
     <>

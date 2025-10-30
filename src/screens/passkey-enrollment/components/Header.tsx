@@ -7,8 +7,8 @@ function Header() {
   const { texts, locales } = usePasskeyEnrollmentManager();
 
   // Use Locales as fallback to SDK texts
-  const titleText = texts?.title || locales?.heading?.title;
-  const logoAltText = texts?.logoAltText || locales?.heading?.logoAltText;
+  const titleText = texts?.title || locales.heading.title;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
