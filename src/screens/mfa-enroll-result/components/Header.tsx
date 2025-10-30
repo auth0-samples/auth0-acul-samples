@@ -6,61 +6,6 @@ import { extractTokenValue } from "@/utils/helpers/tokenUtils";
 
 import { useMfaEnrollResultManager } from "../hooks/useMfaEnrollResultManager";
 
-const getTitle = (
-  data: {
-    status: string;
-  } | null,
-  texts: Record<string, string> | null
-) => {
-  switch (data?.status) {
-    case "success":
-      return texts?.enrolledTitle || "You're All Set!";
-    case "already-enrolled":
-      return texts?.alreadyEnrolledTitle || "Already enrolled";
-    case "already-used":
-      return texts?.alreadyUsedTitle || "Already used";
-    case "invalid-ticket":
-      return texts?.invalidTicketTitle || "Invalid Link";
-    case "expired-ticket":
-      return texts?.expiredTicketTitle || "Expired Link";
-    default:
-      return texts?.genericError || "Something Went Wrong";
-  }
-};
-
-const getDescription = (
-  data: {
-    status: string;
-  } | null,
-  texts: Record<string, string> | null
-) => {
-  switch (data?.status) {
-    case "success":
-      return (
-        texts?.enrolledDescription ||
-        "You have successfully added a new authentication factor."
-      );
-    case "already-enrolled":
-      return (
-        texts?.alreadyEnrolledDescription ||
-        "Two-factor Verification has Already Been Enabled."
-      );
-    case "already-used":
-      return (
-        texts?.alreadyUsedDescription ||
-        "This link has already been used. Please get a new link to enroll with Multi-factor Authentication."
-      );
-    case "invalid-ticket":
-      return (
-        texts?.invalidTicketDescription || "This link is invalid or expired."
-      );
-    case "expired-ticket":
-      return texts?.expiredTicketDescription || "This link is expired.";
-    default:
-      return "";
-  }
-};
-
 const logoWidget = (data: { status: string } | null) => {
   if (data?.status === "success") {
     return (
@@ -91,7 +36,72 @@ const themedLogoWidgetColorSuccess = extractTokenValue(
 const themedLogoWidgetColorError = extractTokenValue("--ul-theme-color-error");
 
 function Header() {
-  const { texts, data } = useMfaEnrollResultManager();
+  const { texts, data, locales } = useMfaEnrollResultManager();
+
+  const getTitle = (
+    data: {
+      status: string;
+    } | null,
+    texts: Record<string, string> | null
+  ) => {
+    switch (data?.status) {
+      case "success":
+        return texts?.enrolledTitle || locales.header.title.enrolledText;
+      case "already-enrolled":
+        return (
+          texts?.alreadyEnrolledTitle ||
+          locales.header.title.alreadyEnrolledText
+        );
+      case "already-used":
+        return texts?.alreadyUsedTitle || locales.header.title.alreadyUsedText;
+      case "invalid-ticket":
+        return (
+          texts?.invalidTicketTitle || locales.header.title.invalidTicketText
+        );
+      case "expired-ticket":
+        return (
+          texts?.expiredTicketTitle || locales.header.title.expiredTicketText
+        );
+      default:
+        return texts?.genericError || locales.header.title.genericErrorText;
+    }
+  };
+
+  const getDescription = (
+    data: {
+      status: string;
+    } | null,
+    texts: Record<string, string> | null
+  ) => {
+    switch (data?.status) {
+      case "success":
+        return (
+          texts?.enrolledDescription || locales.header.description.enrolledText
+        );
+      case "already-enrolled":
+        return (
+          texts?.alreadyEnrolledDescription ||
+          locales.header.description.alreadyEnrolledText
+        );
+      case "already-used":
+        return (
+          texts?.alreadyUsedDescription ||
+          locales.header.description.alreadyUsedText
+        );
+      case "invalid-ticket":
+        return (
+          texts?.invalidTicketDescription ||
+          locales.header.description.invalidTicketText
+        );
+      case "expired-ticket":
+        return (
+          texts?.expiredTicketDescription ||
+          locales.header.description.expiredTicketText
+        );
+      default:
+        return "";
+    }
+  };
 
   return (
     <>

@@ -4,6 +4,7 @@
  */
 
 import type {
+  ErrorItem,
   ScreenMembersOnMfaLoginOptions,
   TransactionMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -70,6 +71,15 @@ const defaultMock = createMockMfaLoginOptionsInstance();
 export const useScreen = jest.fn(() => defaultMock.screen);
 export const useTransaction = jest.fn(() => defaultMock.transaction);
 export const useMfaLoginOptions = jest.fn(() => defaultMock);
+const mockErrors: ErrorItem[] = [];
+
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+}));
 
 export const enroll = defaultMock.enroll;
 

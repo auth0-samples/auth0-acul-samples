@@ -1,8 +1,8 @@
 import {
   enroll,
+  useErrors,
   useMfaLoginOptions,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/mfa-login-options";
 import {
   LoginEnrollOptions,
@@ -10,6 +10,8 @@ import {
 } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 /**
  * Handles the user login via MFA
@@ -29,7 +31,8 @@ export const useMfaLoginOptionsManager = () => {
     mfaLoginOptions,
     handleEnroll,
     texts: (texts || {}) as ScreenMembersOnMfaLoginOptions["texts"],
-    errors: useTransaction().errors || [],
     enrolledFactors: mfaLoginOptions.user?.enrolledFactors || [],
+    locales,
+    useErrors: useErrors(),
   };
 };

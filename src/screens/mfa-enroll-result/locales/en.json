@@ -1,0 +1,21 @@
+{
+    "pageTitle": "MFA enrollment status",
+    "header": {
+        "title": {
+            "enrolledText": "You're All Set!",
+            "alreadyEnrolledText": "Already enrolled",
+            "alreadyUsedText": "Already used",
+            "invalidTicketText": "Invalid Link",
+            "expiredTicketText": "Expired Link",
+            "genericErrorText": "Something Went Wrong"
+        },
+        "description": {
+            "enrolledText": "You have successfully added a new authentication factor.",
+            "alreadyEnrolledText": "Two-factor Verification has Already Been Enabled.",
+            "alreadyUsedText": "This link has already been used. Please get a new link to enroll with Multi-factor Authentication.",
+            "invalidTicketText": "This link is invalid or expired.",
+            "expiredTicketText": "This link is expired."
+        }
+
+    }
+}
