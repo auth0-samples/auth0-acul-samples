@@ -25,7 +25,7 @@ export const ULThemePasswordValidator = ({
   passwordSecurityText,
   show = true,
 }: ULThemePasswordValidatorProps) => {
-  if (!show) {
+  if (!show || !validationRules || validationRules.length === 0) {
     return null;
   }
 

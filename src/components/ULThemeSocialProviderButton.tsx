@@ -43,7 +43,7 @@ const ULThemeSocialProviderButton = ({
 
   // Base Styles getting applied for look and feel
   const baseStyles =
-    "flex items-center justify-start w-full max-w-[320px] h-[52px] py-[14px] px-[16px] gap-x-4";
+    "flex items-center justify-start w-full max-w-[320px] h-[52px] py-3.5 px-4 gap-x-4";
 
   // Keeping the button enable and disable styles as is. Will need to revisit this in future if needed
   const enabledStyles =
@@ -57,21 +57,21 @@ const ULThemeSocialProviderButton = ({
       "theme-universal:font-button", //font-weight
       "theme-universal:rounded-button", // border-radius
       "theme-universal:border-(length:--ul-theme-border-button-border-weight)", // border-weight or border-width
-      "theme-universal:border-(--color-secondary-button-border)", // border-color
-      "theme-universal:text-(--color-secondary-button-label)", // text label color
-      "theme-universal:hover:shadow-[var(--button-hover-shadow)]", // box-shadow on hover
+      "theme-universal:border-secondary-button-border", // border-color
+      "theme-universal:text-secondary-button-label", // text label color
+      "theme-universal:hover:shadow-(--button-hover-shadow)", // box-shadow on hover
       "theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15" // focus base color
     ),
     primary: "", // Add primary overrides if needed
     secondary: "", // Add secondary overrides if needed
     destructive: "", // Add destructive overrides if needed
     ghost: cn(
-      "py-[2px]",
-      "px-[2px]",
-      "mb-[0px]",
+      "py-0.5",
+      "px-0.5",
+      "mb-0",
       "theme-universal:font-button",
-      "theme-universal:text-(--color-secondary-button-label)",
-      "theme-universal:hover:shadow-[var(--button-hover-shadow)]",
+      "theme-universal:text-secondary-button-label",
+      "theme-universal:hover:shadow-(--button-hover-shadow)",
       "theme-universal:focus:outline-none theme-universal:focus:ring-base-focus/15 theme-universal:focus:bg-base-focus/15"
     ),
     link: "", // Add link overrides if needed
@@ -100,7 +100,7 @@ const ULThemeSocialProviderButton = ({
           {iconComponent}
         </span>
       )}
-      <span className="break-words text-base whitespace-normal text-left">
+      <span className="wrap-break-word text-base whitespace-normal text-left">
         {buttonText}
       </span>
       {iconEnd && <span className="shrink-0 ml-auto">{iconEnd}</span>}
