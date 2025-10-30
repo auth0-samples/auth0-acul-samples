@@ -1,0 +1,215 @@
+import { useForm } from "react-hook-form";
+
+import type {
+  Error,
+  TransactionMembersOnLoginId,
+} from "@auth0/auth0-acul-js/types";
+
+import Captcha from "@/components/Captcha/index";
+import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
+import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
+import { Form, FormField, FormItem } from "@/components/ui/form";
+import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
+import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
+import ULThemeLink from "@/components/ULThemeLink";
+import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import { useCaptcha } from "@/hooks/useCaptcha";
+import {
+  isPhoneNumberSupported,
+  transformAuth0CountryCode,
+} from "@/utils/helpers/countryUtils";
+import { getFieldError } from "@/utils/helpers/errorUtils";
+import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
+import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
+
+import { useLoginIdManager } from "../hooks/useLoginIdManager";
+
+interface LoginIdFormData {
+  identifier: string;
+  captcha?: string;
+}
+
+function IdentifierForm() {
+  const {
+    handleLoginId,
+    errors,
+    isCaptchaAvailable,
+    captcha,
+    resetPasswordLink,
+    isForgotPasswordEnabled,
+    loginIdInstance,
+    texts,
+    handlePickCountryCode,
+  } = useLoginIdManager();
+
+  const form = useForm<LoginIdFormData>({
+    defaultValues: {
+      identifier: "",
+      captcha: "",
+    },
+  });
+
+  const {
+    formState: { isSubmitting },
+  } = form;
+
+  const getCaptchaTheme = (): "light" | "dark" | "auto" => {
+    const allowedThemes = ["light", "dark", "auto"] as const;
+    const rawTheme =
+      loginIdInstance?.branding?.themes?.default?.colors?.captcha_widget_theme;
+
+    // Type guard to check if the raw theme is a valid theme
+    const isValidTheme = (
+      theme: unknown
+    ): theme is "light" | "dark" | "auto" => {
+      return allowedThemes.includes(theme as "light" | "dark" | "auto");
+    };
+
+    return isValidTheme(rawTheme) ? rawTheme : "auto";
+  };
+
+  // Handle text fallbacks in component
+  const buttonText = texts?.buttonText || "Continue";
+  const captchaLabel = texts?.captchaCodePlaceholder?.concat("*") || "CAPTCHA*";
+  const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
+
+  // Get general errors (not field-specific)
+  const generalErrors =
+    errors?.filter((error: Error) => !error.field || error.field === null) ||
+    [];
+
+  const identifierSDKError =
+    getFieldError("identifier", errors) ||
+    getFieldError("email", errors) ||
+    getFieldError("phone", errors) ||
+    getFieldError("username", errors);
+
+  const captchaSDKError = getFieldError("captcha", errors);
+
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel,
+    getCaptchaTheme()
+  );
+
+  // Get allowed identifiers directly from SDK
+  const allowedIdentifiers =
+    loginIdInstance?.transaction?.allowedIdentifiers || [];
+
+  const {
+    label: identifierLabel,
+    type: identifierType,
+    autoComplete: identifierAutoComplete,
+  } = getIdentifierDetails(allowedIdentifiers, texts);
+
+  // Proper submit handler with form data
+  const onSubmit = async (data: LoginIdFormData) => {
+    await handleLoginId(data.identifier, captchaValue);
+  };
+
+  const localizedResetPasswordLink =
+    resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
+
+  const shouldShowCountryPicker = isPhoneNumberSupported(allowedIdentifiers);
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+        {/* General alerts at the top */}
+        {generalErrors.length > 0 && (
+          <div className="space-y-3 mb-4">
+            {generalErrors.map((error: Error, index: number) => (
+              <ULThemeAlert key={index} variant="destructive">
+                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+              </ULThemeAlert>
+            ))}
+          </div>
+        )}
+
+        {/* Country Code Picker - only show if phone numbers are supported */}
+        {shouldShowCountryPicker && (
+          <div className="mb-4">
+            <ULThemeCountryCodePicker
+              selectedCountry={transformAuth0CountryCode(
+                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
+                  ?.countryCode,
+                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
+                  ?.countryPrefix
+              )}
+              onClick={handlePickCountryCode}
+              fullWidth
+              placeholder="Select Country"
+            />
+          </div>
+        )}
+
+        {/* Identifier input field */}
+        <FormField
+          control={form.control}
+          name="identifier"
+          rules={{
+            required: "This field is required",
+            maxLength: {
+              value: 100,
+              message: "Maximum 100 characters allowed",
+            },
+          }}
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <ULThemeFloatingLabelField
+                {...field}
+                label={identifierLabel}
+                type={identifierType}
+                autoFocus={true}
+                autoComplete={identifierAutoComplete}
+                error={!!fieldState.error || !!identifierSDKError}
+              />
+              <ULThemeFormMessage
+                sdkError={identifierSDKError}
+                hasFormError={!!fieldState.error}
+              />
+            </FormItem>
+          )}
+        />
+
+        {/* CAPTCHA Box */}
+        {isCaptchaAvailable && captchaConfig && (
+          <Captcha
+            control={form.control}
+            name="captcha"
+            captcha={captchaConfig}
+            {...captchaProps}
+            sdkError={captchaSDKError}
+            rules={{
+              required: "Please complete the CAPTCHA",
+              maxLength: {
+                value: 15,
+                message: "CAPTCHA too long",
+              },
+            }}
+          />
+        )}
+
+        {/* Forgot Password link */}
+        <div className="text-left mb-4">
+          {isForgotPasswordEnabled && localizedResetPasswordLink && (
+            <ULThemeLink href={localizedResetPasswordLink}>
+              {forgotPasswordText}
+            </ULThemeLink>
+          )}
+        </div>
+
+        {/* Submit button */}
+        <ULThemePrimaryButton
+          type="submit"
+          className="w-full"
+          disabled={isSubmitting}
+        >
+          {buttonText}
+        </ULThemePrimaryButton>
+      </form>
+    </Form>
+  );
+}
+
+export default IdentifierForm;
