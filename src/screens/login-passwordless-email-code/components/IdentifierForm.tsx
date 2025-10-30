@@ -41,7 +41,7 @@ function IdentifierForm() {
   // Initialize the form using react-hook-form
   const form = useForm<SubmitCodeOptions>({
     defaultValues: {
-      email: data?.email || "",
+      email: "",
       code: "",
       captcha: "",
     },

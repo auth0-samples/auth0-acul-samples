@@ -1,4 +1,7 @@
+import { useResend } from "@auth0/auth0-acul-react/login-passwordless-sms-otp";
+
 import { ULThemeButton } from "@/components/ULThemeButton";
+import { translate } from "@/utils/helpers/localeTranslate";
 
 import { useLoginPasswordlessSmsOtpManager } from "../hooks/useLoginPasswordlessSmsOtpManager";
 
@@ -7,24 +10,38 @@ function Footer() {
     useLoginPasswordlessSmsOtpManager();
 
   // Handle text fallbacks in component
-  const footerText = texts?.resendText || locales?.footer?.resendActionText;
-  const footerLinkText =
+  const resendText = texts?.resendText || locales?.footer?.resendActionText;
+  const resendLinkText =
     texts?.resendActionText || locales?.footer?.resendActionLinkText;
+
+  const { remaining, disabled, startResend } = useResend({
+    timeoutSeconds: 30,
+  });
+
+  const handleResendClick = async () => {
+    await handleResendOTP();
+    startResend();
+  };
 
   return (
     <div className="mt-4 text-center">
       <span className="pr-1 text-body-text text-(length:--ul-theme-font-body-text-size) font-body">
-        {footerText}
+        {resendText}
       </span>
-      {footerLinkText && (
-        <ULThemeButton
-          variant="link"
-          size="link"
-          onClick={() => handleResendOTP()}
-        >
-          {footerLinkText}
-        </ULThemeButton>
-      )}
+      <ULThemeButton
+        variant="link"
+        size="link"
+        disabled={disabled}
+        onClick={handleResendClick}
+      >
+        {disabled
+          ? translate(
+              "footer.resendCooldown",
+              { seconds: String(remaining) },
+              locales
+            )
+          : resendLinkText}
+      </ULThemeButton>
     </div>
   );
 }

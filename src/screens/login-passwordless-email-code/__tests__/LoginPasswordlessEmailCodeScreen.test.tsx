@@ -1,6 +1,7 @@
 import {
   resendCode,
   submitCode,
+  useResend,
   useScreen,
 } from "@auth0/auth0-acul-react/login-passwordless-email-code";
 import { render, screen } from "@testing-library/react";
@@ -29,6 +30,13 @@ describe("LoginPasswordlessEmailCodeScreen", () => {
       },
       captchaProps: { label: "CAPTCHA" },
       captchaValue: "mock-value",
+    });
+
+    // Reset useResend mock to default state
+    (useResend as jest.Mock).mockReturnValue({
+      remaining: 0,
+      disabled: false,
+      startResend: jest.fn(),
     });
   });
 
@@ -73,6 +81,34 @@ describe("LoginPasswordlessEmailCodeScreen", () => {
     await ScreenTestUtils.clickButton(/Resend/i);
 
     expect(resendCode).toHaveBeenCalled();
+  });
+
+  it("calls resendCode SDK method when resend button is clicked", async () => {
+    const startResend = jest.fn();
+    (useResend as jest.Mock).mockReturnValueOnce({
+      remaining: 0,
+      disabled: false,
+      startResend,
+    });
+
+    render(<LoginPasswordlessEmailCodeScreen />);
+
+    await ScreenTestUtils.clickButton(/Resend/i);
+
+    expect(resendCode).toHaveBeenCalled();
+    expect(startResend).toHaveBeenCalled();
+  });
+
+  it("shows resend cooldown when useResend hook is active", async () => {
+    (useResend as jest.Mock).mockReturnValueOnce({
+      remaining: 25,
+      disabled: true,
+      startResend: jest.fn(),
+    });
+
+    render(<LoginPasswordlessEmailCodeScreen />);
+
+    expect(screen.getByText(/Resend in 25s/i)).toBeInTheDocument();
   });
 
   it("sets correct document title from SDK", () => {

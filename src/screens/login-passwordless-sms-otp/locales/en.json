@@ -9,7 +9,8 @@
     },
     "footer": {
         "resendActionText": "Didn't receive a code?",
-        "resendActionLinkText": "Resend"
+        "resendActionLinkText": "Resend",
+        "resendCooldown": "Resend in {{seconds}}s"
     },
     "form": {
         "selectCountryPlaceholder": "Select Country",
