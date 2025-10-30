@@ -1,4 +1,5 @@
-import { CustomOptions } from "@auth0/auth0-acul-react/types";
+import { useErrors } from "@auth0/auth0-acul-react/passkey-enrollment";
+import { CustomOptions, ErrorItem } from "@auth0/auth0-acul-react/types";
 
 import {
   CheckMarkShieldAccent,
@@ -8,6 +9,7 @@ import {
   WebAuthPlatform,
 } from "@/assets/icons";
 import { ULThemeButton } from "@/components/ULThemeButton";
+import ULThemeAlert, { ULThemeAlertTitle } from "@/components/ULThemeError";
 import {
   ULThemeList,
   ULThemeListDescription,
@@ -25,13 +27,37 @@ import { usePasskeyEnrollmentManager } from "../hooks/usePasskeyEnrollmentManage
  */
 function Details() {
   // Extract necessary methods and properties from the custom hook
-  const { continuePasskeyEnrollment, texts } = usePasskeyEnrollmentManager();
+  const { continuePasskeyEnrollment, texts, locales } =
+    usePasskeyEnrollmentManager();
 
-  // Handle text fallbacks for button and field labels
-  const buttonText = texts?.createButtonText || "Create a passkey";
+  // Use Locales as fallback to SDK texts
+  const buttonText =
+    texts?.createButtonText || locales?.details?.createPasskeyText;
+  const passkeyBenefit1Title =
+    texts?.passkeyBenefit1Title || locales?.details?.passkeyBenefit1Title;
+  const passkeyBenefit1Description =
+    texts?.passkeyBenefit1Description ||
+    locales?.details?.passkeyBenefit1Description;
+  const passkeyBenefit2Title =
+    texts?.passkeyBenefit2Title || locales?.details?.passkeyBenefit2Title;
+  const passkeyBenefit2Description =
+    texts?.passkeyBenefit2Description ||
+    locales?.details?.passkeyBenefit2Description;
+  const passkeyBenefit3Title =
+    texts?.passkeyBenefit3Title || locales?.details?.passkeyBenefit3Title;
+  const passkeyBenefit3Description =
+    texts?.passkeyBenefit3Description ||
+    locales?.details?.passkeyBenefit3Description;
 
   // Using extractTokenValue utility to extract the Icons Color Value from CSS variable
   const iconColor = extractTokenValue("--ul-theme-color-icons");
+
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
 
   /**
    * Handles form submission.
@@ -61,48 +87,46 @@ function Details() {
 
   return (
     <>
+      {/* Display general errors */}
+      {hasError && generalErrors.length > 0 && (
+        <div className="space-y-3 mb-4">
+          {generalErrors.map((error) => (
+            <ULThemeAlert
+              key={error.id}
+              variant="destructive"
+              onDismiss={() => dismiss(error.id)}
+            >
+              <ULThemeAlertTitle>
+                {error.message || locales?.errors?.errorOccurred}
+              </ULThemeAlertTitle>
+            </ULThemeAlert>
+          ))}
+        </div>
+      )}
+
       <ULThemeList variant="icon">
         <ULThemeListItem
           icon={renderIcon(WebAuthPlatform, undefined, "opacity-[1]")}
         >
-          <ULThemeListTitle
-            children={
-              texts?.passkeyBenefit1Title || "No need to remember a password"
-            }
-          ></ULThemeListTitle>
+          <ULThemeListTitle children={passkeyBenefit1Title}></ULThemeListTitle>
           <ULThemeListDescription
-            children={
-              texts?.passkeyBenefit1Description ||
-              "With passkeys, you can use things like your fingerprint or face to login."
-            }
+            children={passkeyBenefit1Description}
           ></ULThemeListDescription>
         </ULThemeListItem>
 
         <ULThemeListItem icon={renderIcon(DeviceGlobeMask, DeviceGlobeAccent)}>
-          <ULThemeListTitle
-            children={
-              texts?.passkeyBenefit2Title || "Works on all of your devices"
-            }
-          ></ULThemeListTitle>
+          <ULThemeListTitle children={passkeyBenefit2Title}></ULThemeListTitle>
           <ULThemeListDescription
-            children={
-              texts?.passkeyBenefit2Description ||
-              "Passkeys will automatically be available across your synced devices."
-            }
+            children={passkeyBenefit2Description}
           ></ULThemeListDescription>
         </ULThemeListItem>
 
         <ULThemeListItem
           icon={renderIcon(CheckMarkShieldMask, CheckMarkShieldAccent)}
         >
-          <ULThemeListTitle
-            children={texts?.passkeyBenefit3Title || "Keep your account safer"}
-          ></ULThemeListTitle>
+          <ULThemeListTitle children={passkeyBenefit3Title}></ULThemeListTitle>
           <ULThemeListDescription
-            children={
-              texts?.passkeyBenefit3Description ||
-              "Passkeys offer state-of-the-art phishing resistance."
-            }
+            children={passkeyBenefit3Description}
           ></ULThemeListDescription>
         </ULThemeListItem>
       </ULThemeList>

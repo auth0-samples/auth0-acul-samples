@@ -4,13 +4,14 @@ import ULThemeLink from "@/components/ULThemeLink";
 import { usePasskeyEnrollmentManager } from "../hooks/usePasskeyEnrollmentManager";
 
 function Footer() {
-  const { links, texts, abortPasskeyEnrollment } =
+  const { links, texts, locales, abortPasskeyEnrollment } =
     usePasskeyEnrollmentManager();
 
-  // Handle text fallbacks in component
+  // Use Locales as fallback to SDK texts
   const continueButtonText =
-    texts?.continueButtonText || "Continue without passkeys";
-  const backButtonText = texts?.backButtonText || "Go back";
+    texts?.continueButtonText || locales?.footer?.continueButtonText;
+  const backButtonText =
+    texts?.backButtonText || locales?.footer?.backButtonText;
 
   return (
     <>
