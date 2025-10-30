@@ -23,8 +23,6 @@ function Footer() {
     timeoutSeconds: 30,
   });
 
-  console.log(disabled);
-
   const handleResendClick = async () => {
     await handleResendEmail();
     startResend();
