@@ -1,39 +1,9 @@
-/**
- * @file This file provides a comprehensive mock for the Auth0 ACUL React mfa-push-list hooks.
- * It is designed to be structurally aligned with the official React SDK, enabling robust
- * and isolated testing of our components.
- */
-import type { TransactionMembers } from "@auth0/auth0-acul-react/types";
-
-/**
- * Screen-specific types for MFA Push List
- */
-export interface ScreenMembersOnMfaPushList {
-  name: string;
-  texts: {
-    pageTitle?: string;
-    backText?: string;
-    title?: string;
-    badgeUrl?: string;
-    badgeAltText?: string;
-    error?: string;
-  };
-}
-
-export interface UserMembers {
-  id?: string;
-  email?: string;
-  picture?: string;
-  enrolledFactors?: string[];
-  enrolledDevices?: Array<{
-    id: number;
-    device: string;
-  }>;
-  enrolledPhoneNumbers?: Array<{
-    id: number;
-    phoneNumber: string;
-  }>;
-}
+import type {
+  ErrorItem,
+  ScreenMembers,
+  TransactionMembers,
+  UserMembers,
+} from "@auth0/auth0-acul-react/types";
 
 /**
  * Defines the "contract" for our mock. It combines the methods from the mfa-push-list
@@ -43,7 +13,7 @@ export interface UserMembers {
 export interface MockMfaPushListInstance {
   goBack: jest.Mock;
   selectMfaPushDevice: jest.Mock;
-  screen: ScreenMembersOnMfaPushList;
+  screen: ScreenMembers;
   transaction: TransactionMembers;
   user: UserMembers;
 }
@@ -67,6 +37,13 @@ export const createMockMfaPushListInstance = (): MockMfaPushListInstance => ({
       badgeAltText: "Link to the Auth0 website",
       error: "Error",
     },
+    captchaImage: null,
+    captchaSiteKey: null,
+    captchaProvider: null,
+    isCaptchaAvailable: false,
+    data: null,
+    links: null,
+    captcha: null,
   },
   transaction: {
     hasErrors: false,
@@ -94,6 +71,13 @@ export const createMockMfaPushListInstance = (): MockMfaPushListInstance => ({
         device: "Test Device 2",
       },
     ],
+    username: null,
+    phoneNumber: null,
+    enrolledEmails: null,
+    enrolledPhoneNumbers: null,
+    organizations: null,
+    userMetadata: null,
+    appMetadata: null,
   },
 });
 
@@ -103,6 +87,19 @@ const mockMfaPushListInstance = createMockMfaPushListInstance();
 export const useMfaPushList = jest.fn(() => ({
   goBack: mockMfaPushListInstance.goBack,
   selectMfaPushDevice: mockMfaPushListInstance.selectMfaPushDevice,
+}));
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
 }));
 
 export const useScreen = jest.fn(() => mockMfaPushListInstance.screen);
