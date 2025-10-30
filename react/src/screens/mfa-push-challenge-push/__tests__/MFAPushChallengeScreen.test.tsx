@@ -1,19 +1,18 @@
+import {
+  enterCodeManually,
+  resendPushNotification,
+  tryAnotherMethod,
+  useErrors,
+  useMfaPolling,
+} from "@auth0/auth0-acul-react/mfa-push-challenge-push";
 import { act, render, screen } from "@testing-library/react";
 
-import type { MockMfaPushChallengeInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-challenge-push";
-import { createMockMfaPushChallengeInstance } from "@/__mocks__/@auth0/auth0-acul-react/mfa-push-challenge-push";
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
-import { useMfaPushChallengeManager } from "../hooks/useMfaPushChallengeManager";
 import MfaPushChallengeScreen from "../index";
 
-jest.mock("../hooks/useMfaPushChallengeManager", () => ({
-  useMfaPushChallengeManager: jest.fn(),
-}));
-
 describe("MfaPushChallengeScreen", () => {
-  let mockInstance: MockMfaPushChallengeInstance;
-
   const renderScreen = async () => {
     await act(async () => {
       render(<MfaPushChallengeScreen />);
@@ -22,29 +21,6 @@ describe("MfaPushChallengeScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockInstance = createMockMfaPushChallengeInstance();
-
-    // Mock the useSignupIdManager hook to return our mock data
-    (useMfaPushChallengeManager as jest.Mock).mockReturnValue({
-      mfaPushChallenge: mockInstance,
-      handleContinueMfaPushChallenge: mockInstance.continue,
-      handleResendPushNotification: mockInstance.resendPushNotification,
-      handleEnterCodeManually: mockInstance.enterCodeManually,
-      handleTryAnotherMethod: mockInstance.tryAnotherMethod,
-      useMfaPolling: (payload: unknown) => {
-        console.log("useMfaPolling called with payload:", payload);
-        return {
-          isRunning: true,
-          startPolling: () => console.log("Mocked startPolling method called"),
-          stopPolling: () => console.log("Mocked stopPolling method called"),
-        };
-      },
-      texts: mockInstance.screen.texts,
-      errors: mockInstance.transaction.errors || [],
-      data: mockInstance.screen.data,
-      links: mockInstance.screen.links,
-      enrolledFactors: mockInstance.user.enrolledFactors,
-    });
   });
 
   it("should render screen with basic structure using CommonTestData", async () => {
@@ -55,6 +31,12 @@ describe("MfaPushChallengeScreen", () => {
         /We’ve sent a notification to the following device via the Auth0 Guardian app:/
       )
     ).toBeInTheDocument();
+  });
+
+  it("should verify useMfaPolling called on page load", async () => {
+    await renderScreen();
+
+    expect(useMfaPolling).toHaveBeenCalled();
   });
 
   it("should verify spinner and device name", async () => {
@@ -70,7 +52,7 @@ describe("MfaPushChallengeScreen", () => {
 
     await ScreenTestUtils.clickButton(/Resend/i);
 
-    expect(mockInstance.resendPushNotification).toHaveBeenCalled();
+    expect(resendPushNotification).toHaveBeenCalled();
   });
 
   it("should handle Try Another method link click using ScreenTestUtils", async () => {
@@ -78,7 +60,7 @@ describe("MfaPushChallengeScreen", () => {
 
     await ScreenTestUtils.clickButton(/Try another method/i);
 
-    expect(mockInstance.tryAnotherMethod).toHaveBeenCalled();
+    expect(tryAnotherMethod).toHaveBeenCalled();
   });
 
   it("should handle Manually Enter Code click using ScreenTestUtils", async () => {
@@ -86,6 +68,37 @@ describe("MfaPushChallengeScreen", () => {
 
     await ScreenTestUtils.clickButton(/Manually Enter Code/i);
 
-    expect(mockInstance.enterCodeManually).toHaveBeenCalled();
+    expect(enterCodeManually).toHaveBeenCalled();
+  });
+
+  it("should display general errors", async () => {
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      hasErrors: true,
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    await renderScreen();
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 });

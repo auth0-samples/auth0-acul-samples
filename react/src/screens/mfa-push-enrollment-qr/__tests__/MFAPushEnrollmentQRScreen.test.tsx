@@ -1,6 +1,10 @@
-import { pickAuthenticator } from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
+import {
+  pickAuthenticator,
+  useErrors,
+} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 import { act, render, screen } from "@testing-library/react";
 
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaPushEnrollmentQRScreen from "../index";
@@ -58,5 +62,36 @@ describe("MfaPushEnrollmentQRScreen", () => {
       "src",
       "mocked_qr_data_url"
     );
+  });
+
+  it("should display general errors", async () => {
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      hasErrors: true,
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    await renderScreen();
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 });

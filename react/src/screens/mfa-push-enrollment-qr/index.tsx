@@ -8,12 +8,11 @@ import { useMfaPushEnrollmentQRManager } from "./hooks/useMfaPushEnrollmentQRMan
 
 function MfaPushEnrollmentQRScreen() {
   // Extracting attributes from hook made out of MfaPushEnrollmentQR instance of Auth0 React ACUL SDK
-  const { texts, mfaPushEnrollmentQR } = useMfaPushEnrollmentQRManager();
+  const { texts, locales, mfaPushEnrollmentQR } =
+    useMfaPushEnrollmentQRManager();
 
   applyAuth0Theme(mfaPushEnrollmentQR);
-  document.title =
-    texts?.pageTitle ||
-    "Scan the code to log in using a push notification | All Applications";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

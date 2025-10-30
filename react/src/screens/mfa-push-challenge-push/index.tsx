@@ -1,17 +1,17 @@
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
+import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 
-// import { applyAuth0Theme } from "@/utils/theme/themeEngine";
 import Header from "./components/Header";
 import MfaPushChallengeForm from "./components/MfaPushChallengeForm";
 import { useMfaPushChallengeManager } from "./hooks/useMfaPushChallengeManager";
 
 function MfaPushChallengeScreen() {
   // Extracting attributes from hook made out of MfaPushChallenge instance of Auth0 React ACUL SDK
-  const { texts } = useMfaPushChallengeManager();
+  const { texts, locales, mfaPushChallengePush } = useMfaPushChallengeManager();
 
-  // applyAuth0Theme(mfaPushChallenge);
-  document.title = texts?.pageTitle || "Verify Your Identity";
+  applyAuth0Theme(mfaPushChallengePush);
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

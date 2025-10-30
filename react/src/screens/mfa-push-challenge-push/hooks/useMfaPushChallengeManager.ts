@@ -1,36 +1,24 @@
 import {
-  // useMfaPolling,
-  // useMfaPushChallengePush,
+  useMfaPushChallengePush,
   useScreen,
-  useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-challenge-push";
 import {
   CustomOptions,
+  MfaPushChallengePushMembers,
   ScreenMembersOnMfaPushChallengePush,
+  UserMembers,
   WithRememberOptions,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/mfa-push-challenge-push/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
-const mockUseMfaPushChallengePush = () => ({
-  continue: (_payload?: WithRememberOptions) =>
-    console.log("Mocked continue method called"),
-  resendPushNotification: (_payload?: WithRememberOptions) =>
-    console.log("Mocked resendPushNotification method called"),
-  enterCodeManually: (_payload?: CustomOptions) =>
-    console.log("Mocked enterCodeManually method called"),
-  tryAnotherMethod: (_payload?: CustomOptions) =>
-    console.log("Mocked tryAnotherMethod method called"),
-});
-
-export const useMfaPushChallengePush = mockUseMfaPushChallengePush;
-
 export const useMfaPushChallengeManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const userInfo = useUser();
-  const mfaPushChallenge = useMfaPushChallengePush();
+  const screen: ScreenMembersOnMfaPushChallengePush = useScreen();
+  const userInfo: UserMembers = useUser();
+  const mfaPushChallengePush: MfaPushChallengePushMembers =
+    useMfaPushChallengePush();
 
   const { texts, data, links } = screen;
   const { enrolledFactors } = userInfo || {};
@@ -40,7 +28,7 @@ export const useMfaPushChallengeManager = () => {
   ): Promise<void> => {
     await executeSafely(
       `Continue MFA Push Challenge with options: ${JSON.stringify(payload)}`,
-      () => mfaPushChallenge.continue(payload)
+      () => mfaPushChallengePush.continue(payload)
     );
   };
 
@@ -49,7 +37,7 @@ export const useMfaPushChallengeManager = () => {
   ): Promise<void> => {
     await executeSafely(
       `Resend MFA Push Notification with options: ${JSON.stringify(payload)}`,
-      () => mfaPushChallenge.resendPushNotification(payload)
+      () => mfaPushChallengePush.resendPushNotification(payload)
     );
   };
 
@@ -58,7 +46,7 @@ export const useMfaPushChallengeManager = () => {
   ): Promise<void> => {
     await executeSafely(
       "Switch to manual code entry for MFA Push Challenge",
-      () => mfaPushChallenge.enterCodeManually(payload)
+      () => mfaPushChallengePush.enterCodeManually(payload)
     );
   };
 
@@ -67,28 +55,20 @@ export const useMfaPushChallengeManager = () => {
   ): Promise<void> => {
     await executeSafely(
       "Request MFA Push Notification via another method",
-      () => mfaPushChallenge.tryAnotherMethod(payload)
+      () => mfaPushChallengePush.tryAnotherMethod(payload)
     );
   };
 
   return {
-    mfaPushChallenge,
+    data,
+    links,
+    locales,
+    enrolledFactors,
+    mfaPushChallengePush,
     handleContinueMfaPushChallenge,
     handleResendPushNotification,
     handleEnterCodeManually,
     handleTryAnotherMethod,
-    useMfaPolling: (payload: unknown) => {
-      console.log("useMfaPolling called with payload:", payload);
-      return {
-        isRunning: true,
-        startPolling: () => console.log("Mocked startPolling method called"),
-        stopPolling: () => console.log("Mocked stopPolling method called"),
-      };
-    },
     texts: (texts || {}) as ScreenMembersOnMfaPushChallengePush["texts"],
-    errors: transaction.errors || [],
-    data,
-    links,
-    enrolledFactors,
   };
 };

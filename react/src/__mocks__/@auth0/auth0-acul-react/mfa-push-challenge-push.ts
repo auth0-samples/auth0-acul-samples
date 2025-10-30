@@ -1,5 +1,7 @@
 import type {
+  ErrorItem,
   ScreenMembersOnMfaPushChallengePush,
+  TransactionMembers,
   UserMembers,
 } from "@auth0/auth0-acul-react/types";
 
@@ -8,28 +10,23 @@ import type {
  * with the `screen` and `transaction` data structures.
  * This provides a single, type-safe object to control in our tests.
  */
-export interface MockMfaPushChallengeInstance {
+export interface MockMfaPushChallengePushInstance {
   continue: jest.Mock;
   resendPushNotification: jest.Mock;
   enterCodeManually: jest.Mock;
   tryAnotherMethod: jest.Mock;
   screen: ScreenMembersOnMfaPushChallengePush;
-  transaction: {
-    hasErrors: boolean;
-    errors: Array<{ message: string; field?: string }>;
-    state: string;
-    locale: string;
-  };
+  transaction: TransactionMembers;
   user: UserMembers;
 }
 
 /**
- * Factory function to create a new mock instance for mfa-sms-enrollment functionality.
+ * Factory function to create a new mock instance form mfa-push-challenge-push functionality.
  * This ensures each test gets a clean, isolated mock object that is
  * structurally aligned with the official SDK documentation.
  */
-export const createMockMfaPushChallengeInstance =
-  (): MockMfaPushChallengeInstance => ({
+export const createMockMfaPushChallengePushInstance =
+  (): MockMfaPushChallengePushInstance => ({
     continue: jest.fn(),
     resendPushNotification: jest.fn(),
     enterCodeManually: jest.fn(),
@@ -72,6 +69,11 @@ export const createMockMfaPushChallengeInstance =
       errors: [],
       state: "mock-mfa-push-challenge-push-state",
       locale: "en",
+      countryCode: null,
+      countryPrefix: null,
+      connectionStrategy: null,
+      currentConnection: null,
+      alternateConnections: null,
     },
     user: {
       id: "dummy_id",
@@ -89,22 +91,52 @@ export const createMockMfaPushChallengeInstance =
     },
   });
 
-// Mock the mfa-push-challenge hooks and methods
-const mockMfaSmsEnrollmentInstance = createMockMfaPushChallengeInstance();
+// Mock the mfa-push-challenge-push hooks and methods
+const mockMfaPushChallengePushInstance =
+  createMockMfaPushChallengePushInstance();
 
-export const useMfaSmsEnrollment = jest.fn(() => ({
-  continue: mockMfaSmsEnrollmentInstance.continue,
-  resendPushNotification: mockMfaSmsEnrollmentInstance.resendPushNotification,
-  enterCodeManually: mockMfaSmsEnrollmentInstance.enterCodeManually,
-  tryAnotherMethod: mockMfaSmsEnrollmentInstance.tryAnotherMethod,
+export const useMfaPushChallengePush = jest.fn(() => ({
+  continue: mockMfaPushChallengePushInstance.continue,
+  resendPushNotification:
+    mockMfaPushChallengePushInstance.resendPushNotification,
+  enterCodeManually: mockMfaPushChallengePushInstance.enterCodeManually,
+  tryAnotherMethod: mockMfaPushChallengePushInstance.tryAnotherMethod,
 }));
 
-export const useScreen = jest.fn(() => mockMfaSmsEnrollmentInstance.screen);
-export const useUser = jest.fn(() => mockMfaSmsEnrollmentInstance.user);
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
+// Mock the useMfaPolling hook
+export const useMfaPolling = jest.fn(() => ({
+  isRunning: true,
+  startPolling: jest.fn(),
+  stopPolling: jest.fn(),
+}));
+
+export const useScreen = jest.fn(() => mockMfaPushChallengePushInstance.screen);
+export const useUser = jest.fn(() => mockMfaPushChallengePushInstance.user);
 export const useTransaction = jest.fn(
-  () => mockMfaSmsEnrollmentInstance.transaction
+  () => mockMfaPushChallengePushInstance.transaction
 );
+
+// Export named functions for direct access in tests
+export const resendPushNotification =
+  mockMfaPushChallengePushInstance.resendPushNotification;
+export const enterCodeManually =
+  mockMfaPushChallengePushInstance.enterCodeManually;
+export const tryAnotherMethod =
+  mockMfaPushChallengePushInstance.tryAnotherMethod;
 
 export default jest
   .fn()
-  .mockImplementation(() => createMockMfaPushChallengeInstance());
+  .mockImplementation(() => createMockMfaPushChallengePushInstance());

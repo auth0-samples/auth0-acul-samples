@@ -1,21 +1,23 @@
 import {
   useMfaPushEnrollmentQr,
   useScreen,
-  useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 import {
   CustomOptions,
+  MfaPushEnrollmentQrMembers,
   ScreenMembersOnMfaPushEnrollmentQr,
+  UserMembers,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/mfa-push-enrollment-qr/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useMfaPushEnrollmentQRManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const userInfo = useUser();
-  const mfaPushEnrollmentQR = useMfaPushEnrollmentQr();
+  const screen: ScreenMembersOnMfaPushEnrollmentQr = useScreen();
+  const userInfo: UserMembers = useUser();
+  const mfaPushEnrollmentQR: MfaPushEnrollmentQrMembers =
+    useMfaPushEnrollmentQr();
 
   const { texts, data } = screen;
   const { enrolledFactors } = userInfo || {};
@@ -30,6 +32,9 @@ export const useMfaPushEnrollmentQRManager = () => {
   };
 
   return {
+    locales,
+    data,
+    enrolledFactors,
     mfaPushEnrollmentQR,
     handlePickAuthenticator,
     useMfaPolling: (payload: unknown) => {
@@ -41,8 +46,5 @@ export const useMfaPushEnrollmentQRManager = () => {
       };
     },
     texts: (texts || {}) as ScreenMembersOnMfaPushEnrollmentQr["texts"],
-    errors: transaction.errors || [],
-    data,
-    enrolledFactors,
   };
 };
