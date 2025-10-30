@@ -5,7 +5,7 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaEmailListManager } from "../hooks/useMFAEmailListManager";
 
 function MFAEmailListHeader() {
-  const { texts, handleBackAction } = useMfaEmailListManager();
+  const { texts, handleBackAction, locales } = useMfaEmailListManager();
 
   return (
     <>
@@ -13,13 +13,13 @@ function MFAEmailListHeader() {
         <button
           type="button"
           onClick={handleBackAction}
-          aria-label={texts?.backText || "Go back"}
+          aria-label={texts?.backText || locales.header.buttonText}
           className="p-1"
         >
           <ChevronLeft size={30} color="#6f7780" />
         </button>
         <ULThemeTitle className="mt-0 mb-0">
-          {texts?.title || "Enrolled Email Addresses"}
+          {texts?.title || locales.header.title}
         </ULThemeTitle>
       </span>
     </>

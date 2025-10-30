@@ -1,6 +1,7 @@
 import {
   goBack,
   selectMfaEmail,
+  useErrors,
   useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-email-list";
@@ -79,7 +80,32 @@ describe("MfaEmailListScreen", () => {
         { message: fieldError, field: "email" },
       ],
     });
-
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "general-error",
+                message: "Unable to load email addresses",
+                kind: "server",
+              },
+              {
+                id: "email",
+                message: "Invalid email",
+                field: "email",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
     await renderScreen();
 
     expect(screen.getByText(generalError)).toBeInTheDocument();

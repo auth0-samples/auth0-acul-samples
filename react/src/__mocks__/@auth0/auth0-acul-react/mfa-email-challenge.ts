@@ -1,6 +1,8 @@
 import type {
+  ErrorItem,
   ScreenMembersOnMfaEmailChallenge,
   TransactionMembers,
+  UserMembers,
 } from "@auth0/auth0-acul-react/types";
 
 /**
@@ -13,6 +15,7 @@ export interface MockMfaEmailChallengeInstance {
   handleTryAnotherMethod: jest.Mock;
   screen: ScreenMembersOnMfaEmailChallenge;
   transaction: TransactionMembers;
+  user: UserMembers;
 }
 
 /**
@@ -70,6 +73,20 @@ export const createMockMfaEmailChallengeInstance =
       currentConnection: null,
       alternateConnections: null,
     },
+    user: {
+      id: null,
+      email: null,
+      username: null,
+      phoneNumber: null,
+      picture: null,
+      enrolledFactors: null,
+      enrolledEmails: [{ id: 0, email: "xyz*****@abc******" }],
+      enrolledPhoneNumbers: null,
+      enrolledDevices: null,
+      organizations: null,
+      userMetadata: null,
+      appMetadata: null,
+    },
   });
 
 const mockMfaEmailChallengeInstance = createMockMfaEmailChallengeInstance();
@@ -78,6 +95,23 @@ export const useScreen = jest.fn(() => mockMfaEmailChallengeInstance.screen);
 export const useTransaction = jest.fn(
   () => mockMfaEmailChallengeInstance.transaction
 );
+export const useUser = jest.fn(() => mockMfaEmailChallengeInstance.user);
+const mockErrors: ErrorItem[] = [];
+
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byKind: jest.fn().mockReturnValue(mockErrors),
+    byField: jest.fn().mockReturnValue([]),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+}));
+export const useResend = jest.fn(() => ({
+  remaining: 30,
+  disabled: false,
+  startResend: jest.fn(),
+}));
+
 export const useMfaEmailChallenge = jest.fn(() => ({
   handleContinue: mockMfaEmailChallengeInstance.handleContinue,
   handleResendEmail: mockMfaEmailChallengeInstance.handleResendEmail,

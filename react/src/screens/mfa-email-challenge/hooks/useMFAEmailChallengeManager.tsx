@@ -1,10 +1,13 @@
 import {
   continueMethod,
+  pickEmail,
   resendCode,
   tryAnotherMethod,
+  useErrors,
   useMfaEmailChallenge,
+  useResend,
   useScreen,
-  useTransaction,
+  useUser,
 } from "@auth0/auth0-acul-react/mfa-email-challenge";
 import {
   ContinueOptions,
@@ -13,11 +16,13 @@ import {
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const useMfaEmailChallengeManager = () => {
   const { texts, data } = useScreen();
 
   const handleResendEmail = async (): Promise<void> => {
-    executeSafely(`Resend email with code`, () => resendCode());
+    await executeSafely(`Resend email with code`, () => resendCode());
   };
 
   const handleContinue = async (
@@ -41,16 +46,24 @@ export const useMfaEmailChallengeManager = () => {
   };
 
   const handleTryAnotherMethod = async (): Promise<void> => {
-    executeSafely(`Try another MFA method`, () => tryAnotherMethod());
+    await executeSafely(`Try another MFA method`, () => tryAnotherMethod());
+  };
+
+  const handlePickEmail = async () => {
+    await executeSafely(`Pick Another Email`, () => pickEmail());
   };
 
   return {
     mfaEmailChallenge: useMfaEmailChallenge(),
     data: (data || {}) as ScreenMembersOnMfaEmailChallenge["data"],
     texts: (texts || {}) as ScreenMembersOnMfaEmailChallenge["texts"],
-    errors: useTransaction().errors || [],
+    enrolledEmails: useUser().enrolledEmails,
+    useErrors: useErrors(),
+    locales,
     handleResendEmail,
     handleContinue,
     handleTryAnotherMethod,
+    handlePickEmail,
+    useResend,
   };
 };
