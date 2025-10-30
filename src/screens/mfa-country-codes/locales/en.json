@@ -1,0 +1,16 @@
+{
+    "page": {
+        "title": "Select your country code | your app"
+    },
+    "header": {
+        "backText": "Go back",
+        "title": "Select your country code"
+    },
+    "list": {
+        "searchPlaceholder": "Search",
+        "noResultsText": "No countries found"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred"
+    }
+}

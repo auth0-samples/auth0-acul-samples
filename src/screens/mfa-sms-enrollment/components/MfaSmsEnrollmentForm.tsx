@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 
-import type { Error, TransactionMembers } from "@auth0/auth0-acul-react/types";
+import { useErrors } from "@auth0/auth0-acul-react/mfa-sms-enrollment";
+import type { ErrorItem } from "@auth0/auth0-acul-react/types";
 
 import {
   ULThemeFloatingLabelField,
@@ -11,7 +12,6 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import ULThemeCountryCodePicker from "@/components/ULThemeCountryCodePicker";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { transformAuth0CountryCode } from "@/utils/helpers/countryUtils";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { useMfaSmsEnrollmentManager } from "../hooks/useMfaSmsEnrollmentManager";
 
@@ -23,9 +23,10 @@ function MfaSmsEnrollmentForm() {
   const {
     handleContinueEnrollment,
     handlePickCountryCode,
-    errors,
     texts,
-    mfaSmsEnrollment,
+    locales,
+    countryCode,
+    countryPrefix,
   } = useMfaSmsEnrollmentManager();
 
   // Initialize the form using react-hook-form
@@ -38,15 +39,22 @@ function MfaSmsEnrollmentForm() {
   const {
     formState: { isSubmitting },
   } = form;
-  const buttonText = texts?.buttonText || "Continue";
-  const phoneLabelText = texts?.placeholder || "Enter your phone number";
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  // Use locales as fallback to SDK texts
+  const buttonText = texts?.buttonText || locales?.form?.continueButtonText;
+  const phoneLabelText = texts?.placeholder || locales?.form?.phoneLabel;
+  const sendingText = locales?.form?.sendingText;
+  const selectCountryPlaceholder = locales?.form?.selectCountryPlaceholder;
 
-  const phoneSDKError = getFieldError("phone", errors);
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get field-specific SDK errors
+  const phoneSDKError = errors.byField("phone")[0]?.message;
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
 
   const onSubmit = async (formData: MfaSmsEnrollmentFormData) => {
     await handleContinueEnrollment(formData.phone);
@@ -58,26 +66,32 @@ function MfaSmsEnrollmentForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {/* Display general errors */}
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
-                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
+                <ULThemeAlertTitle>
+                  {error.message || locales?.errors?.errorOccurred}
+                </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
           </div>
         )}
 
-        {/* Phone enrollment container with country picker and phone input */}
+        {/* Country Code Picker */}
         <ULThemeCountryCodePicker
           selectedCountry={transformAuth0CountryCode(
-            (mfaSmsEnrollment?.transaction as TransactionMembers)?.countryCode,
-            (mfaSmsEnrollment?.transaction as TransactionMembers)?.countryPrefix
+            countryCode,
+            countryPrefix
           )}
           onClick={handleCountryCodeClick}
           fullWidth
-          placeholder="Select Country"
+          placeholder={selectCountryPlaceholder}
         />
 
         {/* Phone Number input field */}
@@ -85,13 +99,13 @@ function MfaSmsEnrollmentForm() {
           control={form.control}
           name="phone"
           rules={{
-            required: "Please enter your phone number.",
+            required: locales?.errors?.phoneRequired,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
-                label={`${phoneLabelText}*`}
+                label={phoneLabelText}
                 type="tel"
                 inputMode="numeric"
                 autoComplete="tel"
@@ -113,7 +127,7 @@ function MfaSmsEnrollmentForm() {
           className="w-full"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : buttonText}
+          {isSubmitting ? sendingText : buttonText}
         </ULThemeButton>
       </form>
     </Form>
