@@ -9,11 +9,12 @@ import { usePasskeyEnrollmentManager } from "./hooks/usePasskeyEnrollmentManager
 
 function PasskeyEnrollmentScreen() {
   // Extracting attributes from hook made out of PasskeyEnrollmentInstance class of Auth0 React ACUL SDK
-  const { passkeyEnrollmentInstance, texts } = usePasskeyEnrollmentManager();
+  const { texts, locales, passkeyEnrollmentInstance } =
+    usePasskeyEnrollmentManager();
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(passkeyEnrollmentInstance);
-  document.title = texts?.pageTitle || "Login";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

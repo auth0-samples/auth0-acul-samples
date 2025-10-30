@@ -1,22 +1,24 @@
 import {
   usePasskeyEnrollmentLocal,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/passkey-enrollment-local";
 import {
   AbortEnrollmentOptions,
   CustomOptions,
+  PasskeyEnrollmentLocalMembers,
   ScreenMembersOnPasskeyEnrollmentLocal,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/passkey-enrollment-local/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 /**
  * Handles the passkey enrollment local process.
  */
 export const usePasskeyEnrollmentLocalManager = () => {
-  const screen = useScreen();
-  const passkeyEnrollmentLocalInstance = usePasskeyEnrollmentLocal();
+  const screen: ScreenMembersOnPasskeyEnrollmentLocal = useScreen();
+  const passkeyEnrollmentLocalInstance: PasskeyEnrollmentLocalMembers =
+    usePasskeyEnrollmentLocal();
 
   const { texts, data, links } = screen;
 
@@ -39,12 +41,12 @@ export const usePasskeyEnrollmentLocalManager = () => {
   };
 
   return {
+    locales,
+    links,
     passkeyEnrollmentLocalInstance,
     continuePasskeyEnrollment,
     abortPasskeyEnrollment,
     texts: (texts || {}) as ScreenMembersOnPasskeyEnrollmentLocal["texts"],
-    errors: useTransaction().errors || [],
     data: (data || {}) as ScreenMembersOnPasskeyEnrollmentLocal["data"],
-    links,
   };
 };

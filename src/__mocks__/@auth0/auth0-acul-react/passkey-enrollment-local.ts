@@ -5,8 +5,8 @@
  *
  */
 import type {
+  ErrorItem,
   ScreenMembersOnPasskeyEnrollmentLocal,
-  TransactionMembers,
 } from "@auth0/auth0-acul-react/types";
 
 /**
@@ -18,7 +18,6 @@ export interface MockPasskeyEnrollmentLocalInstance {
   continuePasskeyEnrollment: jest.Mock;
   abortPasskeyEnrollment: jest.Mock;
   screen: ScreenMembersOnPasskeyEnrollmentLocal;
-  transaction: TransactionMembers;
 }
 
 /**
@@ -59,23 +58,35 @@ export const createMockPasskeyEnrollmentLocalInstance =
       captcha: null,
       links: {
         helpLink: "/test-help-local",
+        back: "/u/signup/identifier?state=mockedStateForPreservedTextsSignup_cl_mock_preservedTexts_vbn789_txId_lkj321",
       },
       data: {
-        phone_number: "Mock Phone Number Local",
-        username: "Mock Username Local",
+        passkey: {
+          public_key: {
+            user: {
+              id: "mocked_id_client",
+              name: "foo1@bar.com",
+              displayName: "foo1@bar.com",
+            },
+            rp: {
+              id: "mocked_id_client",
+              name: "mocked_id_client",
+            },
+            challenge: "mock_challenge",
+            pubKeyCredParams: [
+              {
+                type: "public-key",
+                alg: -8,
+              },
+            ],
+            authenticatorSelection: {
+              residentKey: "required",
+              userVerification: "preferred",
+            },
+          },
+        },
       },
       publicKey: null,
-    },
-    transaction: {
-      hasErrors: false,
-      errors: [],
-      state: "mock-state-local",
-      locale: "en",
-      countryCode: null,
-      countryPrefix: null,
-      connectionStrategy: null,
-      currentConnection: null,
-      alternateConnections: null,
     },
   });
 
@@ -90,11 +101,21 @@ export const usePasskeyEnrollmentLocal = jest.fn(() => ({
     mockPasskeyEnrollmentLocalInstance.abortPasskeyEnrollment,
 }));
 
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
 export const useScreen = jest.fn(
   () => mockPasskeyEnrollmentLocalInstance.screen
-);
-export const useTransaction = jest.fn(
-  () => mockPasskeyEnrollmentLocalInstance.transaction
 );
 export const continuePasskeyEnrollment =
   mockPasskeyEnrollmentLocalInstance.continuePasskeyEnrollment;
