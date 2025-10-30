@@ -62,8 +62,7 @@ jobs:
           NPM_CONFIG_REGISTRY: "https://registry.npmjs.org"
         run: |
           npm config set registry https://registry.npmjs.org/
-          npm cache clean --force
-          npm ci --include=optional --fund=false --audit=false
+          npm install --include=optional --fund=false --audit=false
 
       - name: Build application
         if: steps.check-targets.outputs.has_targets == 'true'
