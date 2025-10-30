@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 
-import type { CustomOptions, Error } from "@auth0/auth0-acul-react/types";
+import { useErrors } from "@auth0/auth0-acul-react/mfa-push-welcome";
+import type { CustomOptions, ErrorItem } from "@auth0/auth0-acul-react/types";
 
 import { AppleIcon, GooglePlayIcon } from "@/assets/icons";
 import { Form } from "@/components/ui/form";
@@ -14,8 +15,8 @@ import { useMfaPushWelcomeManager } from "../hooks/useMfaPushWelcomeManager";
 function MfaPushWelcomeForm() {
   const {
     links,
-    errors,
     texts,
+    locales,
     enrolledFactors,
     handleMfaPushWelcomeEnroll,
     handlePickAuthenticator,
@@ -24,26 +25,31 @@ function MfaPushWelcomeForm() {
   // Initialize the form using react-hook-form
   const form = useForm<CustomOptions>({});
 
-  const continueEnrollButtonText = texts?.buttonText || "Continue";
-  const androidButtonText = texts?.androidButtonText || "Google Play";
-  const iosButtonText = texts?.iosButtonText || "App Store";
+  // Use Locales as fallback to SDK texts
+  const continueEnrollButtonText =
+    texts?.buttonText || locales.form.continueEnrollButtonText;
+  const androidButtonText =
+    texts?.androidButtonText || locales.form.androidButtonText;
+  const iosButtonText = texts?.iosButtonText || locales.form.iosButtonText;
   const pickAuthenticatorText =
-    texts?.pickAuthenticatorText || "Try another method";
+    texts?.pickAuthenticatorText || locales.form.pickAuthenticatorText;
   const shouldShowTryAnotherMethod = enrolledFactors?.length
     ? enrolledFactors.length > 1
     : false;
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
 
   const onSubmit = async (formData?: CustomOptions) => {
     await handleMfaPushWelcomeEnroll(formData);
   };
 
   const socialIconButtonClassNames =
-    "grow-1 border-1 theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 border-(--ul-theme-color-secondary-button-border) theme-universal:rounded-button theme-universal:font-button text-(length:--ul-theme-font-buttons-text-size) hover:shadow-[var(--button-hover-shadow)] theme-universal:text-(--ul-theme-color-secondary-button-label)";
+    "grow border theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 border-(--ul-theme-color-secondary-button-border) theme-universal:rounded-button theme-universal:font-button text-(length:--ul-theme-font-buttons-text-size) hover:shadow-(--button-hover-shadow) theme-universal:text-(--ul-theme-color-secondary-button-label)";
 
   return (
     <Form {...form}>
@@ -51,11 +57,18 @@ function MfaPushWelcomeForm() {
         {/* General error messages */}
         {generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
-                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
-              </ULThemeAlert>
-            ))}
+            {hasError &&
+              generalErrors.map((error) => (
+                <ULThemeAlert
+                  key={error.id}
+                  variant="destructive"
+                  onDismiss={() => dismiss(error.id)}
+                >
+                  <ULThemeAlertTitle>
+                    {error.message || locales.errors.errorOccurred}
+                  </ULThemeAlertTitle>
+                </ULThemeAlert>
+              ))}
           </div>
         )}
 
