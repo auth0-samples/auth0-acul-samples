@@ -7,16 +7,16 @@ import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordl
 function Header() {
   const { texts, locales } = useLoginPasswordlessEmailCodeManager();
 
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || locales?.heading?.logoAltText;
+  // Use locales as fallback for SDK texts
+  const titleText = texts?.title || locales.heading.title;
+  const descriptionText = texts?.description || locales.heading.description;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || locales?.heading?.title}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description || locales?.heading?.description}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }

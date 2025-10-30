@@ -52,15 +52,15 @@ function IdentifierForm() {
   } = form;
 
   // Use locales as fallback to SDK texts
-  const buttonText = texts?.buttonText || locales?.form?.continueButtonText;
-  const codeLabelText = texts?.placeholder || locales?.form?.codeLabelText;
+  const buttonText = texts?.buttonText || locales.form.continueButtonText;
+  const codeLabelText = texts?.placeholder || locales.form.codeLabelText;
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
-    : locales?.form?.captchaLabel;
-  const editText = texts?.editText || locales?.form?.editText;
+    : locales.form.captchaLabel;
+  const editText = texts?.editText || locales.form.editText;
   const editAriaLabel =
-    texts?.editLinkScreenReadableText || locales?.form?.editIdentifierLinkText;
-  const codeRequiredErrorMessage = locales?.errors?.codeIsRequired;
+    texts?.editLinkScreenReadableText || locales.form.editIdentifierLinkText;
+  const codeRequiredErrorMessage = locales.errors.codeIsRequired;
 
   const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
     captcha || undefined,
@@ -105,7 +105,7 @@ function IdentifierForm() {
                 onDismiss={() => dismiss(error.id)}
               >
                 <ULThemeAlertTitle>
-                  {error.message || locales?.errors?.errorOccurred}
+                  {error.message || locales.errors.errorOccurred}
                 </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -175,10 +175,10 @@ function IdentifierForm() {
             className="mt-4"
             sdkError={captchaSDKError}
             rules={{
-              required: locales?.errors?.captchaCompletionRequired,
+              required: locales.errors.captchaCompletionRequired,
               maxLength: {
                 value: 15,
-                message: locales?.errors?.captchaTooLong,
+                message: locales.errors.captchaTooLong,
               },
             }}
           />

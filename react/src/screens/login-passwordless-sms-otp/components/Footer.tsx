@@ -9,10 +9,10 @@ function Footer() {
   const { texts, locales, handleResendOTP } =
     useLoginPasswordlessSmsOtpManager();
 
-  // Handle text fallbacks in component
-  const resendText = texts?.resendText || locales?.footer?.resendActionText;
+  // Use locales as fallback for SDK texts
+  const resendText = texts?.resendText || locales.footer.resendActionText;
   const resendLinkText =
-    texts?.resendActionText || locales?.footer?.resendActionLinkText;
+    texts?.resendActionText || locales.footer.resendActionLinkText;
 
   const { remaining, disabled, startResend } = useResend({
     timeoutSeconds: 30,
