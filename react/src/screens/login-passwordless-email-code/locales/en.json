@@ -9,7 +9,8 @@
     },
     "footer": {
         "resendActionText": "Didn't receive an email?",
-        "resendActionLinkText": "Resend"
+        "resendActionLinkText": "Resend",
+        "resendCooldown": "Resend in {{seconds}}s"
     },
     "form": {
         "selectCountryPlaceholder": "Select Country",

@@ -137,6 +137,13 @@ export const useErrors = jest.fn(() => ({
   dismissAll: jest.fn(),
 }));
 
+// Mock useResend hook
+export const useResend = jest.fn(() => ({
+  remaining: 0,
+  disabled: false,
+  startResend: jest.fn(),
+}));
+
 export const useScreen = jest.fn(
   () => mockLoginPasswordlessEmailCodeInstance.screen
 );
