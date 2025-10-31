@@ -1,4 +1,4 @@
-import { useLoginIdentifiers } from "@auth0/auth0-acul-react/login-id";
+import { useLoginIdentifiers } from "@auth0/auth0-acul-react/reset-password-request";
 import {
   backToLogin,
   resetPassword,
