@@ -8,11 +8,10 @@ import { useMfaPushWelcomeManager } from "./hooks/useMfaPushWelcomeManager";
 
 function MfaPushWelcomeScreen() {
   // Extracting attributes from hook made out of MfaPushWelcome instance of Auth0 React ACUL SDK
-  const { texts, mfaPushWelcome } = useMfaPushWelcomeManager();
+  const { texts, locales, mfaPushWelcome } = useMfaPushWelcomeManager();
 
   applyAuth0Theme(mfaPushWelcome);
-  document.title =
-    texts?.pageTitle || "Install the application | All Applications";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

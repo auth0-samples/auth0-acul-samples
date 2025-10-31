@@ -1,0 +1,40 @@
+{
+  "page": {
+    "title": "Signup",
+    "separator": "OR"
+  },
+  "header": {
+    "logoAlt": "Application Logo",
+    "title": "Welcome",
+    "description": "Sign up to continue to your application."
+  },
+  "form": {
+    "fields": {
+      "password": {
+        "label": "Password",
+        "required": "Password is required",
+        "doesNotMeetRequirements": "Password does not meet requirements"
+      },
+      "captcha": {
+        "label": "CAPTCHA",
+        "imageAlt": "CAPTCHA challenge",
+        "required": "Please complete the CAPTCHA"
+      },
+      "common": {
+        "required": "This field is required"
+      }
+    },
+    "button": "Continue",
+    "passwordSecurity": "Your password must contain:"
+  },
+  "footer": {
+    "text": "Already have an account?",
+    "linkText": "Log in"
+  },
+  "social": {
+    "continueWith": "Continue with"
+  },
+  "errors": {
+    "general": "An error occurred"
+  }
+}

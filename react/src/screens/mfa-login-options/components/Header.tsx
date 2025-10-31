@@ -3,13 +3,11 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaLoginOptionsManager } from "../hooks/useMFALoginOptionsManager";
 
 function Header() {
-  const { texts } = useMfaLoginOptionsManager();
+  const { texts, locales } = useMfaLoginOptionsManager();
 
   return (
     <>
-      <ULThemeTitle>
-        {texts?.title || "Select a method to verify your identity"}
-      </ULThemeTitle>
+      <ULThemeTitle>{texts?.title || locales.header.title}</ULThemeTitle>
     </>
   );
 }

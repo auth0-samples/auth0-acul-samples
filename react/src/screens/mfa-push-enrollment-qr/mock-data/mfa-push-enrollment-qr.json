@@ -36,10 +36,7 @@
     }
   },
   "tenant": {
-    "enabled_factors": [
-      "push-notification",
-      "webauthn-roaming"
-    ],
+    "enabled_factors": ["push-notification", "webauthn-roaming"],
     "mfa_options": {
       "pick_authenticator_enabled": true
     }
@@ -57,10 +54,7 @@
     "id": "mocked_id_client",
     "email": "foo1@bar.com",
     "picture": "mocked_picture_url",
-    "enrolled_factors": [
-      "push-notification",
-      "webauthn-roaming"
-    ]
+    "enrolled_factors": ["push-notification", "webauthn-roaming"]
   },
   "branding": {
     "themes": {

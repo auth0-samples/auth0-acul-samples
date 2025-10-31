@@ -1,11 +1,14 @@
+import type { PasswordComplexityRule } from "@auth0/auth0-acul-react/types";
+
 /**
- * Extract required count from "contains-at-least" rule policy text
- * @param policy - The policy string to parse (can be null/undefined)
+ * Extract required count from "contains-at-least" rule
+ * @param rule - The rule to extract count from
  * @returns The required count (1-10), defaults to 1 for invalid input
  */
-const extractRequiredCount = (policy: string | null | undefined): number => {
-  const match = policy?.match(/at least (\d+)/i);
-  const count = match ? parseInt(match[1], 10) : 1;
+const extractRequiredCount = (
+  rule: PasswordComplexityRule | undefined
+): number => {
+  const count = rule?.args?.count || 1;
   return Math.max(1, Math.min(count, 10));
 };
 
@@ -13,7 +16,7 @@ const extractRequiredCount = (policy: string | null | undefined): number => {
  * Check if grouped rules meet the "contains-at-least" requirement
  */
 export const isGroupRuleValid = (
-  validationRules: any[] | null | undefined
+  validationRules: PasswordComplexityRule[] | null | undefined
 ): boolean => {
   if (!validationRules || validationRules.length === 0) {
     return false;
@@ -38,7 +41,7 @@ export const isGroupRuleValid = (
     return false;
   }
 
-  const requiredCount = extractRequiredCount(containsAtLeastRule.policy);
+  const requiredCount = extractRequiredCount(containsAtLeastRule);
   const validGroupedRulesCount = groupedRules.filter(
     (rule) => rule.isValid
   ).length;
@@ -50,12 +53,9 @@ export const isGroupRuleValid = (
  * Check if all password validation rules are satisfied
  */
 export const isPasswordValid = (
-  validationRules: any
+  validationRules: PasswordComplexityRule[]
 ): boolean => {
-  // Handle both array and object with rules property
-  const rules = Array.isArray(validationRules) ? validationRules : validationRules?.rules || [];
-  
-  if (!rules || rules.length === 0) {
+  if (!validationRules || validationRules.length === 0) {
     return false;
   }
 
@@ -67,34 +67,38 @@ export const isPasswordValid = (
     "password-policy-special-characters",
   ];
 
-  const individualRules = rules.filter(
-    (rule: any) =>
+  const individualRules = validationRules.filter(
+    (rule: PasswordComplexityRule) =>
       !groupedRuleCodes.includes(rule.code) &&
       !rule.code.includes("contains-at-least")
   );
 
-  const groupedRules = rules.filter((rule: any) =>
+  const groupedRules = validationRules.filter((rule: PasswordComplexityRule) =>
     groupedRuleCodes.includes(rule.code)
   );
 
-  const containsAtLeastRule = rules.find((rule: any) =>
-    rule.code.includes("contains-at-least")
+  const containsAtLeastRule = validationRules.find(
+    (rule: PasswordComplexityRule) => rule.code.includes("contains-at-least")
   );
 
   // Check individual rules (like minimum length, no identical characters, etc.)
-  const individualRulesValid = individualRules.every((rule: any) => rule.isValid);
+  const individualRulesValid = individualRules.every(
+    (rule: PasswordComplexityRule) => rule.isValid
+  );
 
   // Handle grouped rules validation
   let groupedRulesValid = true;
   if (containsAtLeastRule && groupedRules.length > 0) {
-    const requiredCount = extractRequiredCount(containsAtLeastRule.policy);
+    const requiredCount = extractRequiredCount(containsAtLeastRule);
     const validGroupedRulesCount = groupedRules.filter(
-      (rule: any) => rule.isValid
+      (rule: PasswordComplexityRule) => rule.isValid
     ).length;
     groupedRulesValid = validGroupedRulesCount >= requiredCount;
   } else if (groupedRules.length > 0) {
     // If no "contains-at-least" rule but we have grouped rules, all must be valid
-    groupedRulesValid = groupedRules.every((rule: any) => rule.isValid);
+    groupedRulesValid = groupedRules.every(
+      (rule: PasswordComplexityRule) => rule.isValid
+    );
   }
 
   return individualRulesValid && groupedRulesValid;

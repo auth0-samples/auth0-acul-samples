@@ -8,7 +8,7 @@ export const CommonTestData = {
     general: { message: "Invalid credentials" },
     fieldSpecific: { message: "Invalid email format", field: "email" },
     captcha: { message: "Invalid CAPTCHA", field: "captcha" },
-    network: { message: "Network error occurred" },
+    network: { code: "NETWORK_ERROR", message: "Network error occurred" },
   },
 
   socialConnections: [

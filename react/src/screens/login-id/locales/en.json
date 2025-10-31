@@ -1,0 +1,33 @@
+{
+    "page": {
+        "title": "Login",
+        "orText": "OR"
+    },
+    "heading": {
+        "title": "Welcome",
+        "description": "Log in to continue",
+        "logoAltText": "Application Logo"
+    },
+    "footer": {
+        "signupActionText": "Don't have an account?",
+        "signupActionLinkText": "Sign Up"
+    },
+    "alternativeLogins": {
+        "passkeyButtonText": "Continue with a passkey",
+        "continueWithText": "Continue with",
+        "passkeyLabel": "Passkey"
+    },
+    "loginIdForm": {
+        "selectCountryPlaceholder": "Select Country",
+        "captchaLabel": "Enter the code shown above*",
+        "passwordLabel": "Password*",
+        "forgotPasswordLinkText": "Forgot password?",
+        "continueButtonText": "Continue"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred",
+        "identifierRequired": "Identifier is required",
+        "passwordRequired": "Password is required",
+        "captchaCompletionRequired": "Please complete the CAPTCHA"
+    }
+}

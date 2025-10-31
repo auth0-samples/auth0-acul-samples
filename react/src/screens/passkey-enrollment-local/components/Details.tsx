@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 
+import { useErrors } from "@auth0/auth0-acul-react/passkey-enrollment-local";
 import type {
   AbortEnrollmentOptions,
   CustomOptions,
-  Error,
+  ErrorItem,
 } from "@auth0/auth0-acul-react/types";
 
 import {
@@ -33,7 +34,7 @@ import { usePasskeyEnrollmentLocalManager } from "../hooks/usePasskeyEnrollmentL
  */
 function Details() {
   // Extract necessary methods and properties from the custom hook
-  const { texts, errors, continuePasskeyEnrollment, abortPasskeyEnrollment } =
+  const { texts, locales, continuePasskeyEnrollment, abortPasskeyEnrollment } =
     usePasskeyEnrollmentLocalManager();
 
   // Initialize the form using react-hook-form
@@ -46,20 +47,34 @@ function Details() {
     formState: { isSubmitting },
   } = form;
 
-  // Handle text fallbacks for button and field labels
-  const buttonText = texts?.createButtonText || "Create a new passkey";
+  // Use Locales as fallback to SDK texts
+  const buttonText =
+    texts?.createButtonText || locales.details.createPasskeyButtonText;
   const continueButtonText =
-    texts?.continueButtonText || "Continue without a new passkey";
+    texts?.continueButtonText ||
+    locales.details.continueWithoutPasskeyButtonText;
   const showHideLocalEnrollmentCheckboxText =
-    texts?.checkboxText || "Don't show me this again";
+    texts?.checkboxText || locales.details.showHideLocalEnrollmentCheckboxText;
+  const passkeyBenefit1Title =
+    texts?.passkeyBenefit1Title || locales.details.passkeyBenefit1Title;
+  const passkeyBenefit1Description =
+    texts?.passkeyBenefit1Description ||
+    locales.details.passkeyBenefit1Description;
+  const passkeyBenefit2Title =
+    texts?.passkeyBenefit2Title || locales.details.passkeyBenefit2Title;
+  const passkeyBenefit2Description =
+    texts?.passkeyBenefit2Description ||
+    locales.details.passkeyBenefit2Description;
 
   // Using extractTokenValue utility to extract the Icons Color Value from CSS variable
   const iconColor = extractTokenValue("--ul-theme-color-icons");
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
 
   /**
    * This method handles form submission when user clicks on creating passkey.
@@ -110,11 +125,17 @@ function Details() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onCreateClick)}>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
-                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
+                <ULThemeAlertTitle>
+                  {error.message || locales.errors.errorOccurred}
+                </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
           </div>
@@ -124,30 +145,19 @@ function Details() {
             icon={renderIcon(LockHeavyMask, LockHeavyAccent, "opacity-[0.5]")}
           >
             <ULThemeListTitle
-              children={
-                texts?.passkeyBenefit1Title ||
-                "Sign in quickly with this device"
-              }
+              children={passkeyBenefit1Title}
             ></ULThemeListTitle>
             <ULThemeListDescription
-              children={
-                texts?.passkeyBenefit1Description ||
-                "You won't need to use another device's passkey next time you sign in."
-              }
+              children={passkeyBenefit1Description}
             ></ULThemeListDescription>
           </ULThemeListItem>
 
           <ULThemeListItem icon={renderIcon(WebAuthPlatform, undefined)}>
             <ULThemeListTitle
-              children={
-                texts?.passkeyBenefit2Title || "No need to remember a password"
-              }
+              children={passkeyBenefit2Title}
             ></ULThemeListTitle>
             <ULThemeListDescription
-              children={
-                texts?.passkeyBenefit2Description ||
-                "With passkeys, you can use things like your fingerprint or face to login."
-              }
+              children={passkeyBenefit2Description}
             ></ULThemeListDescription>
           </ULThemeListItem>
         </ULThemeList>

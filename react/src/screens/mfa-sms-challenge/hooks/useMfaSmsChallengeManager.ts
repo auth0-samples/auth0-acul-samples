@@ -1,19 +1,20 @@
 import {
   useMfaSmsChallenge,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/mfa-sms-challenge";
 import type {
+  MfaSmsChallengeMembers,
   MfaSmsChallengeOptions,
   ScreenMembersOnMfaSmsChallenge,
 } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const useMfaSmsChallengeManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const mfaSmsChallenge = useMfaSmsChallenge();
+  const mfaSmsChallenge: MfaSmsChallengeMembers = useMfaSmsChallenge();
+  const screen: ScreenMembersOnMfaSmsChallenge = useScreen();
 
   const { texts, data, links } = screen;
 
@@ -60,8 +61,8 @@ export const useMfaSmsChallengeManager = () => {
     handlePickSms,
     handleTryAnotherMethod,
     texts: (texts || {}) as ScreenMembersOnMfaSmsChallenge["texts"],
-    errors: transaction.errors || [],
     data,
     links,
+    locales,
   };
 };

@@ -8,11 +8,10 @@ import { useMfaSmsListManager } from "./hooks/useMfaSmsListManager";
 
 function MfaSmsListScreen() {
   // Extracting attributes from hook made out of MfaSmsList instance of Auth0 React ACUL SDK
-  const { mfasmsList, texts } = useMfaSmsListManager();
+  const { mfasmsList, texts, locales } = useMfaSmsListManager();
 
   applyAuth0Theme(mfasmsList);
-  document.title =
-    texts?.pageTitle || "List of available phone numbers | your app";
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

@@ -3,10 +3,11 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { usePhoneIdentifierEnrollmentManager } from "../hooks/usePhoneIdentifierEnrollmentManager";
 
 function Footer() {
-  const { texts, handleReturnToPrevious } =
+  const { texts, handleReturnToPrevious, locales } =
     usePhoneIdentifierEnrollmentManager();
 
-  const returnToPreviousScreenText = texts?.backButtonText || "Go back";
+  const returnToPreviousScreenText =
+    texts?.backButtonText || locales.footer.backButtonText;
 
   const handleGoBackAction = async () => {
     await handleReturnToPrevious();

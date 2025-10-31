@@ -1,6 +1,8 @@
 import React from "react";
 import { Control, FieldValues, Path, RegisterOptions } from "react-hook-form";
 
+import type { CaptchaContext } from "@auth0/auth0-acul-js/types";
+
 import AuthChallengeWidget from "./providers/AuthChallengeWidget";
 import FriendlyCaptchaWidget from "./providers/FriendlyCaptchaWidget";
 import HCaptchaWidget from "./providers/HCaptchaWidget";
@@ -36,13 +38,8 @@ export interface CaptchaWidgetProps<T extends FieldValues = FieldValues> {
   error?: string;
 }
 
-export interface ICaptcha {
-  provider?: string;
-  image?: string;
-  imageAltText?: string;
-  enabled?: boolean;
-  siteKey?: string;
-}
+// Use SDK's CaptchaContext interface
+export type ICaptcha = CaptchaContext;
 
 export interface CaptchaProps<T extends FieldValues = FieldValues> {
   captcha?: ICaptcha;
@@ -97,10 +94,10 @@ const Captcha = <T extends FieldValues = FieldValues>({
     };
   }
   const CAPTCHA_WIDGET_MAP = getCaptchaWidgetMap<T>();
-  const { provider, image, siteKey, enabled = true } = captcha || {}; // Default 'enabled' to true
+  const { provider, image, siteKey } = captcha || {};
 
-  // If captcha is not enabled or no provider is specified, render nothing.
-  if (!enabled || !provider) {
+  // If no provider is specified, render nothing.
+  if (!provider) {
     return null;
   }
 

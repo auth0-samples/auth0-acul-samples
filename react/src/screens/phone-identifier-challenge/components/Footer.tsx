@@ -1,23 +1,28 @@
-import { useState } from "react";
-
 import { ULThemeButton } from "@/components/ULThemeButton";
 
 import { usePhoneIdentifierChallengeManager } from "../hooks/usePhoneIdentifierChallengeManager";
 
 function Footer() {
-  const { texts, handleResendCode, handleReturnToPrevious } =
-    usePhoneIdentifierChallengeManager();
+  const {
+    texts,
+    handleResendCode,
+    handleReturnToPrevious,
+    locales,
+    useResend,
+  } = usePhoneIdentifierChallengeManager();
 
-  const [hasResent, setHasResent] = useState(false);
+  const { disabled } = useResend({
+    timeoutSeconds: 10,
+  });
 
-  const resendText = texts?.resendText || "Didn't receive a code?";
-  const resendLinkText = texts?.resendActionText || "Resend";
+  const resendText = texts?.resendText || locales.footer.resendCodeText;
+  const resendLinkText =
+    texts?.resendActionText || locales.footer.resendButtonText;
   const resendLimitReachedText =
-    texts?.resendLimitReachedText || "Code has been resent.";
-  const backButtonText = texts?.backButtonText || "Go back";
+    texts?.resendLimitReachedText || locales.footer.limitReachedText;
+  const backButtonText = texts?.backButtonText || locales.footer.backButtonText;
 
   const handleResendClick = async () => {
-    setHasResent(true);
     await handleResendCode();
   };
 
@@ -29,7 +34,7 @@ function Footer() {
     <div className="text-center space-y-4 mt-4">
       {/* Resend code section */}
       <div>
-        {!hasResent ? (
+        {!disabled ? (
           <>
             <span className="text-(length:--ul-theme-font-body-text-size) font-body">
               {resendText}{" "}
@@ -50,7 +55,7 @@ function Footer() {
       </div>
 
       {/* Go back button */}
-      {hasResent && (
+      {disabled && (
         <div>
           <ULThemeButton onClick={handleReturnClick} variant="link" size="link">
             {backButtonText}

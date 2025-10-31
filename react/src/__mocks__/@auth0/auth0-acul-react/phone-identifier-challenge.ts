@@ -3,6 +3,7 @@
  */
 
 import {
+  ErrorItem,
   ScreenMembersOnPhoneIdentifierChallenge,
   TransactionMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -93,6 +94,22 @@ const mockInstance = createMockPhoneIdentifierChallengeManagerInstance();
 
 export const useScreen = jest.fn(() => mockInstance.screen);
 export const useTransaction = jest.fn(() => mockInstance.transaction);
+const mockErrors: ErrorItem[] = [];
+
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byKind: jest.fn().mockReturnValue(mockErrors),
+    byField: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+}));
+
+export const useResend = jest.fn(() => ({
+  remaining: 0,
+  disabled: false,
+  startResend: jest.fn(),
+}));
 
 export const resendCode = mockInstance.resendCode;
 export const returnToPrevious = mockInstance.returnToPrevious;

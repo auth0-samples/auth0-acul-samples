@@ -5,18 +5,20 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaSmsChallengeManager } from "../hooks/useMfaSmsChallengeManager";
 
 function Header() {
-  const { texts, data } = useMfaSmsChallengeManager();
+  const { texts, data, locales } = useMfaSmsChallengeManager();
 
   // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
-  const phoneNumber = data?.phoneNumber || "your phone";
+  const logoAltText = texts?.logoAltText || locales.header.logoAlt;
+  const title = texts?.title || locales.header.title;
+  const phoneNumber = data?.phoneNumber || "";
+  const description = texts?.description || locales.header.description;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
       <ULThemeSubtitle className="mb-6">
-        {texts?.description || `We've sent a text message to: ${phoneNumber}`}
+        {description} {phoneNumber}
       </ULThemeSubtitle>
     </>
   );

@@ -1,12 +1,14 @@
 import {
   resendEmail,
+  useErrors,
   useResetPasswordEmail,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/reset-password-email";
 import { ScreenMembersOnResetPasswordEmail } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 /**
  * Handles successfully sent email screen for password reset process
@@ -25,7 +27,8 @@ export const useResetPasswordEmailManager = () => {
     resetPasswordEmail: useResetPasswordEmail(),
     handleResendEmail,
     texts: (texts || {}) as ScreenMembersOnResetPasswordEmail["texts"],
-    errors: useTransaction().errors || [],
+    useErrors: useErrors(),
     data: data || {},
+    locales,
   };
 };

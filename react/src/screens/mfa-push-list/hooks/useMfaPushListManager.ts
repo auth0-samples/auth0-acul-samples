@@ -6,16 +6,21 @@ import {
 } from "@auth0/auth0-acul-react/mfa-push-list";
 import type {
   CustomOptions,
+  MfaPushListMembers,
+  ScreenMembers,
   SelectMfaPushDeviceOptions,
+  TransactionMembers,
+  UserMembers,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/mfa-push-list/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useMfaPushListManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const mfaPushListInstance = useMfaPushList();
-  const user = useUser();
+  const screen: ScreenMembers = useScreen();
+  const transaction: TransactionMembers = useTransaction();
+  const mfaPushListInstance: MfaPushListMembers = useMfaPushList();
+  const user: UserMembers = useUser();
 
   const { texts } = screen;
 
@@ -39,11 +44,12 @@ export const useMfaPushListManager = () => {
   };
 
   return {
+    texts: texts || {},
+    locales,
+    errors: transaction.errors || [],
+    user: user || {},
     mfaPushListInstance,
     handleBackAction,
     handleSelectMFAPushDeviceAction,
-    texts: texts || {},
-    errors: transaction.errors || [],
-    user: user || {},
   };
 };

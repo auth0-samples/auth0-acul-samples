@@ -11,10 +11,11 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaSmsListManager } from "../hooks/useMfaSmsListManager";
 
 function MfaSmsListHeader() {
-  const { texts, handleBackAction } = useMfaSmsListManager();
+  const { texts, locales, handleBackAction } = useMfaSmsListManager();
 
-  const backText = texts?.backText || "Go back";
-  const titleText = texts?.title || "Enrolled Phone Numbers";
+  // Use locales as fallback to SDK texts
+  const backText = texts?.backText || locales?.header?.backText;
+  const titleText = texts?.title || locales?.header?.title;
 
   return (
     <>

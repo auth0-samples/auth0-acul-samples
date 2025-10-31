@@ -1,0 +1,10 @@
+{
+  "pageTitle": "Check your email",
+  "header": {
+    "title": "Check Your Email",
+    "description": "Please check the email address {{email}} for instructions to reset your password."
+  },
+  "button": {
+    "resendText": "Resend email"
+  }
+}

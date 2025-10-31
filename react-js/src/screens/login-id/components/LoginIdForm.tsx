@@ -1,10 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import type {
-  Error,
-  LoginOptions,
-  TransactionMembersOnLoginId,
-} from "@auth0/auth0-acul-js/login-id";
+import type { Error, LoginOptions } from "@auth0/auth0-acul-js/types";
 
 import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
@@ -21,26 +17,22 @@ import {
 } from "@/utils/helpers/countryUtils";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
-function IdentifierForm() {
+function LoginIdForm() {
   const {
     handleLoginId,
-    errors,
-    isCaptchaAvailable,
-    captcha,
-    resetPasswordLink,
-    isForgotPasswordEnabled,
     loginIdInstance,
-    texts,
+    screen,
+    transaction,
     handlePickCountryCode,
+    locales,
   } = useLoginIdManager();
 
   const form = useForm<LoginOptions>({
     defaultValues: {
-      identifier: "",
+      username: "",
       captcha: "",
     },
   });
@@ -49,14 +41,28 @@ function IdentifierForm() {
     formState: { isSubmitting },
   } = form;
 
-  // Handle text fallbacks in component
-  const buttonText = texts?.buttonText || "Continue";
+  // Destructure from screen and transaction
+  const { texts, isCaptchaAvailable, captcha, resetPasswordLink } = screen;
+  const { isForgotPasswordEnabled, countryCode, countryPrefix } = transaction;
+
+  // Get computed values from SDK instance
+  const errors = loginIdInstance.getErrors();
+  const loginIdentifiers = loginIdInstance.getLoginIdentifiers() || [];
+
+  // Handle text fallbacks using locales
+  const buttonText = texts?.buttonText || locales.form.button;
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
-    : "CAPTCHA*";
-  const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
+    : `${locales.form.fields.captcha.label}*`;
+  const forgotPasswordText =
+    texts?.forgotPasswordText || locales.form.forgotPassword;
 
-  // Get general errors (not field-specific)
+  const {
+    label: identifierLabel,
+    type: identifierType,
+    autoComplete: identifierAutoComplete,
+  } = getIdentifierDetails(loginIdentifiers, texts);
+
   const generalErrors =
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
@@ -69,30 +75,18 @@ function IdentifierForm() {
 
   const captchaSDKError = getFieldError("captcha", errors);
 
-  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+  const { captchaConfig, captchaProps } = useCaptcha(
     captcha || undefined,
     captchaLabel
   );
 
-  // Get allowed identifiers directly from SDK
-  const allowedIdentifiers =
-    loginIdInstance?.transaction?.allowedIdentifiers || [];
-
-  const {
-    label: identifierLabel,
-    type: identifierType,
-    autoComplete: identifierAutoComplete,
-  } = getIdentifierDetails(allowedIdentifiers, texts);
+  const shouldShowCountryPicker = isPhoneNumberSupported(loginIdentifiers);
+  const selectedCountry = transformAuth0CountryCode(countryCode, countryPrefix);
 
   // Proper submit handler with form data
-  const onSubmit = async (data: LoginOptions) => {
-    await handleLoginId(String(data.identifier || ""), captchaValue);
+  const onSubmit = async (data: LoginOptions): Promise<void> => {
+    await handleLoginId(data);
   };
-
-  const localizedResetPasswordLink =
-    resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
-
-  const shouldShowCountryPicker = isPhoneNumberSupported(allowedIdentifiers);
 
   return (
     <Form {...form}>
@@ -112,15 +106,10 @@ function IdentifierForm() {
         {shouldShowCountryPicker && (
           <div className="mb-4">
             <ULThemeCountryCodePicker
-              selectedCountry={transformAuth0CountryCode(
-                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryCode,
-                (loginIdInstance?.transaction as TransactionMembersOnLoginId)
-                  ?.countryPrefix
-              )}
+              selectedCountry={selectedCountry}
               onClick={handlePickCountryCode}
               fullWidth
-              placeholder="Select Country"
+              placeholder={locales.form.countryPicker.placeholder}
             />
           </div>
         )}
@@ -128,13 +117,9 @@ function IdentifierForm() {
         {/* Identifier input field */}
         <FormField
           control={form.control}
-          name="identifier"
+          name="username"
           rules={{
-            required: "This field is required",
-            maxLength: {
-              value: 100,
-              message: "Maximum 100 characters allowed",
-            },
+            required: locales.form.fields.identifier.required,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -164,19 +149,19 @@ function IdentifierForm() {
             {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales.form.fields.captcha.required,
             }}
           />
         )}
 
         {/* Forgot Password link */}
-        <div className="text-left mb-4">
-          {isForgotPasswordEnabled && localizedResetPasswordLink && (
-            <ULThemeLink href={localizedResetPasswordLink}>
+        {isForgotPasswordEnabled && resetPasswordLink && (
+          <div className="mb-4 mt-2 text-left">
+            <ULThemeLink href={resetPasswordLink}>
               {forgotPasswordText}
             </ULThemeLink>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Submit button */}
         <ULThemePrimaryButton
@@ -191,4 +176,4 @@ function IdentifierForm() {
   );
 }
 
-export default IdentifierForm;
+export default LoginIdForm;

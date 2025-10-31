@@ -9,12 +9,12 @@ import { useLoginPasswordlessEmailCodeManager } from "./hooks/useLoginPasswordle
 
 function LoginPasswordlessEmailCodeScreen() {
   // Extracting attributes from hook made out of useLoginPasswordlessEmailCode hook of Auth0 React SDK
-  const { loginPasswordlessEmailCode, texts } =
+  const { loginPasswordlessEmailCode, texts, locales } =
     useLoginPasswordlessEmailCodeManager();
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginPasswordlessEmailCode);
-  document.title = texts?.pageTitle || "Enter your email code to log in";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

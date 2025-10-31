@@ -96,6 +96,24 @@ export const useTransaction = jest.fn(
   () => mockMfaSmsChallengeInstance.transaction
 );
 
+// Mock useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn((_field: string) => []),
+    byKind: jest.fn((_kind: string) => []),
+    byCode: jest.fn((_code: string) => []),
+  },
+  hasError: jest.fn(() => false),
+  dismiss: jest.fn(),
+}));
+
+// Mock useResend hook for managing resend cooldown
+export const useResend = jest.fn(() => ({
+  remaining: 0,
+  disabled: false,
+  startResend: jest.fn(),
+}));
+
 // Export named functions for direct access in tests
 export const continueMfaSmsChallenge =
   mockMfaSmsChallengeInstance.continueMfaSmsChallenge;

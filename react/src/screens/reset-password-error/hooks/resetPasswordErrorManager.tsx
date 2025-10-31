@@ -4,6 +4,8 @@ import {
 } from "@auth0/auth0-acul-react/reset-password-error";
 import { ScreenMembersOnResetPasswordError } from "@auth0/auth0-acul-react/types";
 
+import locales from "../locales/en.json";
+
 /**
  * Handles password reset error
  *
@@ -14,5 +16,6 @@ export const useResetPasswordErrorManager = () => {
   return {
     resetPasswordError: useResetPasswordError(),
     texts: texts as ScreenMembersOnResetPasswordError["texts"] | null,
+    locales,
   };
 };

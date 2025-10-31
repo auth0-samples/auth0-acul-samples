@@ -3,24 +3,25 @@ import {
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-sms-enrollment";
-import { ScreenMembersOnMfaSmsEnrollment } from "@auth0/auth0-acul-react/types";
+import {
+  MfaSmsEnrollmentMembers,
+  ScreenMembersOnMfaSmsEnrollment,
+} from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/mfa-sms-enrollment/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useMfaSmsEnrollmentManager = () => {
-  const screen = useScreen();
+  const mfaSmsEnrollment: MfaSmsEnrollmentMembers = useMfaSmsEnrollment();
+  const screen: ScreenMembersOnMfaSmsEnrollment = useScreen();
   const transaction = useTransaction();
-  const mfaSmsEnrollment = useMfaSmsEnrollment();
 
   const { texts, data, links } = screen;
+  const { countryCode, countryPrefix } = transaction;
 
-  const handleContinueEnrollment = async (
-    phone: string,
-    captcha?: string
-  ): Promise<void> => {
+  const handleContinueEnrollment = async (phone: string): Promise<void> => {
     const options = {
       phone: phone?.trim() || "",
-      ...(captcha && { captcha }),
     };
 
     await executeSafely(
@@ -47,8 +48,10 @@ export const useMfaSmsEnrollmentManager = () => {
     handlePickCountryCode,
     handleTryAnotherMethod,
     texts: (texts || {}) as ScreenMembersOnMfaSmsEnrollment["texts"],
-    errors: transaction.errors || [],
+    locales,
     data,
     links,
+    countryCode,
+    countryPrefix,
   };
 };

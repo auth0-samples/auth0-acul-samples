@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import type { Error } from "@auth0/auth0-acul-react/types";
+import type { ErrorItem } from "@auth0/auth0-acul-react/types";
 
 import { ULThemeFloatingLabelField } from "@/components/form";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -16,7 +16,7 @@ interface PhoneEnrollmentFormData {
 }
 
 function PhoneIdentifierEnrollmentForm() {
-  const { handleContinueEnrollment, errors, texts, data } =
+  const { handleContinueEnrollment, texts, data, locales, useErrors } =
     usePhoneIdentifierEnrollmentManager();
 
   // Initialize the form using react-hook-form
@@ -29,12 +29,14 @@ function PhoneIdentifierEnrollmentForm() {
   const {
     formState: { isSubmitting },
   } = form;
-  const buttonText = texts?.continueButtonText || "Continue";
+  const buttonText = texts?.continueButtonText || locales.form.buttonLabelText;
+  const { errors, hasError, dismiss } = useErrors;
 
   // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const generalErrors: ErrorItem[] =
+    errors.byKind("server")?.filter((error) => {
+      return !error.field || error.field === null;
+    }) || [];
 
   const onSubmit = async (formData: PhoneEnrollmentFormData) => {
     await handleContinueEnrollment(formData.type);
@@ -59,10 +61,14 @@ function PhoneIdentifierEnrollmentForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -81,8 +87,7 @@ function PhoneIdentifierEnrollmentForm() {
         {/* Phone identifier enrollment options*/}
         <div>
           <ULThemeSubtitle className="mb-2 mt-4 theme-universal:text-start">
-            {texts?.chooseMessageTypeText ||
-              "How do you want to receive the code?"}
+            {texts?.chooseMessageTypeText || locales.form.field.labelText}
           </ULThemeSubtitle>
 
           <FormField
@@ -97,7 +102,7 @@ function PhoneIdentifierEnrollmentForm() {
                   onClick={() => field.onChange("text")}
                   ref={textButtonRef}
                 >
-                  {texts?.smsButtonText || "Text Message"}
+                  {texts?.smsButtonText || locales.form.field.smsButton}
                 </ULThemeButton>
 
                 <ULThemeButton
@@ -107,7 +112,7 @@ function PhoneIdentifierEnrollmentForm() {
                   onClick={() => field.onChange("voice")}
                   ref={voiceButtonRef}
                 >
-                  {texts?.voiceButtonText || "Voice Call"}
+                  {texts?.voiceButtonText || locales.form.field.voiceButton}
                 </ULThemeButton>
               </FormItem>
             )}
@@ -121,7 +126,9 @@ function PhoneIdentifierEnrollmentForm() {
           className="w-full mt-3"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Sending..." : buttonText}
+          {isSubmitting
+            ? `${locales.form.field.sendingCodeText}...`
+            : buttonText}
         </ULThemeButton>
       </form>
     </Form>

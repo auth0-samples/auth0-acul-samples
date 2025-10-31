@@ -26,27 +26,22 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies (SKIPPED due to non availability of React SDK)
+      - name: Install dependencies
         working-directory: react
-        if: false
         run: npm ci
 
-      - name: Lint check (SKIPPED)
+      - name: Lint check
         working-directory: react
-        if: false
         run: npm run lint:check
 
-      - name: Type check (SKIPPED)
+      - name: Type check
         working-directory: react
-        if: false
         run: npx tsc --noEmit
 
-      - name: Test (SKIPPED)
+      - name: Run tests
         working-directory: react
-        if: false
-        run: npm test -- --coverage --watchAll=false --passWithNoTests
+        run: npm test -- --coverage --watchAll=false
 
-      - name: Build (SKIPPED)
+      - name: Build
         working-directory: react
-        if: false
         run: npm run build

@@ -2,10 +2,14 @@ import {
   resendCode,
   returnToPrevious,
   submitPhoneChallenge,
+  useErrors,
+  useResend,
   useScreen,
+  useTransaction,
 } from "@auth0/auth0-acul-react/phone-identifier-challenge";
 import { render, screen } from "@testing-library/react";
 
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import PhoneIdentifierChallengeScreen from "../index";
@@ -58,6 +62,10 @@ describe("PhoneIdentifierChallengeScreen", () => {
     render(<PhoneIdentifierChallengeScreen />);
 
     await ScreenTestUtils.clickButton(/Resend/i);
+    (useResend as jest.Mock).mockReturnValueOnce({
+      disabled: true,
+    });
+    render(<PhoneIdentifierChallengeScreen />);
     await ScreenTestUtils.clickButton(/Go back/i);
 
     expect(returnToPrevious).toHaveBeenCalled();
@@ -65,9 +73,11 @@ describe("PhoneIdentifierChallengeScreen", () => {
 
   it("shows resend limit reached text after resending", async () => {
     render(<PhoneIdentifierChallengeScreen />);
-
     await ScreenTestUtils.clickButton(/Resend/i);
-
+    (useResend as jest.Mock).mockReturnValueOnce({
+      disabled: true,
+    });
+    render(<PhoneIdentifierChallengeScreen />);
     expect(screen.getByText(/Code has been resent/i)).toBeInTheDocument();
   });
 
@@ -84,5 +94,39 @@ describe("PhoneIdentifierChallengeScreen", () => {
 
     render(<PhoneIdentifierChallengeScreen />);
     expect(screen.getByText("Verify Your Identity")).toBeInTheDocument();
+  });
+
+  it("should display general errors", async () => {
+    // Configure mock transaction to have general error
+    const mockTransaction = (useTransaction as jest.Mock)();
+    mockTransaction.errors = [CommonTestData.errors.network];
+    mockTransaction.hasErrors = true;
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    render(<PhoneIdentifierChallengeScreen />);
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 });

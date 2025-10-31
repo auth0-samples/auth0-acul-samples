@@ -9,10 +9,10 @@ import { useMfaSmsEnrollmentManager } from "./hooks/useMfaSmsEnrollmentManager";
 
 function MfaSmsEnrollmentScreen() {
   // Extracting attributes from hook made out of MfaSmsEnrollment instance of Auth0 React ACUL SDK
-  const { mfaSmsEnrollment, texts } = useMfaSmsEnrollmentManager();
+  const { mfaSmsEnrollment, texts, locales } = useMfaSmsEnrollmentManager();
 
   applyAuth0Theme(mfaSmsEnrollment);
-  document.title = texts?.pageTitle || "Secure Your Account - MFA";
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

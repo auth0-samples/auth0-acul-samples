@@ -1,0 +1,25 @@
+{
+    "pageTitle": "Enter your phone code to log in",
+    "header": {
+        "logoAltText": "Application Logo",
+        "title": "Verify Your Identity",
+        "phoneNumber": "your phone",
+        "smsDescriptionText": "We've sent a text message to: {{phoneNumber}}",
+        "voiceDescriptionText": "We've sent a 6-digit code via voice phone call to the following phone number: {{phoneNumber}}"
+    },
+    "form": {
+        "field": {
+            "labelText": "Enter the 6-digit code",
+            "required": "Please enter the verification code.",
+            "submitButtonText": "Verifying"
+        },
+        "buttonLabelText": "Continue"
+    },
+    "footer": {
+        "resendCodeText": "Didn't receive a code?",
+        "resendButtonText": "Resend",
+        "limitReachedText": "Code has been resent.",
+        "backButtonText": "Go back"
+        
+    }
+}

@@ -5,18 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaPushWelcomeManager } from "../hooks/useMfaPushWelcomeManager";
 
 function Header() {
-  const { texts } = useMfaPushWelcomeManager();
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const { texts, locales } = useMfaPushWelcomeManager();
+
+  // Use Locales as fallback to SDK texts
+  const titleText = texts?.title || locales.heading.title;
+  const descriptionText = texts?.description || locales.heading.description;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Secure Your Account"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description ||
-          `In order to continue, install the Auth0 Guardian app via the app store from your mobile device.`}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }

@@ -1,13 +1,13 @@
+import type { PasswordComplexityRule } from "@auth0/auth0-acul-react/types";
 import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { isGroupRuleValid } from "@/utils/helpers/passwordValidator";
 
 export interface ULThemePasswordValidatorProps {
   /**
    * Array of password validation rules from usePasswordValidation hook
    */
-  validationRules: any;
+  validationRules: PasswordComplexityRule[];
   /**
    * Optional class names for additional styling
    */
@@ -25,64 +25,46 @@ export const ULThemePasswordValidator = ({
   passwordSecurityText,
   show = true,
 }: ULThemePasswordValidatorProps) => {
-  if (!show || !validationRules.length) {
+  if (!show || !validationRules || validationRules.length === 0) {
     return null;
   }
 
-  // Handle both array and object with rules property
-  const rules = Array.isArray(validationRules) ? validationRules : validationRules?.rules || [];
-
-  // Check if we have a grouped structure with "contains-at-least"
-  const hasContainsAtLeastRule = rules.some((rule: any) =>
-    rule.code.includes("contains-at-least")
-  );
-
-  // Get sub-rules that should be nested under "contains-at-least" (only if grouped structure exists)
-  const subRules = hasContainsAtLeastRule
-    ? rules.filter((rule: any) =>
-        [
-          "password-policy-lower-case",
-          "password-policy-upper-case",
-          "password-policy-numbers",
-          "password-policy-special-characters",
-        ].includes(rule.code)
-      )
-    : [];
-
-  // Get main rules - if no grouped structure, show all rules; otherwise exclude sub-rules
-  const mainRules = hasContainsAtLeastRule
-    ? rules.filter(
-        (rule: any) =>
-          ![
-            "password-policy-lower-case",
-            "password-policy-upper-case",
-            "password-policy-numbers",
-            "password-policy-special-characters",
-          ].includes(rule.code)
-      )
-    : rules;
-
-  const renderValidationItem = (
-    rule: any,
-    overrideValid?: boolean
-  ) => {
-    const isValid = overrideValid !== undefined ? overrideValid : rule.isValid;
+  const renderValidationItem = (rule: PasswordComplexityRule) => {
+    const hasNestedItems = rule.items && rule.items.length > 0;
 
     return (
       <li
         key={rule.code}
         className={cn(
           "text-(length:--ul-theme-font-body-text-size) relative",
-          isValid ? "list-none text-success" : "text-body-text"
+          rule.isValid ? "list-none text-success" : "text-body-text"
         )}
       >
-        {isValid && (
+        {rule.isValid && (
           <Check
             className="absolute -left-5 top-0.5 h-4 w-4 text-success"
             data-testid={`check-icon-${rule.code}`}
           />
         )}
-        <span>{rule.policy}</span>
+        <div>
+          <span>{rule.label}</span>
+          {/* Render nested items if they exist */}
+          {hasNestedItems && (
+            <ul className="mt-1 space-y-1 pl-4 list-disc">
+              {rule.items!.map((item) => (
+                <li
+                  key={item.code}
+                  className={cn(
+                    "text-(length:--ul-theme-font-body-text-size)",
+                    item.isValid ? "text-success" : "text-body-text"
+                  )}
+                >
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </li>
     );
   };
@@ -99,40 +81,7 @@ export const ULThemePasswordValidator = ({
       </div>
 
       <ul className="space-y-2 pl-4 list-disc">
-        {mainRules.map((rule: any) => {
-          // Handle the "contains-at-least" rule specially
-          if (rule.code.includes("contains-at-least")) {
-            const containsAtLeastValid = isGroupRuleValid(validationRules);
-
-            return (
-              <li
-                key={rule.code}
-                className={cn(
-                  "text-(length:--ul-theme-font-body-text-size) relative",
-                  containsAtLeastValid
-                    ? "list-none text-success"
-                    : "text-body-text"
-                )}
-              >
-                {containsAtLeastValid && (
-                  <Check
-                    className="absolute -left-5 top-0.5 h-4 w-4 text-success"
-                    data-testid={`check-icon-${rule.code}`}
-                  />
-                )}
-                <div>
-                  <span>{rule.policy}</span>
-                  {/* Render sub-rules nested under contains-at-least */}
-                  <ul className="mt-1 space-y-1 pl-4 list-disc">
-                    {subRules.map((subRule: any) => renderValidationItem(subRule))}
-                  </ul>
-                </div>
-              </li>
-            );
-          }
-
-          return renderValidationItem(rule);
-        })}
+        {validationRules.map((rule) => renderValidationItem(rule))}
       </ul>
     </div>
   );

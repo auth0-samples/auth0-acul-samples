@@ -1,6 +1,9 @@
 import React from "react";
 
-import type { Error, MfaLoginFactorType } from "@auth0/auth0-acul-react/types";
+import type {
+  ErrorItem,
+  MfaLoginFactorType,
+} from "@auth0/auth0-acul-react/types";
 import { ChevronRight } from "lucide-react";
 
 import {
@@ -22,31 +25,36 @@ import { useMfaLoginOptionsManager } from "../hooks/useMFALoginOptionsManager";
 
 function MFALoginOptionsList() {
   // Extracting attributes from hook made out of MFALoginOptionsInstance class of Auth0 React SDK
-  const { texts, handleEnroll, errors, enrolledFactors } =
+  const { texts, handleEnroll, enrolledFactors, locales, useErrors } =
     useMfaLoginOptionsManager();
+  const { errors, hasError, dismiss } = useErrors;
 
   // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const generalErrors: ErrorItem[] =
+    errors.byKind("server")?.filter((error) => {
+      return !error.field || error.field === null;
+    }) || [];
   const enrollOptions = enrolledFactors as MfaLoginFactorType[];
 
   const displayNameMap: Record<MfaLoginFactorType, string> = {
-    sms: texts?.authenticatorNamesSMS ?? "SMS",
-    voice: texts?.authenticatorNamesVoice ?? "Phone",
-    phone: texts?.authenticatorNamesPhone ?? "Phone",
+    sms: texts?.authenticatorNamesSMS ?? locales.MFALoginOptions.sms,
+    voice: texts?.authenticatorNamesVoice ?? locales.MFALoginOptions.voice,
+    phone: texts?.authenticatorNamesPhone ?? locales.MFALoginOptions.phone,
     "push-notification":
       texts?.authenticatorNamesPushNotification ??
-      "Notification via Auth0 Guardian app",
-    otp: texts?.authenticatorNamesOTP ?? "Google Authenticator or similar",
+      locales.MFALoginOptions.pushNotification,
+    otp: texts?.authenticatorNamesOTP ?? locales.MFALoginOptions.otp,
     "webauthn-roaming":
-      texts?.authenticatorNamesWebauthnRoaming ?? "Security Key",
-    email: texts?.authenticatorNamesEmail ?? "Email",
-    "recovery-code": texts?.authenticatorNamesRecoveryCode ?? "Recovery code",
+      texts?.authenticatorNamesWebauthnRoaming ??
+      locales.MFALoginOptions.webauthnRoaming,
+    email: texts?.authenticatorNamesEmail ?? locales.MFALoginOptions.email,
+    "recovery-code":
+      texts?.authenticatorNamesRecoveryCode ??
+      locales.MFALoginOptions.recoveryCode,
     "webauthn-platform":
       texts?.authenticatorNamesWebauthnPlatform ??
-      "Fingerprint or Face Recognition",
-    duo: texts?.authenticatorNamesDUO ?? "Notification via DUO app",
+      locales.MFALoginOptions.webauthnPlatform,
+    duo: texts?.authenticatorNamesDUO ?? locales.MFALoginOptions.duo,
   };
 
   const iconMap: Record<MfaLoginFactorType, React.ReactNode> = {
@@ -73,10 +81,14 @@ function MFALoginOptionsList() {
   return (
     <>
       {/* General error messages */}
-      {generalErrors.length > 0 && (
+      {hasError && generalErrors.length > 0 && (
         <div className="space-y-3 mb-4">
-          {generalErrors.map((error: Error, index: number) => (
-            <ULThemeAlert key={`${error.message}-${index}`}>
+          {generalErrors.map((error) => (
+            <ULThemeAlert
+              key={error.id}
+              variant="destructive"
+              onDismiss={() => dismiss(error.id)}
+            >
               <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
             </ULThemeAlert>
           ))}

@@ -1,0 +1,12 @@
+{
+    "page": {
+        "title": "List of available devices | My App"
+    },
+    "heading": {
+        "goBackActionText": "Go back",
+        "title": "Registered Devices"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred"
+    }
+}

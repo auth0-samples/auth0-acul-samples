@@ -4,6 +4,7 @@
  * and isolated testing of our components.
  */
 import {
+  ErrorItem,
   type PasswordPolicy,
   type ScreenMembersOnLoginPassword,
   TransactionMembersOnLoginPassword,
@@ -146,6 +147,19 @@ const mockLoginPasswordInstance = createMockLoginPasswordInstance();
 export const useLoginPassword = jest.fn(() => ({
   login: mockLoginPasswordInstance.login,
   federatedLogin: mockLoginPasswordInstance.federatedLogin,
+}));
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
 }));
 
 export const useScreen = jest.fn(() => mockLoginPasswordInstance.screen);
