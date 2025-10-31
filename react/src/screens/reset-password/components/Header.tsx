@@ -5,19 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useResetPasswordManager } from "../hooks/useResetPasswordManager";
 
 function Header() {
-  const { texts } = useResetPasswordManager();
+  const { texts, locales } = useResetPasswordManager();
 
   // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const logoAltText = texts?.logoAltText || locales.header.logoAltText;
+  const title = texts?.title || locales.header.title;
+  const description = texts?.description || locales.header.description;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Change Your Password"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description ||
-          "Enter a new password below to change your password."}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{description}</ULThemeSubtitle>
     </>
   );
 }

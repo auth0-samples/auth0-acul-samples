@@ -1,12 +1,15 @@
 import {
   resetPassword,
+  useErrors,
+  usePasswordValidation,
   useResetPassword,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/reset-password";
 import { ScreenMembersOnResetPassword } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 /**
  * Handles the password reset process
@@ -37,6 +40,8 @@ export const useResetPasswordManager = () => {
     resetPassword: useResetPassword(),
     handleSubmitPassword,
     texts: (texts || {}) as ScreenMembersOnResetPassword["texts"],
-    errors: useTransaction().errors || [],
+    locales,
+    useErrors: useErrors(),
+    usePasswordValidation,
   };
 };
