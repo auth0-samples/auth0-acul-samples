@@ -5,18 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaPushChallengeManager } from "../hooks/useMfaPushChallengeManager";
 
 function Header() {
-  const { texts } = useMfaPushChallengeManager();
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const { texts, locales } = useMfaPushChallengeManager();
+
+  // Use Locales as fallback to SDK texts
+  const titleText = texts?.title || locales.heading.title;
+  const descriptionText = texts?.description || locales.heading.description;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description ||
-          `We’ve sent a notification to the following device via the app:`}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }

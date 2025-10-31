@@ -1,0 +1,22 @@
+{
+    "page": {
+        "title": "Verify Your Identity"
+    },
+    "heading": {
+        "logoAltText": "Application Logo",
+        "title": "Verify Your Identity",
+        "description": "We’ve sent a notification to the following device via the app:"
+    },
+    "form": {
+        "rememberDeviceText": "Remember this device for 30 days",
+        "enterOtpCodeText": "Manually Enter Code",
+        "resendText": "Didn't receive a code?",
+        "resendActionText": "Resend",
+        "tryAnotherMethodText": "Try another method",
+        "separatorText": "OR",
+        "yourDeviceText": "Your Device"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred"
+    }
+}

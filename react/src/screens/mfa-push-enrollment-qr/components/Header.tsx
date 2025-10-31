@@ -5,18 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaPushEnrollmentQRManager } from "../hooks/useMfaPushEnrollmentQRManager";
 
 function Header() {
-  const { texts } = useMfaPushEnrollmentQRManager();
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const { texts, locales } = useMfaPushEnrollmentQRManager();
+
+  // Use Locales as fallback to SDK texts
+  const titleText = texts?.title || locales.heading.title;
+  const descriptionText = texts?.description || locales.heading.description;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Secure Your Account"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-8">
-        {texts?.description ||
-          `Scan the QR Code below using the Guardian app on your mobile device.`}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-8">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }

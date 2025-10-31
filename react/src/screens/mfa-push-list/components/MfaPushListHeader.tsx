@@ -12,6 +12,7 @@ import { useMfaPushListManager } from "../hooks/useMfaPushListManager";
 function MfaPushListHeader() {
   const { texts, locales, handleBackAction } = useMfaPushListManager();
 
+  // Use Locales as fallback to SDK texts
   const backText = texts?.backText || locales.heading.goBackActionText;
   const titleText = texts?.title || locales.heading.title;
 

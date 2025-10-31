@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import type { Error, WithRememberOptions } from "@auth0/auth0-acul-react/types";
+import {
+  useErrors,
+  useMfaPolling,
+} from "@auth0/auth0-acul-react/mfa-push-challenge-push";
+import type {
+  ErrorItem,
+  WithRememberOptions,
+} from "@auth0/auth0-acul-react/types";
 
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
@@ -17,10 +24,9 @@ import { useMfaPushChallengeManager } from "../hooks/useMfaPushChallengeManager"
 function MfaSmsChallengeForm() {
   const {
     data,
-    errors,
     texts,
+    locales,
     enrolledFactors,
-    useMfaPolling,
     handleEnterCodeManually,
     handleTryAnotherMethod,
     handleContinueMfaPushChallenge,
@@ -34,29 +40,32 @@ function MfaSmsChallengeForm() {
     },
   });
 
+  // Use Locales as fallback to SDK texts
   const rememberDeviceText =
-    texts?.rememberMeText || "Remember this device for 30 days";
-  const enterOtpCodeText = texts?.enterOtpCode || "Manually Enter Code";
-  const resendText = texts?.resendText || "Didn't receive a code?";
-  const resendLinkText = texts?.resendActionText || "Resend";
+    texts?.rememberMeText || locales.form.rememberDeviceText;
+  const enterOtpCodeText = texts?.enterOtpCode || locales.form.enterOtpCodeText;
+  const resendText = texts?.resendText || locales.form.resendText;
+  const resendLinkText =
+    texts?.resendActionText || locales.form.resendActionText;
   const tryAnotherMethodText =
-    texts?.pickAuthenticatorText || "Try another method";
+    texts?.pickAuthenticatorText || locales.form.tryAnotherMethodText;
   const { deviceName, showRememberDevice } = data || {};
-  const separatorText = texts?.separatorText || "OR";
+  const separatorText = texts?.separatorText || locales.form.separatorText;
   const shouldShowTryAnotherMethod = enrolledFactors?.length
     ? enrolledFactors.length > 1
     : false;
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("server")
+    .filter((err) => !err.field);
 
   // Automatically start polling when the page loads
   const { isRunning, startPolling, stopPolling } = useMfaPolling({
     intervalMs: 3000,
     onCompleted: () => {
-      console.log("Push approved | declined");
       handleContinueMfaPushChallenge({
         rememberDevice: form.getValues().rememberDevice,
       });
@@ -81,11 +90,17 @@ function MfaSmsChallengeForm() {
     <Form {...form}>
       <form>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
-                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            {generalErrors.map((error: ErrorItem) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
+                <ULThemeAlertTitle>
+                  {error.message || locales.errors.errorOccurred}
+                </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
           </div>
@@ -100,7 +115,7 @@ function MfaSmsChallengeForm() {
               <ULThemeSocialProviderButton
                 displayName={""}
                 key={deviceName}
-                buttonText={deviceName || "Your Device"}
+                buttonText={deviceName || locales.form.yourDeviceText}
                 iconComponent={isRunning && <ULThemeSpinner />}
                 disabled
                 name={field.name}
