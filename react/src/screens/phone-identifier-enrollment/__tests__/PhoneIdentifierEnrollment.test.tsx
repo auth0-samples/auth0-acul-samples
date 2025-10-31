@@ -1,10 +1,13 @@
 import {
   continuePhoneEnrollment,
   returnToPrevious,
+  useErrors,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/phone-identifier-enrollment";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+
+import { CommonTestData } from "@/test/fixtures/common-data";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -41,7 +44,7 @@ describe("Phone Enrollment Components", () => {
     expect(screen.getByText(/Verify Your Identity/i)).toBeInTheDocument();
     expect(
       screen.getByText(
-        /We will send a 6-digit code to the following phone number:/i
+        /We will send a 6-digit code to the following phone number/i
       )
     ).toBeInTheDocument();
   });
@@ -59,14 +62,38 @@ describe("Phone Enrollment Components", () => {
     ).toBeInTheDocument();
   });
 
-  it("displays general errors if present", () => {
-    (useTransaction as jest.Mock).mockReturnValue({
-      hasErrors: true,
-      errors: [{ message: "General error", field: null }],
+  it("should display general errors", async () => {
+    // Configure mock transaction to have general error
+    const mockTransaction = (useTransaction as jest.Mock)();
+    mockTransaction.errors = [CommonTestData.errors.network];
+    mockTransaction.hasErrors = true;
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "server") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     render(<PhoneIdentifierEnrollmentForm />);
-    expect(screen.getByText(/General error/i)).toBeInTheDocument();
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 
   it("calls continueEnrollment with selected message type on submit", async () => {

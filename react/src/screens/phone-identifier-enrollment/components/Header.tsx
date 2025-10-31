@@ -5,19 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { usePhoneIdentifierEnrollmentManager } from "../hooks/usePhoneIdentifierEnrollmentManager";
 
 function Header() {
-  const { texts } = usePhoneIdentifierEnrollmentManager();
+  const { texts, locales } = usePhoneIdentifierEnrollmentManager();
 
   // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  const logoAltText = texts?.logoAltText || locales.header.logoAltText;
+  const title = texts?.title || locales.header.title;
+  const description = texts?.description || locales.header.description;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description ||
-          "We will send a 6-digit code to the following phone number:"}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{description}</ULThemeSubtitle>
     </>
   );
 }

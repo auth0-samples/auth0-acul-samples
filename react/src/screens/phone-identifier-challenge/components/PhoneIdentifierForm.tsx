@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 
 import type {
-  Error,
+  ErrorItem,
   PhoneChallengeOptions,
 } from "@auth0/auth0-acul-react/types";
 
@@ -12,12 +12,11 @@ import {
 import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { usePhoneIdentifierChallengeManager } from "../hooks/usePhoneIdentifierChallengeManager";
 
 function PhoneIdentifierChallengeForm() {
-  const { handleSubmitPhoneChallenge, errors, texts } =
+  const { handleSubmitPhoneChallenge, useErrors, texts, locales } =
     usePhoneIdentifierChallengeManager();
 
   // Initialize the form using react-hook-form
@@ -31,15 +30,17 @@ function PhoneIdentifierChallengeForm() {
     formState: { isSubmitting },
   } = form;
 
-  const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the 6-digit code";
+  const buttonText = texts?.buttonText || locales.form.buttonLabelText;
+  const codeLabelText = texts?.placeholder || locales.form.field.labelText;
+  const { errors, hasError, dismiss } = useErrors;
 
   // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const generalErrors: ErrorItem[] =
+    errors.byKind("server")?.filter((error) => {
+      return !error.field || error.field === null;
+    }) || [];
 
-  const codeSDKError = getFieldError("code", errors);
+  const codeSDKError = errors.byField("code")[0]?.message;
 
   const onSubmit = async (formData: PhoneChallengeOptions) => {
     await handleSubmitPhoneChallenge(formData.code);
@@ -49,10 +50,14 @@ function PhoneIdentifierChallengeForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -64,7 +69,7 @@ function PhoneIdentifierChallengeForm() {
           control={form.control}
           name="code"
           rules={{
-            required: "Please enter the verification code.",
+            required: locales.form.field.required,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -93,7 +98,7 @@ function PhoneIdentifierChallengeForm() {
           className="w-full"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Verifying..." : buttonText}
+          {isSubmitting ? `${locales.form.field.submitButtonText}` : buttonText}
         </ULThemeButton>
       </form>
     </Form>

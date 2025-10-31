@@ -1,9 +1,9 @@
 import {
   continuePhoneEnrollment,
   returnToPrevious,
+  useErrors,
   usePhoneIdentifierEnrollment,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/phone-identifier-enrollment";
 import {
   PhoneEnrollmentOptions,
@@ -12,9 +12,10 @@ import {
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const usePhoneIdentifierEnrollmentManager = () => {
   const screen = useScreen();
-  const transaction = useTransaction();
   const phoneIdentifierEnrollment = usePhoneIdentifierEnrollment();
 
   const { texts, data } = screen;
@@ -40,7 +41,8 @@ export const usePhoneIdentifierEnrollmentManager = () => {
     handleContinueEnrollment,
     handleReturnToPrevious,
     texts: (texts || {}) as ScreenMembersOnPhoneIdentifierEnrollment["texts"],
-    errors: transaction.errors || [],
     data: data,
+    locales,
+    useErrors: useErrors(),
   };
 };
