@@ -17,7 +17,6 @@ import { useCaptcha } from "@/hooks/useCaptcha";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 
 import { useResetPasswordRequestManager } from "../hooks/resetPasswordRequestManager";
-import locales from "../locales/en.json";
 function ResetPasswordRequestForm() {
   const {
     handleResetPasswordRequest,
@@ -26,13 +25,15 @@ function ResetPasswordRequestForm() {
     captcha,
     useLoginIdentifiers,
     useErrors,
+    locales,
+    inputfield,
   } = useResetPasswordRequestManager();
   const { errors, hasError, dismiss } = useErrors;
 
   // Initialize the form using react-hook-form
   const form = useForm<ResetPasswordRequestOptions>({
     defaultValues: {
-      username: "",
+      username: String(inputfield),
       captcha: "",
     },
   });
@@ -99,7 +100,7 @@ function ResetPasswordRequestForm() {
           </div>
         )} */}
 
-        {/* Username or Email or Phone input field */}
+        {/* Username or Email or Phone pre-filled input field */}
         <FormField
           control={form.control}
           name="username"

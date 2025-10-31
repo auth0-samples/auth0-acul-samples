@@ -6,6 +6,7 @@ import {
   useResetPasswordRequest,
   useScreen,
   useTransaction,
+  useUntrustedData,
 } from "@auth0/auth0-acul-react/reset-password-request";
 import {
   ResetPasswordRequestOptions,
@@ -13,6 +14,8 @@ import {
 } from "@auth0/auth0-acul-react/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locales/en.json";
 
 export const useResetPasswordRequestManager = () => {
   const { texts, captchaImage, isCaptchaAvailable } = useScreen();
@@ -51,5 +54,7 @@ export const useResetPasswordRequestManager = () => {
     captcha: useScreen().captcha || null,
     useLoginIdentifiers: useLoginIdentifiers(),
     useErrors: useErrors(),
+    inputfield: useUntrustedData().submittedFormData?.username || "",
+    locales,
   };
 };

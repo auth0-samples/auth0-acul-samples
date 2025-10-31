@@ -1,9 +1,9 @@
 import { ULThemeButton } from "@/components/ULThemeButton";
 
 import { useResetPasswordRequestManager } from "../hooks/resetPasswordRequestManager";
-import locales from "../locales/en.json";
 function Footer() {
-  const { texts, handleBackToLogin } = useResetPasswordRequestManager();
+  const { texts, handleBackToLogin, locales } =
+    useResetPasswordRequestManager();
 
   const returnToPreviousScreenText =
     texts?.backToLoginLinkText || locales.footer.backButton;

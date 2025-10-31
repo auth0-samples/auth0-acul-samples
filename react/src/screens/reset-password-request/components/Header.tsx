@@ -6,10 +6,10 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 
 import { useResetPasswordRequestManager } from "../hooks/resetPasswordRequestManager";
-import locales from "../locales/en.json";
 
 function Header() {
-  const { texts, useLoginIdentifiers } = useResetPasswordRequestManager();
+  const { texts, useLoginIdentifiers, locales } =
+    useResetPasswordRequestManager();
 
   // Use helper to determine placeholder based on active identifiers
   const identifierDetails = getIdentifierDetails(
