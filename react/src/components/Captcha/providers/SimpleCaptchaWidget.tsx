@@ -25,7 +25,7 @@ const SimpleCaptchaWidget = <T extends FieldValues = FieldValues>({
   }
 
   const imageUrl = config.image;
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
+  const captchaImageAlt = "CAPTCHA challenge";
   // Image container styles with theme
   const imageContainerStyles = cn(
     "flex justify-center p-8 rounded",
