@@ -169,6 +169,7 @@
         },
         "fonts": {
           "reference_text_size": 16,
+          "font_url": "https://webapps1.chicago.gov/cdn/Fonts/RobotoDraftItalic.woff2",
           "links_style": "normal",
           "title": {
             "bold": false,
