@@ -2,9 +2,10 @@ import {
   resendCode,
   returnToPrevious,
   submitPhoneChallenge,
+  useErrors,
   usePhoneIdentifierChallenge,
+  useResend,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/phone-identifier-challenge";
 import {
   PhoneChallengeOptions,
@@ -13,9 +14,10 @@ import {
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
+import locales from "../locales/en.json";
+
 export const usePhoneIdentifierChallengeManager = () => {
   const screen = useScreen();
-  const transaction = useTransaction();
   const phoneIdentifierChallenge = usePhoneIdentifierChallenge();
 
   const { texts, data } = screen;
@@ -47,7 +49,9 @@ export const usePhoneIdentifierChallengeManager = () => {
     handleResendCode,
     handleReturnToPrevious,
     texts: (texts || {}) as ScreenMembersOnPhoneIdentifierChallenge["texts"],
-    errors: transaction.errors || [],
     data: (data || {}) as ScreenMembersOnPhoneIdentifierChallenge["data"],
+    locales,
+    useErrors: useErrors(),
+    useResend,
   };
 };

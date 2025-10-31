@@ -1,17 +1,30 @@
 import ULThemeLogo from "@/components/ULThemeLogo";
 import ULThemeSubtitle from "@/components/ULThemeSubtitle";
 import ULThemeTitle from "@/components/ULThemeTitle";
+import { translate } from "@/utils/helpers/localeTranslate";
 
 import { usePhoneIdentifierChallengeManager } from "../hooks/usePhoneIdentifierChallengeManager";
 
 function Header() {
-  const { texts, data } = usePhoneIdentifierChallengeManager();
+  const { texts, data, locales } = usePhoneIdentifierChallengeManager();
 
   // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
-  const phoneNumber = data?.phone || "your phone";
-  const defaultSmsDescription = `We've sent a text message to: ${phoneNumber}`;
-  const defaultVoiceDescription = `We've sent a 6-digit code via voice phone call to the following phone number: ${phoneNumber}`;
+  const logoAltText = texts?.logoAltText || locales.header.logoAltText;
+  const phoneNumber = data?.phone || locales.header.phoneNumber;
+  const defaultSmsDescription = translate(
+    "header.smsDescriptionText",
+    {
+      phoneNumber: phoneNumber,
+    },
+    locales
+  );
+  const defaultVoiceDescription = translate(
+    "header.voiceDescriptionText",
+    {
+      phoneNumber: phoneNumber,
+    },
+    locales
+  );
 
   const appendPhoneNumber = (text?: string) =>
     text ? text + ` ${phoneNumber}` : "";
@@ -24,7 +37,7 @@ function Header() {
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
+      <ULThemeTitle>{texts?.title || locales.header.title}</ULThemeTitle>
       <ULThemeSubtitle className="mb-6">{description}</ULThemeSubtitle>
     </>
   );
