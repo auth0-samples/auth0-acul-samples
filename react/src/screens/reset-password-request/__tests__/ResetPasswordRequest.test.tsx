@@ -48,7 +48,7 @@ describe("ResetPasswordRequestScreen", () => {
     expect(screen.getByText(/Forgot Your Password\?/i)).toBeInTheDocument();
     expect(
       screen.getByText(
-        /Enter your Username or Email address and we will send you instructions/i
+        /Enter your Phone number or Email address and we will send you instructions to reset your password./i
       )
     ).toBeInTheDocument();
   });
