@@ -8,12 +8,12 @@ import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
 import { useResetPasswordRequestManager } from "../hooks/resetPasswordRequestManager";
 
 function Header() {
-  const { texts, useLoginIdentifiers, locales } =
+  const { texts, activeIdentifiers, locales } =
     useResetPasswordRequestManager();
 
   // Use helper to determine placeholder based on active identifiers
   const identifierDetails = getIdentifierDetails(
-    (useLoginIdentifiers || undefined) as IdentifierType[] | undefined,
+    (activeIdentifiers || undefined) as IdentifierType[] | undefined,
     texts
   );
 

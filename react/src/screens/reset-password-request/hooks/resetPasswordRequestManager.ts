@@ -52,7 +52,7 @@ export const useResetPasswordRequestManager = () => {
     countryPrefix: useTransaction().countryPrefix || null,
     isCaptchaAvailable: useScreen().isCaptchaAvailable === true,
     captcha: useScreen().captcha || null,
-    useLoginIdentifiers: useLoginIdentifiers(),
+    activeIdentifiers: useLoginIdentifiers(),
     useErrors: useErrors(),
     inputfield: useUntrustedData().submittedFormData?.username || "",
     locales,

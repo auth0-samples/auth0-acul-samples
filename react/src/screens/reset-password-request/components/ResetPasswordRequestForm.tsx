@@ -23,7 +23,7 @@ function ResetPasswordRequestForm() {
     texts,
     isCaptchaAvailable,
     captcha,
-    useLoginIdentifiers,
+    activeIdentifiers,
     useErrors,
     locales,
     inputfield,
@@ -46,7 +46,7 @@ function ResetPasswordRequestForm() {
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
     : `${locales.form.fields.captcha.label}*`;
-  const identifierDetails = getIdentifierDetails(useLoginIdentifiers, texts);
+  const identifierDetails = getIdentifierDetails(activeIdentifiers, texts);
 
   // Extract general errors (not field-specific) from the SDK
   const generalErrors: ErrorItem[] =
