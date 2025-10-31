@@ -5,6 +5,7 @@
 import {
   ScreenMembersOnResetPasswordRequest,
   TransactionMembers,
+  UntrustedDataMembers,
 } from "@auth0/auth0-acul-react/types";
 import { jest } from "@jest/globals";
 
@@ -21,6 +22,7 @@ export interface ResetPasswordRequestManagerInstance {
   captchaImage: string | null;
   countryCode: string | null;
   countryPrefix: string | null;
+  untrustedData: UntrustedDataMembers;
 }
 
 /**
@@ -58,8 +60,9 @@ export const createMockResetPasswordRequestManagerInstance =
     },
     errors: [],
     captcha: {
-      provider: "auth0_v2",
-      siteKey: "0x4AAAAAAAQFNSW6xordsuIq",
+      provider: "auth0",
+      siteKey: "mock-key",
+      image: "data:image/png;base64,mockimage",
     },
     isCaptchaAvailable: true,
     resetPassword: jest.fn(),
@@ -78,6 +81,10 @@ export const createMockResetPasswordRequestManagerInstance =
       currentConnection: null,
       alternateConnections: null,
     },
+    untrustedData: {
+      submittedFormData: { username: "abc@xyz.com" },
+      authorizationParams: null,
+    },
   });
 
 /**
@@ -87,6 +94,7 @@ const mockInstance = createMockResetPasswordRequestManagerInstance();
 
 export const useScreen = jest.fn(() => mockInstance.screen);
 export const useTransaction = jest.fn(() => mockInstance.transaction);
+export const useUntrustedData = jest.fn(() => mockInstance.untrustedData);
 
 export const resetPassword = mockInstance.resetPassword;
 export const backToLogin = mockInstance.backToLogin;
