@@ -84,22 +84,6 @@ function ResetPasswordRequestForm() {
           </div>
         )}
 
-        {/* TODO: Implement after pickCountryCode method is available */}
-        {/* Country Code Picker - only show if phone numbers are supported */}
-        {/* {shouldShowCountryPicker && (
-          <div className="mb-4">
-            <ULThemeCountryCodePicker
-              selectedCountry={transformAuth0CountryCode(
-                countryCode,
-                countryPrefix
-              )}
-              onClick={handlePickCountryCode}
-              fullWidth
-              placeholder="Select Country"
-            />
-          </div>
-        )} */}
-
         {/* Username or Email or Phone pre-filled input field */}
         <FormField
           control={form.control}
