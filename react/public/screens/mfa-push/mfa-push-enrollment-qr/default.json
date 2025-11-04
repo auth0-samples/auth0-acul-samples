@@ -16,10 +16,18 @@
     "usage": "allow"
   },
   "prompt": {
-    "name": "mfa"
+    "name": "mfa-push"
   },
   "screen": {
-    "name": "mfa-detect-browser-capabilities"
+    "data": {
+      "qr_code": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "code": "ABCD-EFGH-IJKL"
+    },
+    "links": {
+      "android": "https://wrathful-cow.com",
+      "ios": "https://plump-tenant.info"
+    },
+    "name": "mfa-push-enrollment-qr"
   },
   "tenant": {
     "name": "stanton-inc"

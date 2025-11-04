@@ -16,13 +16,18 @@
     "usage": "allow"
   },
   "prompt": {
-    "name": "reset-password"
+    "name": "mfa-push"
   },
   "screen": {
     "data": {
-      "email": "Zachariah.Kutch33@hotmail.com"
+      "qr_code": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+      "code": "ABCD-EFGH-IJKL"
     },
-    "name": "reset-password-mfa-email-challenge"
+    "links": {
+      "android": "https://wrathful-cow.com",
+      "ios": "https://plump-tenant.info"
+    },
+    "name": "mfa-push-enrollment-qr"
   },
   "tenant": {
     "name": "stanton-inc"
@@ -33,12 +38,7 @@
     "errors": [
       {
         "code": "invalid_request",
-        "message": "The transaction has expired."
-      },
-      {
-        "code": "no-code",
-        "message": "Please enter a code",
-        "field": "code"
+        "message": "The QR code could not be generated. Please try again."
       }
     ]
   }
