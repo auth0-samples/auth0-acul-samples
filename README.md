@@ -14,18 +14,20 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
 - **SDK**: Auth0 ACUL JS SDK (`@auth0/auth0-acul-js`)
 - **Screens**: 3 authentication screens (login, login-id, login-password)
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
+- **Development**: Integrated context inspector for real-time debugging
 
 ### ⚡ [React Sample](./react/)
 - **SDK**: Auth0 ACUL React SDK (`@auth0/auth0-acul-react`)
 - **Screens**: 31 authentication screens covering the complete authentication flow
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
+- **Development**: Integrated context inspector for real-time debugging
 
 <div align="center">
   <img 
     width="800" 
-    alt="Login ID Screen with mock data" 
+    alt="Login ID Screen in development mode" 
     src="https://github.com/user-attachments/assets/70c747fa-6374-46d4-a0d8-29c08cdd1f99" />
-  <p><em>Login ID Screen with mock data on local setup</em></p>
+  <p><em>Login ID Screen in development mode with context inspector</em></p>
 </div>
 
 ## Table of Contents
@@ -52,11 +54,11 @@ cd react-js
 # Install dependencies
 npm install
 
-# Start developing with mock data
-npm run screen login-id  # Opens http://localhost:3000
+# Start development server with context inspector
+npm run dev  # Opens http://localhost:3000
 ```
 
-Perfect for exploring the codebase, building new screens, or customizing existing ones without any Auth0 setup required.
+The development server includes an integrated context inspector that lets you visualize and edit the Auth0 Universal Login context in real-time, switch between screens, and test different scenarios.
 
 <a id="prerequisites"></a>
 
@@ -71,7 +73,7 @@ Perfect for exploring the codebase, building new screens, or customizing existin
 - Auth0 tenant with verified custom domain
 - Enterprise Auth0 plan (for ACUL access)
 
-> **Open Source Contributors:** You can explore and contribute to this codebase using mock data without needing an Auth0 Enterprise plan.
+> **Open Source Contributors:** You can explore and contribute to this codebase without needing an Auth0 Enterprise plan using the development context inspector.
 
 <details>
 <summary>Need to install Node.js?</summary>
@@ -273,8 +275,8 @@ We welcome contributions! Here's how you can help:
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
-3. Make your changes using mock data for testing
-4. Test thoroughly: Navigate to `react-js/` and run `npm test`
+3. Make your changes using the development server: `npm run dev`
+4. Test thoroughly: `npm test`
 5. Submit a pull request
 
 **What to Contribute:**
@@ -286,10 +288,11 @@ We welcome contributions! Here's how you can help:
 
 **Development Guidelines:**
 
-- Follow the existing code patterns in `react-js/src/screens/`
+- Follow the existing code patterns in `react-js/src/screens/` or `react/src/screens/`
 - Use TypeScript for type safety
 - Follow the Auth0 design system principles
 - Include tests for new functionality
+- Use `npm run dev` to start the development server with context inspector
 
 <a id="documentation"></a>
 
@@ -311,20 +314,8 @@ We welcome contributions! Here's how you can help:
 **Solutions:**
 
 1. Check browser console for JavaScript errors
-2. Verify screen name matches directory in `react-js/src/screens/`
-3. Ensure all dependencies installed: `npm install`
-4. Try clearing browser cache and restarting dev server
-</details>
-
-<details>
-<summary>Mock data not displaying correctly</summary>
-
-**Symptoms:** Forms show empty fields or default values
-**Solutions:**
-
-1. Check if mock data file exists in `react-js/src/mock-data/`
-2. Verify mock data structure matches screen requirements
-3. Check network tab for failed API calls to mock endpoints
+2. Ensure all dependencies installed: `npm install`
+3. Try clearing browser cache and restarting dev server: `npm run dev`
 </details>
 
 ### Getting Help

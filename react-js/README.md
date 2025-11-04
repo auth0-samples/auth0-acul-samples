@@ -17,6 +17,7 @@ This implementation includes 3 authentication screens:
 - 🧪 **Testing**: Comprehensive test suite with Jest and React Testing Library
 - 📱 **Responsive**: Mobile-first design with Tailwind CSS
 - 🚀 **CI/CD**: GitHub Actions workflow for automated deployment
+- 🔍 **Development Tools**: Integrated context inspector for real-time Auth0 context visualization and manipulation
 
 ## Quick Start
 
@@ -24,8 +25,8 @@ This implementation includes 3 authentication screens:
 # Install dependencies
 npm install
 
-# Start development with mock data
-npm run screen login-id
+# Start development server with context inspector
+npm run dev
 
 # Run tests
 npm test
@@ -36,6 +37,16 @@ npm run build
 # Serve built files locally for testing
 npx serve dist -p 8080 --cors
 ```
+
+## Development with Context Inspector
+
+In development mode, the application includes **ul-context-inspector** - a visual tool that lets you:
+- 📋 View the current Auth0 Universal Login context
+- ✏️ Edit context values in real-time
+- 🔄 Switch between different screens
+- 🧪 Test error states and edge cases
+
+The inspector panel appears automatically when running `npm run dev` and is completely removed from production builds.
 
 ## Build Output
 
@@ -63,12 +74,6 @@ dist/
 
 Each screen can be deployed independently for incremental rollouts.
 
-## Available Screens
-
-- `npm run screen login` - Universal login
-- `npm run screen login-id` - Identifier-first login
-- `npm run screen login-password` - Password entry
-
 ## Tech Stack
 
 - **Framework**: React 19 with TypeScript
@@ -86,7 +91,6 @@ react-js/
 │   ├── screens/           # Authentication screens
 │   ├── components/        # Reusable UI components
 │   ├── utils/            # Helper utilities
-│   ├── mock-data/        # Mock data for development
 │   └── types/            # TypeScript definitions
 ├── .github/workflows/    # Deployment automation
 └── ...config files

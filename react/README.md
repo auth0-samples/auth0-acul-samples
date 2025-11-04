@@ -20,10 +20,12 @@ This implementation includes 31 comprehensive authentication screens covering th
 - **Signup ID**: Identifier-first signup flow
 - **Signup Password**: Password signup screen
 
-### Password Reset (4 screens)
+### Password Reset (5 screens)
 
-- **Reset Password**: Password reset screen
+- **Reset Password Request**: Initiate password reset
 - **Reset Password Email**: Email-based password reset
+- **Reset Password**: Password reset screen
+- **Reset Password Success**: Password reset confirmation
 - **Reset Password Error**: Password reset error handling
 - **Reset Password Success**: Password reset confirmation
 
@@ -52,6 +54,7 @@ This implementation includes 31 comprehensive authentication screens covering th
 
 - **Email Identifier Challenge**: Email verification for identifier-first flow
 - **Phone Identifier Challenge**: Phone verification for identifier-first flow
+- **Phone Identifier Enrollment**: Phone number enrollment
 
 ## Quick Start
 
@@ -59,13 +62,8 @@ This implementation includes 31 comprehensive authentication screens covering th
 # Install dependencies
 npm install
 
-# Start development with mock data for any screen
-npm run screen login
-npm run screen login-id
-npm run screen signup
-npm run screen mfa-sms-challenge
-npm run screen passkey-enrollment
-# ... and 26 more screens
+# Start development server with context inspector
+npm run dev
 
 # Run tests
 npm test
@@ -76,6 +74,16 @@ npm run build
 # Serve built files locally for testing
 npx serve dist -p 8080 --cors
 ```
+
+## Development with Context Inspector
+
+In development mode, the application includes **ul-context-inspector** - a visual tool that lets you:
+- 📋 View the current Auth0 Universal Login context
+- ✏️ Edit context values in real-time
+- 🔄 Switch between different screens
+- 🧪 Test error states and edge cases
+
+The inspector panel appears automatically when running `npm run dev` and is completely removed from production builds.
 
 ## Build Output
 
@@ -111,7 +119,7 @@ Each screen can be deployed independently for incremental rollouts.
 - **Auth0 Design System**: Implements Auth0's design language with theme support
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 - **CI/CD Ready**: GitHub Actions workflow for automated deployment
-- **Mock Data Support**: Develop and test without Auth0 tenant
+- **Development Tools**: Integrated context inspector for real-time Auth0 context visualization and manipulation
 
 ## Tech Stack
 
@@ -132,7 +140,6 @@ react/
 │   ├── hooks/            # React hooks for auth flows
 │   ├── utils/            # Helper utilities and theme engine
 │   ├── test/             # Test utilities and setup
-│   ├── mock-data/        # Mock data for development
 │   └── types/            # TypeScript definitions
 ├── .github/workflows/    # Deployment automation
 └── ...config files

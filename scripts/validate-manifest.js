@@ -74,20 +74,6 @@ function validateFilesExist(templateId, template) {
     if (!fs.statSync(screenPath).isDirectory()) {
       throw new Error(`Template ${templateId}: screen path is not a directory: ${screen.path}`);
     }
-    
-    // Validate screen has mock data
-    const mockDataPath = path.join(screenPath, 'mock-data', `${screen.id}.json`);
-    if (!fs.existsSync(mockDataPath)) {
-      throw new Error(`Template ${templateId}: screen ${screen.id} missing mock data: ${mockDataPath}`);
-    }
-    
-    // Validate mock data JSON syntax
-    try {
-      const mockDataContent = fs.readFileSync(mockDataPath, 'utf8');
-      JSON.parse(mockDataContent);
-    } catch (jsonError) {
-      throw new Error(`Template ${templateId}: screen ${screen.id} has invalid JSON in mock data: ${mockDataPath} - ${jsonError.message}`);
-    }
   });
 }
 

@@ -27,6 +27,7 @@
       ],
       "base_directories": [
         ".github",
+        "public",
         "scripts",
         "src/__mocks__",
         "src/assets",
@@ -86,6 +87,7 @@
       ],
       "base_directories": [
         ".github",
+        "public",
         "scripts",
         "src/__mocks__",
         "src/assets",
