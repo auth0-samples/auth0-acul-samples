@@ -9,7 +9,7 @@ function Footer() {
   const { texts, handleResendCode, handleReturnToPrevious, locales } =
     useEmailIdentifierChallengeManager();
 
-  const { remaining, disabled, startResend } = useResend({
+  const { remaining, disabled } = useResend({
     timeoutSeconds: 30,
   });
 
@@ -21,7 +21,6 @@ function Footer() {
 
   const handleResendClick = async () => {
     await handleResendCode();
-    startResend();
   };
 
   const handleReturnClick = async () => {

@@ -7,6 +7,7 @@
       "sdk": "js",
       "base_files": [
         ".prettierrc.json",
+        "DEPLOYMENT.md",
         "README.md",
         "babel.config.cjs",
         "components.json",
@@ -23,17 +24,17 @@
         "src/vite-env.d.ts"
       ],
       "base_directories": [
-        "src/components",
-        "src/lib",
-        "src/types",
-        "src/utils",
-        "src/hooks",
-        "src/constants",
-        "src/assets",
-        "src/__mocks__",
-        "src/test",
+        ".github",
         "scripts",
-        ".github"
+        "src/__mocks__",
+        "src/assets",
+        "src/components",
+        "src/constants",
+        "src/hooks",
+        "src/lib",
+        "src/test",
+        "src/types",
+        "src/utils"
       ],
       "screens": [
         {
@@ -63,6 +64,7 @@
       "sdk": "react",
       "base_files": [
         ".prettierrc.json",
+        "DEPLOYMENT.md",
         "README.md",
         "babel.config.cjs",
         "components.json",
@@ -79,17 +81,17 @@
         "src/vite-env.d.ts"
       ],
       "base_directories": [
-        "src/components",
-        "src/lib",
-        "src/types",
-        "src/utils",
-        "src/constants",
-        "src/assets",
-        "src/hooks",
-        "src/__mocks__",
-        "src/test",
+        ".github",
         "scripts",
-        ".github"
+        "src/__mocks__",
+        "src/assets",
+        "src/components",
+        "src/constants",
+        "src/hooks",
+        "src/lib",
+        "src/test",
+        "src/types",
+        "src/utils"
       ],
       "screens": [
         {

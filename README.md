@@ -248,7 +248,7 @@ Reference these built assets in your Auth0 ACUL configuration.
 
 ## Deployment
 
-This repository includes GitHub Actions workflows for automated deployment. See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete setup instructions.
+This repository includes GitHub Actions workflows for automated deployment. See [DEPLOYMENT.md](./react/DEPLOYMENT.md) for complete setup instructions.
 
 <details>
 <summary>Enabling Screens for Deployment</summary>
@@ -297,7 +297,6 @@ We welcome contributions! Here's how you can help:
 
 - **[Auth0 ACUL Documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations)** - Official ACUL guide
 - **[ACUL API Documentation](https://auth0.github.io/universal-login/modules/Classes.html)** - SDK classes and methods
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment setup instructions
 
 <a id="troubleshooting"></a>
 

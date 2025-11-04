@@ -140,7 +140,7 @@ react/
 
 ## Deployment
 
-This sample includes a GitHub Actions workflow for automated deployment to AWS S3. See [DEPLOYMENT.md](../DEPLOYMENT.md) for configuration details.
+This sample includes a GitHub Actions workflow for automated deployment to AWS S3. See [DEPLOYMENT.md](DEPLOYMENT.md) for complete setup instructions or [.github/GITHUB_ACTIONS.md](.github/GITHUB_ACTIONS.md) for workflow details.
 
 ## Documentation
 

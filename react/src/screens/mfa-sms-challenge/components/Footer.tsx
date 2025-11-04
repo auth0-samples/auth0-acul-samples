@@ -15,7 +15,7 @@ function Footer() {
   } = useMfaSmsChallengeManager();
 
   // Use the resend hook for managing cooldown
-  const { remaining, disabled, startResend } = useResend({
+  const { remaining, disabled } = useResend({
     timeoutSeconds: 30,
   });
 
@@ -31,7 +31,6 @@ function Footer() {
     texts?.pickAuthenticatorText || locales.footer.tryAnother;
 
   const handleResendClick = async () => {
-    startResend();
     await handleResendCode();
   };
 

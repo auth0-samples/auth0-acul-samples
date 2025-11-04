@@ -96,7 +96,6 @@ describe("LoginPasswordlessSmsOtpScreen", () => {
     await ScreenTestUtils.clickButton(/Resend/i);
 
     expect(resendOTP).toHaveBeenCalled();
-    expect(startResend).toHaveBeenCalled();
   });
 
   it("shows resend cooldown when useResend hook is active", async () => {

@@ -19,13 +19,12 @@ function Footer() {
   const footerLinkTryAnotherMethodText =
     texts?.tryAnotherMethodText || locales.footer.tryAnotherMethodText;
 
-  const { remaining, disabled, startResend } = useResend({
+  const { remaining, disabled } = useResend({
     timeoutSeconds: 30,
   });
 
   const handleResendClick = async () => {
     await handleResendEmail();
-    startResend();
   };
 
   return (

@@ -10,6 +10,7 @@
     "build": "tsc && vite build --logLevel info",
     "build:local": "PORT=8080 node ./scripts/build-local.js",
     "build:watch": "vite build --watch",
+    "dev": "vite dev",
     "preview": "vite preview",
     "preview:watch": "concurrently \"vite build --watch\" \"vite preview\"",
     "generate:screenLoader": "node ./scripts/generate-screen-loader.js",

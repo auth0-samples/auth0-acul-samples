@@ -40,11 +40,12 @@ function discoverTemplateDirs() {
  */
 function validateFilesExist(templateId, template) {
   console.log(`    Validating files exist for template: ${templateId}`);
+  const templateDir = path.join(rootDir, templateId);
   
   // Validate base_files
   if (template.base_files) {
     template.base_files.forEach(filePath => {
-      const fullPath = path.join(rootDir, filePath);
+      const fullPath = path.join(templateDir, filePath);
       if (!fs.existsSync(fullPath)) {
         throw new Error(`Template ${templateId}: base_file does not exist: ${filePath}`);
       }
@@ -54,7 +55,7 @@ function validateFilesExist(templateId, template) {
   // Validate base_directories
   if (template.base_directories) {
     template.base_directories.forEach(dirPath => {
-      const fullPath = path.join(rootDir, dirPath);
+      const fullPath = path.join(templateDir, dirPath);
       if (!fs.existsSync(fullPath)) {
         throw new Error(`Template ${templateId}: base_directory does not exist: ${dirPath}`);
       }
@@ -66,7 +67,7 @@ function validateFilesExist(templateId, template) {
   
   // Validate screen paths
   template.screens.forEach(screen => {
-    const screenPath = path.join(rootDir, screen.path);
+    const screenPath = path.join(templateDir, screen.path);
     if (!fs.existsSync(screenPath)) {
       throw new Error(`Template ${templateId}: screen path does not exist: ${screen.path}`);
     }
@@ -164,8 +165,8 @@ function validateManifest() {
           }
         });
         
-        // Validate screen ID matches directory name
-        const expectedPath = `${templateId}/src/screens/${screen.id}`;
+        // Validate screen ID matches directory name (paths should be template-relative)
+        const expectedPath = `src/screens/${screen.id}`;
         if (screen.path !== expectedPath) {
           console.warn(`⚠️  Warning: Screen ${screen.id} path ${screen.path} doesn't match expected pattern ${expectedPath}`);
         }

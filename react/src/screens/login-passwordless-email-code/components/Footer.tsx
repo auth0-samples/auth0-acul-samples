@@ -14,13 +14,12 @@ function Footer() {
   const resendLinkText =
     texts?.resendActionText || locales.footer.resendActionLinkText;
 
-  const { remaining, disabled, startResend } = useResend({
+  const { remaining, disabled } = useResend({
     timeoutSeconds: 30,
   });
 
   const handleResendClick = async () => {
     await handleResendEmailCode();
-    startResend();
   };
 
   return (

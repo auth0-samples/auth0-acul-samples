@@ -27,7 +27,7 @@ trap 'echo "ERR TRAP: Removing $SETTINGS_FILE due to error processing $SCREEN_NA
 # SETTINGS FILE GENERATION
 #############################################
 
-JSON_CONTENT=$(jq -n --arg base_href "${CDN_BASE_URL}/" --argjson cfg "$CONTEXT_CONFIG" '{ rendering_mode: "advanced", context_configuration: $cfg, default_head_tags_disabled: false, head_tags: [ { tag: "base", attributes: { href: $base_href } }, { tag: "meta", attributes: { name: "viewport", content: "width=device-width, initial-scale=1" } } ] }')
+JSON_CONTENT=$(jq -n --argjson cfg "$CONTEXT_CONFIG" '{ rendering_mode: "advanced", context_configuration: $cfg, default_head_tags_disabled: false, head_tags: [ { tag: "meta", attributes: { name: "viewport", content: "width=device-width, initial-scale=1" } } ] }')
 if [ $? -ne 0 ]; then 
   echo "::error::Failed to create base JSON content for $SCREEN_NAME"
   rm -f "$SETTINGS_FILE"; trap - ERR

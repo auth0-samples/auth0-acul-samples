@@ -71,7 +71,6 @@ describe("EmailIdentifierChallengeScreen", () => {
     await ScreenTestUtils.clickButton(/Resend/i);
 
     expect(resendCode).toHaveBeenCalled();
-    expect(startResend).toHaveBeenCalled();
   });
 
   it("calls returnToPrevious SDK method when go back button is clicked", async () => {

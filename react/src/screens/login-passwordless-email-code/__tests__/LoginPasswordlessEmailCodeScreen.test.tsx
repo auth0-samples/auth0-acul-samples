@@ -96,7 +96,6 @@ describe("LoginPasswordlessEmailCodeScreen", () => {
     await ScreenTestUtils.clickButton(/Resend/i);
 
     expect(resendCode).toHaveBeenCalled();
-    expect(startResend).toHaveBeenCalled();
   });
 
   it("shows resend cooldown when useResend hook is active", async () => {
