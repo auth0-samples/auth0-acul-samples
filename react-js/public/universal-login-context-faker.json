@@ -1,0 +1,309 @@
+{
+  "branding": {
+    "settings": {
+      "logo_url": "https://appropriate-solution.org",
+      "favicon_url": "https://trivial-scaffold.info/",
+      "font": {
+        "url": "https://junior-word.com"
+      },
+      "colors": {
+        "primary": "#5fcf09",
+        "page_background": "#0ed15e"
+      }
+    },
+    "themes": {
+      "default": {
+        "displayName": "Default Theme",
+        "colors": {
+          "primary_button": "#bc8cc4",
+          "primary_button_label": "#9b0fdd",
+          "secondary_button_border": "#d4c7f4",
+          "secondary_button_label": "#083e9e",
+          "base_focus_color": "#31c9cd",
+          "base_hover_color": "#11d4c1",
+          "links_focused_components": "#f7dfc0",
+          "header": "#f8b460",
+          "body_text": "#7e93db",
+          "widget_background": "#b0937f",
+          "widget_border": "#0ddada",
+          "input_labels_placeholders": "#ee3bf4",
+          "input_filled_text": "#6de9e6",
+          "input_border": "#6c8cd2",
+          "input_background": "#5addf7",
+          "icons": "#bb2043",
+          "error": "#f9d747",
+          "success": "#efa97a",
+          "captcha_widget_theme": "#3ac20b"
+        },
+        "fonts": {
+          "font_url": "https://unfortunate-circumference.name",
+          "reference_text_size": 11,
+          "title": {
+            "bold": false,
+            "size": 20
+          },
+          "subtitle": {
+            "bold": false,
+            "size": 28
+          },
+          "body_text": {
+            "bold": true,
+            "size": 18
+          },
+          "buttons_text": {
+            "bold": true,
+            "size": 15
+          },
+          "input_labels": {
+            "bold": false,
+            "size": 10
+          },
+          "links": {
+            "bold": true,
+            "size": 11
+          },
+          "links_style": "none"
+        },
+        "borders": {
+          "button_border_weight": 2,
+          "buttons_style": "square",
+          "button_border_radius": 9,
+          "input_border_weight": 2,
+          "inputs_style": "square",
+          "input_border_radius": 13,
+          "widget_corner_radius": 3,
+          "widget_border_weight": 3,
+          "show_widget_shadow": true
+        },
+        "widget": {
+          "logo_position": "center",
+          "logo_url": "https://sour-bid.info",
+          "logo_height": 82,
+          "header_text_alignment": "left",
+          "social_buttons_layout": "inline"
+        },
+        "page_background": {
+          "page_layout": "boxed",
+          "background_color": "#e9e3d1",
+          "background_image_url": "https://loremflickr.com/530/3331?lock=7727840492183434"
+        }
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner",
+    "logo_uri": "https://odd-resource.biz/",
+    "metadata": {}
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "display_name": "Gorczany, Raynor and Hansen",
+    "usage": "allow",
+    "metadata": {},
+    "branding": {
+      "logo_url": "https://twin-cafe.name/",
+      "colors": {
+        "primary": "#f31fd2",
+        "page_background": "#83c05f"
+      }
+    }
+  },
+  "prompt": {
+    "name": "signup"
+  },
+  "screen": {
+    "name": "mfa-challenge",
+    "texts": {
+      "title": "advoco cursim appono",
+      "buttonText": "curto"
+    },
+    "links": {
+      "edit_identifier": "https://frivolous-schedule.biz/",
+      "login": "https://curly-interior.name",
+      "reset_password": "https://nimble-wombat.net",
+      "signup": "https://international-transom.com/",
+      "back_button": "https://sniveling-pillow.org",
+      "back_to_app": "https://cruel-sailor.net",
+      "ios": "https://plump-tenant.info",
+      "android": "https://wrathful-cow.com"
+    },
+    "captcha": {
+      "provider": "internal",
+      "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9ImZ1bGwiIHdpZHRoPSIxMjAiIGhlaWdodD0iNDAiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMzZDRhN2YiLz48dGV4dCB4PSI2MCIgeT0iMjAiIGZvbnQtc2l6ZT0iMjAiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+MTIweDQwPC90ZXh0Pjwvc3ZnPg==",
+      "siteKey": "ZAP6GXblGvRQcO7GXLoCaE9a"
+    },
+    "data": {
+      "nickname": "Chadrick77",
+      "username": "Alexandre.Windler12",
+      "email": "Zachariah.Kutch33@hotmail.com",
+      "phone_number": "+698311601504164",
+      "message_type": "sms",
+      "show_link_voice": true,
+      "show_link_sms": false,
+      "show_remember_device": true,
+      "phone_prefixes": [
+        {
+          "country": "El Salvador",
+          "country_code": "BL",
+          "phone_prefix": "+925"
+        },
+        {
+          "country": "Montenegro",
+          "country_code": "GQ",
+          "phone_prefix": "+182"
+        },
+        {
+          "country": "Paraguay",
+          "country_code": "FM",
+          "phone_prefix": "+800"
+        }
+      ],
+      "hideScopes": true,
+      "scopes": [
+        {
+          "openid": "Open ID Connect"
+        },
+        {
+          "profile": "User Profile"
+        }
+      ],
+      "authorization_details": [
+        {
+          "type": "internal"
+        }
+      ],
+      "status": "pending",
+      "errorType": "usedError",
+      "qr_code": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9ImZ1bGwiIHdpZHRoPSIxMjAiIGhlaWdodD0iMjgzIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjOGE0MGM2Ii8+PHRleHQgeD0iNjAiIHk9IjE0MS41IiBmb250LXNpemU9IjIwIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPjEyMHgyODM8L3RleHQ+PC9zdmc+",
+      "qr_uri": "https://humble-decongestant.org/",
+      "text_code": "A9yztD",
+      "passkey": {
+        "public_key": {
+          "user": {
+            "id": "266c830d-a725-4fb8-b04d-6846bce19d62",
+            "name": "Sammy.Barton9",
+            "displayName": "Lori Schuster"
+          },
+          "rp": {
+            "id": "linear-expense.biz",
+            "name": "White, Christiansen and Gerlach"
+          },
+          "challenge": "QPQBLwqUQ41tSYUw32jgAasIj93QiNdH",
+          "pubKeyCredParams": [
+            {
+              "type": "public-key",
+              "alg": -7
+            },
+            {
+              "type": "public-key",
+              "alg": -257
+            }
+          ],
+          "authenticatorSelection": {
+            "residentKey": "required",
+            "userVerification": "preferred",
+            "authenticatorAttachment": "platform"
+          }
+        }
+      },
+      "resendLimitReached": true,
+      "webauthnType": "webauthn-platform"
+    }
+  },
+  "tenant": {
+    "friendly_name": "Bernier, Okuneva and Ward",
+    "logo_url": "https://internal-exploration.info",
+    "name": "stanton-inc",
+    "enabled_locales": [
+      "en"
+    ],
+    "enabled_factors": [
+      "otp"
+    ],
+    "mfa_options": {
+      "pick_authenticator_enabled": true
+    }
+  },
+  "transaction": {
+    "locale": "en",
+    "locale_dir": "ltr",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5",
+    "connections": [
+      {
+        "name": "tabernus",
+        "strategy": "auth0",
+        "options": {}
+      },
+      {
+        "name": "amplus",
+        "strategy": "google-oauth2",
+        "options": {
+          "display_name": "Google"
+        }
+      }
+    ],
+    "errors": [
+      {
+        "code": "AI",
+        "message": "Utique tendo ter.",
+        "field": "tui"
+      }
+    ],
+    "user_exists": false
+  },
+  "untrusted_data": {
+    "submitted_form_data": {
+      "email": "Joanie_Torphy43@yahoo.com"
+    },
+    "authorization_params": {
+      "screen_hint": "signup",
+      "ui_locales": "en"
+    }
+  },
+  "user": {
+    "id": "user_2EDmjBOchCv7b0F6Yyc5P4Y1",
+    "email": "Emerald.Denesik84@gmail.com",
+    "picture": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/27.jpg",
+    "enrolled_emails": [
+      {
+        "id": 5370192419577410,
+        "email": "Lyda_Osinski39@yahoo.com"
+      }
+    ],
+    "enrolled_factors": [
+      "otp",
+      "sms"
+    ],
+    "enrolled_phone_numbers": [
+      {
+        "id": 311331924481134,
+        "phoneNumber": "+305395829109563"
+      }
+    ],
+    "enrolled_devices": [
+      {
+        "id": 4103841698761608,
+        "device": "Device bluetooth"
+      }
+    ],
+    "user_metadata": {
+      "theme": "dark"
+    },
+    "app_metadata": {
+      "plan": "premium"
+    },
+    "organizations": [
+      {
+        "tenant": "gallery",
+        "id": "org_QvjFnmrmR9TGo5iEI1oYW79w",
+        "name": "ortiz---kshlerin",
+        "display_name": "Watsica - McCullough",
+        "metadata": {},
+        "branding": {},
+        "enabled_connections": []
+      }
+    ]
+  }
+}

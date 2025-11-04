@@ -1,0 +1,45 @@
+{
+  "branding": {
+    "settings": {
+      "font": {
+        "url": "https://junior-word.com"
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "signup-id"
+  },
+  "screen": {
+    "links": {
+      "login": "https://curly-interior.name"
+    },
+    "name": "signup-id"
+  },
+  "tenant": {
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5",
+    "errors": [
+      {
+        "code": "invalid_request",
+        "message": "The transaction has expired."
+      },
+      {
+        "code": "no-email",
+        "message": "Please enter an email address",
+        "field": "email"
+      }
+    ]
+  }
+}

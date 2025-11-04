@@ -1,0 +1,64 @@
+{
+  "branding": {
+    "settings": {
+      "font": {
+        "url": "https://junior-word.com"
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "passkeys"
+  },
+  "screen": {
+    "data": {
+      "passkey": {
+        "public_key": {
+          "authenticatorSelection": {
+            "residentKey": "required",
+            "userVerification": "preferred"
+          },
+          "challenge": "QPQBLwqUQ41tSYUw32jgAasIj93QiNdH",
+          "pubKeyCredParams": [
+            {
+              "alg": -7,
+              "type": "public-key"
+            },
+            {
+              "alg": -257,
+              "type": "public-key"
+            }
+          ],
+          "rp": {
+            "id": "linear-expense.biz",
+            "name": "White, Christiansen and Gerlach"
+          },
+          "user": {
+            "displayName": "Lori Schuster",
+            "id": "266c830d-a725-4fb8-b04d-6846bce19d62",
+            "name": "Sammy.Barton9"
+          }
+        }
+      }
+    },
+    "links": {
+      "login": "https://curly-interior.name"
+    },
+    "name": "passkey-enrollment"
+  },
+  "tenant": {
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5"
+  }
+}

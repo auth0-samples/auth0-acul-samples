@@ -1,0 +1,46 @@
+{
+  "branding": {
+    "settings": {
+      "font": {
+        "url": "https://junior-word.com"
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "login-id"
+  },
+  "screen": {
+    "links": {
+      "reset_password": "https://nimble-wombat.net",
+      "signup": "https://international-transom.com/"
+    },
+    "name": "login-id"
+  },
+  "tenant": {
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5",
+    "errors": [
+      {
+        "code": "invalid_request",
+        "message": "The transaction has expired."
+      },
+      {
+        "code": "invalid-email-format",
+        "message": "Email is not valid",
+        "field": "username"
+      }
+    ]
+  }
+}

@@ -1,14 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { loadAndSetMockContext } from "@/utils/screen/mockContextLoader";
-
 import "./index.css";
 
-import App from "./App.tsx";
-
 async function initializeApp() {
-  await loadAndSetMockContext();
+  // Load context inspector styles only in dev mode
+  if (import.meta.env.DEV) {
+    await import("ul-context-inspector/style.css");
+  }
+
+  // Import the factory function and create the App component
+  const { default: createApp } = await import("./App.tsx");
+  const App = await createApp();
 
   /**
    * ACUL Integration Note:

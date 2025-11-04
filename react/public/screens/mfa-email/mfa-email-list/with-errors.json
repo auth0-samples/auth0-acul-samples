@@ -1,0 +1,45 @@
+{
+  "branding": {
+    "settings": {
+      "font": {
+        "url": "https://junior-word.com"
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "mfa-email"
+  },
+  "screen": {
+    "name": "mfa-email-list"
+  },
+  "tenant": {
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5",
+    "errors": [
+      {
+        "code": "invalid_request",
+        "message": "The transaction has expired."
+      }
+    ]
+  },
+  "user": {
+    "enrolled_emails": [
+      {
+        "id": 5370192419577410,
+        "email": "Lyda_Osinski39@yahoo.com"
+      }
+    ]
+  }
+}

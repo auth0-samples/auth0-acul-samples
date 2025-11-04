@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "initialize": "npm install && npm run build",
-    "screen": "node ./scripts/dev-screen.js",
     "build": "tsc && vite build --logLevel info",
     "build:local": "PORT=8080 node ./scripts/build-local.js",
     "build:watch": "vite build --watch",
@@ -73,7 +72,8 @@
     "tw-animate-css": "^1.3.5",
     "typescript": "~5.8.3",
     "typescript-eslint": "8.37.0",
-    "vite": "7.1.12"
+    "vite": "7.1.12",
+    "ul-context-inspector": "file:../../../sdk/ul-context-inspector"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

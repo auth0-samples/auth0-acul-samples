@@ -1,0 +1,39 @@
+{
+  "branding": {
+    "settings": {
+      "font": {
+        "url": "https://junior-word.com"
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "mfa-sms"
+  },
+  "screen": {
+    "name": "mfa-sms-list"
+  },
+  "tenant": {
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5"
+  },
+  "user": {
+    "enrolled_phone_numbers": [
+      {
+        "id": 311331924481134,
+        "phoneNumber": "+305395829109563"
+      }
+    ]
+  }
+}

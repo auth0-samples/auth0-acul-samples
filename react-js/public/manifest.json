@@ -1,0 +1,29 @@
+{
+  "versions": ["v2", "v0"],
+  "screens": [
+    {
+      "login": {
+        "login": {
+          "path": "/screens/login/login",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "login-id": {
+        "login-id": {
+          "path": "/screens/login-id/login-id",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "login-password": {
+        "login-password": {
+          "path": "/screens/login-password/login-password",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "branding": {
+    "settings": {
+      "font": {
+        "url": "https://junior-word.com"
+      }
+    }
+  },
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "reset-password"
+  },
+  "screen": {
+    "data": {
+      "nickname": "Chadrick77",
+      "username": "Alexandre.Windler12",
+      "email": "Zachariah.Kutch33@hotmail.com",
+      "phone_number": "+698311601504164",
+      "message_type": "sms",
+      "show_link_voice": true,
+      "show_link_sms": false,
+      "show_remember_device": true,
+      "phone_prefixes": [
+        {
+          "country": "El Salvador",
+          "country_code": "BL",
+          "phone_prefix": "+925"
+        },
+        {
+          "country": "Montenegro",
+          "country_code": "GQ",
+          "phone_prefix": "+182"
+        },
+        {
+          "country": "Paraguay",
+          "country_code": "FM",
+          "phone_prefix": "+800"
+        }
+      ],
+      "hideScopes": true,
+      "scopes": [
+        {
+          "openid": "Open ID Connect"
+        },
+        {
+          "profile": "User Profile"
+        }
+      ],
+      "authorization_details": [
+        {
+          "type": "internal"
+        }
+      ],
+      "status": "pending",
+      "errorType": "usedError",
+      "qr_code": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgYmFzZVByb2ZpbGU9ImZ1bGwiIHdpZHRoPSIxMjAiIGhlaWdodD0iMjgzIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjOGE0MGM2Ii8+PHRleHQgeD0iNjAiIHk9IjE0MS41IiBmb250LXNpemU9IjIwIiBhbGlnbm1lbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPjEyMHgyODM8L3RleHQ+PC9zdmc+",
+      "qr_uri": "https://humble-decongestant.org/",
+      "text_code": "A9yztD",
+      "passkey": {
+        "public_key": {
+          "user": {
+            "id": "266c830d-a725-4fb8-b04d-6846bce19d62",
+            "name": "Sammy.Barton9",
+            "displayName": "Lori Schuster"
+          },
+          "rp": {
+            "id": "linear-expense.biz",
+            "name": "White, Christiansen and Gerlach"
+          },
+          "challenge": "QPQBLwqUQ41tSYUw32jgAasIj93QiNdH",
+          "pubKeyCredParams": [
+            {
+              "type": "public-key",
+              "alg": -7
+            },
+            {
+              "type": "public-key",
+              "alg": -257
+            }
+          ],
+          "authenticatorSelection": {
+            "residentKey": "required",
+            "userVerification": "preferred",
+            "authenticatorAttachment": "platform"
+          }
+        }
+      },
+      "resendLimitReached": true,
+      "webauthnType": "webauthn-platform"
+    },
+    "name": "reset-password-request"
+  },
+  "tenant": {
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5"
+  }
+}
