@@ -169,6 +169,7 @@
         },
         "fonts": {
           "reference_text_size": 16,
+          "font_url": "mocked_font_url",
           "links_style": "normal",
           "title": {
             "bold": false,

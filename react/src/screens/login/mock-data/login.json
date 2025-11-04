@@ -165,6 +165,7 @@
         },
         "fonts": {
           "reference_text_size": 16,
+          "font_url": "sample_mock_font_url",
           "links_style": "normal",
           "title": {
             "bold": false,
