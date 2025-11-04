@@ -1,60 +1,24 @@
-import { Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 
-import { getScreenComponent } from "@/utils/screen/screenLoader";
+/**
+ * Main App Component (JS SDK)
+ * Conditionally loads DevScreenManager or ProdScreenManager based on environment
+ * Uses React.lazy() for optimal code splitting and tree-shaking
+ */
 
-import type { UniversalLoginContext } from "./types/auth0-sdk";
-
-const isDev = import.meta.env.DEV;
-
-// Export async factory function to create the appropriate App component
-export default async function createApp() {
-  if (isDev) {
-    // DEV MODE: Use ul-context-inspector
-    const { UniversalLoginContextPanel, useUniversalLoginContextSubscription } =
-      await import("ul-context-inspector");
-
-    return () => {
-      const context =
-        useUniversalLoginContextSubscription<UniversalLoginContext>();
-      const screenName = context?.screen?.name;
-      const ScreenComponent = getScreenComponent(screenName);
-
-      return (
-        <Suspense fallback={<div>Loading...</div>}>
-          <UniversalLoginContextPanel />
-          {ScreenComponent ? (
-            <ScreenComponent />
-          ) : (
-            <div>Screen &quot;{screenName}&quot; not implemented yet</div>
-          )}
-        </Suspense>
-      );
-    };
+// Conditionally lazy-load the appropriate screen manager
+const ScreenManager = lazy(() => {
+  if (import.meta.env.DEV) {
+    return import("./DevScreenManager");
   } else {
-    // PRODUCTION MODE: Use Auth0 JS SDK
-    const { getCurrentScreen } = await import("@auth0/auth0-acul-js");
-
-    return () => {
-      const [screen, setScreen] = useState<string | undefined>(undefined);
-
-      useEffect(() => {
-        const currentScreenDetails = getCurrentScreen();
-        if (currentScreenDetails) {
-          setScreen(currentScreenDetails);
-        }
-      }, []);
-
-      const ScreenComponent = getScreenComponent(screen);
-
-      return (
-        <Suspense fallback={<div>Loading...</div>}>
-          {ScreenComponent ? (
-            <ScreenComponent />
-          ) : (
-            <div>Screen &quot;{screen}&quot; not implemented yet</div>
-          )}
-        </Suspense>
-      );
-    };
+    return import("./ProdScreenManager");
   }
+});
+
+export default function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ScreenManager />
+    </Suspense>
+  );
 }

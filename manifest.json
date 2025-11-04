@@ -19,6 +19,8 @@
         "tsconfig.json",
         "vite.config.ts",
         "src/App.tsx",
+        "src/DevScreenManager.tsx",
+        "src/ProdScreenManager.tsx",
         "src/index.css",
         "src/main.tsx",
         "src/vite-env.d.ts"
@@ -76,6 +78,8 @@
         "tsconfig.json",
         "vite.config.ts",
         "src/App.tsx",
+        "src/DevScreenManager.tsx",
+        "src/ProdScreenManager.tsx",
         "src/index.css",
         "src/main.tsx",
         "src/vite-env.d.ts"
