@@ -160,6 +160,11 @@ export const useErrors = jest.fn(() => ({
   dismissAll: jest.fn(),
 }));
 
+// Mock the usePasskeyAutofill hook
+export const usePasskeyAutofill = jest.fn(() => ({
+  inputRef: HTMLInputElement,
+}));
+
 export const useScreen = jest.fn(() => mockLoginIdInstance.screen);
 export const useTransaction = jest.fn(() => mockLoginIdInstance.transaction);
 

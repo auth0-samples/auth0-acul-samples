@@ -9,7 +9,6 @@ set -e
 
 # Default values
 MANIFEST_PATH="${MANIFEST_PATH:-./manifest.json}"
-STRICT_MODE="${STRICT_MODE:-true}"
 
 # Colors for output
 RED='\033[0;31m'
@@ -20,12 +19,10 @@ NC='\033[0m' # No Color
 
 # Counters
 ERRORS=0
-WARNINGS=0
 
 echo -e "${BLUE}🔍 Auth0 ACUL Manifest Validation${NC}"
 echo "=================================="
 echo "Manifest: $MANIFEST_PATH"
-echo "Strict Mode: $STRICT_MODE"
 echo ""
 
 #############################################
@@ -123,7 +120,6 @@ const path = require('path');
 const manifest = JSON.parse(fs.readFileSync('$MANIFEST_PATH', 'utf8'));
 
 let errors = 0;
-let warnings = 0;
 
 for (const [templateId, template] of Object.entries(manifest.templates)) {
   console.log(\`  Checking template: \${templateId}\`);
@@ -192,21 +188,6 @@ for (const [templateId, template] of Object.entries(manifest.templates)) {
         errors++;
         continue;
       }
-      
-      // Check mock data (prepend template directory)
-      const mockPath = path.join(templateId, screen.path, 'mock-data', \`\${screen.id}.json\`);
-      if (!fs.existsSync(mockPath)) {
-        console.log(\`❌ Mock data not found: \${mockPath}\`);
-        errors++;
-      } else {
-        // Validate JSON syntax
-        try {
-          JSON.parse(fs.readFileSync(mockPath, 'utf8'));
-        } catch (e) {
-          console.log(\`❌ Invalid JSON in mock data: \${mockPath}\`);
-          errors++;
-        }
-      }
     }
   }
   
@@ -228,7 +209,7 @@ for (const [templateId, template] of Object.entries(manifest.templates)) {
   }
 }
 
-console.log(\`Validation complete: \${errors} errors, \${warnings} warnings\`);
+console.log(\`Validation complete: \${errors} errors\`);
 process.exit(errors > 0 ? 1 : 0);
 " 2>/dev/null
 
@@ -251,13 +232,11 @@ echo -e "${BLUE}📊 Validation Summary${NC}"
 echo "===================="
 echo "Result: $RESULT"
 echo "Errors: $ERRORS"
-echo "Warnings: $WARNINGS"
 
 # Set GitHub Actions outputs
 if [ -n "$GITHUB_OUTPUT" ]; then
     echo "result=$RESULT" >> "$GITHUB_OUTPUT"
     echo "errors=$ERRORS" >> "$GITHUB_OUTPUT"
-    echo "warnings=$WARNINGS" >> "$GITHUB_OUTPUT"
 fi
 
 # Exit with appropriate code

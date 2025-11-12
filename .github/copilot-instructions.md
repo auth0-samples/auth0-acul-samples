@@ -77,7 +77,7 @@ import { SomeAuthFunction } from "@auth0/auth0-acul-js";
 
 ### Build & Deploy Workflow
 - `npm run build:local` - Build for local testing with PORT=8080
-- `npm run validate-manifest` - Validate manifest.json structure (critical for ACUL)
+- `npm run validate-manifest` - Validate manifest.json structure (useful for auth0-cli)
 - `npm run ci` - Full CI pipeline: validate → lint → test → build
 
 ### Testing Architecture

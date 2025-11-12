@@ -199,7 +199,7 @@ export const getIdentifierDetails = (
   return {
     label: finalLabel,
     type: finalType,
-    autoComplete: finalAutoComplete,
+    autoComplete: finalAutoComplete + " webauthn",
     description: finalDescription,
   };
 };

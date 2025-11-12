@@ -14,7 +14,7 @@ function ResendEmail() {
 
   // Extract general errors (not field-specific) from the SDK
   const generalErrors: ErrorItem[] =
-    errors.byKind("server")?.filter((error) => {
+    errors.byKind("auth0")?.filter((error) => {
       return !error.field || error.field === null;
     }) || [];
 

@@ -76,7 +76,7 @@ function IdentifierForm() {
 
   // Get general errors (not field-specific)
   const generalErrors: ErrorItem[] = errors
-    .byKind("server")
+    .byKind("auth0")
     .filter((err) => !err.field);
 
   /**

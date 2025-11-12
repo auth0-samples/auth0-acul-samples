@@ -83,6 +83,11 @@ function LoginIdForm() {
   const shouldShowCountryPicker = isPhoneNumberSupported(loginIdentifiers);
   const selectedCountry = transformAuth0CountryCode(countryCode, countryPrefix);
 
+  // Enable passkey autofill for identifier field if supported
+  if (transaction?.isPasskeyEnabled) {
+    loginIdInstance.registerPasskeyAutofill("username");
+  }
+
   // Proper submit handler with form data
   const onSubmit = async (data: LoginOptions): Promise<void> => {
     await handleLoginId(data);

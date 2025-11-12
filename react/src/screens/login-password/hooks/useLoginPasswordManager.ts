@@ -79,6 +79,6 @@ export const useLoginPasswordManager = () => {
     errors: transaction.errors,
     handleLoginPassword,
     handleFederatedLogin,
-    passwordPolicy: transaction.getPasswordPolicy(),
+    passwordPolicy: transaction.passwordPolicy,
   };
 };

@@ -10,29 +10,74 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
 
 ## Available Samples
 
-### 🚀 [React-JS Sample](./react-js/)
+### [React-JS Sample](./react-js/)
 - **SDK**: Auth0 ACUL JS SDK (`@auth0/auth0-acul-js`)
-- **Screens**: 3 authentication screens (login, login-id, login-password)
+- **Screens**: 3 authentication screens
+  - Login (universal login)
+  - Login-ID (identifier-first flow)
+  - Login-Password (password entry)
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
 - **Development**: Integrated context inspector for real-time debugging
 
-### ⚡ [React Sample](./react/)
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img 
+        src="https://github.com/user-attachments/assets/800077f0-bb17-427b-bb56-80f676698986" 
+        alt="Login ID Screen with mock data"
+        width="100%" />
+      <br />
+      <sub><em>Login-id screen local development with ul-context-inspector</em></sub>
+    </td>
+    <td width="50%" align="center">
+      <img 
+        src="https://github.com/user-attachments/assets/dc7dd554-be25-4939-b1cd-c4a882355dba" 
+        alt="Login ID Screen deployed with ACUL"
+        width="100%" />
+      <br />
+      <sub><em>Login-id screen production deployment with ACUL</em></sub>
+    </td>
+  </tr>
+</table>
+
+
+### [React Sample](./react/)
 - **SDK**: Auth0 ACUL React SDK (`@auth0/auth0-acul-react`)
-- **Screens**: 31 authentication screens covering the complete authentication flow
+- **Screens**: 31 authentication screens
+  - **Login & Authentication (5)**: Login, Login-ID, Login-Password, Login-Passwordless-Email-Code, Login-Passwordless-SMS-OTP
+  - **Signup & Registration (3)**: Signup, Signup-ID, Signup-Password
+  - **Password Reset (4)**: Reset-Password-Request, Reset-Password-Email, Reset-Password, Reset-Password-Error
+  - **Multi-Factor Authentication (15)**: MFA-Begin-Enroll-Options, MFA-Country-Codes, MFA-Email-Challenge, MFA-Email-List, MFA-Enroll-Result, MFA-Login-Options, MFA-Push-Challenge-Push, MFA-Push-Enrollment-QR, MFA-Push-List, MFA-Push-Welcome, MFA-SMS-Challenge, MFA-SMS-Enrollment, MFA-SMS-List, MFA-WebAuthn-Platform-Challenge, MFA-WebAuthn-Platform-Enrollment
+  - **Passkeys (2)**: Passkey-Enrollment, Passkey-Enrollment-Local
+  - **Identifier Management (2)**: Email-Identifier-Challenge, Phone-Identifier-Challenge
 - **Tech Stack**: React 19, TypeScript, Vite, Tailwind CSS
 - **Development**: Integrated context inspector for real-time debugging
 
-<div align="center">
-  <img 
-    width="800" 
-    alt="Login ID Screen in development mode" 
-    src="https://github.com/user-attachments/assets/70c747fa-6374-46d4-a0d8-29c08cdd1f99" />
-  <p><em>Login ID Screen in development mode with context inspector</em></p>
-</div>
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img 
+        src="https://github.com/user-attachments/assets/52376b2d-d25b-4155-873c-9d314af64c91" 
+        alt="Signup Screen with mock data"
+        width="100%" />
+      <br />
+      <sub><em>Signup screen local development with ul-context-inspector</em></sub>
+    </td>
+    <td width="50%" align="center">
+      <img 
+        src="https://github.com/user-attachments/assets/01ce0c6f-1dea-4d24-ac58-61d7d7ca3390" 
+        alt="Signup Screen deployed with ACUL"
+        width="100%" />
+      <br />
+      <sub><em>Signup screen production deployment with ACUL</em></sub>
+    </td>
+  </tr>
+</table>
 
 ## Table of Contents
 
 - [Quick Start](#quick-start)
+- [Development with ul-context-inspector](#development-with-ul-context-inspector)
 - [Prerequisites](#prerequisites)
 - [Screens](#screens)
 - [Build Structure](#build-structure)
@@ -59,6 +104,41 @@ npm run dev  # Opens http://localhost:3000
 ```
 
 The development server includes an integrated context inspector that lets you visualize and edit the Auth0 Universal Login context in real-time, switch between screens, and test different scenarios.
+
+<a id="development-with-ul-context-inspector"></a>
+
+## Development with ul-context-inspector
+
+`ul-context-inspector` is a developer panel that simulates Auth0's Universal Login context using local mock data, enabling development without an Enterprise Auth0 tenant.
+
+**How it works:**
+- **Development**: Loads mock JSON from `public/screens/` → No Auth0 connection needed
+- **Production**: Uses real Auth0 context from `window.universal_login_context`
+
+### Creating Local Mocks
+
+1. Add screen mocks in `public/screens/{prompt}/{screen}/`:
+   - `default.json` - Default state
+   - `with-errors.json` - Error state
+
+2. Register in `public/manifest.json`:
+```json
+{
+  "versions": ["v2", "v0"],
+  "screens": [
+    {
+      "login": {
+        "login": {
+          "path": "/screens/login/login",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    }
+  ]
+}
+```
+
+3. Run `npm run dev` - screens appear in the inspector automatically!
 
 <a id="prerequisites"></a>
 
@@ -299,7 +379,6 @@ We welcome contributions! Here's how you can help:
 ## Documentation
 
 - **[Auth0 ACUL Documentation](https://auth0.com/docs/customize/login-pages/advanced-customizations)** - Official ACUL guide
-- **[ACUL API Documentation](https://auth0.github.io/universal-login/modules/Classes.html)** - SDK classes and methods
 
 <a id="troubleshooting"></a>
 

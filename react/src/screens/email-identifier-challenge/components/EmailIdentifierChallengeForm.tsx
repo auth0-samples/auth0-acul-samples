@@ -34,7 +34,7 @@ function EmailIdentifierChallengeForm() {
   const codeLabelText = texts?.placeholder || locales?.form?.codeLabel;
 
   // Extract general errors (not field-specific) from the SDK using useErrors hook
-  const generalErrors = errors.byKind("server").filter((err) => !err.field);
+  const generalErrors = errors.byKind("auth0").filter((err) => !err.field);
 
   const codeSDKError = errors.byField("code")[0]?.message;
 

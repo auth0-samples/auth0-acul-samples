@@ -166,11 +166,18 @@
             "locale_dir": {
               "type": "string"
             },
-            "connections": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Acul.Connections"
-              }
+            "connection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/Acul.DbConnection"
+                },
+                {
+                  "$ref": "#/definitions/Acul.PasswordlessConnection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "errors": {
               "type": "array",
@@ -183,6 +190,21 @@
                 "boolean",
                 "null"
               ]
+            },
+            "custom_domain": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "domain_metadata": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
             }
           },
           "additionalProperties": false
@@ -993,7 +1015,7 @@
       ],
       "additionalProperties": false
     },
-    "Acul.Connections": {
+    "Acul.DbConnection": {
       "type": "object",
       "properties": {
         "name": {
@@ -1002,22 +1024,282 @@
         "strategy": {
           "type": "string"
         },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
         "options": {
           "type": "object",
           "properties": {
-            "display_name": {
-              "type": "string"
-            },
-            "show_as_button": {
+            "signup_enabled": {
               "type": "boolean"
             },
-            "icon_url": {
-              "type": "string"
+            "username_required": {
+              "type": "boolean"
+            },
+            "forgot_password_enabled": {
+              "type": "boolean"
+            },
+            "attributes": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "object",
+                  "properties": {
+                    "signup_status": {
+                      "type": "string"
+                    },
+                    "identifier_active": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "signup_status"
+                  ],
+                  "additionalProperties": false
+                },
+                "username": {
+                  "type": "object",
+                  "properties": {
+                    "signup_status": {
+                      "type": "string"
+                    },
+                    "identifier_active": {
+                      "type": "boolean"
+                    },
+                    "validation": {
+                      "type": "object",
+                      "properties": {
+                        "max_length": {
+                          "type": "number"
+                        },
+                        "min_length": {
+                          "type": "number"
+                        },
+                        "allowed_types": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "boolean"
+                            },
+                            "phone_number": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "email",
+                            "phone_number"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "max_length",
+                        "min_length",
+                        "allowed_types"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "signup_status"
+                  ],
+                  "additionalProperties": false
+                },
+                "phone": {
+                  "type": "object",
+                  "properties": {
+                    "signup_status": {
+                      "type": "string"
+                    },
+                    "identifier_active": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "signup_status"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "authentication_methods": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "policy": {
+                      "type": "string"
+                    },
+                    "min_length": {
+                      "type": "number"
+                    },
+                    "password_security_info": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Acul.PasswordComplexityRule"
+                      }
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "policy",
+                    "min_length",
+                    "password_security_info"
+                  ],
+                  "additionalProperties": false
+                },
+                "passkey": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "enabled"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "password",
+                "passkey"
+              ],
+              "additionalProperties": false
+            },
+            "validation": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "object",
+                  "properties": {
+                    "min_length": {
+                      "type": "number"
+                    },
+                    "max_length": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "min_length",
+                    "max_length"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "username"
+              ],
+              "additionalProperties": false
             }
           },
+          "required": [
+            "signup_enabled",
+            "forgot_password_enabled",
+            "attributes",
+            "authentication_methods"
+          ],
           "additionalProperties": false
         }
       },
+      "required": [
+        "metadata",
+        "name",
+        "options",
+        "strategy"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.PasswordComplexityRule": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "total": {
+              "type": "number"
+            },
+            "example": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "count"
+          ],
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Acul.PasswordComplexityRule"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "label",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.PasswordlessConnection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "signup_enabled": {
+              "$ref": "#/definitions/Boolean"
+            }
+          },
+          "required": [
+            "signup_enabled"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "metadata",
+        "name",
+        "options",
+        "strategy"
+      ],
+      "additionalProperties": false
+    },
+    "Boolean": {
+      "type": "object",
       "additionalProperties": false
     },
     "Acul.Error": {

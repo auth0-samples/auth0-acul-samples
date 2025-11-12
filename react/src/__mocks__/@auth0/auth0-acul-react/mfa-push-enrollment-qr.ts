@@ -114,6 +114,13 @@ export const useErrors = jest.fn(() => ({
   dismissAll: jest.fn(),
 }));
 
+// Mock the useMfaPolling hook
+export const useMfaPolling = jest.fn(() => ({
+  isRunning: true,
+  startPolling: jest.fn(),
+  stopPolling: jest.fn(),
+}));
+
 export const useScreen = jest.fn(() => mockMfaPushEnrollmentQRInstance.screen);
 export const useUser = jest.fn(() => mockMfaPushEnrollmentQRInstance.user);
 export const useTransaction = jest.fn(

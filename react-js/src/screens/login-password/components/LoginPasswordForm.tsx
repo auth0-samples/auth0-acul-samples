@@ -42,8 +42,8 @@ function LoginPasswordForm() {
   } = form;
 
   const errors = loginPasswordInstance.getErrors();
-  const passwordPolicy = transaction.getPasswordPolicy?.();
-  const allowedIdentifiers = transaction.getAllowedIdentifiers?.() || [];
+  const passwordPolicy = transaction.passwordPolicy;
+  const allowedIdentifiers = transaction.allowedIdentifiers || [];
 
   const buttonText = texts?.buttonText || locales.form.button;
   const passwordLabelText =

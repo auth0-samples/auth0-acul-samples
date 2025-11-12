@@ -1,6 +1,7 @@
 import {
   pickAuthenticator,
   useErrors,
+  useMfaPolling,
 } from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 import { act, render, screen } from "@testing-library/react";
 
@@ -39,6 +40,12 @@ describe("MfaPushEnrollmentQRScreen", () => {
     ).toBeInTheDocument();
   });
 
+  it("should verify useMfaPolling called on page load", async () => {
+    await renderScreen();
+
+    expect(useMfaPolling).toHaveBeenCalled();
+  });
+
   it("should call window navigator cliboard write menthod when Copy as code button is clicked", async () => {
     await renderScreen();
 
@@ -71,7 +78,7 @@ describe("MfaPushEnrollmentQRScreen", () => {
       errors: {
         byField: jest.fn(() => []),
         byKind: jest.fn((kind: string) => {
-          if (kind === "server") {
+          if (kind === "auth0") {
             return [
               {
                 id: "network-error",

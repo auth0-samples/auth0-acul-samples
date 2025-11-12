@@ -5,7 +5,6 @@
  */
 import {
   ErrorItem,
-  type PasswordPolicy,
   type ScreenMembersOnLoginPassword,
   TransactionMembersOnLoginPassword,
 } from "@auth0/auth0-acul-react/types";
@@ -130,14 +129,15 @@ export const createMockLoginPasswordInstance =
       isSignupEnabled: false,
       isForgotPasswordEnabled: false,
       isPasskeyEnabled: false,
-      getPasswordPolicy: function (): PasswordPolicy | null {
-        return {
-          minLength: 8,
-          policy: "good",
-        };
+      passwordPolicy: {
+        minLength: 8,
+        policy: "good",
       },
-      getUsernamePolicy: jest.fn(),
-      getAllowedIdentifiers: jest.fn(),
+      usernamePolicy: {
+        minLength: 8,
+        maxLength: 64,
+      },
+      allowedIdentifiers: ["email", "username"],
     },
   });
 

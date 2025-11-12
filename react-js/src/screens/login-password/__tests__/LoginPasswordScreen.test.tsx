@@ -96,10 +96,10 @@ describe("LoginPasswordScreen", () => {
   });
 
   it("should validate password min length based on policy", async () => {
-    mockInstance.transaction.getPasswordPolicy = jest.fn(() => ({
+    mockInstance.transaction.passwordPolicy = {
       minLength: 10,
       policy: "good",
-    }));
+    };
     await renderScreen();
 
     await ScreenTestUtils.fillInput(/password/i, "short");

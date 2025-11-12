@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import {
   useErrors,
   useLoginIdentifiers,
+  usePasskeyAutofill,
 } from "@auth0/auth0-acul-react/login-id";
 import type {
   ErrorItem,
@@ -36,6 +37,7 @@ function LoginIdForm() {
     countryPrefix,
     resetPasswordLink,
     isCaptchaAvailable,
+    isPasskeyEnabled,
     handleLoginId,
     handlePickCountryCode,
   } = useLoginIdManager();
@@ -74,6 +76,12 @@ function LoginIdForm() {
     captchaLabel
   );
 
+  // Enable passkey autofill for identifier field if supported
+  if (isPasskeyEnabled) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    usePasskeyAutofill();
+  }
+
   const { errors, hasError, dismiss } = useErrors();
 
   // Get field-specific SDK errors
@@ -82,7 +90,7 @@ function LoginIdForm() {
 
   // Get general errors (not field-specific)
   const generalErrors: ErrorItem[] = errors
-    .byKind("server")
+    .byKind("auth0")
     .filter((err) => !err.field);
 
   const shouldShowCountryPicker = isPhoneNumberSupported(

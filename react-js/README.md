@@ -2,13 +2,6 @@
 
 This sample demonstrates how to build custom Auth0 Advanced Customizations for Universal Login (ACUL) screens using React, TypeScript, Tailwind CSS, and the **Auth0 ACUL JS SDK**.
 
-## Overview
-
-This implementation includes 3 authentication screens:
-- **Login**: Universal login screen
-- **Login ID**: Identifier-first login flow
-- **Login Password**: Password entry screen
-
 ## Features
 
 - 🔐 **Auth0 ACUL JS SDK Integration**: Uses `@auth0/auth0-acul-js`
@@ -40,13 +33,107 @@ npx serve dist -p 8080 --cors
 
 ## Development with Context Inspector
 
-In development mode, the application includes **ul-context-inspector** - a visual tool that lets you:
-- 📋 View the current Auth0 Universal Login context
-- ✏️ Edit context values in real-time
-- 🔄 Switch between different screens
-- 🧪 Test error states and edge cases
+The development server includes **ul-context-inspector** - a developer panel that simulates the Auth0 Universal Login context using local mock data. This enables offline development without requiring an Auth0 tenant.
 
-The inspector panel appears automatically when running `npm run dev` and is completely removed from production builds.
+**Key Benefits:**
+- No Auth0 tenant or custom domain required
+```
+
+## Development with Context Inspector
+
+The development server includes **ul-context-inspector** - a powerful tool for local development without requiring an Auth0 tenant.
+
+### What is ul-context-inspector? �
+
+`ul-context-inspector` is a developer panel that simulates the Auth0 Universal Login context (`window.universal_login_context`) using local mock data. This enables complete offline development and testing.
+
+### Using the Inspector
+
+When you run `npm run dev`, the inspector panel automatically appears with:
+
+- **Screen selector** - Switch between all 3 screens instantly
+- **Variant toggle** - Test default vs error states
+- **Context editor** - Modify any context property in real-time
+- **Data source** - Choose mock versions or custom data
+- **Live preview** - See changes immediately
+
+### Creating Local Mocks
+
+Mock data is stored in `public/screens/` with this structure:
+
+```
+public/screens/
+  {prompt}/
+    {screen}/
+      default.json       # Default state mock
+      with-errors.json   # Error state mock
+```
+
+**Example: Adding a new screen mock**
+
+1. Create the directory structure:
+```bash
+mkdir -p public/screens/login/login
+```
+
+2. Add mock files (`default.json`, `with-errors.json`):
+```json
+{
+  "screen": {
+    "name": "login",
+    "data": {},
+    "texts": {
+      "pageTitle": "Log in | Auth0"
+    }
+  },
+  "organization": null,
+  "client": {
+    "metadata": {}
+  },
+  "tenant": {
+    "name": "your-tenant"
+  }
+}
+```
+
+3. Register in `public/manifest.json`:
+```json
+{
+  "versions": ["v2", "v0"],
+  "screens": [
+    {
+      "login": {
+        "login": {
+          "path": "/screens/login/login",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    }
+  ]
+}
+```
+
+## Development with Context Inspector
+
+The development server includes **ul-context-inspector** - a developer panel that simulates the Auth0 Universal Login context using local mock data. This enables offline development without requiring an Auth0 tenant.
+
+**Key Benefits:**
+- No Auth0 tenant or custom domain required
+- Instant context updates with live reload
+- Switch between screens and variants easily
+- Version controlled mock data in `public/screens/`
+
+**Development vs Production:**
+- Development: Uses local JSON files, instant updates, works offline
+- Production: Requires Auth0 Enterprise tenant with custom domain
+
+**Adding Mock Data:**
+1. Create directory: `public/screens/{prompt}/{screen}/`
+2. Add `default.json` and `with-errors.json` with context structure
+3. Register in `public/manifest.json` under `screens` array
+4. Restart dev server
+
+**Note:** Inspector is automatically removed from production builds.
 
 ## Build Output
 

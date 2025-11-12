@@ -20,9 +20,21 @@ export default function ProdScreenManager() {
 
   const ScreenComponent = getScreenComponent(screen);
 
-  return ScreenComponent ? (
-    <ScreenComponent />
-  ) : (
-    <div>Screen &quot;{screen}&quot; not implemented yet</div>
+  if (!screen) {
+    return null;
+  }
+
+  if (ScreenComponent) {
+    return <ScreenComponent />;
+  }
+
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-center p-8">
+        <p className="text-lg text-gray-600">
+          Screen &quot;{screen}&quot; is not implemented
+        </p>
+      </div>
+    </div>
   );
 }

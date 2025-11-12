@@ -1,5 +1,6 @@
 import {
   enroll,
+  returnToPrevious,
   useErrors,
   useMfaLoginOptions,
   useScreen,
@@ -27,9 +28,16 @@ export const useMfaLoginOptionsManager = () => {
     );
   };
 
+  const handleReturnToPrevious = async (): Promise<void> => {
+    await executeSafely("Return to previous screen", () =>
+      returnToPrevious({})
+    );
+  };
+
   return {
     mfaLoginOptions,
     handleEnroll,
+    handleReturnToPrevious,
     texts: (texts || {}) as ScreenMembersOnMfaLoginOptions["texts"],
     enrolledFactors: mfaLoginOptions.user?.enrolledFactors || [],
     locales,

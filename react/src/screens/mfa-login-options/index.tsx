@@ -18,9 +18,9 @@ function MFALoginOptions() {
   return (
     // Applying UDS theme overrides using the "theme-universal" class
     <ULThemePageLayout className="theme-universal">
-      <ULThemeCard className="w-full max-w-[400px] gap-0">
+      <ULThemeCard className="p-0 pt-4 gap-0 w-(--prompt-width) min-h-(--prompt-min-height)">
         <Header />
-        <ULThemeSeparator />
+        <ULThemeSeparator className="grow-0" />
         <MFALoginOptionsList />
       </ULThemeCard>
     </ULThemePageLayout>

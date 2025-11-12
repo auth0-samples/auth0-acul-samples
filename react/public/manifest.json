@@ -1,5 +1,18 @@
 {
-  "versions": ["v2", "v0"],
+  "versions": [
+    "1.17527.0",
+    "1.17533.0",
+    "1.17536.0",
+    "1.17539.0",
+    "1.17549.0",
+    "1.17557.0",
+    "1.17563.0",
+    "1.17570.0",
+    "1.17571.0",
+    "1.17577.0",
+    "1.17579.0",
+    "v0"
+  ],
   "screens": [
     {
       "login": {
@@ -50,6 +63,166 @@
       }
     },
     {
+      "mfa-begin-enroll-options": {
+        "mfa-begin-enroll-options": {
+          "path": "/screens/mfa/mfa-begin-enroll-options",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-country-codes": {
+        "mfa-country-codes": {
+          "path": "/screens/mfa-sms/mfa-country-codes",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-email-challenge": {
+        "mfa-email-challenge": {
+          "path": "/screens/mfa-email/mfa-email-challenge",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-enroll-result": {
+        "mfa-enroll-result": {
+          "path": "/screens/mfa/mfa-enroll-result",
+          "variants": ["default"]
+        }
+      }
+    },
+    {
+      "mfa-login-options": {
+        "mfa-login-options": {
+          "path": "/screens/mfa/mfa-login-options",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-push-challenge-push": {
+        "mfa-push-challenge-push": {
+          "path": "/screens/mfa-push/mfa-push-challenge-push",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-push-welcome": {
+        "mfa-push-welcome": {
+          "path": "/screens/mfa-push/mfa-push-welcome",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-push-list": {
+        "mfa-push-list": {
+          "path": "/screens/mfa-push/mfa-push-list",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-push-enrollment-qr": {
+        "mfa-push-enrollment-qr": {
+          "path": "/screens/mfa-push/mfa-push-enrollment-qr",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-sms-challenge": {
+        "mfa-sms-challenge": {
+          "path": "/screens/mfa-sms/mfa-sms-challenge",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-sms-enrollment": {
+        "mfa-sms-enrollment": {
+          "path": "/screens/mfa-sms/mfa-sms-enrollment",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-sms-list": {
+        "mfa-sms-list": {
+          "path": "/screens/mfa-sms/mfa-sms-list",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "mfa-email-list": {
+        "mfa-email-list": {
+          "path": "/screens/mfa-email/mfa-email-list",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "passkeys": {
+        "passkey-enrollment": {
+          "path": "/screens/passkeys/passkey-enrollment",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "passkeys": {
+        "passkey-enrollment-local": {
+          "path": "/screens/passkeys/passkey-enrollment-local",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "reset-password": {
+        "reset-password": {
+          "path": "/screens/reset-password/reset-password",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "reset-password": {
+        "reset-password-email": {
+          "path": "/screens/reset-password/reset-password-email",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "reset-password": {
+        "reset-password-error": {
+          "path": "/screens/reset-password/reset-password-error",
+          "variants": ["default"]
+        }
+      }
+    },
+    {
+      "reset-password": {
+        "reset-password-success": {
+          "path": "/screens/reset-password/reset-password-success",
+          "variants": ["default"]
+        }
+      }
+    },
+    {
+      "reset-password": {
+        "reset-password-request": {
+          "path": "/screens/reset-password/reset-password-request",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
       "signup": {
         "signup": {
           "path": "/screens/signup/signup",
@@ -74,14 +247,6 @@
       }
     },
     {
-      "phone-identifier-enrollment": {
-        "phone-identifier-enrollment": {
-          "path": "/screens/phone-identifier-enrollment/phone-identifier-enrollment",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
       "phone-identifier-challenge": {
         "phone-identifier-challenge": {
           "path": "/screens/phone-identifier-challenge/phone-identifier-challenge",
@@ -90,161 +255,9 @@
       }
     },
     {
-      "reset-password": {
-        "reset-password-request": {
-          "path": "/screens/reset-password/reset-password-request",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "reset-password": {
-        "reset-password-email": {
-          "path": "/screens/reset-password/reset-password-email",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "reset-password": {
-        "reset-password": {
-          "path": "/screens/reset-password/reset-password",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "reset-password": {
-        "reset-password-success": {
-          "path": "/screens/reset-password/reset-password-success",
-          "variants": ["default"]
-        }
-      }
-    },
-    {
-      "reset-password": {
-        "reset-password-error": {
-          "path": "/screens/reset-password/reset-password-error",
-          "variants": ["default"]
-        }
-      }
-    },
-    {
-      "mfa-push": {
-        "mfa-push-welcome": {
-          "path": "/screens/mfa-push/mfa-push-welcome",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-push": {
-        "mfa-push-enrollment-qr": {
-          "path": "/screens/mfa-push/mfa-push-enrollment-qr",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-push": {
-        "mfa-push-challenge-push": {
-          "path": "/screens/mfa-push/mfa-push-challenge-push",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-push": {
-        "mfa-push-list": {
-          "path": "/screens/mfa-push/mfa-push-list",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-sms": {
-        "mfa-country-codes": {
-          "path": "/screens/mfa-sms/mfa-country-codes",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-sms": {
-        "mfa-sms-enrollment": {
-          "path": "/screens/mfa-sms/mfa-sms-enrollment",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-sms": {
-        "mfa-sms-challenge": {
-          "path": "/screens/mfa-sms/mfa-sms-challenge",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-sms": {
-        "mfa-sms-list": {
-          "path": "/screens/mfa-sms/mfa-sms-list",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-email": {
-        "mfa-email-challenge": {
-          "path": "/screens/mfa-email/mfa-email-challenge",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa-email": {
-        "mfa-email-list": {
-          "path": "/screens/mfa-email/mfa-email-list",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa": {
-        "mfa-enroll-result": {
-          "path": "/screens/mfa/mfa-enroll-result",
-          "variants": ["default"]
-        }
-      }
-    },
-    {
-      "mfa": {
-        "mfa-login-options": {
-          "path": "/screens/mfa/mfa-login-options",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "mfa": {
-        "mfa-begin-enroll-options": {
-          "path": "/screens/mfa/mfa-begin-enroll-options",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "passkeys": {
-        "passkey-enrollment": {
-          "path": "/screens/passkeys/passkey-enrollment",
-          "variants": ["default", "with-errors"]
-        }
-      }
-    },
-    {
-      "passkeys": {
-        "passkey-enrollment-local": {
-          "path": "/screens/passkeys/passkey-enrollment-local",
+      "phone-identifier-enrollment": {
+        "phone-identifier-enrollment": {
+          "path": "/screens/phone-identifier-enrollment/phone-identifier-enrollment",
           "variants": ["default", "with-errors"]
         }
       }

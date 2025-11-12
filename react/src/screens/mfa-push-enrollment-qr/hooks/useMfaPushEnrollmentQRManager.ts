@@ -37,14 +37,6 @@ export const useMfaPushEnrollmentQRManager = () => {
     enrolledFactors,
     mfaPushEnrollmentQR,
     handlePickAuthenticator,
-    useMfaPolling: (payload: unknown) => {
-      console.log("useMfaPolling called with payload:", payload);
-      return {
-        isRunning: true,
-        startPolling: () => console.log("Mocked startPolling method called"),
-        stopPolling: () => console.log("Mocked stopPolling method called"),
-      };
-    },
     texts: (texts || {}) as ScreenMembersOnMfaPushEnrollmentQr["texts"],
   };
 };

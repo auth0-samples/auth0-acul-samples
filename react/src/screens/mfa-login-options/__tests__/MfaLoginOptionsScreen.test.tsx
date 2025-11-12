@@ -85,7 +85,7 @@ describe("MfaLoginOptionsScreen", () => {
       errors: {
         byField: jest.fn(() => []),
         byKind: jest.fn((kind: string) => {
-          if (kind === "server") {
+          if (kind === "auth0") {
             return [
               {
                 id: "network-error",

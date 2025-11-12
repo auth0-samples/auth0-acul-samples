@@ -31,7 +31,7 @@ function MFALoginOptionsList() {
 
   // Extract general errors (not field-specific) from the SDK
   const generalErrors: ErrorItem[] =
-    errors.byKind("server")?.filter((error) => {
+    errors.byKind("auth0")?.filter((error) => {
       return !error.field || error.field === null;
     }) || [];
   const enrollOptions = enrolledFactors as MfaLoginFactorType[];
@@ -95,7 +95,7 @@ function MFALoginOptionsList() {
         </div>
       )}
       {/* Render buttons for each enrollment option */}
-      <div className="space-y-2">
+      <div className="space-y-0 px-10 pb-10">
         {enrollOptions.map((option) => {
           return (
             <React.Fragment key={option}>

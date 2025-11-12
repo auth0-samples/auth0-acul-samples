@@ -11,6 +11,7 @@ export interface MockLoginIdInstance {
   getLoginIdentifiers: jest.Mock;
   screen: ScreenMembersOnLoginId;
   transaction: TransactionMembersOnLoginId;
+  registerPasskeyAutofill: jest.Mock;
 }
 
 /**
@@ -26,6 +27,7 @@ export const createMockLoginIdInstance = (): MockLoginIdInstance => {
     pickCountryCode: jest.fn(),
     getErrors: jest.fn(() => []), // Returns empty array by default
     getLoginIdentifiers: jest.fn(), // Will be set up below
+    registerPasskeyAutofill: jest.fn(),
     screen: {
       name: "login-id",
       texts: {
@@ -72,7 +74,7 @@ export const createMockLoginIdInstance = (): MockLoginIdInstance => {
       connectionStrategy: null,
       usernamePolicy: null,
     },
-  } as MockLoginIdInstance;
+  } as unknown as MockLoginIdInstance;
 
   // Make getLoginIdentifiers return the current allowedIdentifiers from transaction
   mockInstance.getLoginIdentifiers.mockImplementation(

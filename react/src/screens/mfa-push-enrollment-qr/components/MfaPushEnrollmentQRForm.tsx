@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { useErrors } from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
+import {
+  useErrors,
+  useMfaPolling,
+} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
 import { type CustomOptions, ErrorItem } from "@auth0/auth0-acul-react/types";
 
 import { Form } from "@/components/ui/form";
@@ -11,14 +14,8 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { useMfaPushEnrollmentQRManager } from "../hooks/useMfaPushEnrollmentQRManager";
 
 function MfaPushEnrollmentQRForm() {
-  const {
-    data,
-    texts,
-    locales,
-    enrolledFactors,
-    useMfaPolling,
-    handlePickAuthenticator,
-  } = useMfaPushEnrollmentQRManager();
+  const { data, texts, locales, enrolledFactors, handlePickAuthenticator } =
+    useMfaPushEnrollmentQRManager();
 
   // Initialize the form using react-hook-form
   const form = useForm<CustomOptions>({});
@@ -37,13 +34,12 @@ function MfaPushEnrollmentQRForm() {
 
   // Get general errors (not field-specific)
   const generalErrors: ErrorItem[] = errors
-    .byKind("server")
+    .byKind("auth0")
     .filter((err) => !err.field);
 
   // Automatically start polling when the page loads
   const { startPolling, stopPolling } = useMfaPolling({
     intervalMs: 3000,
-    onCompleted: () => console.log("Push Enrollment accepted | declined"),
     onError: (error: unknown) =>
       console.error("Push Enrollment Polling error:", error),
   });

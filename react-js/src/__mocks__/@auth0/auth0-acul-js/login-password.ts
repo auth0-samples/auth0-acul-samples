@@ -63,7 +63,7 @@ export const createMockLoginPasswordInstance =
         hasErrors: false,
         // Default transaction state
         errors: [],
-        getAllowedIdentifiers: jest.fn(() => []),
+        allowedIdentifiers: ["email", "username"],
         alternateConnections: [],
         locale: "en",
         state: "g-state",
@@ -71,11 +71,14 @@ export const createMockLoginPasswordInstance =
         countryPrefix: null,
         currentConnection: null,
         connectionStrategy: null,
-        getPasswordPolicy: jest.fn(() => ({
+        passwordPolicy: {
           minLength: 8,
           policy: "good",
-        })),
-        getUsernamePolicy: jest.fn(() => null),
+        },
+        usernamePolicy: {
+          minLength: 8,
+          maxLength: 64,
+        },
       },
     } as MockLoginPasswordInstance;
 
