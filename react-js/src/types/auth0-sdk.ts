@@ -10,8 +10,6 @@ import type {
  * This interface is built from the `Base` members of the ACUL JS SDK
  * and serves as the primary, strongly-typed entry point for interacting
  * with the SDK's data.
- *
- * @see https://auth0.github.io/universal-login/modules/Interfaces.Base.html
  */
 export interface UniversalLoginContext {
   branding: BrandingMembers;

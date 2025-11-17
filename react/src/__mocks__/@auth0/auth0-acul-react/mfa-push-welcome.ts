@@ -1,4 +1,5 @@
 import type {
+  ErrorItem,
   ScreenMembersOnMfaPushWelcome,
   UserMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -99,6 +100,19 @@ export const pickAuthenticator = mockMfaWelcomeInstance.pickAuthenticator;
 export const useMfaPushWelcome = jest.fn(() => ({
   enroll: mockMfaWelcomeInstance.enroll,
   pickAuthenticator: mockMfaWelcomeInstance.pickAuthenticator,
+}));
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
 }));
 
 export const useScreen = jest.fn(() => mockMfaWelcomeInstance.screen);

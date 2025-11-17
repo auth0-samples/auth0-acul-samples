@@ -5,19 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaSmsEnrollmentManager } from "../hooks/useMfaSmsEnrollmentManager";
 
 function Header() {
-  const { texts } = useMfaSmsEnrollmentManager();
+  const { texts, locales } = useMfaSmsEnrollmentManager();
 
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  // Use locales as fallback to SDK texts
+  const logoAltText = texts?.logoAltText || locales?.header?.logoAltText;
+  const title = texts?.title || locales?.header?.title;
+  const description = texts?.description || locales?.header?.description;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Secure Your Account"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description ||
-          "Enter your phone number below. An SMS will be sent to that number with a code to enter on the next screen."}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{title}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{description}</ULThemeSubtitle>
     </>
   );
 }

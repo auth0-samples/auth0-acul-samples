@@ -1,0 +1,23 @@
+{
+  "page": {
+    "title": "Enter your email code to log in"
+  },
+  "header": {
+    "logoAlt": "Application Logo",
+    "title": "Verify Your Identity",
+    "description": "We've sent an email with your code to: {{email}}",
+    "emailFallback": "your email"
+  },
+  "form": {
+    "codeLabel": "Enter the 6-digit code",
+    "codeRequired": "Please enter the verification code.",
+    "submitButton": "Continue",
+    "submitting": "Verifying..."
+  },
+  "footer": {
+    "resendText": "Didn't receive a code?",
+    "resendActionText": "Resend",
+    "resendCooldown": "Resend in {{seconds}}s",
+    "backButtonText": "Go back"
+  }
+}

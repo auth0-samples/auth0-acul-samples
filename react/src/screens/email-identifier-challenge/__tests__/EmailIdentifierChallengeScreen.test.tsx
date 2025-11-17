@@ -2,6 +2,8 @@ import {
   resendCode,
   returnToPrevious,
   submitEmailChallenge,
+  useErrors,
+  useResend,
   useScreen,
 } from "@auth0/auth0-acul-react/email-identifier-challenge";
 import { render, screen } from "@testing-library/react";
@@ -13,6 +15,25 @@ import EmailIdentifierChallengeScreen from "../index";
 describe("EmailIdentifierChallengeScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+
+    // Reset useErrors mock to default state
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn(() => []),
+        byCode: jest.fn(() => []),
+      },
+      hasError: false,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    // Reset useResend mock to default state
+    (useResend as jest.Mock).mockReturnValue({
+      remaining: 0,
+      disabled: false,
+      startResend: jest.fn(),
+    });
   });
 
   it("renders correctly with email identifier challenge content", () => {
@@ -38,6 +59,13 @@ describe("EmailIdentifierChallengeScreen", () => {
   });
 
   it("calls resendCode SDK method when resend button is clicked", async () => {
+    const startResend = jest.fn();
+    (useResend as jest.Mock).mockReturnValueOnce({
+      remaining: 0,
+      disabled: false,
+      startResend,
+    });
+
     render(<EmailIdentifierChallengeScreen />);
 
     await ScreenTestUtils.clickButton(/Resend/i);
@@ -53,12 +81,45 @@ describe("EmailIdentifierChallengeScreen", () => {
     expect(returnToPrevious).toHaveBeenCalled();
   });
 
-  it("shows resend limit reached text after resending", async () => {
+  it("shows resend cooldown when useResend hook is active", async () => {
+    (useResend as jest.Mock).mockReturnValueOnce({
+      remaining: 25,
+      disabled: true,
+      startResend: jest.fn(),
+    });
+
     render(<EmailIdentifierChallengeScreen />);
 
-    await ScreenTestUtils.clickButton(/Resend/i);
+    expect(screen.getByText(/Resend in 25s/i)).toBeInTheDocument();
+  });
 
-    expect(screen.getByText(/Code has been resent/i)).toBeInTheDocument();
+  it("displays errors from useErrors hook", async () => {
+    const mockDismiss = jest.fn();
+    const mockUseErrors = useErrors as jest.Mock;
+
+    // Mock useErrors to return errors
+    mockUseErrors.mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn(() => [
+          {
+            id: "error-1",
+            message: "Invalid code. Please try again.",
+            field: null,
+          },
+        ]),
+        byCode: jest.fn(() => []),
+      },
+      hasError: true,
+      dismiss: mockDismiss,
+      dismissAll: jest.fn(),
+    });
+
+    render(<EmailIdentifierChallengeScreen />);
+
+    expect(
+      screen.getByText(/Invalid code. Please try again./i)
+    ).toBeInTheDocument();
   });
 
   it("sets correct document title from SDK", () => {

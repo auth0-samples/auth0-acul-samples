@@ -1,18 +1,17 @@
 name: Deploy React-JS Sample to S3
 
-# This workflow deploys the React-JS sample (using Auth0 ACUL JS SDK)
-# It is triggered when changes are made to the react-js directory
+# This workflow deploys the React-JS sample when code is merged to main branch
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
     paths:
       - "**/*"
-      - ".github/config/deploy_config.yml" # This file is used to determine which screens to deploy
+      - ".github/config/deploy_config.yml"
       - "!.github/workflows/acul-deploy.yml"
       - "!DEPLOYMENT.md"
       - "!README.md"
-  workflow_dispatch: # Kept for manual triggering, but inputs removed
+  workflow_dispatch: # Manual triggering
 
 env:
   NODE_VERSION: "22"
@@ -53,8 +52,7 @@ jobs:
           NPM_CONFIG_REGISTRY: "https://registry.npmjs.org"
         run: |
           npm config set registry https://registry.npmjs.org/
-          npm cache clean --force
-          npm ci --include=optional --fund=false --audit=false
+          npm install --include=optional --fund=false --audit=false
 
       - name: Build application
         if: steps.check-targets.outputs.has_targets == 'true'

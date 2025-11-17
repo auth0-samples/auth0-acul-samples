@@ -1,0 +1,20 @@
+{
+    "pageTitle": "Use your phone number to log in",
+    "header": {
+        "logoAltText": "Application Logo",
+        "title": "Verify Your Identity",
+        "description": "We will send a 6-digit code to the following phone number"
+    },
+    "form": {
+        "field": {
+            "labelText": "How do you want to receive the code?",
+            "smsButton": "Text Message",
+            "voiceButton": "Voice Call",
+            "sendingCodeText": "Sending"
+        },
+        "buttonLabelText": "Continue"
+    },
+    "footer": {
+        "backButtonText": "Go back"
+    }
+}

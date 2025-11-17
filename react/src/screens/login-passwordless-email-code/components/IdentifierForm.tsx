@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 
-import type { Error, SubmitCodeOptions } from "@auth0/auth0-acul-react/types";
+import { useErrors } from "@auth0/auth0-acul-react/login-passwordless-email-code";
+import type {
+  ErrorItem,
+  SubmitCodeOptions,
+} from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import {
   ULThemeFloatingLabelField,
   ULThemeFormMessage,
@@ -11,7 +15,7 @@ import { Form, FormField, FormItem } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
-import { getFieldError } from "@/utils/helpers/errorUtils";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
@@ -25,19 +29,19 @@ import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordl
 function IdentifierForm() {
   // Extract necessary methods and properties from the custom hook
   const {
-    handleSubmitEmailCode,
-    data,
-    errors,
-    isCaptchaAvailable,
-    captchaImage,
     texts,
+    locales,
+    data,
     links,
+    captcha,
+    isCaptchaAvailable,
+    handleSubmitEmailCode,
   } = useLoginPasswordlessEmailCodeManager();
 
   // Initialize the form using react-hook-form
   const form = useForm<SubmitCodeOptions>({
     defaultValues: {
-      email: data?.username || "",
+      email: "",
       code: "",
       captcha: "",
     },
@@ -47,23 +51,33 @@ function IdentifierForm() {
     formState: { isSubmitting },
   } = form;
 
-  // Handle text fallbacks for button and field labels
-  const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the code";
+  // Use locales as fallback to SDK texts
+  const buttonText = texts?.buttonText || locales.form.continueButtonText;
+  const codeLabelText = texts?.placeholder || locales.form.codeLabelText;
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
-    : "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
+    : locales.form.captchaLabel;
+  const editText = texts?.editText || locales.form.editText;
+  const editAriaLabel =
+    texts?.editLinkScreenReadableText || locales.form.editIdentifierLinkText;
+  const codeRequiredErrorMessage = locales.errors.codeIsRequired;
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
 
-  // Extract field-specific errors for email, code, and CAPTCHA
-  const emailSDKError = getFieldError("email", errors);
-  const codeSDKError = getFieldError("code", errors);
-  const captchaSDKError = getFieldError("captcha", errors);
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get field-specific SDK errors
+  const emailSDKError = errors.byField("email")[0]?.message;
+  const codeSDKError = errors.byField("code")[0]?.message;
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("auth0")
+    .filter((err) => !err.field);
 
   /**
    * Handles form submission.
@@ -71,24 +85,33 @@ function IdentifierForm() {
    * @param data - The form data containing email, code, and optional CAPTCHA.
    */
   const onSubmit = async (data: SubmitCodeOptions) => {
-    await handleSubmitEmailCode(String(data.code), data.captcha);
+    await handleSubmitEmailCode({
+      code: String(data.code),
+      captcha: isCaptchaAvailable && captchaValue ? captchaValue : undefined,
+    });
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
-                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
+                <ULThemeAlertTitle>
+                  {error.message || locales.errors.errorOccurred}
+                </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
           </div>
         )}
 
-        {/* Email input field */}
+        {/* Prefilled Email(Username) input field */}
         <FormField
           control={form.control}
           name="email"
@@ -103,14 +126,12 @@ function IdentifierForm() {
                 endAdornment={
                   <ULThemeLink
                     href={links?.edit_identifier}
-                    aria-label={
-                      texts?.editLinkScreenReadableText || "Edit email address"
-                    }
+                    aria-label={editAriaLabel}
                   >
-                    {texts?.editText || "Edit"}
+                    {editText}
                   </ULThemeLink>
                 }
-                className="pr-[16px]"
+                className="pr-4"
               />
               <ULThemeFormMessage
                 sdkError={emailSDKError}
@@ -120,12 +141,12 @@ function IdentifierForm() {
           )}
         />
 
-        {/* Code input field */}
+        {/* Email Code input field */}
         <FormField
           control={form.control}
           name="code"
           rules={{
-            required: "Please fill out this field.",
+            required: codeRequiredErrorMessage,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -143,29 +164,31 @@ function IdentifierForm() {
           )}
         />
 
-        {/* CAPTCHA Box */}
-        {isCaptchaAvailable &&
-          (codeSDKError || captchaSDKError || generalErrors.length > 0) && (
-            <Captcha
-              control={form.control}
-              name="captcha"
-              label={captchaLabel}
-              imageUrl={captchaImage || ""}
-              imageAltText={captchaImageAlt}
-              className="mb-4"
-              sdkError={captchaSDKError}
-              rules={{
-                required: "Please complete the CAPTCHA",
-                maxLength: {
-                  value: 15,
-                  message: "CAPTCHA too long",
-                },
-              }}
-            />
-          )}
+        {/* Captcha Field */}
+        {isCaptchaAvailable && captchaConfig && (
+          <Captcha
+            control={form.control}
+            name="captcha"
+            captcha={captchaConfig}
+            {...captchaProps}
+            className="mt-4"
+            sdkError={captchaSDKError}
+            rules={{
+              required: locales.errors.captchaCompletionRequired,
+              maxLength: {
+                value: 15,
+                message: locales.errors.captchaTooLong,
+              },
+            }}
+          />
+        )}
 
         {/* Submit button */}
-        <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
+        <ULThemeButton
+          type="submit"
+          className="w-full mt-4"
+          disabled={isSubmitting}
+        >
           {buttonText}
         </ULThemeButton>
       </form>

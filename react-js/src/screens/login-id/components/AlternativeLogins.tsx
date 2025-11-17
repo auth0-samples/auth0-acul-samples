@@ -5,17 +5,22 @@ import { getSocialProviderDetails } from "@/utils/helpers/socialUtils";
 
 import { useLoginIdManager } from "../hooks/useLoginIdManager";
 
-export interface AlternativeLoginsProps {
-  connections?: SocialConnection[] | undefined;
-}
+const AlternativeLogins = () => {
+  const {
+    handleFederatedLogin,
+    handlePasskeyLogin,
+    screen,
+    transaction,
+    locales,
+  } = useLoginIdManager();
+  const { texts } = screen;
+  const { isPasskeyEnabled, alternateConnections } = transaction;
 
-const AlternativeLogins = ({ connections }: AlternativeLoginsProps) => {
-  const { handleFederatedLogin, handlePasskeyLogin, texts, isPasskeyEnabled } =
-    useLoginIdManager();
+  const connections = alternateConnections as SocialConnection[] | undefined;
 
-  // Handle text fallbacks in component
+  // Handle text fallbacks using locales
   const passkeyButtonText =
-    texts?.passkeyButtonText || "Continue with a passkey";
+    texts?.passkeyButtonText || locales.form.passkeyButton;
 
   return (
     <>
@@ -32,7 +37,7 @@ const AlternativeLogins = ({ connections }: AlternativeLoginsProps) => {
         {connections?.map((connection: SocialConnection) => {
           const { displayName, iconComponent } =
             getSocialProviderDetails(connection);
-          const socialButtonText = `Continue with ${displayName}`;
+          const socialButtonText = `${locales.social.continueWith} ${displayName}`;
           return (
             <ULThemeSocialProviderButton
               key={connection.name}

@@ -118,7 +118,7 @@ function SignupForm() {
 
   // Get general errors (errors without a specific field)
   const generalErrors: ErrorItem[] = errors
-    .byKind("server")
+    .byKind("auth0")
     .filter((err) => !err.field);
 
   // Use locale strings with fallback to SDK texts
@@ -237,12 +237,12 @@ function SignupForm() {
     },
     [
       form.control,
-      texts,
-      errors,
+      locales.form.fields.common.required,
       isUsernameValid,
       userNameErrors,
       phoneCountryCode,
       handleCountryCodeSelect,
+      texts,
       getIdentifierError,
     ]
   );

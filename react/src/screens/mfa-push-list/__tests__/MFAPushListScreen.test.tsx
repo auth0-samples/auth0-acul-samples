@@ -1,11 +1,12 @@
 import {
   goBack,
   selectMfaPushDevice,
-  useTransaction,
+  useErrors,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-push-list";
 import { act, render, screen } from "@testing-library/react";
 
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaPushListScreen from "../index";
@@ -97,29 +98,35 @@ describe("MFAPushListScreen", () => {
     expect(selectMfaPushDevice).toHaveBeenCalledWith({ deviceIndex: 99 });
   });
 
-  it("should display general errors from transaction and filter out field-specific errors", async () => {
-    const generalError = "Unable to load devices";
-    const fieldError = "Invalid device name";
-
-    const mockUseTransaction = useTransaction as jest.Mock;
-    const originalMock = mockUseTransaction();
-    mockUseTransaction.mockReturnValue({
-      ...originalMock,
+  it("should display general errors", async () => {
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
       hasErrors: true,
-      errors: [
-        { message: generalError, field: null },
-        { message: fieldError, field: "device" },
-      ],
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "auth0") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     await renderScreen();
 
-    // General error should be displayed
-    expect(screen.getByText(generalError)).toBeInTheDocument();
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-
-    // Field-specific error should NOT be displayed in error alert
-    expect(screen.queryByText(fieldError)).not.toBeInTheDocument();
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 
   it("should handle empty devices list gracefully", async () => {

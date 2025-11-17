@@ -2,70 +2,14 @@
 
 This sample demonstrates how to build custom Auth0 Advanced Customizations for Universal Login (ACUL) screens using React, TypeScript, Tailwind CSS, and the **Auth0 ACUL React SDK**.
 
-## Overview
-
-This implementation includes 31 comprehensive authentication screens covering the complete authentication flow:
-
-### Login & Authentication (5 screens)
-
-- **Login**: Universal login screen
-- **Login ID**: Identifier-first login flow
-- **Login Password**: Password entry screen
-- **Login Passwordless Email Code**: Email code verification flow
-- **Login Passwordless SMS OTP**: SMS OTP verification flow
-
-### Signup & Registration (3 screens)
-
-- **Signup**: Universal signup screen
-- **Signup ID**: Identifier-first signup flow
-- **Signup Password**: Password signup screen
-
-### Password Reset (4 screens)
-
-- **Reset Password**: Password reset screen
-- **Reset Password Email**: Email-based password reset
-- **Reset Password Error**: Password reset error handling
-- **Reset Password Success**: Password reset confirmation
-
-### Multi-Factor Authentication (15 screens)
-
-- **MFA Begin Enroll Options**: MFA enrollment options selection
-- **MFA Country Codes**: Country code selection for phone-based MFA
-- **MFA Email Challenge**: Email-based MFA verification
-- **MFA Email List**: List of enrolled email addresses
-- **MFA Enroll Result**: MFA enrollment confirmation
-- **MFA Login Options**: MFA method selection at login
-- **MFA Push Challenge Push**: Push notification challenge
-- **MFA Push Enrollment QR**: QR code for push notification enrollment
-- **MFA Push List**: List of enrolled push devices
-- **MFA Push Welcome**: Push notification enrollment introduction
-- **MFA SMS Challenge**: SMS-based MFA verification
-- **MFA SMS Enrollment**: SMS MFA enrollment flow
-- **MFA SMS List**: List of enrolled phone numbers
-
-### Passkey & WebAuthn (2 screens)
-
-- **Passkey Enrollment**: Passkey enrollment flow
-- **Passkey Enrollment Local**: Local passkey enrollment
-
-### Identifier Management (2 screens)
-
-- **Email Identifier Challenge**: Email verification for identifier-first flow
-- **Phone Identifier Challenge**: Phone verification for identifier-first flow
-
 ## Quick Start
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development with mock data for any screen
-npm run screen login
-npm run screen login-id
-npm run screen signup
-npm run screen mfa-sms-challenge
-npm run screen passkey-enrollment
-# ... and 26 more screens
+# Start development server with context inspector
+npm run dev
 
 # Run tests
 npm test
@@ -76,6 +20,57 @@ npm run build
 # Serve built files locally for testing
 npx serve dist -p 8080 --cors
 ```
+
+## Development with Context Inspector
+
+The development server includes **ul-context-inspector** - a tool for local development without an Auth0 tenant.
+
+**What it does:**
+- Simulates Auth0's Universal Login context using local mock JSON files
+- Enables instant screen switching, variant testing, and context editing
+- Automatically removed from production builds
+
+**Development vs Production:**
+- **Development**: Uses local mocks from `public/screens/` (no Auth0 required)
+- **Production**: Uses real Auth0 context from `window.universal_login_context`
+
+### Adding Mock Data
+
+Create mock files in `public/screens/{prompt}/{screen}/`:
+
+```bash
+mkdir -p public/screens/login/login
+```
+
+Add `default.json` and `with-errors.json`:
+```json
+{
+  "screen": {
+    "name": "login",
+    "texts": { "pageTitle": "Log in | Auth0" }
+  },
+  "tenant": { "name": "your-tenant" }
+}
+```
+
+Register in `public/manifest.json`:
+```json
+{
+  "versions": ["v2", "v0"],
+  "screens": [
+    {
+      "login": {
+        "login": {
+          "path": "/screens/login/login",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    }
+  ]
+}
+```
+
+Restart `npm run dev` - the screen appears in the inspector automatically!
 
 ## Build Output
 
@@ -111,7 +106,7 @@ Each screen can be deployed independently for incremental rollouts.
 - **Auth0 Design System**: Implements Auth0's design language with theme support
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 - **CI/CD Ready**: GitHub Actions workflow for automated deployment
-- **Mock Data Support**: Develop and test without Auth0 tenant
+- **Development Tools**: Integrated context inspector for real-time Auth0 context visualization and manipulation
 
 ## Tech Stack
 
@@ -132,7 +127,6 @@ react/
 │   ├── hooks/            # React hooks for auth flows
 │   ├── utils/            # Helper utilities and theme engine
 │   ├── test/             # Test utilities and setup
-│   ├── mock-data/        # Mock data for development
 │   └── types/            # TypeScript definitions
 ├── .github/workflows/    # Deployment automation
 └── ...config files
@@ -140,7 +134,7 @@ react/
 
 ## Deployment
 
-This sample includes a GitHub Actions workflow for automated deployment to AWS S3. See [DEPLOYMENT.md](../DEPLOYMENT.md) for configuration details.
+This sample includes a GitHub Actions workflow for automated deployment to AWS S3. See [DEPLOYMENT.md](DEPLOYMENT.md) for complete setup instructions or [.github/GITHUB_ACTIONS.md](.github/GITHUB_ACTIONS.md) for workflow details.
 
 ## Documentation
 

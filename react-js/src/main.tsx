@@ -1,15 +1,16 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { loadAndSetMockContext } from "@/utils/screen/mockContextLoader";
-
 import "./index.css";
 
 import App from "./App.tsx";
 
-async function initializeApp() {
-  await loadAndSetMockContext();
+// Conditionally load inspector styles in dev mode
+if (import.meta.env.DEV) {
+  import("ul-context-inspector/style.css");
+}
 
+async function initializeApp() {
   /**
    * ACUL Integration Note:
    * The following lines handle the specific way this React application is integrated

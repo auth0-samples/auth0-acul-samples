@@ -18,6 +18,8 @@
  *
  */
 
+import { applyAuth0Font } from "./fontLoader";
+
 interface ColorData {
   primary_button?: string;
   primary_button_label?: string;
@@ -54,6 +56,7 @@ interface BorderData {
 
 interface FontData {
   reference_text_size?: number;
+  font_url?: string;
   title?: {
     size?: number;
     bold?: boolean;
@@ -255,6 +258,11 @@ export function flattenFonts(fonts: FontData): Record<string, string> {
   // Links style (normal/italic)
   if (fonts.links_style)
     result["--ul-theme-font-links-style"] = fonts.links_style;
+
+  // Process Dynamic Font family url via tenant settings (must be a woff2 or woff file)
+  if ((fonts as FontData).font_url) {
+    applyAuth0Font(fonts.font_url);
+  }
 
   return result;
 }

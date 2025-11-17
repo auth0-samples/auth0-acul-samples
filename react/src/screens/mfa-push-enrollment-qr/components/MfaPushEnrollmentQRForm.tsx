@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import type { CustomOptions, Error } from "@auth0/auth0-acul-react/types";
+import {
+  useErrors,
+  useMfaPolling,
+} from "@auth0/auth0-acul-react/mfa-push-enrollment-qr";
+import { type CustomOptions, ErrorItem } from "@auth0/auth0-acul-react/types";
 
 import { Form } from "@/components/ui/form";
 import { ULThemeButton } from "@/components/ULThemeButton";
@@ -10,40 +14,34 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { useMfaPushEnrollmentQRManager } from "../hooks/useMfaPushEnrollmentQRManager";
 
 function MfaPushEnrollmentQRForm() {
-  const {
-    data,
-    errors,
-    texts,
-    enrolledFactors,
-    handlePickAuthenticator,
-    useMfaPolling,
-  } = useMfaPushEnrollmentQRManager();
+  const { data, texts, locales, enrolledFactors, handlePickAuthenticator } =
+    useMfaPushEnrollmentQRManager();
 
   // Initialize the form using react-hook-form
   const form = useForm<CustomOptions>({});
   const { qrCode, qrUri, showCodeCopy } = data || {};
 
-  const copyAsCodeLinkText = texts?.copyCodeLinkText || "Copy as code";
+  // Use Locales as fallback to SDK texts
+  const copyAsCodeLinkText =
+    texts?.copyCodeLinkText || locales.form.copyCodeLinkText;
   const pickAuthenticatorText =
-    texts?.pickAuthenticatorText || "Try another method";
+    texts?.pickAuthenticatorText || locales.form.pickAuthenticatorText;
   const shouldShowTryAnotherMethod = enrolledFactors?.length
     ? enrolledFactors.length > 1
     : false;
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("auth0")
+    .filter((err) => !err.field);
 
   // Automatically start polling when the page loads
   const { startPolling, stopPolling } = useMfaPolling({
     intervalMs: 3000,
-    onCompleted: () => {
-      console.log("Push Enrollment accepted | declined");
-    },
-    onError: (error: unknown) => {
-      console.error("Push Enrollment Polling error:", error);
-    },
+    onError: (error: unknown) =>
+      console.error("Push Enrollment Polling error:", error),
   });
 
   const handleCopyAsCode = (event: React.MouseEvent) => {
@@ -64,11 +62,17 @@ function MfaPushEnrollmentQRForm() {
     <Form {...form}>
       <form>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
-                <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
+            {generalErrors.map((error: ErrorItem) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
+                <ULThemeAlertTitle>
+                  {error.message || locales.errors.errorOccurred}
+                </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
           </div>
@@ -79,7 +83,7 @@ function MfaPushEnrollmentQRForm() {
           <div className="flex justify-center">
             <img
               src={qrCode}
-              className="border-1 rounded-[3px] border-(--ul-theme-color-qrcode-border) w-41 h-41"
+              className="border rounded-[3px] border-(--ul-theme-color-qrcode-border) w-41 h-41"
             />
           </div>
           {/* Copy QR As Code Button */}

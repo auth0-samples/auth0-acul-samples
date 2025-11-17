@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 
+import { useErrors } from "@auth0/auth0-acul-react/mfa-sms-challenge";
 import type {
-  Error,
+  ErrorItem,
   MfaSmsChallengeOptions,
 } from "@auth0/auth0-acul-react/types";
 
@@ -14,13 +15,14 @@ import { Label } from "@/components/ui/label";
 import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeCheckbox } from "@/components/ULThemeCheckbox";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
-import { getFieldError } from "@/utils/helpers/errorUtils";
 
 import { useMfaSmsChallengeManager } from "../hooks/useMfaSmsChallengeManager";
 
 function MfaSmsChallengeForm() {
-  const { handleContinueMfaSmsChallenge, data, errors, texts } =
+  const { handleContinueMfaSmsChallenge, data, texts, locales } =
     useMfaSmsChallengeManager();
+
+  const { errors, hasError, dismiss } = useErrors();
 
   // Initialize the form using react-hook-form
   const form = useForm<MfaSmsChallengeOptions>({
@@ -34,18 +36,22 @@ function MfaSmsChallengeForm() {
     formState: { isSubmitting },
   } = form;
 
-  const buttonText = texts?.buttonText || "Continue";
-  const codeLabelText = texts?.placeholder || "Enter the 6-digit code";
+  const buttonText = texts?.buttonText || locales.form.button;
+  const codeLabelText = texts?.placeholder || locales.form.fields.code.label;
   const rememberDeviceText =
-    texts?.rememberMeText || "Remember this device for 30 days";
+    texts?.rememberMeText || locales.form.rememberDevice;
 
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
+  // Get field-specific errors using SDK's errors helper
+  const codeSDKError = errors.byField("code")[0]?.message;
 
-  const codeSDKError = getFieldError("code", errors);
-  const maskedPhoneNumber = data?.phoneNumber || "XXXXXXXXX";
+  // Get general errors (errors without a specific field)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("auth0")
+    .filter((err) => !err.field);
+
+  const maskedPhoneNumber =
+    data?.phoneNumber || locales.form.fields.phoneNumber.fallback;
+  const phoneNumberLabel = locales.form.fields.phoneNumber.label;
 
   const onSubmit = async (formData: MfaSmsChallengeOptions) => {
     await handleContinueMfaSmsChallenge(formData.code, formData.rememberDevice);
@@ -55,10 +61,14 @@ function MfaSmsChallengeForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* General error messages */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index}>
+            {generalErrors.map((error: ErrorItem) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>{error.message}</ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -68,7 +78,7 @@ function MfaSmsChallengeForm() {
         {/* Disabled phone number display */}
         <ULThemeFloatingLabelField
           name="phoneNumber"
-          label="Phone Number"
+          label={phoneNumberLabel}
           value={maskedPhoneNumber}
           disabled
         />
@@ -78,7 +88,7 @@ function MfaSmsChallengeForm() {
           control={form.control}
           name="code"
           rules={{
-            required: "Please enter the verification code.",
+            required: locales.form.fields.code.required,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -132,7 +142,7 @@ function MfaSmsChallengeForm() {
           className="w-full"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Verifying..." : buttonText}
+          {isSubmitting ? locales.form.buttonSubmitting : buttonText}
         </ULThemeButton>
       </form>
     </Form>

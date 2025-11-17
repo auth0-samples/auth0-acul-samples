@@ -5,18 +5,18 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useLoginPasswordlessEmailCodeManager } from "../hooks/useLoginPasswordlessEmailCodeManager";
 
 function Header() {
-  const { texts } = useLoginPasswordlessEmailCodeManager();
+  const { texts, locales } = useLoginPasswordlessEmailCodeManager();
 
-  // Handle text fallbacks in component
-  const logoAltText = texts?.logoAltText || "Application Logo";
+  // Use locales as fallback for SDK texts
+  const titleText = texts?.title || locales.heading.title;
+  const descriptionText = texts?.description || locales.heading.description;
+  const logoAltText = texts?.logoAltText || locales.heading.logoAltText;
 
   return (
     <>
       <ULThemeLogo altText={logoAltText}></ULThemeLogo>
-      <ULThemeTitle>{texts?.title || "Verify Your Identity"}</ULThemeTitle>
-      <ULThemeSubtitle className="mb-6">
-        {texts?.description || "We've sent an email with your code to:"}
-      </ULThemeSubtitle>
+      <ULThemeTitle>{titleText}</ULThemeTitle>
+      <ULThemeSubtitle className="mb-6">{descriptionText}</ULThemeSubtitle>
     </>
   );
 }

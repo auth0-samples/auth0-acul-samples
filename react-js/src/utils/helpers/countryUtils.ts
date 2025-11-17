@@ -255,7 +255,6 @@ const COUNTRY_DATA: Record<string, { name: string; flag: string }> = {
 
 /**
  * Auth0 SDK country code structure from TransactionMembersOnLoginId
- * Based on: https://auth0.github.io/universal-login/interfaces/Classes.TransactionMembersOnLoginId.html
  */
 export interface Auth0CountryCode {
   code: string; // Country code like "IN", "US"

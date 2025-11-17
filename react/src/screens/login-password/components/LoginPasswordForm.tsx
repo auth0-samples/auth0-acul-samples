@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 
+import { useErrors } from "@auth0/auth0-acul-react/login-password";
 import type {
-  Error,
+  ErrorItem,
   LoginPasswordOptions,
 } from "@auth0/auth0-acul-react/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -13,20 +14,20 @@ import { ULThemeButton } from "@/components/ULThemeButton";
 import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
-import { getFieldError } from "@/utils/helpers/errorUtils";
+import { useCaptcha } from "@/hooks/useCaptcha";
 
 import { useLoginPasswordManager } from "../hooks/useLoginPasswordManager";
 
 function LoginPasswordForm() {
   const {
     texts,
+    locales,
     data,
-    errors,
-    isCaptchaAvailable,
-    captchaImage,
+    captcha,
     editIdentifierLink,
     resetPasswordLink,
     passwordPolicy,
+    isCaptchaAvailable,
     handleLoginPassword,
   } = useLoginPasswordManager();
 
@@ -43,34 +44,57 @@ function LoginPasswordForm() {
     formState: { isSubmitting },
   } = form;
 
+  // Use locales as fallback to SDK texts
+  const captchaLabel = texts?.captchaCodePlaceholder
+    ? `${texts.captchaCodePlaceholder}*`
+    : locales?.loginPasswordForm?.captchaLabel;
+  const passwordLabel =
+    texts?.passwordPlaceholder || locales?.loginPasswordForm?.passwordLabel;
+  const forgotPasswordLinkText =
+    texts?.forgotPasswordText ||
+    locales?.loginPasswordForm?.forgotPasswordLinkText;
+  const continueButtonText =
+    texts?.buttonText || locales?.loginPasswordForm?.continueButtonText;
+
+  const { captchaConfig, captchaProps, captchaValue } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
+
+  const { errors, hasError, dismiss } = useErrors();
+
+  // Get field-specific SDK errors
+  const passwordSDKError = errors.byField("password")[0]?.message;
+  const captchaSDKError = errors.byField("captcha")[0]?.message;
+
+  // Get general errors (not field-specific)
+  const generalErrors: ErrorItem[] = errors
+    .byKind("auth0")
+    .filter((err) => !err.field);
+
   // Proper submit handler with form data
   const onSubmit = async (data: LoginPasswordOptions) => {
     await handleLoginPassword({
       username: data.username,
       password: data.password,
-      ...(isCaptchaAvailable && data.captcha && { captcha: data.captcha }),
+      captcha: isCaptchaAvailable && captchaValue ? captchaValue : undefined,
     });
   };
-
-  // Extract field-specific errors for password, and CAPTCHA
-  const passwordSDKError = getFieldError("password", errors || []);
-  const captchaSDKError = getFieldError("captcha", errors || []);
-
-  // Extract general errors (not field-specific) from the SDK
-  const generalErrors =
-    errors?.filter((error: Error) => !error.field || error.field === null) ||
-    [];
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* Display general errors */}
-        {generalErrors.length > 0 && (
+        {hasError && generalErrors.length > 0 && (
           <div className="space-y-3 mb-4">
-            {generalErrors.map((error: Error, index: number) => (
-              <ULThemeAlert key={index} variant="destructive">
+            {generalErrors.map((error) => (
+              <ULThemeAlert
+                key={error.id}
+                variant="destructive"
+                onDismiss={() => dismiss(error.id)}
+              >
                 <ULThemeAlertTitle>
-                  {error.message || "An error occurred"}
+                  {error.message || locales?.errors?.errorOccurred}
                 </ULThemeAlertTitle>
               </ULThemeAlert>
             ))}
@@ -91,10 +115,11 @@ function LoginPasswordForm() {
                 readOnly={true}
                 endAdornment={
                   <ULThemeLink href={editIdentifierLink || ""}>
-                    {texts?.editEmailText || "Edit"}
+                    {texts?.editEmailText ||
+                      locales?.loginPasswordForm?.editText}
                   </ULThemeLink>
                 }
-                className="pr-[16px]"
+                className="pr-4"
               />
               <ULThemeFormMessage hasFormError={!!fieldState.error} />
             </FormItem>
@@ -106,15 +131,15 @@ function LoginPasswordForm() {
           control={form.control}
           name="password"
           rules={{
-            required: "Password is required",
+            required: locales?.errors?.passwordRequired,
             maxLength: {
               value: 200,
-              message: "Maximum 200 characters allowed",
+              message: locales?.errors?.max200CharsAllowed,
             },
             minLength: passwordPolicy?.minLength
               ? {
                   value: passwordPolicy.minLength,
-                  message: `Password must be at least ${passwordPolicy.minLength} characters`,
+                  message: `${locales?.errors?.passwordMinLength} ${passwordPolicy.minLength} ${locales?.errors?.charactersText}`,
                 }
               : undefined,
           }}
@@ -122,7 +147,7 @@ function LoginPasswordForm() {
             <FormItem>
               <ULThemePasswordField
                 {...field}
-                label={texts?.passwordPlaceholder || "Password"}
+                label={passwordLabel}
                 autoFocus={true}
                 autoComplete="current-password"
                 error={!!fieldState.error || !!passwordSDKError}
@@ -135,25 +160,19 @@ function LoginPasswordForm() {
           )}
         />
 
-        {/* CAPTCHA Box */}
-        {isCaptchaAvailable && captchaImage && (
+        {/* Captcha Field */}
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
-            name="captcha"
             control={form.control}
-            label={
-              texts?.captchaCodePlaceholder
-                ? `${texts.captchaCodePlaceholder}*`
-                : "Enter the code shown above*"
-            }
-            imageUrl={captchaImage}
-            imageAltText={"CAPTCHA challenge"}
-            className="mb-4"
+            name="captcha"
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales?.errors?.captchaCompletionRequired,
               maxLength: {
                 value: 15,
-                message: "CAPTCHA too long",
+                message: locales?.errors?.captchaTooLong,
               },
             }}
           />
@@ -162,13 +181,13 @@ function LoginPasswordForm() {
         {resetPasswordLink && (
           <div className="mb-4 mt-2 text-left">
             <ULThemeLink href={resetPasswordLink}>
-              {texts?.forgotPasswordText || "Forgot password?"}
+              {forgotPasswordLinkText}
             </ULThemeLink>
           </div>
         )}
 
         <ULThemeButton type="submit" className="w-full" disabled={isSubmitting}>
-          {texts?.buttonText || "Continue"}
+          {continueButtonText}
         </ULThemeButton>
       </form>
     </Form>

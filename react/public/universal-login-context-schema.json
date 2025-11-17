@@ -1,0 +1,1489 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Acul.UniversalLoginContext",
+  "definitions": {
+    "Acul.UniversalLoginContext": {
+      "type": "object",
+      "properties": {
+        "branding": {
+          "type": "object",
+          "properties": {
+            "settings": {
+              "$ref": "#/definitions/Acul.BrandingSettings"
+            },
+            "themes": {
+              "type": "object",
+              "properties": {
+                "default": {
+                  "$ref": "#/definitions/Acul.DefaultTheme"
+                }
+              },
+              "required": [
+                "default"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "client": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "logo_uri": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "organization": {
+          "type": "object",
+          "properties": {
+            "branding": {
+              "$ref": "#/definitions/Acul.OrganizationBranding"
+            },
+            "display_name": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "name": {
+              "type": "string"
+            },
+            "usage": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name",
+            "usage"
+          ],
+          "additionalProperties": false
+        },
+        "prompt": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "screen": {
+          "type": "object",
+          "properties": {
+            "links": {
+              "$ref": "#/definitions/Acul.ScreenLinks"
+            },
+            "name": {
+              "type": "string"
+            },
+            "texts": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "captcha": {
+              "$ref": "#/definitions/Acul.Captcha"
+            },
+            "data": {
+              "$ref": "#/definitions/Acul.ScreenData"
+            }
+          },
+          "additionalProperties": false
+        },
+        "tenant": {
+          "type": "object",
+          "properties": {
+            "enabled_locales": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "enabled_factors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "friendly_name": {
+              "type": "string"
+            },
+            "logo_url": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "mfa_options": {
+              "type": "object",
+              "properties": {
+                "pick_authenticator_enabled": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "transaction": {
+          "type": "object",
+          "properties": {
+            "country_code": {
+              "$ref": "#/definitions/Acul.CountryCode"
+            },
+            "locale": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "locale_dir": {
+              "type": "string"
+            },
+            "connection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/Acul.DbConnection"
+                },
+                {
+                  "$ref": "#/definitions/Acul.PasswordlessConnection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "errors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Acul.Error"
+              }
+            },
+            "user_exists": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "custom_domain": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "domain_metadata": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "untrusted_data": {
+          "$ref": "#/definitions/Acul.UntrustedData"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "picture": {
+              "type": "string"
+            },
+            "enrolled_emails": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Acul.ShortEntity_email"
+              }
+            },
+            "enrolled_factors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "enrolled_phone_numbers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Acul.ShortEntity_phoneNumber"
+              }
+            },
+            "enrolled_devices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Acul.ShortEntity_device"
+              }
+            },
+            "user_metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "app_metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "organizations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Entities.Organization"
+              }
+            }
+          },
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Acul.BrandingSettings": {
+      "type": "object",
+      "properties": {
+        "colors": {
+          "type": "object",
+          "properties": {
+            "page_background": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "angle_deg": {
+                      "type": "number"
+                    },
+                    "end": {
+                      "type": "string"
+                    },
+                    "start": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "angle_deg",
+                    "end",
+                    "start",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "primary": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "favicon_url": {
+          "type": "string"
+        },
+        "font": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        "logo_url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Acul.DefaultTheme": {
+      "type": "object",
+      "properties": {
+        "colors": {
+          "type": "object",
+          "properties": {
+            "primary_button": {
+              "type": "string"
+            },
+            "primary_button_label": {
+              "type": "string"
+            },
+            "secondary_button_border": {
+              "type": "string"
+            },
+            "secondary_button_label": {
+              "type": "string"
+            },
+            "base_focus_color": {
+              "type": "string"
+            },
+            "base_hover_color": {
+              "type": "string"
+            },
+            "links_focused_components": {
+              "type": "string"
+            },
+            "header": {
+              "type": "string"
+            },
+            "body_text": {
+              "type": "string"
+            },
+            "widget_background": {
+              "type": "string"
+            },
+            "widget_border": {
+              "type": "string"
+            },
+            "input_labels_placeholders": {
+              "type": "string"
+            },
+            "input_filled_text": {
+              "type": "string"
+            },
+            "input_border": {
+              "type": "string"
+            },
+            "input_background": {
+              "type": "string"
+            },
+            "icons": {
+              "type": "string"
+            },
+            "error": {
+              "type": "string"
+            },
+            "success": {
+              "type": "string"
+            },
+            "captcha_widget_theme": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "primary_button",
+            "primary_button_label",
+            "secondary_button_border",
+            "secondary_button_label",
+            "base_focus_color",
+            "base_hover_color",
+            "links_focused_components",
+            "header",
+            "body_text",
+            "widget_background",
+            "widget_border",
+            "input_labels_placeholders",
+            "input_filled_text",
+            "input_border",
+            "input_background",
+            "icons",
+            "error",
+            "success",
+            "captcha_widget_theme"
+          ],
+          "additionalProperties": false
+        },
+        "fonts": {
+          "type": "object",
+          "properties": {
+            "font_url": {
+              "type": "string"
+            },
+            "reference_text_size": {
+              "type": "number"
+            },
+            "title": {
+              "type": "object",
+              "properties": {
+                "bold": {
+                  "type": "boolean"
+                },
+                "size": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "bold",
+                "size"
+              ],
+              "additionalProperties": false
+            },
+            "subtitle": {
+              "type": "object",
+              "properties": {
+                "bold": {
+                  "type": "boolean"
+                },
+                "size": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "bold",
+                "size"
+              ],
+              "additionalProperties": false
+            },
+            "body_text": {
+              "type": "object",
+              "properties": {
+                "bold": {
+                  "type": "boolean"
+                },
+                "size": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "bold",
+                "size"
+              ],
+              "additionalProperties": false
+            },
+            "buttons_text": {
+              "type": "object",
+              "properties": {
+                "bold": {
+                  "type": "boolean"
+                },
+                "size": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "bold",
+                "size"
+              ],
+              "additionalProperties": false
+            },
+            "input_labels": {
+              "type": "object",
+              "properties": {
+                "bold": {
+                  "type": "boolean"
+                },
+                "size": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "bold",
+                "size"
+              ],
+              "additionalProperties": false
+            },
+            "links": {
+              "type": "object",
+              "properties": {
+                "bold": {
+                  "type": "boolean"
+                },
+                "size": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "bold",
+                "size"
+              ],
+              "additionalProperties": false
+            },
+            "links_style": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "font_url",
+            "reference_text_size",
+            "links_style"
+          ],
+          "additionalProperties": false
+        },
+        "borders": {
+          "type": "object",
+          "properties": {
+            "button_border_weight": {
+              "type": "number"
+            },
+            "buttons_style": {
+              "type": "string"
+            },
+            "button_border_radius": {
+              "type": "number"
+            },
+            "input_border_weight": {
+              "type": "number"
+            },
+            "inputs_style": {
+              "type": "string"
+            },
+            "input_border_radius": {
+              "type": "number"
+            },
+            "widget_corner_radius": {
+              "type": "number"
+            },
+            "widget_border_weight": {
+              "type": "number"
+            },
+            "show_widget_shadow": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "button_border_weight",
+            "buttons_style",
+            "button_border_radius",
+            "input_border_weight",
+            "inputs_style",
+            "input_border_radius",
+            "widget_corner_radius",
+            "widget_border_weight",
+            "show_widget_shadow"
+          ],
+          "additionalProperties": false
+        },
+        "widget": {
+          "type": "object",
+          "properties": {
+            "logo_position": {
+              "type": "string"
+            },
+            "logo_url": {
+              "type": "string"
+            },
+            "logo_height": {
+              "type": "number"
+            },
+            "header_text_alignment": {
+              "type": "string"
+            },
+            "social_buttons_layout": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "logo_position",
+            "logo_url",
+            "logo_height",
+            "header_text_alignment",
+            "social_buttons_layout"
+          ],
+          "additionalProperties": false
+        },
+        "page_background": {
+          "type": "object",
+          "properties": {
+            "page_layout": {
+              "type": "string"
+            },
+            "background_color": {
+              "type": "string"
+            },
+            "background_image_url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "page_layout",
+            "background_color",
+            "background_image_url"
+          ],
+          "additionalProperties": false
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "displayName"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.OrganizationBranding": {
+      "type": "object",
+      "properties": {
+        "colors": {
+          "type": "object",
+          "properties": {
+            "page_background": {
+              "type": "string"
+            },
+            "primary": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "logo_url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Acul.ScreenLinks": {
+      "type": "object",
+      "properties": {
+        "edit_identifier": {
+          "type": "string"
+        },
+        "login": {
+          "type": "string"
+        },
+        "reset_password": {
+          "type": "string"
+        },
+        "signup": {
+          "type": "string"
+        },
+        "back_button": {
+          "type": "string"
+        },
+        "back_to_app": {
+          "type": "string"
+        },
+        "ios": {
+          "type": "string"
+        },
+        "android": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Acul.Captcha": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "siteKey": {
+          "type": "string"
+        },
+        "clientSubdomain": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.ScreenData": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        },
+        "message_type": {
+          "type": "string"
+        },
+        "show_link_voice": {
+          "type": "boolean"
+        },
+        "show_link_sms": {
+          "type": "boolean"
+        },
+        "show_remember_device": {
+          "type": "boolean"
+        },
+        "phone_prefixes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Acul.PhonePrefix"
+          }
+        },
+        "hideScopes": {
+          "type": "boolean"
+        },
+        "hiddenFields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "errorType": {
+          "type": "string"
+        },
+        "webauthnType": {
+          "type": "string"
+        },
+        "authorization_details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Acul.AuthorizationDetails"
+          }
+        },
+        "device_name": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "qr_code": {
+          "type": "string"
+        },
+        "qr_uri": {
+          "type": "string"
+        },
+        "show_code_copy": {
+          "type": "boolean"
+        },
+        "resendLimitReached": {
+          "type": "boolean"
+        },
+        "text_code": {
+          "type": "string"
+        },
+        "inviter": {
+          "type": "string"
+        },
+        "passkey": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Acul.PasskeyCreate"
+            },
+            {
+              "$ref": "#/definitions/Acul.PasskeyRead"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Acul.PhonePrefix": {
+      "type": "object",
+      "properties": {
+        "country": {
+          "type": "string"
+        },
+        "country_code": {
+          "type": "string"
+        },
+        "phone_prefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "country",
+        "country_code",
+        "phone_prefix"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.AuthorizationDetails": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "Acul.PasskeyCreate": {
+      "type": "object",
+      "properties": {
+        "public_key": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "displayName"
+              ],
+              "additionalProperties": false
+            },
+            "rp": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ],
+              "additionalProperties": false
+            },
+            "challenge": {
+              "type": "string"
+            },
+            "pubKeyCredParams": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "alg": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "alg"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "authenticatorSelection": {
+              "type": "object",
+              "properties": {
+                "residentKey": {
+                  "type": "string"
+                },
+                "userVerification": {
+                  "type": "string"
+                },
+                "authenticatorAttachment": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "residentKey",
+                "userVerification"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "user",
+            "rp",
+            "challenge",
+            "pubKeyCredParams",
+            "authenticatorSelection"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "public_key"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.PasskeyRead": {
+      "type": "object",
+      "properties": {
+        "public_key": {
+          "type": "object",
+          "properties": {
+            "challenge": {
+              "type": "string"
+            },
+            "allowCredentials": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "transports": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "id",
+                  "transports"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "challenge"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "public_key"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.CountryCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "prefix",
+        "country"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.DbConnection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "signup_enabled": {
+              "type": "boolean"
+            },
+            "username_required": {
+              "type": "boolean"
+            },
+            "forgot_password_enabled": {
+              "type": "boolean"
+            },
+            "attributes": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "object",
+                  "properties": {
+                    "signup_status": {
+                      "type": "string"
+                    },
+                    "identifier_active": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "signup_status"
+                  ],
+                  "additionalProperties": false
+                },
+                "username": {
+                  "type": "object",
+                  "properties": {
+                    "signup_status": {
+                      "type": "string"
+                    },
+                    "identifier_active": {
+                      "type": "boolean"
+                    },
+                    "validation": {
+                      "type": "object",
+                      "properties": {
+                        "max_length": {
+                          "type": "number"
+                        },
+                        "min_length": {
+                          "type": "number"
+                        },
+                        "allowed_types": {
+                          "type": "object",
+                          "properties": {
+                            "email": {
+                              "type": "boolean"
+                            },
+                            "phone_number": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "email",
+                            "phone_number"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "max_length",
+                        "min_length",
+                        "allowed_types"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "signup_status"
+                  ],
+                  "additionalProperties": false
+                },
+                "phone": {
+                  "type": "object",
+                  "properties": {
+                    "signup_status": {
+                      "type": "string"
+                    },
+                    "identifier_active": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "signup_status"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "authentication_methods": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "policy": {
+                      "type": "string"
+                    },
+                    "min_length": {
+                      "type": "number"
+                    },
+                    "password_security_info": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Acul.PasswordComplexityRule"
+                      }
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "policy",
+                    "min_length",
+                    "password_security_info"
+                  ],
+                  "additionalProperties": false
+                },
+                "passkey": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "enabled"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "password",
+                "passkey"
+              ],
+              "additionalProperties": false
+            },
+            "validation": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "object",
+                  "properties": {
+                    "min_length": {
+                      "type": "number"
+                    },
+                    "max_length": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "min_length",
+                    "max_length"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "username"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "signup_enabled",
+            "forgot_password_enabled",
+            "attributes",
+            "authentication_methods"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "metadata",
+        "name",
+        "options",
+        "strategy"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.PasswordComplexityRule": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "args": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "total": {
+              "type": "number"
+            },
+            "example": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "count"
+          ],
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Acul.PasswordComplexityRule"
+          }
+        }
+      },
+      "required": [
+        "code",
+        "label",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.PasswordlessConnection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "signup_enabled": {
+              "$ref": "#/definitions/Boolean"
+            }
+          },
+          "required": [
+            "signup_enabled"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "metadata",
+        "name",
+        "options",
+        "strategy"
+      ],
+      "additionalProperties": false
+    },
+    "Boolean": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "Acul.Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "field": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.UntrustedData": {
+      "type": "object",
+      "properties": {
+        "submitted_form_data": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "authorization_params": {
+          "type": "object",
+          "properties": {
+            "login_hint": {
+              "type": "string"
+            },
+            "screen_hint": {
+              "type": "string"
+            },
+            "ui_locales": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Entities.Organization": {
+      "type": "object",
+      "properties": {
+        "tenant": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "metadata": {},
+        "branding": {},
+        "enabled_connections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Entities.EnabledConnection"
+          }
+        },
+        "token_quota": {
+          "$ref": "#/definitions/TokenQuota.Configuration"
+        }
+      },
+      "required": [
+        "tenant",
+        "id",
+        "name",
+        "metadata",
+        "branding"
+      ],
+      "additionalProperties": false
+    },
+    "Entities.EnabledConnection": {
+      "type": "object",
+      "properties": {
+        "connection_id": {
+          "type": "string"
+        },
+        "assign_membership_on_login": {
+          "type": "boolean"
+        },
+        "isVisible": {
+          "type": "boolean"
+        },
+        "isSignupEnabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "connection_id",
+        "assign_membership_on_login",
+        "isVisible",
+        "isSignupEnabled"
+      ],
+      "additionalProperties": false
+    },
+    "TokenQuota.Configuration": {
+      "type": "object",
+      "properties": {
+        "client_credentials": {
+          "type": "object",
+          "properties": {
+            "enforce": {
+              "type": "boolean"
+            },
+            "per_hour": {
+              "type": "number"
+            },
+            "per_day": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "client_credentials"
+      ],
+      "additionalProperties": false
+    },
+    "Acul.ShortEntity_email": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "email",
+        "id"
+      ]
+    },
+    "Acul.ShortEntity_phoneNumber": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "phoneNumber": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "phoneNumber"
+      ]
+    },
+    "Acul.ShortEntity_device": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "device": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "device",
+        "id"
+      ]
+    }
+  },
+  "info": {
+    "version": "v0"
+  }
+}

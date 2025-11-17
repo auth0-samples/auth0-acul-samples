@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 
-import type { Error, LoginOptions } from "@auth0/auth0-acul-js/login";
+import type { Error, LoginPayloadOptions } from "@auth0/auth0-acul-js/types";
 
-import Captcha from "@/components/Captcha";
+import Captcha from "@/components/Captcha/index";
 import { ULThemeFloatingLabelField } from "@/components/form/ULThemeFloatingLabelField";
 import { ULThemeFormMessage } from "@/components/form/ULThemeFormMessage";
 import { Form, FormField, FormItem } from "@/components/ui/form";
@@ -10,26 +10,17 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import ULThemeLink from "@/components/ULThemeLink";
 import { ULThemePasswordField } from "@/components/ULThemePasswordField";
 import { ULThemePrimaryButton } from "@/components/ULThemePrimaryButton";
+import { useCaptcha } from "@/hooks/useCaptcha";
 import { getFieldError } from "@/utils/helpers/errorUtils";
 import { getIdentifierDetails } from "@/utils/helpers/identifierUtils";
-import { rebaseLinkToCurrentOrigin } from "@/utils/helpers/urlUtils";
 
 import { useLoginManager } from "../hooks/useLoginManager";
 
 function LoginForm() {
-  const {
-    handleLogin,
-    errors,
-    isCaptchaAvailable,
-    captchaImage,
-    resetPasswordLink,
-    isForgotPasswordEnabled,
-    texts,
-    allowedIdentifiers,
-    passwordPolicy,
-  } = useLoginManager();
+  const { handleLogin, screen, transaction, loginInstance, locales } =
+    useLoginManager();
 
-  const form = useForm<LoginOptions>({
+  const form = useForm<LoginPayloadOptions>({
     defaultValues: {
       username: "",
       password: "",
@@ -41,26 +32,33 @@ function LoginForm() {
     formState: { isSubmitting },
   } = form;
 
-  // Handle text fallbacks in component
-  const buttonText = texts?.buttonText || "Continue";
+  // Destructure from screen and transaction
+  const { texts, isCaptchaAvailable, captcha, resetPasswordLink } = screen;
+  const { isForgotPasswordEnabled, passwordPolicy } = transaction;
+
+  // Get computed values from SDK instance
+  const errors = loginInstance.getErrors();
+  const loginIdentifiers = loginInstance.getLoginIdentifiers() || [];
+
+  // Handle text fallbacks using locales
+  const buttonText = texts?.buttonText || locales.form.button;
   const captchaLabel = texts?.captchaCodePlaceholder
     ? `${texts.captchaCodePlaceholder}*`
-    : "CAPTCHA*";
-  const captchaImageAlt = "CAPTCHA challenge"; // Default fallback
-  const forgotPasswordText = texts?.forgotPasswordText || "Forgot Password?";
+    : `${locales.form.fields.captcha.label}*`;
+  const forgotPasswordText =
+    texts?.forgotPasswordText || locales.form.forgotPassword;
 
   // Use getIdentifierDetails pattern for username label
   const {
     label: usernameLabel,
     type: usernameType,
     autoComplete: usernameAutoComplete,
-  } = getIdentifierDetails(allowedIdentifiers, texts);
+  } = getIdentifierDetails(loginIdentifiers, texts);
 
   const passwordLabel = texts?.passwordPlaceholder
     ? `${texts.passwordPlaceholder}*`
-    : "Password*";
+    : `${locales.form.fields.password.label}*`;
 
-  // Password visibility toggle
   const generalErrors =
     errors?.filter((error: Error) => !error.field || error.field === null) ||
     [];
@@ -71,13 +69,16 @@ function LoginForm() {
   const passwordSDKError = getFieldError("password", errors);
   const captchaSDKError = getFieldError("captcha", errors);
 
-  // Proper submit handler with form data
-  const onSubmit = async (data: LoginOptions) => {
-    await handleLogin(data.username, data.password, data.captcha);
-  };
+  // Setup captcha with useCaptcha hook
+  const { captchaConfig, captchaProps } = useCaptcha(
+    captcha || undefined,
+    captchaLabel
+  );
 
-  const localizedResetPasswordLink =
-    resetPasswordLink && rebaseLinkToCurrentOrigin(resetPasswordLink);
+  // Proper submit handler with form data
+  const onSubmit = async (data: LoginPayloadOptions): Promise<void> => {
+    await handleLogin(data);
+  };
 
   return (
     <Form {...form}>
@@ -98,11 +99,7 @@ function LoginForm() {
           control={form.control}
           name="username"
           rules={{
-            required: "This field is required",
-            maxLength: {
-              value: 100,
-              message: "Maximum 100 characters allowed",
-            },
+            required: locales.form.fields.username.required,
           }}
           render={({ field, fieldState }) => (
             <FormItem>
@@ -127,15 +124,14 @@ function LoginForm() {
           control={form.control}
           name="password"
           rules={{
-            required: "Password is required",
-            maxLength: {
-              value: 200,
-              message: "Maximum 200 characters allowed",
-            },
+            required: locales.form.fields.password.required,
             minLength: passwordPolicy?.minLength
               ? {
                   value: passwordPolicy.minLength,
-                  message: `Password must be at least ${passwordPolicy.minLength} characters`,
+                  message: locales.form.fields.password.minLength.replace(
+                    "{minLength}",
+                    String(passwordPolicy.minLength)
+                  ),
                 }
               : undefined,
           }}
@@ -156,28 +152,27 @@ function LoginForm() {
         />
 
         {/* CAPTCHA Box */}
-        {isCaptchaAvailable && (
+        {isCaptchaAvailable && captchaConfig && (
           <Captcha
             control={form.control}
             name="captcha"
-            label={captchaLabel}
-            imageUrl={captchaImage || ""}
-            imageAltText={captchaImageAlt}
+            captcha={captchaConfig}
+            {...captchaProps}
             sdkError={captchaSDKError}
             rules={{
-              required: "Please complete the CAPTCHA",
+              required: locales.form.fields.captcha.required,
             }}
           />
         )}
 
         {/* Forgot Password link */}
-        <div className="text-left">
-          {isForgotPasswordEnabled && localizedResetPasswordLink && (
-            <ULThemeLink href={localizedResetPasswordLink}>
+        {isForgotPasswordEnabled && resetPasswordLink && (
+          <div className="mb-4 mt-2 text-left">
+            <ULThemeLink href={resetPasswordLink}>
               {forgotPasswordText}
             </ULThemeLink>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Submit button */}
         <ULThemePrimaryButton

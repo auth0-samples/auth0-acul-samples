@@ -1,24 +1,24 @@
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 
-import { useCurrentScreen } from "@auth0/auth0-acul-react";
+/**
+ * Main App Component
+ * Conditionally loads DevScreenManager or ProdScreenManager based on environment
+ * Uses React.lazy() for optimal code splitting and tree-shaking
+ */
 
-import { getScreenComponent } from "@/utils/screen/screenLoader";
+// Conditionally lazy-load the appropriate screen manager
+const ScreenManager = lazy(() => {
+  if (import.meta.env.DEV) {
+    return import("./DevScreenManager");
+  } else {
+    return import("./ProdScreenManager");
+  }
+});
 
-const App = () => {
-  const screenOptions = useCurrentScreen();
-  const screenName = screenOptions?.screen?.name;
-
-  const ScreenComponent = getScreenComponent(screenName);
-
+export default function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {ScreenComponent ? (
-        <ScreenComponent />
-      ) : (
-        <div>Screen &quot;{screenName}&quot; not implemented yet</div>
-      )}
+      <ScreenManager />
     </Suspense>
   );
-};
-
-export default App;
+}

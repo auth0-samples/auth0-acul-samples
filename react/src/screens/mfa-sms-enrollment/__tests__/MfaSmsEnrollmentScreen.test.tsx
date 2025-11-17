@@ -2,8 +2,8 @@
 import {
   continueEnrollment,
   pickCountryCode,
+  useErrors,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/mfa-sms-enrollment";
 import { render, screen, waitFor } from "@testing-library/react";
 
@@ -30,9 +30,11 @@ describe("MfaSmsEnrollmentScreen", () => {
 
     // Verify form fields are present
     expect(
-      screen.getByLabelText(/enter your phone number\*/i)
+      screen.getByLabelText(/enter your phone number/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/select country/i)).toBeInTheDocument(); // Country picker
+
+    // Country picker shows selected country from mock (US +1)
+    expect(screen.getByText(/united states/i)).toBeInTheDocument();
   });
 
   it("should set document title correctly", () => {
@@ -57,8 +59,9 @@ describe("MfaSmsEnrollmentScreen", () => {
 
   it("should successfully submit form with valid phone number", async () => {
     render(<MfaSmsEnrollmentScreen />);
-    await ScreenTestUtils.fillInput(/enter your phone number\*/i, "1234567890");
+    await ScreenTestUtils.fillInput(/enter your phone number/i, "1234567890");
     await ScreenTestUtils.clickButton(/continue/i);
+
     await waitFor(() => {
       expect(continueEnrollment).toHaveBeenCalledWith({
         phone: "1234567890",
@@ -69,32 +72,34 @@ describe("MfaSmsEnrollmentScreen", () => {
   it("should handle country code picker interaction", async () => {
     render(<MfaSmsEnrollmentScreen />);
 
-    await ScreenTestUtils.clickButton(/select country/i);
+    // Click on the country picker button (shows "United States" from mock)
+    await ScreenTestUtils.clickButton(/united states/i);
+
     await waitFor(() => {
       expect(pickCountryCode).toHaveBeenCalledWith({});
     });
   });
 
   it("should display API errors when enrollment fails", () => {
-    const mockUseTransaction = useTransaction as jest.Mock;
-    const originalMock = mockUseTransaction();
+    const mockUseErrors = useErrors as jest.Mock;
 
-    mockUseTransaction.mockReturnValue({
-      ...originalMock,
-      hasErrors: true,
-      errors: [
-        { message: "Phone number is already enrolled", field: "phone" },
-        { message: "Invalid phone number format", field: "phone" },
-        { message: "Network connection failed" },
-      ],
+    // Mock useErrors to return errors
+    mockUseErrors.mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn(() => [
+          { id: "1", message: "Network connection failed" },
+        ]),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     render(<MfaSmsEnrollmentScreen />);
 
-    // Should display all general error messages (field-specific errors are handled by form validation)
+    // Should display general error messages
     expect(screen.getByText(/network connection failed/i)).toBeInTheDocument();
-    // Note: Field-specific errors like "phone number is already enrolled" would be displayed
-    // in the form field error area, not as general alerts
   });
 
   it("should set fallback title when texts is missing", () => {
@@ -108,7 +113,7 @@ describe("MfaSmsEnrollmentScreen", () => {
 
     render(<MfaSmsEnrollmentScreen />);
 
-    // Should use fallback title
+    // Should use fallback title from locales
     expect(document.title).toBe("Secure Your Account - MFA");
   });
 });

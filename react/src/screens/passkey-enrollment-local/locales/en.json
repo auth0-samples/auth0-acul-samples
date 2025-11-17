@@ -1,0 +1,24 @@
+{
+    "page": {
+        "title": "Create Passkey"
+    },
+    "heading": {
+        "title": "Create a passkey on this device",
+        "logoAltText": "Application Logo"
+    },
+    "details": {
+        "createPasskeyButtonText": "Create a new passkey",
+        "continueWithoutPasskeyButtonText": "Continue without a new passkey",
+        "showHideLocalEnrollmentCheckboxText": "Don't show me this again",
+        "passkeyBenefit1Title": "Sign in quickly with this device",
+        "passkeyBenefit1Description": "You won't need to use another device's passkey next time you sign in.",
+        "passkeyBenefit2Title": "No need to remember a password",
+        "passkeyBenefit2Description": "With passkeys, you can use things like your fingerprint or face to login."
+    },
+    "errors": {
+        "errorOccurred": "An error occurred",
+        "identifierRequired": "Identifier is required",
+        "passwordRequired": "Password is required",
+        "captchaCompletionRequired": "Please complete the CAPTCHA"
+    }
+}

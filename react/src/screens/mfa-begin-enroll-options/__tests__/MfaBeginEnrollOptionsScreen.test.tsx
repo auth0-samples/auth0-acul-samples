@@ -1,5 +1,6 @@
 import {
   enroll,
+  useErrors,
   useScreen,
   useTransaction,
 } from "@auth0/auth0-acul-react/mfa-begin-enroll-options";
@@ -68,22 +69,53 @@ describe("MfaBeginEnrollOptionsScreen", () => {
     expect(enroll).toHaveBeenCalledWith({ action: "webauthn-roaming" });
   });
 
+  it("should integrate with useErrors hook for error handling", async () => {
+    await renderScreen();
+
+    // Verify useErrors hook is called (integration check)
+    expect(useErrors).toHaveBeenCalled();
+
+    // Verify component renders correctly with error handling in place
+    expect(screen.getByText(/SMS/i)).toBeInTheDocument();
+  });
+
   it("displays general errors when present", async () => {
     const mockErrors = [
       { message: "Network error occurred", field: null },
       { message: "Service unavailable", field: undefined },
     ];
 
+    // Configure mock transaction to have general error
     (useTransaction as jest.Mock).mockReturnValue({
-      state: "",
-      locale: "",
-      countryCode: null,
-      countryPrefix: null,
-      connectionStrategy: null,
       hasErrors: true,
       errors: mockErrors,
-      currentConnection: null,
-      alternateConnections: null,
+    });
+
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "auth0") {
+            return [
+              {
+                id: "network-error",
+                message: "Network error occurred",
+                kind: "server",
+              },
+              {
+                id: "service-unavailable",
+                message: "Service unavailable",
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     await renderScreen();

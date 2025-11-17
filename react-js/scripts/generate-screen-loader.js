@@ -113,31 +113,24 @@ function validateScreenStructure() {
     const indexFile = path.join(screenPath, "index.tsx");
     const componentsDir = path.join(screenPath, "components");
     const hooksDir = path.join(screenPath, "hooks");
-    const mockDataDir = path.join(screenPath, "mock-data");
-    
+
     if (!fs.existsSync(screenPath)) {
       // This is not an issue - screen might not be implemented yet
       return;
     }
-    
+
     if (!fs.existsSync(indexFile)) {
       issues.push(`Missing index.tsx for screen: ${screenName}`);
     }
-    
+
     if (!fs.existsSync(componentsDir)) {
       issues.push(`Missing components directory for screen: ${screenName}`);
     }
-    
+
     if (!fs.existsSync(hooksDir)) {
       issues.push(`Missing hooks directory for screen: ${screenName}`);
     }
-    
-    if (!fs.existsSync(mockDataDir)) {
-      issues.push(`Missing mock-data directory for screen: ${screenName}`);
-    }
-  });
-  
-  if (issues.length > 0) {
+  });  if (issues.length > 0) {
     console.warn(`${ANSI_YELLOW}Structure issues found:${ANSI_RESET}`);
     issues.forEach((issue) => console.warn(`  ⚠️  ${issue}`));
   } else {

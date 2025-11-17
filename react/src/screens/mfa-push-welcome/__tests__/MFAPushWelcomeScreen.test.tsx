@@ -1,9 +1,11 @@
 import {
   enroll,
   pickAuthenticator,
+  useErrors,
 } from "@auth0/auth0-acul-react/mfa-push-welcome";
 import { act, render, screen } from "@testing-library/react";
 
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import MfaPusWelcomeScreen from "../index";
@@ -53,5 +55,36 @@ describe("MFAPushWelcomeScreen", () => {
     const links = screen.getAllByRole("link");
     expect(links[0]).toHaveAttribute("href", "mock_ios_link");
     expect(links[1]).toHaveAttribute("href", "mock_android_link");
+  });
+
+  it("should display general errors", async () => {
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      hasErrors: true,
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "auth0") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    await renderScreen();
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 });

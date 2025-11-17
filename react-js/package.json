@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "initialize": "npm install && npm run build",
-    "screen": "node ./scripts/dev-screen.js",
     "build": "tsc && vite build --logLevel info",
     "build:local": "PORT=8080 node ./scripts/build-local.js",
     "build:watch": "vite build --watch",
+    "dev": "vite dev",
     "preview": "vite preview",
     "preview:watch": "concurrently \"vite build --watch\" \"vite preview\"",
     "generate:screenLoader": "node ./scripts/generate-screen-loader.js",
@@ -20,7 +20,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@auth0/auth0-acul-js": "1.0.0-alpha.1",
+    "@auth0/auth0-acul-js": "1.0.0-alpha.2",
     "@base-ui-components/react": "^1.0.0-beta.1",
     "@hcaptcha/react-hcaptcha": "^1.12.1",
     "class-variance-authority": "^0.7.1",
@@ -36,6 +36,7 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@auth0/ul-context-inspector": "^1.1.0",
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",

@@ -1,5 +1,7 @@
 import type {
+  ErrorItem,
   ScreenMembersOnMfaPushEnrollmentQr,
+  TransactionMembers,
   UserMembers,
 } from "@auth0/auth0-acul-react/types";
 
@@ -11,12 +13,7 @@ import type {
 export interface MockMfaPushEnrollmentQRInstance {
   pickAuthenticator: jest.Mock;
   screen: ScreenMembersOnMfaPushEnrollmentQr;
-  transaction: {
-    hasErrors: boolean;
-    errors: Array<{ message: string; field?: string }>;
-    state: string;
-    locale: string;
-  };
+  transaction: TransactionMembers;
   user: UserMembers;
 }
 
@@ -71,6 +68,11 @@ export const createMockMfaPushEnrollmentQRInstance =
       errors: [],
       state: "mock-mfa-push-enrollment-qr-state",
       locale: "en",
+      countryCode: null,
+      countryPrefix: null,
+      connectionStrategy: null,
+      currentConnection: null,
+      alternateConnections: null,
     },
     user: {
       id: "dummy_id",
@@ -97,6 +99,26 @@ export const pickAuthenticator =
 export const useMfaPushEnrollmentQr = jest.fn(() => ({
   screen: mockMfaPushEnrollmentQRInstance.screen,
   pickAuthenticator: mockMfaPushEnrollmentQRInstance.pickAuthenticator,
+}));
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
+// Mock the useMfaPolling hook
+export const useMfaPolling = jest.fn(() => ({
+  isRunning: true,
+  startPolling: jest.fn(),
+  stopPolling: jest.fn(),
 }));
 
 export const useScreen = jest.fn(() => mockMfaPushEnrollmentQRInstance.screen);

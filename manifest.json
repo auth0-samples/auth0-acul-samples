@@ -7,6 +7,7 @@
       "sdk": "js",
       "base_files": [
         ".prettierrc.json",
+        "DEPLOYMENT.md",
         "README.md",
         "babel.config.cjs",
         "components.json",
@@ -18,22 +19,24 @@
         "tsconfig.json",
         "vite.config.ts",
         "src/App.tsx",
+        "src/DevScreenManager.tsx",
+        "src/ProdScreenManager.tsx",
         "src/index.css",
         "src/main.tsx",
         "src/vite-env.d.ts"
       ],
       "base_directories": [
-        "src/components",
-        "src/lib",
-        "src/types",
-        "src/utils",
-        "src/hooks",
-        "src/constants",
-        "src/assets",
-        "src/__mocks__",
-        "src/test",
+        ".github",
         "scripts",
-        ".github"
+        "src/__mocks__",
+        "src/assets",
+        "src/components",
+        "src/constants",
+        "src/hooks",
+        "src/lib",
+        "src/test",
+        "src/types",
+        "src/utils"
       ],
       "screens": [
         {
@@ -63,6 +66,7 @@
       "sdk": "react",
       "base_files": [
         ".prettierrc.json",
+        "DEPLOYMENT.md",
         "README.md",
         "babel.config.cjs",
         "components.json",
@@ -74,22 +78,24 @@
         "tsconfig.json",
         "vite.config.ts",
         "src/App.tsx",
+        "src/DevScreenManager.tsx",
+        "src/ProdScreenManager.tsx",
         "src/index.css",
         "src/main.tsx",
         "src/vite-env.d.ts"
       ],
       "base_directories": [
-        "src/components",
-        "src/lib",
-        "src/types",
-        "src/utils",
-        "src/constants",
-        "src/assets",
-        "src/hooks",
-        "src/__mocks__",
-        "src/test",
+        ".github",
         "scripts",
-        ".github"
+        "src/__mocks__",
+        "src/assets",
+        "src/components",
+        "src/constants",
+        "src/hooks",
+        "src/lib",
+        "src/test",
+        "src/types",
+        "src/utils"
       ],
       "screens": [
         {
@@ -133,6 +139,12 @@
           "name": "Reset Password",
           "description": "Screen for password reset",
           "path": "src/screens/reset-password"
+        },
+        {
+          "id": "reset-password-request",
+          "name": "Reset Password: Request",
+          "description": "Screen for reset password request",
+          "path": "src/screens/reset-password-request"
         },
         {
           "id": "reset-password-success",

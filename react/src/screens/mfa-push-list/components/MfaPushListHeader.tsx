@@ -10,10 +10,11 @@ import ULThemeTitle from "@/components/ULThemeTitle";
 import { useMfaPushListManager } from "../hooks/useMfaPushListManager";
 
 function MfaPushListHeader() {
-  const { texts, handleBackAction } = useMfaPushListManager();
+  const { texts, locales, handleBackAction } = useMfaPushListManager();
 
-  const backText = texts?.backText || "Go back";
-  const titleText = texts?.title || "Registered Devices";
+  // Use Locales as fallback to SDK texts
+  const backText = texts?.backText || locales.heading.goBackActionText;
+  const titleText = texts?.title || locales.heading.title;
 
   return (
     <>

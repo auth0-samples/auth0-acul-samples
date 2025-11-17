@@ -1,22 +1,23 @@
 import {
   usePasskeyEnrollment,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/passkey-enrollment";
 import {
   CustomOptions,
+  PasskeyEnrollmentMembers,
   ScreenMembersOnPasskeyEnrollment,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/passkey-enrollment/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 /**
  * Handles the passkey enrollment process.
  */
 export const usePasskeyEnrollmentManager = () => {
-  const screen = useScreen();
-  const transaction = useTransaction();
-  const passkeyEnrollmentInstance = usePasskeyEnrollment();
+  const screen: ScreenMembersOnPasskeyEnrollment = useScreen();
+  const passkeyEnrollmentInstance: PasskeyEnrollmentMembers =
+    usePasskeyEnrollment();
 
   const { texts, data, links } = screen;
 
@@ -39,12 +40,12 @@ export const usePasskeyEnrollmentManager = () => {
   };
 
   return {
+    data,
+    links,
+    locales,
     passkeyEnrollmentInstance,
     continuePasskeyEnrollment,
     abortPasskeyEnrollment,
     texts: (texts || {}) as ScreenMembersOnPasskeyEnrollment["texts"],
-    errors: transaction.errors || [],
-    data,
-    links,
   };
 };

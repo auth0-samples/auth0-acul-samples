@@ -72,6 +72,17 @@ export const useMfaSmsEnrollment = jest.fn(() => ({
   tryAnotherMethod: mockMfaSmsEnrollmentInstance.tryAnotherMethod,
 }));
 
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn(() => []),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
 export const useScreen = jest.fn(() => mockMfaSmsEnrollmentInstance.screen);
 export const useTransaction = jest.fn(
   () => mockMfaSmsEnrollmentInstance.transaction

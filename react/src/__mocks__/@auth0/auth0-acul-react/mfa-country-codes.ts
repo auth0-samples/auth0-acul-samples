@@ -121,6 +121,19 @@ export const useMfaCountryCodes = jest.fn(() => ({
 }));
 
 /**
+ * Mock implementation of the useErrors hook
+ */
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn(() => []),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
+}));
+
+/**
  * Mock implementation of the useScreen hook
  */
 export const useScreen = jest.fn(() => mockInstance.screen);

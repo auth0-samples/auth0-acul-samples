@@ -12,12 +12,12 @@ import { useLoginManager } from "./hooks/useLoginManager";
 
 function LoginScreen() {
   // Extracting attributes from hook made out of LoginInstance class of Auth0 React ACUL SDK
-  const { login, texts, alternateConnections } = useLoginManager();
+  const { login, texts, locales, alternateConnections } = useLoginManager();
 
   const showSeparator = alternateConnections && alternateConnections.length > 0;
 
-  const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Login";
+  const separatorText = texts?.separatorText || locales?.page?.orText;
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   applyAuth0Theme(login);
 

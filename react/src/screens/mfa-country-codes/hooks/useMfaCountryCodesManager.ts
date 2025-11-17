@@ -1,15 +1,14 @@
 import {
   useMfaCountryCodes,
   useScreen,
-  useTransaction,
 } from "@auth0/auth0-acul-react/mfa-country-codes";
 import type { SelectCountryCodeOptions } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/mfa-country-codes/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useMfaCountryCodesManager = () => {
   const screen = useScreen();
-  const transaction = useTransaction();
   const mfaCountryCodes = useMfaCountryCodes();
 
   const { texts, data } = screen;
@@ -38,7 +37,7 @@ export const useMfaCountryCodesManager = () => {
     handleBackAction,
     handleSelectCountryCode,
     texts: texts || {},
-    errors: transaction.errors || [],
+    locales,
     phonePrefixes: data?.phone_prefixes || [],
   };
 };

@@ -9,11 +9,11 @@ import { useEmailIdentifierChallengeManager } from "./hooks/useEmailIdentifierCh
 
 function EmailIdentifierChallengeScreen() {
   // Extracting attributes from hook made out of EmailIdentifierChallenge instance of Auth0 React ACUL SDK
-  const { emailIdentifierChallenge, texts } =
+  const { emailIdentifierChallenge, texts, locales } =
     useEmailIdentifierChallengeManager();
 
   applyAuth0Theme(emailIdentifierChallenge);
-  document.title = texts?.pageTitle || "Enter your email code to log in";
+  document.title = texts?.pageTitle || locales?.page?.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

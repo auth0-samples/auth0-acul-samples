@@ -90,7 +90,7 @@ function SignupPasswordForm() {
   if (userPhone) visibleFields.push("phone", "phone_number");
   if (userUsername) visibleFields.push("username");
 
-  const generalErrors: ErrorItem[] = errors.byKind("server").filter((error) => {
+  const generalErrors: ErrorItem[] = errors.byKind("auth0").filter((error) => {
     // Include errors with no field or null field
     if (!error.field || error.field === null) return true;
 

@@ -1,4 +1,4 @@
-import { useTransaction } from "@auth0/auth0-acul-react/mfa-country-codes";
+import { useErrors } from "@auth0/auth0-acul-react/mfa-country-codes";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
 import MfaCountryCodesScreen from "../index";
@@ -93,17 +93,18 @@ describe("MfaCountryCodesScreen", () => {
 
   it("should display general errors and filter out field-specific errors", async () => {
     const generalError = "Unable to load country codes";
-    const fieldError = "Invalid country code";
 
-    const mockUseTransaction = useTransaction as jest.Mock;
-    const originalMock = mockUseTransaction();
-    mockUseTransaction.mockReturnValue({
-      ...originalMock,
-      hasErrors: true,
-      errors: [
-        { message: generalError, field: null },
-        { message: fieldError, field: "country_code" },
-      ],
+    const mockUseErrors = useErrors as jest.Mock;
+
+    // Mock useErrors to return errors
+    mockUseErrors.mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn(() => [{ id: "1", message: generalError }]),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     await renderScreen();
@@ -111,8 +112,5 @@ describe("MfaCountryCodesScreen", () => {
     // General error should be displayed
     expect(screen.getByText(generalError)).toBeInTheDocument();
     expect(screen.getByRole("alert")).toBeInTheDocument();
-
-    // Field-specific error should NOT be displayed
-    expect(screen.queryByText(fieldError)).not.toBeInTheDocument();
   });
 });

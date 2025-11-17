@@ -1,48 +1,54 @@
 import { useMemo } from "react";
 
-import type { ScreenMembersOnLoginId } from "@auth0/auth0-acul-js/login-id";
 import LoginIdInstance from "@auth0/auth0-acul-js/login-id";
+import type {
+  LoginOptions,
+  ScreenMembersOnLoginId,
+  TransactionMembersOnLoginId,
+} from "@auth0/auth0-acul-js/types";
 
 import { executeSafely } from "@/utils/helpers/executeSafely";
+
+import locales from "../locale/en.json";
 
 export const useLoginIdManager = () => {
   const loginIdInstance = useMemo(() => new LoginIdInstance(), []);
 
-  const { transaction, screen } = loginIdInstance;
-  const { isSignupEnabled, isForgotPasswordEnabled, isPasskeyEnabled } =
-    transaction;
+  const {
+    transaction,
+    screen,
+  }: {
+    transaction: TransactionMembersOnLoginId;
+    screen: ScreenMembersOnLoginId;
+  } = loginIdInstance;
 
-  const { signupLink, resetPasswordLink, texts, captchaImage } = screen;
-
-  const handleLoginId = async (
-    loginId: string,
-    captcha?: string
-  ): Promise<void> => {
-    const options: { username: string; captcha?: string } = {
-      username: loginId?.trim() || "",
+  const handleLoginId = async (payload: LoginOptions): Promise<void> => {
+    const options: LoginOptions = {
+      username: payload.username?.trim() || "",
     };
 
-    if (screen.isCaptchaAvailable && captcha?.trim()) {
-      options.captcha = captcha.trim();
+    if (screen.isCaptchaAvailable && payload.captcha?.trim()) {
+      options.captcha = payload.captcha.trim();
     }
+
     executeSafely(`LoginId with options: ${JSON.stringify(options)}`, () =>
       loginIdInstance.login(options)
     );
   };
 
-  const handleFederatedLogin = async (connectionName: string) => {
+  const handleFederatedLogin = async (
+    connectionName: string
+  ): Promise<void> => {
     executeSafely(`Federated login with connection: ${connectionName}`, () =>
       loginIdInstance.federatedLogin({ connection: connectionName })
     );
   };
 
-  const handlePasskeyLogin = async () => {
-    if (isPasskeyEnabled) {
-      executeSafely(`Passkey login`, () => loginIdInstance.passkeyLogin());
-    }
+  const handlePasskeyLogin = async (): Promise<void> => {
+    executeSafely(`Passkey login`, () => loginIdInstance.passkeyLogin());
   };
 
-  const handlePickCountryCode = async () => {
+  const handlePickCountryCode = async (): Promise<void> => {
     executeSafely(`Pick country code`, () => loginIdInstance.pickCountryCode());
   };
 
@@ -52,15 +58,8 @@ export const useLoginIdManager = () => {
     handleFederatedLogin,
     handlePasskeyLogin,
     handlePickCountryCode,
-    texts: (texts || {}) as ScreenMembersOnLoginId["texts"],
-    isSignupEnabled: isSignupEnabled === true,
-    isForgotPasswordEnabled: isForgotPasswordEnabled === true,
-    isPasskeyEnabled: isPasskeyEnabled === true,
-    isCaptchaAvailable: screen.isCaptchaAvailable === true,
-    errors: loginIdInstance.getErrors(),
-    captchaImage,
-    captcha: screen.captcha || null,
-    signupLink,
-    resetPasswordLink,
+    screen,
+    transaction,
+    locales,
   };
 };

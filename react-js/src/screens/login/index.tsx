@@ -1,9 +1,8 @@
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
 import ULThemeSeparator from "@/components/ULThemeSeparator";
-import { SocialConnection } from "@/utils/helpers/socialUtils";
 import { extractTokenValue } from "@/utils/helpers/tokenUtils";
-import { applyAuth0Theme } from "@/utils/theme/themeEngine";
+import { applyAuth0Theme } from "@/utils/theme";
 
 import AlternativeLogins from "./components/AlternativeLogins";
 import Footer from "./components/Footer";
@@ -12,20 +11,16 @@ import LoginForm from "./components/LoginForm";
 import { useLoginManager } from "./hooks/useLoginManager";
 
 function LoginScreen() {
-  // Extracting attributes from hook made out of LoginInstance class of Auth0 JS SDK
-  const { loginInstance, texts } = useLoginManager();
-
-  // Fetching List of Social Connections
-  const socialConnectionsList = loginInstance?.transaction
-    ?.alternateConnections as SocialConnection[] | undefined;
+  const { loginInstance, screen, transaction, locales } = useLoginManager();
+  const { texts } = screen;
+  const { alternateConnections } = transaction;
 
   // Check whether separator component needs to be rendered based on social connections
-  const showSeparator =
-    socialConnectionsList && socialConnectionsList.length > 0;
+  const showSeparator = alternateConnections && alternateConnections.length > 0;
 
-  // Other Texts
-  const separatorText = texts?.separatorText || "OR";
-  document.title = texts?.pageTitle || "Login";
+  // Handle text fallbacks using locales
+  const separatorText = texts?.separatorText || locales.page.separator;
+  document.title = texts?.pageTitle || locales.page.title;
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(loginInstance);
@@ -40,7 +35,7 @@ function LoginScreen() {
       {alignment === "bottom" && showSeparator && (
         <ULThemeSeparator text={separatorText} />
       )}
-      <AlternativeLogins connections={socialConnectionsList} />
+      <AlternativeLogins />
       {alignment === "top" && showSeparator && (
         <ULThemeSeparator text={separatorText} />
       )}

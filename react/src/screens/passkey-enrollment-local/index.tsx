@@ -8,12 +8,12 @@ import { usePasskeyEnrollmentLocalManager } from "./hooks/usePasskeyEnrollmentLo
 
 function PasskeyEnrollmentLocalScreen() {
   // Extracting attributes from hook made out of PasskeyEnrollmentLocalInstance class of Auth0 React ACUL SDK
-  const { passkeyEnrollmentLocalInstance, texts } =
+  const { texts, locales, passkeyEnrollmentLocalInstance } =
     usePasskeyEnrollmentLocalManager();
 
   // Apply theme from SDK instance when screen loads
   applyAuth0Theme(passkeyEnrollmentLocalInstance);
-  document.title = texts?.pageTitle || "Create Passkey";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     // Applying UDS theme overrides using the "theme-universal" class

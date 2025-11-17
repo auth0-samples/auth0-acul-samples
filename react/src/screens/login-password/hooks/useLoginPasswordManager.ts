@@ -5,21 +5,25 @@ import {
 } from "@auth0/auth0-acul-react/login-password";
 import type {
   FederatedLoginOptions,
+  LoginPasswordMembers,
   LoginPasswordOptions,
+  ScreenMembersOnLoginPassword,
+  TransactionMembersOnLoginPassword,
 } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/login-password/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useLoginPasswordManager = () => {
-  const loginPassword = useLoginPassword();
-  const screen = useScreen();
-  const transaction = useTransaction();
+  const loginPassword: LoginPasswordMembers = useLoginPassword();
+  const screen: ScreenMembersOnLoginPassword = useScreen();
+  const transaction: TransactionMembersOnLoginPassword = useTransaction();
 
   const { alternateConnections } = transaction;
   const {
     isCaptchaAvailable,
     texts,
-    captchaImage,
+    captcha,
     signupLink,
     resetPasswordLink,
     editIdentifierLink,
@@ -47,14 +51,14 @@ export const useLoginPasswordManager = () => {
     };
 
     executeSafely(
-      `Login Password with options: ${JSON.stringify(logOptions)}`,
+      `Perform login password operation with options: ${JSON.stringify(logOptions)}`,
       () => loginPassword.login(options)
     );
   };
 
   const handleFederatedLogin = async (payload: FederatedLoginOptions) => {
     executeSafely(
-      `Federated login with connection: ${payload.connection}`,
+      `Perform federated login with connection: ${payload.connection}`,
       () => loginPassword.federatedLogin(payload)
     );
   };
@@ -62,11 +66,12 @@ export const useLoginPasswordManager = () => {
   return {
     loginPassword,
     texts,
+    locales,
     isSignupEnabled,
     isForgotPasswordEnabled,
     isCaptchaAvailable,
     alternateConnections,
-    captchaImage,
+    captcha,
     signupLink,
     resetPasswordLink,
     editIdentifierLink,
@@ -74,6 +79,6 @@ export const useLoginPasswordManager = () => {
     errors: transaction.errors,
     handleLoginPassword,
     handleFederatedLogin,
-    passwordPolicy: transaction.getPasswordPolicy(),
+    passwordPolicy: transaction.passwordPolicy,
   };
 };

@@ -1,0 +1,15 @@
+{
+    "page": {
+        "title": "List of available phone numbers | your app"
+    },
+    "header": {
+        "backText": "Go back",
+        "title": "Enrolled Phone Numbers"
+    },
+    "list": {
+        "noPhoneNumbers": "No phone numbers enrolled"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred"
+    }
+}

@@ -1,9 +1,11 @@
 import {
   abortPasskeyEnrollment,
   continuePasskeyEnrollment,
+  useErrors,
 } from "@auth0/auth0-acul-react/passkey-enrollment-local";
 import { act, render, screen } from "@testing-library/react";
 
+import { CommonTestData } from "@/test/fixtures/common-data";
 import { ScreenTestUtils } from "@/test/utils/screen-test-utils";
 
 import PasskeyEnrollmentLocalScreen from "../index";
@@ -50,5 +52,36 @@ describe("PasskeyEnrollmentLocalInstance", () => {
     await ScreenTestUtils.clickButton("Continue without a new passkey");
 
     expect(abortPasskeyEnrollment).toHaveBeenCalled();
+  });
+
+  it("should display general errors", async () => {
+    // Mock useErrors to return general error (no field)
+    (useErrors as jest.Mock).mockReturnValue({
+      hasErrors: true,
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn((kind: string) => {
+          if (kind === "auth0") {
+            return [
+              {
+                id: "network-error",
+                message: CommonTestData.errors.network.message,
+                kind: "server",
+              },
+            ];
+          }
+          return [];
+        }),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
+    });
+
+    await renderScreen();
+
+    expect(
+      screen.getByText(CommonTestData.errors.network.message)
+    ).toBeInTheDocument();
   });
 });

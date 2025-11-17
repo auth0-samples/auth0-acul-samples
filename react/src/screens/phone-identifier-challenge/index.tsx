@@ -1,6 +1,6 @@
 import ULThemeCard from "@/components/ULThemeCard";
 import ULThemePageLayout from "@/components/ULThemePageLayout";
-import { applyAuth0Theme } from "@/utils/theme/themeEngine";
+import { applyAuth0Theme } from "@/utils/theme";
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -9,11 +9,11 @@ import { usePhoneIdentifierChallengeManager } from "./hooks/usePhoneIdentifierCh
 
 function PhoneIdentifierChallengeScreen() {
   // Extracting attributes from hook made out of PhoneIdentifierChallenge instance of Auth0 React ACUL SDK
-  const { phoneIdentifierChallenge, texts } =
+  const { phoneIdentifierChallenge, texts, locales } =
     usePhoneIdentifierChallengeManager();
 
   applyAuth0Theme(phoneIdentifierChallenge);
-  document.title = texts?.pageTitle || "Enter your phone code to log in";
+  document.title = texts?.pageTitle || locales.pageTitle;
 
   return (
     <ULThemePageLayout className="theme-universal">

@@ -1,16 +1,15 @@
 import {
   useMfaSmsList,
   useScreen,
-  useTransaction,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-sms-list";
 import type { MfaSmsListOptions } from "@auth0/auth0-acul-react/types";
 
+import locales from "@/screens/mfa-sms-list/locales/en.json";
 import { executeSafely } from "@/utils/helpers/executeSafely";
 
 export const useMfaSmsListManager = () => {
   const screen = useScreen();
-  const transaction = useTransaction();
   const mfasmsList = useMfaSmsList();
   const user = useUser();
 
@@ -20,12 +19,12 @@ export const useMfaSmsListManager = () => {
     await executeSafely("Navigate back", () => mfasmsList.backAction({}));
   };
 
-  const handleSelectPhoneNumber = async (id: number): Promise<void> => {
+  const handleSelectPhoneNumber = async (index: number): Promise<void> => {
     const options: MfaSmsListOptions = {
-      index: id,
+      index,
     };
 
-    await executeSafely(`Select phone number with index: ${id}`, () =>
+    await executeSafely(`Select phone number with index: ${index}`, () =>
       mfasmsList.selectPhoneNumber(options)
     );
   };
@@ -35,7 +34,7 @@ export const useMfaSmsListManager = () => {
     handleBackAction,
     handleSelectPhoneNumber,
     texts: texts || {},
-    errors: transaction.errors || [],
+    locales,
     user: user || {},
   };
 };

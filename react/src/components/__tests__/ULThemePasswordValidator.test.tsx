@@ -75,7 +75,6 @@ describe("ULThemePasswordValidator", () => {
     );
     expect(container1.firstChild).toBeNull();
 
-    // Test empty rules array
     const { container: container2 } = render(
       <ULThemePasswordValidator validationRules={[]} show={true} />
     );

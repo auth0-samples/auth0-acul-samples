@@ -9,10 +9,10 @@ import { useMfaPushListManager } from "./hooks/useMfaPushListManager";
 
 function MfaPushListScreen() {
   // Extracting attributes from hook made out of MfaPushList instance of Auth0 React ACUL SDK
-  const { mfaPushListInstance, texts } = useMfaPushListManager();
+  const { texts, locales, mfaPushListInstance } = useMfaPushListManager();
 
   applyAuth0Theme(mfaPushListInstance);
-  document.title = texts?.pageTitle || "List of available devices | My App";
+  document.title = texts?.pageTitle || locales.page.title;
 
   return (
     <ULThemePageLayout className="theme-universal">

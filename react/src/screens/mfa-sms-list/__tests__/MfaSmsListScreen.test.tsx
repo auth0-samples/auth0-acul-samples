@@ -1,7 +1,7 @@
 import {
   backAction,
   selectPhoneNumber,
-  useTransaction,
+  useErrors,
   useUser,
 } from "@auth0/auth0-acul-react/mfa-sms-list";
 import { act, render, screen } from "@testing-library/react";
@@ -71,17 +71,18 @@ describe("MfaSmsListScreen", () => {
 
   it("should display general errors from transaction and filter out field-specific errors", async () => {
     const generalError = "Unable to load phone numbers";
-    const fieldError = "Invalid phone number";
 
-    const mockUseTransaction = useTransaction as jest.Mock;
-    const originalMock = mockUseTransaction();
-    mockUseTransaction.mockReturnValue({
-      ...originalMock,
-      hasErrors: true,
-      errors: [
-        { message: generalError, field: null },
-        { message: fieldError, field: "phoneNumber" },
-      ],
+    const mockUseErrors = useErrors as jest.Mock;
+
+    // Mock useErrors to return errors
+    mockUseErrors.mockReturnValue({
+      errors: {
+        byField: jest.fn(() => []),
+        byKind: jest.fn(() => [{ id: "1", message: generalError }]),
+      },
+      hasError: true,
+      dismiss: jest.fn(),
+      dismissAll: jest.fn(),
     });
 
     await renderScreen();
@@ -89,9 +90,6 @@ describe("MfaSmsListScreen", () => {
     // General error should be displayed
     expect(screen.getByText(generalError)).toBeInTheDocument();
     expect(screen.getByRole("alert")).toBeInTheDocument();
-
-    // Field-specific error should NOT be displayed in error alert
-    expect(screen.queryByText(fieldError)).not.toBeInTheDocument();
   });
 
   it("should handle empty phone numbers list gracefully", async () => {

@@ -1,0 +1,22 @@
+{
+    "pageTitle": "Reset your password",
+    "header": {
+        "logoAltText": "Application Logo",
+        "title": "Change Your Password",
+        "description": "Enter a new password below to change your password."
+    },
+    "form": {
+        "fields": {
+            "password": {
+                "labelText": "New Password",
+                "required": "Password is required",
+                "doesNotMeetRequirements": "Password does not meet requirements"
+            },
+            "confirmPassword": {
+                "labelText": "Re-enter new password"
+            }
+        },
+        "buttonText": "Reset Password",
+        "passwordSecurity": "Your password must contain:"
+    }
+}

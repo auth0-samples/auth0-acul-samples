@@ -4,7 +4,7 @@
  * and isolated testing of our components.
  */
 import {
-  type PasswordPolicy,
+  ErrorItem,
   type ScreenMembersOnLoginPassword,
   TransactionMembersOnLoginPassword,
 } from "@auth0/auth0-acul-react/types";
@@ -129,14 +129,15 @@ export const createMockLoginPasswordInstance =
       isSignupEnabled: false,
       isForgotPasswordEnabled: false,
       isPasskeyEnabled: false,
-      getPasswordPolicy: function (): PasswordPolicy | null {
-        return {
-          minLength: 8,
-          policy: "good",
-        };
+      passwordPolicy: {
+        minLength: 8,
+        policy: "good",
       },
-      getUsernamePolicy: jest.fn(),
-      getAllowedIdentifiers: jest.fn(),
+      usernamePolicy: {
+        minLength: 8,
+        maxLength: 64,
+      },
+      allowedIdentifiers: ["email", "username"],
     },
   });
 
@@ -146,6 +147,19 @@ const mockLoginPasswordInstance = createMockLoginPasswordInstance();
 export const useLoginPassword = jest.fn(() => ({
   login: mockLoginPasswordInstance.login,
   federatedLogin: mockLoginPasswordInstance.federatedLogin,
+}));
+
+const mockErrors: ErrorItem[] = [];
+
+// Mock the useErrors hook
+export const useErrors = jest.fn(() => ({
+  errors: {
+    byField: jest.fn(() => []),
+    byKind: jest.fn().mockReturnValue(mockErrors),
+  },
+  hasError: false,
+  dismiss: jest.fn(),
+  dismissAll: jest.fn(),
 }));
 
 export const useScreen = jest.fn(() => mockLoginPasswordInstance.screen);

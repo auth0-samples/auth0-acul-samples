@@ -110,7 +110,6 @@ function validateScreenStructure() {
     const indexFile = path.join(screenPath, "index.tsx");
     const componentsDir = path.join(screenPath, "components");
     const hooksDir = path.join(screenPath, "hooks");
-    const mockDataDir = path.join(screenPath, "mock-data");
 
     if (!fs.existsSync(screenPath)) {
       // This is not an issue - screen might not be implemented yet
@@ -127,10 +126,6 @@ function validateScreenStructure() {
 
     if (!fs.existsSync(hooksDir)) {
       issues.push(`Missing hooks directory for screen: ${screenName}`);
-    }
-
-    if (!fs.existsSync(mockDataDir)) {
-      issues.push(`Missing mock-data directory for screen: ${screenName}`);
     }
   });
 

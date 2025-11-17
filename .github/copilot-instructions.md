@@ -15,16 +15,16 @@ Welcome, Copilot. You are an AI pair programmer for the Auth0 Advanced Customiza
 ## Project Overview
 This is an Auth0 Advanced Customizations for Universal Login (ACUL) monorepo with two samples:
 - **`react-js/`** - Production-ready with Auth0 ACUL JS SDK (`@auth0/auth0-acul-js`) - 3 screens
-- **`react/`** - Under development with Auth0 ACUL React SDK (`@auth0/auth0-acul-react`) - 8+ screens
+- **`react/`** - Under development with Auth0 ACUL React SDK (`@auth0/auth0-acul-react`) - 31 screens
 
-Both use React 19, TypeScript, Vite, and Tailwind CSS v4 with Auth0's design system.
+Both use React 19, TypeScript, Vite, Tailwind CSS v4, and ul-context-inspector for development.
 
 ## 🛠️ Critical Architecture Patterns
 
 ### Monorepo Structure
 - **Workspace Commands**: Use `npm run <command>:all` for monorepo-wide operations
 - **Sample Selection**: Work in either `react/` (React SDK, in development) or `react-js/` (JS SDK, production-ready)
-- **Screen Development**: Use `npm run screen <screen-name>` for isolated development with hot-reload
+- **Screen Development**: Use `npm run dev` for development with ul-context-inspector
 
 ### Screen Architecture Pattern
 Each authentication screen follows this strict pattern:
@@ -33,7 +33,6 @@ src/screens/[screen-name]/
 ├── index.tsx              # Main screen component, applies theme, sets title
 ├── components/            # Screen-specific UI components (Header, Footer, Form)
 ├── hooks/                 # Screen manager hook (e.g., useMfaSmsChallengeManager)
-├── mock-data/            # Development mock data
 └── __tests__/            # Screen-specific tests
 ```
 
@@ -72,13 +71,13 @@ import { SomeAuthFunction } from "@auth0/auth0-acul-js";
 ## 🔧 Development Workflow Essentials
 
 ### Screen Development Commands
-- `npm run screen <screen-name>` - Start development server for specific screen
-- `npm run screen:all` - Illegal - must specify screen name
+- `npm run dev` - Start development server with ul-context-inspector
+- Use the context inspector panel to switch between screens
 - Valid screens defined in `src/constants/validScreens.js`
 
 ### Build & Deploy Workflow
 - `npm run build:local` - Build for local testing with PORT=8080
-- `npm run validate-manifest` - Validate manifest.json structure (critical for ACUL)
+- `npm run validate-manifest` - Validate manifest.json structure (useful for auth0-cli)
 - `npm run ci` - Full CI pipeline: validate → lint → test → build
 
 ### Testing Architecture
@@ -131,7 +130,6 @@ await executeSafely("Action description", () => sdkMethod.action(options));
 - **Components**: PascalCase with `ULTheme` prefix for themed components  
 - **Hooks**: `use[ScreenName]Manager` pattern for screen logic
 - **Tests**: Co-located `__tests__/` directories with `.test.tsx` extension
-- **Mock Data**: `mock-data/` in screen directories for development
 
 ## Build System Architecture
 - **Vite**: Dynamically discovers screens and creates entry points
@@ -145,10 +143,11 @@ Before generating code for any library, reference its latest official documentat
 
 ### Screen Development Workflow
 1. Choose sample: `react/` (React SDK) or `react-js/` (JS SDK)
-2. Start screen: `npm run screen <screen-name>` (must match `validScreens.js`)
-3. Follow screen architecture pattern with mandatory theme application
-4. Use `ScreenTestUtils` class for testing
-5. Build locally: `npm run build:local` with PORT=8080
+2. Start development: `npm run dev`
+3. Use ul-context-inspector to switch screens and modify context
+4. Follow screen architecture pattern with mandatory theme application
+5. Use `ScreenTestUtils` class for testing
+6. Build locally: `npm run build:local` with PORT=8080
 
 ### Code Quality Requirements
 - **Linting**: All code must pass ESLint rules
@@ -162,16 +161,15 @@ Before generating code for any library, reference its latest official documentat
 2. Follow established ULTheme component patterns  
 3. Apply theme with `applyAuth0Theme(screenInstance)` in screen index.tsx
 4. Use `executeSafely` for all Auth0 SDK operations
-5. Include mock data for development testing
-6. Add comprehensive tests with ScreenTestUtils
-7. Ensure WCAG compliance for accessibility
-8. Reference CSS variables with `extractTokenValue()` utility
+5. Add comprehensive tests with ScreenTestUtils
+6. Ensure WCAG compliance for accessibility
+7. Reference CSS variables with `extractTokenValue()` utility
 
 ## Important Notes
 - **ACUL**: Early Access feature requiring Enterprise Auth0 plan + custom domain
 - **Screen Names**: Must match entries in `src/constants/validScreens.js`
 - **Theme Application**: Critical for proper styling - always apply in screen index.tsx
-- **Development**: Use mock data to avoid API dependencies during development
+- **Development**: Use ul-context-inspector to visualize and modify Auth0 context during development
 - **Monorepo**: Use workspace commands (`npm run <cmd>:all`) for multi-sample operations
 
 By following these instructions, you'll maintain consistency with Auth0's design system while building production-ready authentication UI components.
