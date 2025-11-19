@@ -44,6 +44,7 @@ describe("ULThemeCheckbox", () => {
     render(<ULThemeCheckbox id="test-checkbox" disabled />);
 
     const checkbox = screen.getByRole("checkbox");
-    expect(checkbox).toBeDisabled();
+    expect(checkbox).toHaveAttribute("aria-disabled", "true");
+    expect(checkbox).toHaveAttribute("data-disabled");
   });
 });

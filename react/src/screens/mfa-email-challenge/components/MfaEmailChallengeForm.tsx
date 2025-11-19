@@ -144,8 +144,10 @@ function MfaEmailChallengeForm() {
                     id="rememberDevice"
                     checked={field.value}
                     onCheckedChange={field.onChange}
+                    aria-labelledby="rememberDevice-label"
                   />
                   <Label
+                    id="rememberDevice-label"
                     htmlFor="rememberDevice"
                     className="text-(length:--ul-theme-font-body-text-size) cursor-pointer"
                   >

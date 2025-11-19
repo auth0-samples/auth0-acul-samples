@@ -5,11 +5,6 @@ import "./index.css";
 
 import App from "./App.tsx";
 
-// Conditionally load inspector styles in dev mode
-if (import.meta.env.DEV) {
-  import("ul-context-inspector/style.css");
-}
-
 async function initializeApp() {
   /**
    * ACUL Integration Note:
