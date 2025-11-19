@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemeSearch matches snapshot with default props 1`] = `
+<div
+  class="relative"
+>
+  <svg
+    aria-hidden="true"
+    class="lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 theme-universal:text-input-labels w-5 h-5"
+    fill="none"
+    height="24"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    width="24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="m21 21-4.34-4.34"
+    />
+    <circle
+      cx="11"
+      cy="11"
+      r="8"
+    />
+  </svg>
+  <input
+    class="w-full pl-10 pr-4 theme-universal:bg-input-bg theme-universal:text-input-text theme-universal:border-input-border theme-universal:rounded-input border outline-none theme-universal:text-(length:--ul-theme-font-body-text-size) theme-universal:font-body theme-universal:placeholder:text-input-labels theme-universal:focus:border-base-focus transition-colors duration-150 h-12"
+    placeholder="Search"
+    type="text"
+  />
+</div>
+`;

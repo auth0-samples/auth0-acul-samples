@@ -27,8 +27,8 @@ lerna-debug.log*
 coverage/
 *.lcov
 
-# Development tools
-.husky/
+# Documentation
+docs/
 
 # Operating system files
 .DS_Store
@@ -52,4 +52,3 @@ Thumbs.db
 *.ntvs*
 *.njsproj
 *.sln
-.husky

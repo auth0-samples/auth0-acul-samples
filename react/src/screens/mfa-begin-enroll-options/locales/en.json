@@ -1,0 +1,16 @@
+{
+    "pageTitle": "Add another authentication method",
+    "header": {
+        "logoAltText": "Application Logo",
+        "title": "Keep Your Account Safe",
+        "description": "Add another authentication method."
+    },
+    "MFAOptions": {
+        "sms": "SMS",
+        "voice": "Phone",
+        "phone": "Phone",
+        "pushNotification": "Notification via Auth0 Guardian app",
+        "otp": "Google Authenticator or similar",
+        "webauthnRoaming": "Security Key"
+    }
+}

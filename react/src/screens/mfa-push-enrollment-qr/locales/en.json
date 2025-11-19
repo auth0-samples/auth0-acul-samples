@@ -1,0 +1,17 @@
+{
+    "page": {
+        "title": "Scan the code to log in using a push notification | All Applications"
+    },
+    "heading": {
+        "logoAltText": "Application Logo",
+        "title": "Secure Your Account",
+        "description": "Scan the QR Code below using the Guardian app on your mobile device."
+    },
+    "form": {
+        "copyCodeLinkText": "Copy as code",
+        "pickAuthenticatorText": "Try another method"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred"
+    }
+}

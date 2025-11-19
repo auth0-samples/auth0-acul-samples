@@ -1,0 +1,104 @@
+name: Deploy ACUL Screens to S3 and Auth0
+
+# This workflow deploys ACUL screens when code is merged to main branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*"
+      - ".github/config/deploy_config.yml"
+      - "!.github/workflows/acul-deploy.yml"
+      - "!DEPLOYMENT.md"
+      - "!README.md"
+  workflow_dispatch: # Manual triggering
+
+env:
+  NODE_VERSION: "22"
+  WORKING_DIR: "."
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy ACUL Screens
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check deployment targets
+        id: check-targets
+        uses: ./.github/actions/check-deployment-targets
+        with:
+          working-directory: ${{ env.WORKING_DIR }}
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        if: steps.check-targets.outputs.has_targets == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          registry-url: "https://registry.npmjs.org"
+          cache-dependency-path: ${{ env.WORKING_DIR }}/package-lock.json
+
+      - name: Install dependencies
+        if: steps.check-targets.outputs.has_targets == 'true'
+        shell: bash
+        working-directory: ${{ env.WORKING_DIR }}
+        env:
+          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org"
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm install --include=optional --fund=false --audit=false
+
+      - name: Build application
+        if: steps.check-targets.outputs.has_targets == 'true'
+        shell: bash
+        working-directory: ${{ env.WORKING_DIR }}
+        run: |
+          echo "Starting build for all screens."
+          npm run build --if-present
+
+      - name: Configure AWS credentials
+        if: steps.check-targets.outputs.has_targets == 'true'
+        uses: aws-actions/configure-aws-credentials@be2e7ad815e27b890489a89ce2717b0f9e26b56e # v4.3.1
+        with:
+          role-to-assume: ${{ secrets.AWS_S3_ARN }}
+          aws-region: ${{ secrets.AWS_REGION || 'us-east-1' }}
+          mask-aws-account-id: true
+
+      - name: Upload assets to S3
+        if: steps.check-targets.outputs.has_targets == 'true'
+        uses: ./.github/actions/upload-acul-to-s3
+        with:
+          working-directory: ${{ env.WORKING_DIR }}
+          s3-bucket-name: ${{ secrets.S3_BUCKET_NAME }}
+
+      - name: Setup Auth0 CLI
+        if: steps.check-targets.outputs.has_targets == 'true'
+        uses: ./.github/actions/setup-auth0-cli
+        with:
+          auth0-domain: ${{ secrets.AUTH0_DOMAIN }}
+          auth0-client-id: ${{ secrets.AUTH0_CLIENT_ID }}
+          auth0-client-secret: ${{ secrets.AUTH0_CLIENT_SECRET }}
+
+      - name: Configure Auth0 screens
+        if: steps.check-targets.outputs.has_targets == 'true'
+        id: configure-auth0
+        uses: ./.github/actions/configure-auth0-screens
+        with:
+          working-directory: ${{ env.WORKING_DIR }}
+          cdn-url: ${{ secrets.S3_CDN_URL }}
+          screens-json: ${{ steps.check-targets.outputs.target_screens }}
+
+      - name: Deployment targets
+        if: steps.check-targets.outputs.has_targets == 'false'
+        shell: bash
+        run: |
+          echo "ℹ️ No screens are targeted for deployment."
+          echo "All screens in deploy_config.yml are set to false."
+          echo "Skipping build, upload, and configuration steps."
+          echo "To deploy screens, set desired screens to 'true' in .github/config/deploy_config.yml"

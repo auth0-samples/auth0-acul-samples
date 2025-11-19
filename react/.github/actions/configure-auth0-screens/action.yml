@@ -1,0 +1,78 @@
+name: 'Configure Auth0 Screens'
+description: 'Configures Auth0 Universal Login screens using targeted screens from deployment config'
+inputs:
+  working-directory:
+    description: 'Working directory relative to repository root'
+    required: true
+    default: '.'
+  cdn-url:
+    description: 'Base URL of the CDN (without trailing slash)'
+    required: true
+  screens-json:
+    description: 'JSON array of targeted screens to configure'
+    required: true
+  deploy_config_path:
+    description: 'Path to the deploy_config.yml file'
+    required: false
+    default: '.github/config/deploy_config.yml'
+outputs:
+  deployed_screens:
+    description: 'Comma-separated list of successfully deployed screens'
+    value: ${{ steps.configure.outputs.deployed_screens }}
+  failed_screens:
+    description: 'Comma-separated list of screens that failed to deploy'
+    value: ${{ steps.configure.outputs.failed_screens }}
+runs:
+  using: 'composite'
+  steps:
+    - id: configure
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        CDN_URL: ${{ inputs.cdn-url }}
+        TARGETED_SCREENS_JSON: ${{ inputs.screens-json }}
+        DEPLOY_CONFIG_PATH: ${{ inputs.deploy_config_path }}
+      run: |
+        set -euo pipefail
+        
+        SUCCESS_SCREENS=()
+        FAILED_SCREENS=()
+        
+        # Make scripts executable
+        chmod +x .github/actions/configure-auth0-screens/scripts/*.sh
+        
+        # Step 1: Setup and Configuration  
+        source .github/actions/configure-auth0-screens/scripts/setup-and-config.sh
+        
+        # Step 2: Process each targeted screen
+        echo "Processing targeted screens: $TARGETED_SCREENS_JSON"
+        
+        if [[ "$TARGETED_SCREENS_JSON" == "[]" || "$TARGETED_SCREENS_JSON" == "null" ]]; then
+          echo "deployed_screens=None (No targets provided)" >> $GITHUB_OUTPUT
+          echo "failed_screens=None (No targets provided)" >> $GITHUB_OUTPUT
+          exit 0 
+        fi
+        
+        # Process each targeted screen
+        while IFS= read -r screen_to_deploy; do
+          if [[ -n "$screen_to_deploy" ]]; then
+            echo "----------------------------------------------"
+            echo "Processing targeted screen: $screen_to_deploy"
+            
+            if .github/actions/configure-auth0-screens/scripts/process-screen.sh "$screen_to_deploy"; then
+              SUCCESS_SCREENS+=("$screen_to_deploy")
+            else
+              FAILED_SCREENS+=("$screen_to_deploy")
+            fi
+          fi
+        done < <(echo "$TARGETED_SCREENS_JSON" | jq -r '.[]?' 2>/dev/null || true)
+        
+        # Step 3: Generate final report
+        echo "----------------------------------------------"
+        
+        # Convert arrays to JSON for passing to script
+        SUCCESS_SCREENS_JSON=$(printf '%s\n' "${SUCCESS_SCREENS[@]}" | jq -R . | jq -s .)
+        FAILED_SCREENS_JSON=$(printf '%s\n' "${FAILED_SCREENS[@]}" | jq -R . | jq -s .)
+        
+        export SUCCESS_SCREENS_JSON FAILED_SCREENS_JSON TARGETED_SCREENS_JSON
+        .github/actions/configure-auth0-screens/scripts/generate-report.sh

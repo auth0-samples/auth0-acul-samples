@@ -1,0 +1,310 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/** UDS Custom Variant for Dark theme **/
+@custom-variant dark (&:is(.dark *));
+
+/** UDS Custom Variant for Auth0 Universal Login Theme Overrides **/
+@custom-variant theme-universal {
+  .theme-universal & {
+    @slot;
+  }
+}
+
+/** UL Custom Utilities:
+Created to support alignment related utlities like justify, text-align etc with dynamic theming values 
+**/
+@layer utilities {
+  /** Custom Utility to handle page layout alignment **/
+  .justify-page-layout {
+    justify-content: var(--ul-theme-page-bg-page-layout);
+  }
+
+  /** Custom Utility to handle text header alignment **/
+  .justify-text-header {
+    text-align: var(--ul-theme-widget-header-text-alignment);
+  }
+
+  /** Custom Utility to handle logo alignment(left, right, center) **/
+  .justify-widget-logo {
+    justify-content: var(--ul-theme-widget-logo-position);
+  }
+}
+
+/** UDS Default theme variables **/
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-disabled: color-mix(in hsl, #fff, #2d333a 8%);
+}
+
+/** Auth0 Theme Variables **/
+@theme {
+  /* Auth0 Theme */
+
+  /* Colors */
+  --color-primary-button: var(--ul-theme-color-primary-button);
+  /* custom token */
+  --color-primary-button-label: var(--ul-theme-color-primary-button-label);
+  --color-secondary-button-border: var(
+    --ul-theme-color-secondary-button-border
+  );
+  --color-secondary-button-label: var(--ul-theme-color-secondary-button-label);
+  --color-base-focus: var(--ul-theme-color-base-focus-color);
+  --color-base-hover: var(--ul-theme-color-base-hover-color);
+  --button-hover-shadow: inset 0 0 0 100px
+    color-mix(in srgb, var(--color-base-hover) 10%, transparent);
+  --color-link-focus: var(--ul-theme-color-links-focused-components);
+  --color-header: var(--ul-theme-color-header);
+  --color-body-text: var(--ul-theme-color-body-text);
+  --color-widget-bg: var(--ul-theme-color-widget-background);
+  --color-widget-border: var(--ul-theme-color-widget-border);
+  --color-input-labels: var(--ul-theme-color-input-labels-placeholders);
+  --color-input-text: var(--ul-theme-color-input-filled-text);
+  --color-input-border: var(--ul-theme-color-input-border);
+  --color-input-bg: var(--ul-theme-color-input-background);
+  --color-icons: var(--ul-theme-color-icons);
+  --color-error: var(--ul-theme-color-error);
+  --color-success: var(--ul-theme-color-success);
+  --color-warning: var(--ul-theme-color-warning);
+  --color-info: var(--ul-theme-color-primary-button);
+  --captcha-widget-theme: var(--ul-theme-color-captcha-widget-theme);
+  --color-spinner: var(--ul-theme-color-spinner);
+
+  /* Borders */
+  --radius-button: var(--ul-theme-border-button-border-radius);
+  --radius-input: var(--ul-theme-border-input-border-radius);
+  --radius-widget: var(--ul-theme-border-widget-corner-radius);
+  --shadow-widget: var(--ul-theme-border-show-widget-shadow);
+  --border-input: var(--ul-theme-border-input-border-weight);
+  --border-widget: var(--ul-theme-border-widget-border-weight);
+
+  /* Font Weights */
+  --font-weight-title: var(--ul-theme-font-title-weight);
+  --font-weight-subtitle: var(--ul-theme-font-subtitle-weight);
+  --font-weight-body: var(--ul-theme-font-body-text-weight);
+  --font-weight-button: var(--ul-theme-font-buttons-text-weight);
+  --font-weight-input-label: var(--ul-theme-font-input-labels-weight);
+  --font-weight-link: var(--ul-theme-font-links-weight);
+
+  /** Font Sizes **/
+  --font-size-list-title: var(--ul-theme-font-list-text-size);
+  --font-size-list-subtitle: var(--ul-theme-font-body-text-size);
+
+  /* Widget */
+  --height-widget-logo: var(--ul-theme-widget-logo-height);
+  --social-buttons-layout: var(--ul-theme-widget-social-buttons-layout);
+
+  /** Custom Height/Width **/
+  --prompt-min-height: calc(8px * 67.5);
+  --prompt-width: calc(8px * 50);
+
+  /* Layout */
+  --size-4: 1rem;
+  --size-5: 1.25rem;
+  --size-6: 1.5rem;
+  --size-8: 2rem;
+  --size-10: 2.5rem;
+  --size-20: 5rem;
+  --max-w-sm: 24rem;
+  --max-w-md: 28rem;
+}
+
+:root {
+  /* Colors */
+  --ul-theme-color-primary-button: #635dff;
+  --ul-theme-color-primary-button-label: #ffffff;
+  --ul-theme-color-secondary-button-border: #c9cace;
+  --ul-theme-color-secondary-button-label: #1e212a;
+  --ul-theme-color-base-focus-color: #635dff;
+  --ul-theme-color-base-hover-color: #000000;
+  --ul-theme-color-links-focused-components: #635dff;
+  --ul-theme-color-header: #1e212a;
+  --ul-theme-color-body-text: #1e212a;
+  --ul-theme-color-widget-background: #ffffff;
+  --ul-theme-color-widget-border: #c9cace;
+  --ul-theme-color-input-labels-placeholders: #65676e;
+  --ul-theme-color-input-filled-text: #000000;
+  --ul-theme-color-input-border: #c9cace;
+  --ul-theme-color-input-background: #ffffff;
+  --ul-theme-color-icons: #65676e;
+  --ul-theme-color-error: #d03c38;
+  --ul-theme-color-success: #13a688;
+  --ul-theme-color-warning: #ffdb5f;
+  --ul-theme-color-captcha-widget-theme: dark;
+  --ul-theme-color-spinner: #6f7780;
+  --ul-theme-color-qrcode-border: #dee2e6;
+
+  /* Borders */
+  --ul-theme-border-buttons-style: rounded;
+  --ul-theme-border-inputs-style: rounded;
+  --ul-theme-border-button-border-weight: 1px;
+  --ul-theme-border-button-border-radius: 3px;
+  --ul-theme-border-input-border-weight: 1px;
+  --ul-theme-border-input-border-radius: 3px;
+  --ul-theme-border-widget-corner-radius: 5px;
+  --ul-theme-border-widget-border-weight: 0px;
+  --ul-theme-border-show-widget-shadow: 1;
+  --ul-theme-border-links-border-radius: 3px;
+
+  /* Fonts */
+  --ul-theme-font-reference-text-size: 16px;
+  --ul-theme-font-links-style: normal;
+  --ul-theme-font-title-size: 1.5rem;
+  --ul-theme-font-title-weight: 400;
+  --ul-theme-font-subtitle-size: 0.875rem;
+  --ul-theme-font-subtitle-weight: 400;
+  --ul-theme-font-body-text-size: 0.875rem;
+  --ul-theme-font-body-text-weight: 400;
+  --ul-theme-font-buttons-text-size: 1rem;
+  --ul-theme-font-buttons-text-weight: 400;
+  --ul-theme-font-input-labels-size: 1rem;
+  --ul-theme-font-input-labels-weight: 400;
+  --ul-theme-font-links-size: 0.875rem;
+  --ul-theme-font-links-weight: 700;
+  --ul-theme-font-list-size: 1.025rem;
+
+  /* Page Background */
+  --ul-theme-page-bg-page-layout: center;
+  --ul-theme-page-bg-background-color: #000000;
+  --ul-theme-page-bg-background-image-url: none;
+
+  /* Widget */
+  --ul-theme-widget-logo-position: center;
+  --ul-theme-widget-logo-url: "https://cdn.auth0.com/blog/auth0_by_okta_logo_black.png";
+  --ul-theme-widget-logo-height: 52px;
+  --ul-theme-widget-header-text-alignment: center;
+  --ul-theme-widget-social-buttons-layout: bottom;
+
+  /* Global base styles not directly tied to Tailwind utility names */
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* UDS Base Variables - Light Theme */
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+body {
+  margin: 0;
+  background-color: var(--ul-theme-page-bg-background-color);
+  background-image: var(--ul-theme-page-bg-background-image-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--ul-theme-color-body-text);
+  min-height: 100vh;
+}
+
+/** UDS Dark Theme Variables **/
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}

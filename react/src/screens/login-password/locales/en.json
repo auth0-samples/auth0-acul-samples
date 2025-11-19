@@ -1,0 +1,38 @@
+{
+    "page": {
+        "title": "Login Password",
+        "orText": "OR"
+    },
+    "heading": {
+        "title": "Welcome",
+        "description": "Enter your password for My Company to continue to My App",
+        "logoAltText": "Application Logo"
+    },
+    "footer": {
+        "signupActionText": "Don't have an account?",
+        "signupActionLinkText": "Sign Up"
+    },
+    "alternativeLogins": {
+        "passkeyButtonText": "Continue with a passkey",
+        "continueWithText": "Continue with",
+        "passkeyLabel": "Passkey"
+    },
+    "loginPasswordForm": {
+        "selectCountryPlaceholder": "Select Country",
+        "captchaLabel": "Enter the code shown above*",
+        "passwordLabel": "Password*",
+        "forgotPasswordLinkText": "Forgot password?",
+        "continueButtonText": "Continue",
+        "editText": "Edit"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred",
+        "identifierRequired": "Identifier is required",
+        "passwordRequired": "Password is required",
+        "captchaCompletionRequired": "Please complete the CAPTCHA",
+        "max200CharsAllowed": "Maximum 200 characters allowed",
+        "passwordMinLength": "Password must be at least",
+        "charactersText": "characters",
+        "captchaTooLong": "CAPTCHA too long"
+    }
+}

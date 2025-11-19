@@ -1,0 +1,42 @@
+{
+  "versions": [
+    "1.17527.0",
+    "1.17533.0",
+    "1.17536.0",
+    "1.17539.0",
+    "1.17549.0",
+    "1.17557.0",
+    "1.17563.0",
+    "1.17570.0",
+    "1.17571.0",
+    "1.17577.0",
+    "1.17579.0",
+    "v0"
+  ],
+  "screens": [
+    {
+      "login": {
+        "login": {
+          "path": "/screens/login/login",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "login-id": {
+        "login-id": {
+          "path": "/screens/login-id/login-id",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    },
+    {
+      "login-password": {
+        "login-password": {
+          "path": "/screens/login-password/login-password",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "client": {
+    "id": "jAn8Pnux9dkf8U7DebyrMhde",
+    "logo_uri": "https://odd-resource.biz/",
+    "name": "Hagenes, Runte and Gleichner"
+  },
+  "organization": {
+    "display_name": "Gorczany, Raynor and Hansen",
+    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
+    "name": "hegmann-llc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "mfa-email"
+  },
+  "screen": {
+    "data": {
+      "email": "Zachariah.Kutch33@hotmail.com",
+      "show_remember_device": true
+    },
+    "name": "mfa-email-challenge"
+  },
+  "tenant": {
+    "enabled_factors": [
+      "otp"
+    ],
+    "enabled_locales": [
+      "en"
+    ],
+    "friendly_name": "Bernier, Okuneva and Ward",
+    "mfa_options": {
+      "pick_authenticator_enabled": true
+    },
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "connection": {
+      "name": "tabernus",
+      "options": {
+        "attributes": {
+          "email": {
+            "identifier_active": true,
+            "signup_status": "required"
+          },
+          "username": {
+            "identifier_active": false,
+            "signup_status": "hidden"
+          }
+        },
+        "authentication_methods": {
+          "passkey": {
+            "enabled": true
+          },
+          "password": {
+            "enabled": true,
+            "min_length": 8,
+            "password_security_info": [
+              {
+                "code": "ter-tui",
+                "label": "Versus desparatus numquam valde tum debeo ara adipisci.",
+                "status": "unmet",
+                "args": {
+                  "count": 4
+                }
+              },
+              {
+                "code": "conventus-colligo",
+                "label": "Torqueo autus cinis quaerat dolores angelus audax.",
+                "status": "met",
+                "args": {
+                  "count": 4
+                }
+              },
+              {
+                "code": "amor-voluptates",
+                "label": "Bardus aliquid tremo aeternus voluptates acceptus attollo.",
+                "status": "met",
+                "args": {
+                  "count": 1
+                }
+              }
+            ],
+            "policy": "good"
+          }
+        },
+        "forgot_password_enabled": true,
+        "signup_enabled": true
+      },
+      "strategy": "auth0"
+    },
+    "locale": "en",
+    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5",
+    "errors": [
+      {
+        "code": "invalid_request",
+        "message": "The transaction has expired."
+      },
+      {
+        "code": "no-code",
+        "message": "Please enter a code",
+        "field": "code"
+      }
+    ]
+  },
+  "untrusted_data": {
+    "submitted_form_data": {
+      "email": "Foster15@hotmail.com"
+    },
+    "authorization_params": {
+      "screen_hint": "signup",
+      "ui_locales": "en"
+    }
+  }
+}

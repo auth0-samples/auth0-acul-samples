@@ -1,0 +1,36 @@
+{
+  "page": {
+    "title": "Login",
+    "separator": "OR"
+  },
+  "header": {
+    "logoAlt": "Application Logo",
+    "title": "Welcome",
+    "description": "Log in to dev-tenant to continue to my acul react."
+  },
+  "form": {
+    "fields": {
+      "username": {
+        "required": "This field is required"
+      },
+      "password": {
+        "label": "Password",
+        "required": "Password is required",
+        "minLength": "Password must be at least {minLength} characters"
+      },
+      "captcha": {
+        "label": "CAPTCHA",
+        "required": "Please complete the CAPTCHA"
+      }
+    },
+    "button": "Continue",
+    "forgotPassword": "Forgot Password?"
+  },
+  "footer": {
+    "text": "Don't have an account?",
+    "linkText": "Sign up"
+  },
+  "social": {
+    "continueWith": "Continue with"
+  }
+}
