@@ -19,10 +19,6 @@ const AlternativeLogins = () => {
   const passkeyButtonText =
     texts?.passkeyButtonText || locales?.alternativeLogins?.passkeyButtonText;
 
-  if (!alternateConnections || alternateConnections.length === 0) {
-    return null;
-  }
-
   const handleConnectionLogin = (connection: SocialConnection) => {
     const federatedLoginOptions = {
       connection: connection.name,

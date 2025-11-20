@@ -1,13 +1,13 @@
 {
   "client": {
-    "id": "jAn8Pnux9dkf8U7DebyrMhde",
-    "logo_uri": "https://odd-resource.biz/",
-    "name": "Hagenes, Runte and Gleichner"
+    "id": "ynAQdpx1JBSCbPkXd1nbDpF9",
+    "logo_uri": "https://disloyal-merit.net",
+    "name": "Marvin - Klein"
   },
   "organization": {
-    "display_name": "Gorczany, Raynor and Hansen",
-    "id": "org_SOzFEX4jIuGtY5VQcAJrcuNq",
-    "name": "hegmann-llc",
+    "display_name": "Stoltenberg Inc",
+    "id": "org_8SOzFEX4jIuGtY5VQcAJrcuN",
+    "name": "hoppe-inc",
     "usage": "allow"
   },
   "prompt": {
@@ -15,8 +15,8 @@
   },
   "screen": {
     "links": {
-      "reset_password": "https://nimble-wombat.net",
-      "signup": "https://international-transom.com/"
+      "reset_password": "https://each-beret.name/",
+      "signup": "https://merry-tabletop.biz"
     },
     "name": "login-id"
   },
@@ -27,7 +27,7 @@
     "enabled_locales": [
       "en"
     ],
-    "friendly_name": "Bernier, Okuneva and Ward",
+    "friendly_name": "Russel, Bernier and Okuneva",
     "mfa_options": {
       "pick_authenticator_enabled": true
     },
@@ -35,7 +35,7 @@
   },
   "transaction": {
     "connection": {
-      "name": "tabernus",
+      "name": "agnosco",
       "options": {
         "attributes": {
           "email": {
@@ -44,7 +44,7 @@
           },
           "username": {
             "identifier_active": false,
-            "signup_status": "hidden"
+            "signup_status": "required"
           }
         },
         "authentication_methods": {
@@ -56,8 +56,8 @@
             "min_length": 8,
             "password_security_info": [
               {
-                "code": "ter-tui",
-                "label": "Versus desparatus numquam valde tum debeo ara adipisci.",
+                "code": "tendo-ter",
+                "label": "Somniculosus versus desparatus numquam valde tum debeo ara adipisci.",
                 "status": "unmet",
                 "args": {
                   "count": 4
@@ -88,16 +88,16 @@
       },
       "strategy": "auth0"
     },
-    "locale": "en",
-    "state": "LJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ5"
+    "locale": "es",
+    "state": "hLJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ"
   },
   "untrusted_data": {
-    "submitted_form_data": {
-      "email": "Foster15@hotmail.com"
-    },
     "authorization_params": {
       "screen_hint": "signup",
       "ui_locales": "en"
+    },
+    "submitted_form_data": {
+      "email": "Marianne35@gmail.com"
     }
   }
 }
