@@ -27,9 +27,6 @@ lerna-debug.log*
 coverage/
 *.lcov
 
-# Documentation
-docs/
-
 # Operating system files
 .DS_Store
 .DS_Store?
