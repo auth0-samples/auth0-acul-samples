@@ -31,7 +31,7 @@ on:
 jobs:
   validate-manifest:
     name: Validate Manifest Structure
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-2cpu-8ram-75ssd
     
     steps:
       - name: Checkout code

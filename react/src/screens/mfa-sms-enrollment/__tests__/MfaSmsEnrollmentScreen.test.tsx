@@ -87,7 +87,7 @@ describe("MfaSmsEnrollmentScreen", () => {
     mockUseErrors.mockReturnValue({
       errors: {
         byField: jest.fn(() => []),
-        byKind: jest.fn(() => [
+        byType: jest.fn(() => [
           { id: "1", message: "Network connection failed" },
         ]),
       },

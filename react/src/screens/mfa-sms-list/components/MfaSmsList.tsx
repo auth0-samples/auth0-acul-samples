@@ -19,7 +19,7 @@ function MfaSmsList() {
 
   // Get general errors (not field-specific)
   const generalErrors: ErrorItem[] = errors
-    .byKind("auth0")
+    .byType("auth0")
     .filter((err) => !err.field);
 
   // Get enrolled phone numbers from user object

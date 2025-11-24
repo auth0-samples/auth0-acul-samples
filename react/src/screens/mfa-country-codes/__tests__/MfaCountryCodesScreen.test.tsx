@@ -100,7 +100,7 @@ describe("MfaCountryCodesScreen", () => {
     mockUseErrors.mockReturnValue({
       errors: {
         byField: jest.fn(() => []),
-        byKind: jest.fn(() => [{ id: "1", message: generalError }]),
+        byType: jest.fn(() => [{ id: "1", message: generalError }]),
       },
       hasError: true,
       dismiss: jest.fn(),

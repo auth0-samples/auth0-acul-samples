@@ -95,7 +95,7 @@ export const useUsernameValidation = jest.fn(() => ({
 export const useErrors = jest.fn(() => ({
   errors: {
     byField: jest.fn(() => []),
-    byKind: jest.fn(() => []),
+    byType: jest.fn(() => []),
   },
   hasError: false,
   dismiss: jest.fn(),

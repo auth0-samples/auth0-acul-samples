@@ -58,7 +58,7 @@ function MfaEmailChallengeForm() {
 
   // Extract general errors (not field-specific) from the SDK
   const generalErrors: ErrorItem[] =
-    errors.byKind("auth0")?.filter((error) => {
+    errors.byType("auth0")?.filter((error) => {
       return !error.field || error.field === null;
     }) || [];
 

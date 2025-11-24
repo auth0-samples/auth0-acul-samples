@@ -139,7 +139,7 @@ describe("MFAEmailChallengeInstance", () => {
     (useErrors as jest.Mock).mockReturnValue({
       errors: {
         byField: jest.fn(() => []),
-        byKind: jest.fn((kind: string) => {
+        byType: jest.fn((kind: string) => {
           if (kind === "auth0") {
             return [
               {
@@ -176,7 +176,7 @@ describe("MFAEmailChallengeInstance", () => {
     // Mock useErrors to return general error (no field)
     (useErrors as jest.Mock).mockReturnValue({
       errors: {
-        byKind: jest.fn(() => []),
+        byType: jest.fn(() => []),
         byField: jest.fn(() => {
           return [
             {

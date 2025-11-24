@@ -100,7 +100,7 @@ export const useTransaction = jest.fn(
 export const useErrors = jest.fn(() => ({
   errors: {
     byField: jest.fn((_field: string) => []),
-    byKind: jest.fn((_kind: string) => []),
+    byType: jest.fn((_kind: string) => []),
     byCode: jest.fn((_code: string) => []),
   },
   hasError: jest.fn(() => false),

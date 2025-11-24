@@ -20,7 +20,7 @@ describe("EmailIdentifierChallengeScreen", () => {
     (useErrors as jest.Mock).mockReturnValue({
       errors: {
         byField: jest.fn(() => []),
-        byKind: jest.fn(() => []),
+        byType: jest.fn(() => []),
         byCode: jest.fn(() => []),
       },
       hasError: false,
@@ -101,7 +101,7 @@ describe("EmailIdentifierChallengeScreen", () => {
     mockUseErrors.mockReturnValue({
       errors: {
         byField: jest.fn(() => []),
-        byKind: jest.fn(() => [
+        byType: jest.fn(() => [
           {
             id: "error-1",
             message: "Invalid code. Please try again.",

@@ -46,7 +46,7 @@ function MfaSmsChallengeForm() {
 
   // Get general errors (errors without a specific field)
   const generalErrors: ErrorItem[] = errors
-    .byKind("auth0")
+    .byType("auth0")
     .filter((err) => !err.field);
 
   const maskedPhoneNumber =

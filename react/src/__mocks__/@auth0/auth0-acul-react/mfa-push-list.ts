@@ -95,7 +95,7 @@ const mockErrors: ErrorItem[] = [];
 export const useErrors = jest.fn(() => ({
   errors: {
     byField: jest.fn(() => []),
-    byKind: jest.fn().mockReturnValue(mockErrors),
+    byType: jest.fn().mockReturnValue(mockErrors),
   },
   hasError: false,
   dismiss: jest.fn(),

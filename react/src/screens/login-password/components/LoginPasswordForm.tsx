@@ -69,7 +69,7 @@ function LoginPasswordForm() {
 
   // Get general errors (not field-specific)
   const generalErrors: ErrorItem[] = errors
-    .byKind("auth0")
+    .byType("auth0")
     .filter((err) => !err.field);
 
   // Proper submit handler with form data

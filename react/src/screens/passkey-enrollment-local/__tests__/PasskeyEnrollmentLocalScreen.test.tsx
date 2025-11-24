@@ -60,7 +60,7 @@ describe("PasskeyEnrollmentLocalInstance", () => {
       hasErrors: true,
       errors: {
         byField: jest.fn(() => []),
-        byKind: jest.fn((kind: string) => {
+        byType: jest.fn((kind: string) => {
           if (kind === "auth0") {
             return [
               {
