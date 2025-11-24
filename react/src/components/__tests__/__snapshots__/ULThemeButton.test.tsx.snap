@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ULThemeButton matches snapshot with custom className 1`] = `
+<button
+  class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden text-sm font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 shadow-button-resting hover:shadow-button-hover hover:border-primary/50 border-primary bg-primary text-primary-foreground hover:bg-primary/90 theme-default:before:from-primary-foreground/0 theme-default:before:to-primary-foreground/15 theme-default:before:absolute theme-default:before:top-0 theme-default:before:left-0 theme-default:before:block theme-default:before:h-full theme-default:before:w-full theme-default:before:bg-gradient-to-t theme-default:before:content-[''] h-10 rounded-2xl has-[>svg]:px-3 w-full custom-btn p-6 border-0 cursor-pointer theme-universal:bg-primary-button theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:hover:shadow-[var(--button-hover-shadow)] theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:disabled:bg-primary-button/70 theme-universal:disabled:border-primary-button/70 theme-universal:disabled:cursor-not-allowed theme-universal:rounded-button theme-universal:font-button theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
+>
+  Full Width Button
+</button>
+`;
+
+exports[`ULThemeButton matches snapshot with default props 1`] = `
+<button
+  class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden text-sm font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 shadow-button-resting hover:shadow-button-hover hover:border-primary/50 border-primary bg-primary text-primary-foreground hover:bg-primary/90 theme-default:before:from-primary-foreground/0 theme-default:before:to-primary-foreground/15 theme-default:before:absolute theme-default:before:top-0 theme-default:before:left-0 theme-default:before:block theme-default:before:h-full theme-default:before:w-full theme-default:before:bg-gradient-to-t theme-default:before:content-[''] h-10 rounded-2xl has-[>svg]:px-3 p-6 border-0 cursor-pointer theme-universal:bg-primary-button theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:hover:shadow-[var(--button-hover-shadow)] theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:disabled:bg-primary-button/70 theme-universal:disabled:border-primary-button/70 theme-universal:disabled:cursor-not-allowed theme-universal:rounded-button theme-universal:font-button theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
+>
+  Default Button
+</button>
+`;
+
+exports[`ULThemeButton matches snapshot with different sizes: large-button 1`] = `
+<button
+  class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 shadow-button-resting hover:shadow-button-hover hover:border-primary/50 border-primary bg-primary text-primary-foreground hover:bg-primary/90 theme-default:before:from-primary-foreground/0 theme-default:before:to-primary-foreground/15 theme-default:before:absolute theme-default:before:top-0 theme-default:before:left-0 theme-default:before:block theme-default:before:h-full theme-default:before:w-full theme-default:before:bg-gradient-to-t theme-default:before:content-[''] h-12 rounded-3xl text-base has-[>svg]:px-4 p-6 border-0 cursor-pointer theme-universal:bg-primary-button theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:hover:shadow-[var(--button-hover-shadow)] theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:disabled:bg-primary-button/70 theme-universal:disabled:border-primary-button/70 theme-universal:disabled:cursor-not-allowed theme-universal:rounded-button theme-universal:font-button theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
+>
+  Large Button
+</button>
+`;
+
+exports[`ULThemeButton matches snapshot with different sizes: small-button 1`] = `
+<button
+  class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center overflow-hidden font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 shadow-button-resting hover:shadow-button-hover hover:border-primary/50 border-primary bg-primary text-primary-foreground hover:bg-primary/90 theme-default:before:from-primary-foreground/0 theme-default:before:to-primary-foreground/15 theme-default:before:absolute theme-default:before:top-0 theme-default:before:left-0 theme-default:before:block theme-default:before:h-full theme-default:before:w-full theme-default:before:bg-gradient-to-t theme-default:before:content-[''] h-8 gap-1.5 rounded-xl text-xs has-[>svg]:px-2.5 p-6 border-0 cursor-pointer theme-universal:bg-primary-button theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:hover:shadow-[var(--button-hover-shadow)] theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:disabled:bg-primary-button/70 theme-universal:disabled:border-primary-button/70 theme-universal:disabled:cursor-not-allowed theme-universal:rounded-button theme-universal:font-button theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
+>
+  Small Button
+</button>
+`;
+
+exports[`ULThemeButton matches snapshot with disabled state 1`] = `
+<button
+  class="focus-visible:ring-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive theme-default:active:scale-[0.99] relative box-border inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden text-sm font-medium whitespace-nowrap transition-all duration-150 ease-in-out outline-none focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 shadow-button-resting hover:shadow-button-hover hover:border-primary/50 border-primary bg-primary text-primary-foreground hover:bg-primary/90 theme-default:before:from-primary-foreground/0 theme-default:before:to-primary-foreground/15 theme-default:before:absolute theme-default:before:top-0 theme-default:before:left-0 theme-default:before:block theme-default:before:h-full theme-default:before:w-full theme-default:before:bg-gradient-to-t theme-default:before:content-[''] h-10 rounded-2xl has-[>svg]:px-3 p-6 border-0 cursor-pointer theme-universal:bg-primary-button theme-universal:text-(--ul-theme-color-primary-button-label) theme-universal:hover:shadow-[var(--button-hover-shadow)] theme-universal:focus:outline-none theme-universal:focus:ring-4 theme-universal:focus:ring-base-focus/15 theme-universal:disabled:bg-primary-button/70 theme-universal:disabled:border-primary-button/70 theme-universal:disabled:cursor-not-allowed theme-universal:rounded-button theme-universal:font-button theme-universal:text-(length:--ul-theme-font-buttons-text-size)"
+  disabled=""
+>
+  Disabled Button
+</button>
+`;

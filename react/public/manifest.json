@@ -1,0 +1,12 @@
+{
+  "screens": [
+    {
+      "login-id": {
+        "login-id": {
+          "path": "/screens/login-id/login-id",
+          "variants": ["default", "with-errors"]
+        }
+      }
+    }
+  ]
+}

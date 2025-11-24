@@ -1,0 +1,47 @@
+name: React-JS CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'react-js/**'
+      - '.github/workflows/react-js-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'react-js/**'
+      - '.github/workflows/react-js-ci.yml'
+
+jobs:
+  react-js-quality:
+    name: React-JS Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          
+      - name: Install dependencies
+        working-directory: react-js
+        run: npm ci
+        
+      - name: Lint check
+        working-directory: react-js
+        run: npm run lint:check
+        
+      - name: Type check
+        working-directory: react-js
+        run: npx tsc --noEmit
+        
+      - name: Run tests
+        working-directory: react-js
+        run: npm test -- --coverage --watchAll=false
+        
+      - name: Build
+        working-directory: react-js
+        run: npm run build

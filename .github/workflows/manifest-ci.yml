@@ -1,0 +1,49 @@
+name: Manifest Validation CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'manifest.json'
+      - 'scripts/validate-manifest.js'
+      - '.github/workflows/manifest-ci.yml'
+      - '.github/actions/validate-manifest/**'
+      # Track React implementations (exclude docs and lock files)
+      - 'react/**'
+      - 'react-js/**'
+      - '!**/README.md'
+      - '!**/package-lock.json'
+      - '!**/.prettierrc.json'
+  push:
+    branches: [main]
+    paths:
+      - 'manifest.json'
+      - 'scripts/validate-manifest.js'
+      - '.github/workflows/manifest-ci.yml'
+      - '.github/actions/validate-manifest/**'
+      # Track React implementations (exclude docs and lock files)
+      - 'react/**'
+      - 'react-js/**'
+      - '!**/README.md'
+      - '!**/package-lock.json'
+      - '!**/.prettierrc.json'
+
+jobs:
+  validate-manifest:
+    name: Validate Manifest Structure
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          
+      - name: Validate manifest
+        uses: ./.github/actions/validate-manifest
+        with:
+          manifest-path: './manifest.json'
+          strict-mode: 'true'

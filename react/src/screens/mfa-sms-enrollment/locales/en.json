@@ -1,0 +1,23 @@
+{
+    "page": {
+        "title": "Secure Your Account - MFA"
+    },
+    "header": {
+        "logoAltText": "Application Logo",
+        "title": "Add Phone Number",
+        "description": "Enter your phone number below. An SMS will be sent to that number with a code to enter on the next screen."
+    },
+    "form": {
+        "selectCountryPlaceholder": "Select Country",
+        "phoneLabel": "Enter your phone number*",
+        "continueButtonText": "Continue",
+        "sendingText": "Sending..."
+    },
+    "footer": {
+        "tryAnotherMethodText": "Try another method"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred",
+        "phoneRequired": "Please enter your phone number."
+    }
+}

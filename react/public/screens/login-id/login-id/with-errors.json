@@ -1,0 +1,114 @@
+{
+  "client": {
+    "id": "ynAQdpx1JBSCbPkXd1nbDpF9",
+    "logo_uri": "https://disloyal-merit.net",
+    "name": "Marvin - Klein"
+  },
+  "organization": {
+    "display_name": "Stoltenberg Inc",
+    "id": "org_8SOzFEX4jIuGtY5VQcAJrcuN",
+    "name": "hoppe-inc",
+    "usage": "allow"
+  },
+  "prompt": {
+    "name": "login-id"
+  },
+  "screen": {
+    "links": {
+      "reset_password": "https://each-beret.name/",
+      "signup": "https://merry-tabletop.biz"
+    },
+    "name": "login-id"
+  },
+  "tenant": {
+    "enabled_factors": [
+      "otp"
+    ],
+    "enabled_locales": [
+      "en"
+    ],
+    "friendly_name": "Russel, Bernier and Okuneva",
+    "mfa_options": {
+      "pick_authenticator_enabled": true
+    },
+    "name": "stanton-inc"
+  },
+  "transaction": {
+    "connection": {
+      "name": "agnosco",
+      "options": {
+        "attributes": {
+          "email": {
+            "identifier_active": true,
+            "signup_status": "required"
+          },
+          "username": {
+            "identifier_active": false,
+            "signup_status": "required"
+          }
+        },
+        "authentication_methods": {
+          "passkey": {
+            "enabled": true
+          },
+          "password": {
+            "enabled": true,
+            "min_length": 8,
+            "password_security_info": [
+              {
+                "code": "tendo-ter",
+                "label": "Somniculosus versus desparatus numquam valde tum debeo ara adipisci.",
+                "status": "unmet",
+                "args": {
+                  "count": 4
+                }
+              },
+              {
+                "code": "conventus-colligo",
+                "label": "Torqueo autus cinis quaerat dolores angelus audax.",
+                "status": "met",
+                "args": {
+                  "count": 4
+                }
+              },
+              {
+                "code": "amor-voluptates",
+                "label": "Bardus aliquid tremo aeternus voluptates acceptus attollo.",
+                "status": "met",
+                "args": {
+                  "count": 1
+                }
+              }
+            ],
+            "policy": "good"
+          }
+        },
+        "forgot_password_enabled": true,
+        "signup_enabled": true
+      },
+      "strategy": "auth0"
+    },
+    "locale": "es",
+    "state": "hLJ47LrwjYHjCx9tBWqOCdkweUFzYmFQ",
+    "errors": [
+      {
+        "code": "invalid_request",
+        "message": "The transaction has expired."
+      },
+      {
+        "code": "invalid-email-format",
+        "message": "Email is not valid",
+        "field": "username"
+      }
+    ]
+  },
+  "untrusted_data": {
+    "authorization_params": {
+      "screen_hint": "signup",
+      "ui_locales": "en"
+    },
+    "submitted_form_data": {
+      "email": "Marianne35@gmail.com"
+    }
+  }
+}

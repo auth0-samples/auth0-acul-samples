@@ -1,0 +1,19 @@
+{
+    "page": {
+        "title": "Install the application | All Applications"
+    },
+    "heading": {
+        "logoAltText": "Application Logo",
+        "title": "Secure Your Account",
+        "description": "In order to continue, install the Auth0 Guardian app via the app store from your mobile device."
+    },
+    "form": {
+        "continueEnrollButtonText": "Continue",
+        "androidButtonText": "Google Play",
+        "iosButtonText": "App Store",
+        "pickAuthenticatorText": "Try another method"
+    },
+    "errors": {
+        "errorOccurred": "An error occurred"
+    }
+}

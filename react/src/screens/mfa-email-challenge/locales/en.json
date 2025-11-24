@@ -1,0 +1,28 @@
+{
+    "pageTitle": "Enter your email code to log in",
+    "header": {
+        "logoAltText": "Application Logo",
+        "title": "Verify Your Identity",
+        "description": "We've sent an email with your code to"
+    },
+    "footer": {
+        "resendText": "Didn't receive an email?",
+        "resendActionText": "Resend",
+        "tryAnotherMethodText": "Try another method",
+        "resendCooldown": "Resend in {{seconds}}s"
+    },
+    "form": {
+        "fields": {
+            "email": {
+                "identifierLabelText": "Email"
+            },
+            "code": {
+                "codeLabelText": "Enter the code",
+                "requiredText": "Please enter the verification code."
+            }
+        },
+        "buttonText": "Continue",
+        "rememberDeviceText": "Remember this device for 30 days",
+        "verificationText": "Verifying"
+    }
+}

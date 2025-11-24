@@ -1,0 +1,298 @@
+{
+  "templates": {
+    "react-js": {
+      "name": "React (with ACUL JS SDK)",
+      "description": "React sample using @auth0/auth0-acul-js SDK with 3 authentication screens",
+      "framework": "react",
+      "sdk": "js",
+      "base_files": [
+        ".prettierrc.json",
+        "DEPLOYMENT.md",
+        "README.md",
+        "babel.config.cjs",
+        "components.json",
+        "eslint.config.js",
+        "index.html",
+        "jest.config.cjs",
+        "package.json",
+        "postcss.config.mjs",
+        "tsconfig.json",
+        "vite.config.ts",
+        "src/App.tsx",
+        "src/DevScreenManager.tsx",
+        "src/ProdScreenManager.tsx",
+        "src/index.css",
+        "src/main.tsx",
+        "src/vite-env.d.ts"
+      ],
+      "base_directories": [
+        ".github",
+        "scripts",
+        "public",
+        "src/__mocks__",
+        "src/assets",
+        "src/components",
+        "src/constants",
+        "src/hooks",
+        "src/lib",
+        "src/test",
+        "src/types",
+        "src/utils"
+      ],
+      "screens": [
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "src/screens/login"
+        },
+        {
+          "id": "login-id",
+          "name": "Login: Identifier First",
+          "description": "Identifier-first login flow for collecting email/username",
+          "path": "src/screens/login-id"
+        },
+        {
+          "id": "login-password",
+          "name": "Login: Password",
+          "description": "Password entry screen for authentication",
+          "path": "src/screens/login-password"
+        }
+      ]
+    },
+    "react": {
+      "name": "React (with ACUL React SDK)",
+      "description": "Advanced React sample using @auth0/auth0-acul-react SDK with 30+ authentication screens",
+      "framework": "react",
+      "sdk": "react",
+      "base_files": [
+        ".prettierrc.json",
+        "DEPLOYMENT.md",
+        "README.md",
+        "babel.config.cjs",
+        "components.json",
+        "eslint.config.js",
+        "index.html",
+        "jest.config.cjs",
+        "package.json",
+        "postcss.config.mjs",
+        "tsconfig.json",
+        "vite.config.ts",
+        "src/App.tsx",
+        "src/DevScreenManager.tsx",
+        "src/ProdScreenManager.tsx",
+        "src/index.css",
+        "src/main.tsx",
+        "src/vite-env.d.ts"
+      ],
+      "base_directories": [
+        ".github",
+        "scripts",
+        "public",
+        "src/__mocks__",
+        "src/assets",
+        "src/components",
+        "src/constants",
+        "src/hooks",
+        "src/lib",
+        "src/test",
+        "src/types",
+        "src/utils"
+      ],
+      "screens": [
+        {
+          "id": "login",
+          "name": "Login",
+          "description": "Universal login screen with social providers and form authentication",
+          "path": "src/screens/login"
+        },
+        {
+          "id": "login-id",
+          "name": "Login Identifier First",
+          "description": "Screen for displaying identifier-first login flow",
+          "path": "src/screens/login-id"
+        },
+        {
+          "id": "login-password",
+          "name": "Login Password",
+          "description": "Screen for displaying login password flow",
+          "path": "src/screens/login-password"
+        },
+        {
+          "id": "login-passwordless-sms-otp",
+          "name": "Login: Passwordless SMS OTP",
+          "description": "Passwordless SMS OTP entry screen for authentication",
+          "path": "src/screens/login-passwordless-sms-otp"
+        },
+        {
+          "id": "login-passwordless-email-code",
+          "name": "Login: Passwordless Email Code",
+          "description": "Passwordless Email Code entry screen for authentication",
+          "path": "src/screens/login-passwordless-email-code"
+        },
+        {
+          "id": "reset-password-email",
+          "name": "Reset Password: Email",
+          "description": "Resend Email screen for password reset",
+          "path": "src/screens/reset-password-email"
+        },
+        {
+          "id": "reset-password",
+          "name": "Reset Password",
+          "description": "Screen for password reset",
+          "path": "src/screens/reset-password"
+        },
+        {
+          "id": "reset-password-request",
+          "name": "Reset Password: Request",
+          "description": "Screen for reset password request",
+          "path": "src/screens/reset-password-request"
+        },
+        {
+          "id": "reset-password-success",
+          "name": "Reset Password: Success",
+          "description": "Screen for successful password reset",
+          "path": "src/screens/reset-password-success"
+        },
+        {
+          "id": "reset-password-error",
+          "name": "Reset Password: Error",
+          "description": "Screen for failed password reset",
+          "path": "src/screens/reset-password-error"
+        },
+        {
+          "id": "signup-id",
+          "name": "Signup Identifier First",
+          "description": "Identifier-first signup flow for collecting user registration details with required and optional fields",
+          "path": "src/screens/signup-id"
+        },
+        {
+          "id": "signup-password",
+          "name": "Signup Password",
+          "description": "Password entry screen for user registration",
+          "path": "src/screens/signup-password"
+        },
+        {
+          "id": "mfa-login-options",
+          "name": "MFA Login Options",
+          "description": "Screen to login via multi-factor authentication (MFA) factors with various options",
+          "path": "src/screens/mfa-login-options"
+        },
+        {
+          "id": "signup",
+          "name": "Signup",
+          "description": "Screen for user registration",
+          "path": "src/screens/signup"
+        },
+        {
+          "id": "passkey-enrollment",
+          "name": "Passkey Enrollment",
+          "description": "Screen for passkey enrollment",
+          "path": "src/screens/passkey-enrollment"
+        },
+        {
+          "id": "passkey-enrollment-local",
+          "name": "Passkey Enrollment Local",
+          "description": "Screen for passkey enrollment local",
+          "path": "src/screens/passkey-enrollment-local"
+        },
+        {
+          "id": "mfa-begin-enroll-options",
+          "name": "MFA Begin Enroll Options",
+          "description": "Screen to begin enrolling in multi-factor authentication (MFA) with various options",
+          "path": "src/screens/mfa-begin-enroll-options"
+        },
+        {
+          "id": "mfa-email-challenge",
+          "name": "MFA Email Challenge",
+          "description": "Screen for MFA email challenge",
+          "path": "src/screens/mfa-email-challenge"
+        },
+        {
+          "id": "mfa-sms-challenge",
+          "name": "MFA SMS Challenge",
+          "description": "MFA SMS challenge screen for authentication",
+          "path": "src/screens/mfa-sms-challenge"
+        },
+        {
+          "id": "mfa-sms-enrollment",
+          "name": "MFA SMS Enrollment",
+          "description": "Screen for enrolling in SMS-based multi-factor authentication (MFA)",
+          "path": "src/screens/mfa-sms-enrollment"
+        },
+        {
+          "id": "mfa-enroll-result",
+          "name": "MFA Enroll Result",
+          "description": "Screen displaying response of MFA Enrollment",
+          "path": "src/screens/mfa-enroll-result"
+        },
+        {
+          "id": "mfa-push-challenge-push",
+          "name": "MFA Push Challenge Push",
+          "description": "Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "src/screens/mfa-push-challenge-push"
+        },
+        {
+          "id": "mfa-push-list",
+          "name": "MFA Push List",
+          "description": "Screen to list and manage Push multi-factor authentication (MFA) devices",
+          "path": "src/screens/mfa-push-list"
+        },
+        {
+          "id": "mfa-push-welcome",
+          "name": "MFA Push Welcome",
+          "description": "Welcome Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "src/screens/mfa-push-welcome"
+        },
+        {
+          "id": "mfa-push-enrollment-qr",
+          "name": "MFA Push Enrollment QR",
+          "description": "MFA Push Enrollment QR Screen for enrolling in Push-based multi-factor authentication (MFA)",
+          "path": "src/screens/mfa-push-enrollment-qr"
+        },
+        {
+          "id": "mfa-sms-list",
+          "name": "MFA SMS List",
+          "description": "Screen to list and manage SMS-based multi-factor authentication (MFA) methods",
+          "path": "src/screens/mfa-sms-list"
+        },
+        {
+          "id": "email-identifier-challenge",
+          "name": "Email Identifier Challenge",
+          "description": "Screen for collecting email identifier during authentication",
+          "path": "src/screens/email-identifier-challenge"
+        },
+        {
+          "id": "phone-identifier-challenge",
+          "name": "Phone Identifier Challenge",
+          "description": "Screen for collecting phone number identifier during authentication",
+          "path": "src/screens/phone-identifier-challenge"
+        },
+        {
+          "id": "mfa-email-list",
+          "name": "MFA Email List",
+          "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
+          "path": "src/screens/mfa-email-list"
+        },
+        {
+          "id": "mfa-country-codes",
+          "name": "MFA Country Codes",
+          "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
+          "path": "src/screens/mfa-country-codes"
+        },
+        {
+          "id": "phone-identifier-enrollment",
+          "name": "Phone Identifier Enrollment",
+          "description": "Screen for enrolling phone identifier",
+          "path": "src/screens/phone-identifier-enrollment"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "repository": "auth0-samples/auth0-acul-samples",
+    "last_updated": "2025-08-12",
+    "description": "Auth0 Advanced Customizations for Universal Login (ACUL) sample templates for multiple frameworks and SDKs"
+  }
+}

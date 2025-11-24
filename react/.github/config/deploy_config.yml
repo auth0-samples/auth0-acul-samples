@@ -1,0 +1,87 @@
+# .github/deploy_config.yml
+# This file defines the default deployment status for each screen.
+# Set the value to 'true' for screens you want to deploy by default
+# when the workflow is run without specific overriding inputs.
+
+default_screen_deployment_status:
+  "login-id": false
+  "login-password": false
+  "email-identifier-challenge": false
+  "login": false
+  "login-passwordless-email-code": false
+  "login-passwordless-sms-otp": false
+  "mfa-begin-enroll-options": false
+  "mfa-country-codes": false
+  "mfa-email-challenge": false
+  "mfa-email-list": false
+  "mfa-enroll-result": false
+  "mfa-login-options": false
+  "mfa-push-challenge-push": false
+  "mfa-push-enrollment-qr": false
+  "mfa-push-list": false
+  "mfa-push-welcome": false
+  "mfa-sms-challenge": false
+  "mfa-sms-enrollment": false
+  "mfa-sms-list": false
+  "passkey-enrollment": false
+  "passkey-enrollment-local": false
+  "phone-identifier-challenge": false
+  "phone-identifier-enrollment": false
+  "reset-password": false
+  "reset-password-email": false
+  "reset-password-error": false
+  "reset-password-success": false
+  "signup": false
+  "signup-id": false
+  "signup-password": false
+  
+  # Screens not yet implemented (alphabetically sorted):
+  # "accept-invitation": false
+  # "brute-force-protection-unblock": false
+  # "brute-force-protection-unblock-failure": false
+  # "brute-force-protection-unblock-success": false
+  # "consent": false
+  # "customized-consent": false
+  # "device-code-activation": false
+  # "device-code-activation-allowed": false
+  # "device-code-activation-denied": false
+  # "device-code-confirmation": false
+  # "email-otp-challenge": false
+  # "email-verification-result": false
+  # "interstitial-captcha": false
+  # "login-email-verification": false
+  # "logout": false
+  # "logout-aborted": false
+  # "logout-complete": false
+  # "mfa-detect-browser-capabilities": false
+  # "mfa-otp-challenge": false
+  # "mfa-otp-enrollment-code": false
+  # "mfa-otp-enrollment-qr": false
+  # "mfa-phone-challenge": false
+  # "mfa-phone-enrollment": false
+  # "mfa-recovery-code-challenge": false
+  # "mfa-recovery-code-challenge-new-code": false
+  # "mfa-recovery-code-enrollment": false
+  # "mfa-voice-challenge": false
+  # "mfa-voice-enrollment": false
+  # "mfa-webauthn-change-key-nickname": false
+  # "mfa-webauthn-enrollment-success": false
+  # "mfa-webauthn-error": false
+  # "mfa-webauthn-not-available-error": false
+  # "mfa-webauthn-platform-challenge": false
+  # "mfa-webauthn-platform-enrollment": false
+  # "mfa-webauthn-roaming-challenge": false
+  # "mfa-webauthn-roaming-enrollment": false
+  # "organization-picker": false
+  # "organization-selection": false
+  # "redeem-ticket": false
+  # "reset-password-mfa-email-challenge": false
+  # "reset-password-mfa-otp-challenge": false
+  # "reset-password-mfa-phone-challenge": false
+  # "reset-password-mfa-push-challenge-push": false
+  # "reset-password-mfa-recovery-code-challenge": false
+  # "reset-password-mfa-sms-challenge": false
+  # "reset-password-mfa-voice-challenge": false
+  # "reset-password-mfa-webauthn-platform-challenge": false
+  # "reset-password-mfa-webauthn-roaming-challenge": false
+  # "reset-password-request": false
