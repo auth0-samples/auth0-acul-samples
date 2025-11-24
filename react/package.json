@@ -36,7 +36,7 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "@auth0/ul-context-inspector": "^1.1.0",
+    "@auth0/ul-context-inspector": "^1.1.2",
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
