@@ -23,7 +23,7 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
   <tr>
     <td width="50%" align="center">
       <img 
-        src="https://github.com/user-attachments/assets/800077f0-bb17-427b-bb56-80f676698986" 
+        src="https://cdn.auth0.com/website/acul-samples/login-id-with-ulx-context.png" 
         alt="Login ID Screen with mock data"
         width="100%" />
       <br />
@@ -31,7 +31,7 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
     </td>
     <td width="50%" align="center">
       <img 
-        src="https://github.com/user-attachments/assets/dc7dd554-be25-4939-b1cd-c4a882355dba" 
+        src="https://cdn.auth0.com/website/acul-samples/login-id-prod.png" 
         alt="Login ID Screen deployed with ACUL"
         width="100%" />
       <br />
@@ -57,7 +57,7 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
   <tr>
     <td width="50%" align="center">
       <img 
-        src="https://github.com/user-attachments/assets/52376b2d-d25b-4155-873c-9d314af64c91" 
+        src="https://cdn.auth0.com/website/acul-samples/signup-with-ulx-context.png" 
         alt="Signup Screen with mock data"
         width="100%" />
       <br />
@@ -65,7 +65,7 @@ This monorepo provides production-ready templates for creating custom Auth0 Adva
     </td>
     <td width="50%" align="center">
       <img 
-        src="https://github.com/user-attachments/assets/01ce0c6f-1dea-4d24-ac58-61d7d7ca3390" 
+        src="https://cdn.auth0.com/website/acul-samples/signup-prod.png" 
         alt="Signup Screen deployed with ACUL"
         width="100%" />
       <br />
