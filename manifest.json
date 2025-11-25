@@ -29,7 +29,6 @@
         ".github",
         "scripts",
         "public",
-        "src/__mocks__",
         "src/assets",
         "src/components",
         "src/constants",
@@ -44,19 +43,28 @@
           "id": "login",
           "name": "Login",
           "description": "Universal login screen with social providers and form authentication",
-          "path": "src/screens/login"
+          "path": "src/screens/login",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-js/login.ts"
+          ]
         },
         {
           "id": "login-id",
           "name": "Login: Identifier First",
           "description": "Identifier-first login flow for collecting email/username",
-          "path": "src/screens/login-id"
+          "path": "src/screens/login-id",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-js/login-id.ts"
+          ]
         },
         {
           "id": "login-password",
           "name": "Login: Password",
           "description": "Password entry screen for authentication",
-          "path": "src/screens/login-password"
+          "path": "src/screens/login-password",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-js/login-password.ts"
+          ]
         }
       ]
     },
@@ -89,7 +97,6 @@
         ".github",
         "scripts",
         "public",
-        "src/__mocks__",
         "src/assets",
         "src/components",
         "src/constants",
@@ -104,187 +111,280 @@
           "id": "login",
           "name": "Login",
           "description": "Universal login screen with social providers and form authentication",
-          "path": "src/screens/login"
+          "path": "src/screens/login",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/login.ts"
+          ]
         },
         {
           "id": "login-id",
           "name": "Login Identifier First",
           "description": "Screen for displaying identifier-first login flow",
-          "path": "src/screens/login-id"
+          "path": "src/screens/login-id",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/login-id.ts"
+          ]
         },
         {
           "id": "login-password",
           "name": "Login Password",
           "description": "Screen for displaying login password flow",
-          "path": "src/screens/login-password"
+          "path": "src/screens/login-password",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/login-password.ts"
+          ]
         },
         {
           "id": "login-passwordless-sms-otp",
           "name": "Login: Passwordless SMS OTP",
           "description": "Passwordless SMS OTP entry screen for authentication",
-          "path": "src/screens/login-passwordless-sms-otp"
+          "path": "src/screens/login-passwordless-sms-otp",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/login-passwordless-sms-otp.ts"
+          ]
         },
         {
           "id": "login-passwordless-email-code",
           "name": "Login: Passwordless Email Code",
           "description": "Passwordless Email Code entry screen for authentication",
-          "path": "src/screens/login-passwordless-email-code"
+          "path": "src/screens/login-passwordless-email-code",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/login-passwordless-email-code.ts"
+          ]
         },
         {
           "id": "reset-password-email",
           "name": "Reset Password: Email",
           "description": "Resend Email screen for password reset",
-          "path": "src/screens/reset-password-email"
+          "path": "src/screens/reset-password-email",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/reset-password-email.ts"
+          ]
         },
         {
           "id": "reset-password",
           "name": "Reset Password",
           "description": "Screen for password reset",
-          "path": "src/screens/reset-password"
+          "path": "src/screens/reset-password",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/reset-password.ts"
+          ]
         },
         {
           "id": "reset-password-request",
           "name": "Reset Password: Request",
           "description": "Screen for reset password request",
-          "path": "src/screens/reset-password-request"
+          "path": "src/screens/reset-password-request",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/reset-password-request.ts"
+          ]
         },
         {
           "id": "reset-password-success",
           "name": "Reset Password: Success",
           "description": "Screen for successful password reset",
-          "path": "src/screens/reset-password-success"
+          "path": "src/screens/reset-password-success",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/reset-password-success.ts"
+          ]
         },
         {
           "id": "reset-password-error",
           "name": "Reset Password: Error",
           "description": "Screen for failed password reset",
-          "path": "src/screens/reset-password-error"
+          "path": "src/screens/reset-password-error",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/reset-password-error.ts"
+          ]
         },
         {
           "id": "signup-id",
           "name": "Signup Identifier First",
           "description": "Identifier-first signup flow for collecting user registration details with required and optional fields",
-          "path": "src/screens/signup-id"
+          "path": "src/screens/signup-id",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/signup-id.ts"
+          ]
         },
         {
           "id": "signup-password",
           "name": "Signup Password",
           "description": "Password entry screen for user registration",
-          "path": "src/screens/signup-password"
+          "path": "src/screens/signup-password",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/signup-password.ts"
+          ]
         },
         {
           "id": "mfa-login-options",
           "name": "MFA Login Options",
           "description": "Screen to login via multi-factor authentication (MFA) factors with various options",
-          "path": "src/screens/mfa-login-options"
+          "path": "src/screens/mfa-login-options",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-login-options.ts"
+          ]
         },
         {
           "id": "signup",
           "name": "Signup",
           "description": "Screen for user registration",
-          "path": "src/screens/signup"
+          "path": "src/screens/signup",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/signup.ts"
+          ]
         },
         {
           "id": "passkey-enrollment",
           "name": "Passkey Enrollment",
           "description": "Screen for passkey enrollment",
-          "path": "src/screens/passkey-enrollment"
+          "path": "src/screens/passkey-enrollment",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/passkey-enrollment.ts"
+          ]
         },
         {
           "id": "passkey-enrollment-local",
           "name": "Passkey Enrollment Local",
           "description": "Screen for passkey enrollment local",
-          "path": "src/screens/passkey-enrollment-local"
+          "path": "src/screens/passkey-enrollment-local",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/passkey-enrollment-local.ts"
+          ]
         },
         {
           "id": "mfa-begin-enroll-options",
           "name": "MFA Begin Enroll Options",
           "description": "Screen to begin enrolling in multi-factor authentication (MFA) with various options",
-          "path": "src/screens/mfa-begin-enroll-options"
+          "path": "src/screens/mfa-begin-enroll-options",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-begin-enroll-options.ts"
+          ]
         },
         {
           "id": "mfa-email-challenge",
           "name": "MFA Email Challenge",
           "description": "Screen for MFA email challenge",
-          "path": "src/screens/mfa-email-challenge"
+          "path": "src/screens/mfa-email-challenge",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-email-challenge.ts"
+          ]
         },
         {
           "id": "mfa-sms-challenge",
           "name": "MFA SMS Challenge",
           "description": "MFA SMS challenge screen for authentication",
-          "path": "src/screens/mfa-sms-challenge"
+          "path": "src/screens/mfa-sms-challenge",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-sms-challenge.ts"
+          ]
         },
         {
           "id": "mfa-sms-enrollment",
           "name": "MFA SMS Enrollment",
           "description": "Screen for enrolling in SMS-based multi-factor authentication (MFA)",
-          "path": "src/screens/mfa-sms-enrollment"
+          "path": "src/screens/mfa-sms-enrollment",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-sms-enrollment.ts"
+          ]
         },
         {
           "id": "mfa-enroll-result",
           "name": "MFA Enroll Result",
           "description": "Screen displaying response of MFA Enrollment",
-          "path": "src/screens/mfa-enroll-result"
+          "path": "src/screens/mfa-enroll-result",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-enroll-result.ts"
+          ]
         },
         {
           "id": "mfa-push-challenge-push",
           "name": "MFA Push Challenge Push",
           "description": "Screen for enrolling in Push-based multi-factor authentication (MFA)",
-          "path": "src/screens/mfa-push-challenge-push"
+          "path": "src/screens/mfa-push-challenge-push",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-push-challenge-push.ts"
+          ]
         },
         {
           "id": "mfa-push-list",
           "name": "MFA Push List",
           "description": "Screen to list and manage Push multi-factor authentication (MFA) devices",
-          "path": "src/screens/mfa-push-list"
+          "path": "src/screens/mfa-push-list",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-push-list.ts"
+          ]
         },
         {
           "id": "mfa-push-welcome",
           "name": "MFA Push Welcome",
           "description": "Welcome Screen for enrolling in Push-based multi-factor authentication (MFA)",
-          "path": "src/screens/mfa-push-welcome"
+          "path": "src/screens/mfa-push-welcome",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-push-welcome.ts"
+          ]
         },
         {
           "id": "mfa-push-enrollment-qr",
           "name": "MFA Push Enrollment QR",
           "description": "MFA Push Enrollment QR Screen for enrolling in Push-based multi-factor authentication (MFA)",
-          "path": "src/screens/mfa-push-enrollment-qr"
+          "path": "src/screens/mfa-push-enrollment-qr",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-push-enrollment-qr.ts"
+          ]
         },
         {
           "id": "mfa-sms-list",
           "name": "MFA SMS List",
           "description": "Screen to list and manage SMS-based multi-factor authentication (MFA) methods",
-          "path": "src/screens/mfa-sms-list"
+          "path": "src/screens/mfa-sms-list",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-sms-list.ts"
+          ]
         },
         {
           "id": "email-identifier-challenge",
           "name": "Email Identifier Challenge",
           "description": "Screen for collecting email identifier during authentication",
-          "path": "src/screens/email-identifier-challenge"
+          "path": "src/screens/email-identifier-challenge",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/email-identifier-challenge.ts"
+          ]
         },
         {
           "id": "phone-identifier-challenge",
           "name": "Phone Identifier Challenge",
           "description": "Screen for collecting phone number identifier during authentication",
-          "path": "src/screens/phone-identifier-challenge"
+          "path": "src/screens/phone-identifier-challenge",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/phone-identifier-challenge.ts"
+          ]
         },
         {
           "id": "mfa-email-list",
           "name": "MFA Email List",
           "description": "Screen to list and manage Email-based multi-factor authentication (MFA) methods",
-          "path": "src/screens/mfa-email-list"
+          "path": "src/screens/mfa-email-list",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-email-list.ts"
+          ]
         },
         {
           "id": "mfa-country-codes",
           "name": "MFA Country Codes",
           "description": "Screen to select country codes for SMS-based multi-factor authentication (MFA)",
-          "path": "src/screens/mfa-country-codes"
+          "path": "src/screens/mfa-country-codes",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/mfa-country-codes.ts"
+          ]
         },
         {
           "id": "phone-identifier-enrollment",
           "name": "Phone Identifier Enrollment",
           "description": "Screen for enrolling phone identifier",
-          "path": "src/screens/phone-identifier-enrollment"
+          "path": "src/screens/phone-identifier-enrollment",
+          "extra_files": [
+            "src/__mocks__/@auth0/auth0-acul-react/phone-identifier-enrollment.ts"
+          ]
         }
       ]
     }
