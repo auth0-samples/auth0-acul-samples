@@ -26,6 +26,7 @@ export const useLoginIdManager = () => {
     isSignupEnabled,
     isForgotPasswordEnabled,
     isPasskeyEnabled,
+    showPasskeyAutofill,
     countryCode,
     countryPrefix,
   } = transaction;
@@ -78,6 +79,7 @@ export const useLoginIdManager = () => {
     isSignupEnabled,
     isForgotPasswordEnabled,
     isPasskeyEnabled,
+    showPasskeyAutofill,
     isCaptchaAvailable,
     captcha,
     alternateConnections,

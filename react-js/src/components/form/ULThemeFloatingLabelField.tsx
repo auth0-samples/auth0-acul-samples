@@ -88,6 +88,7 @@ function ULThemeFloatingLabelField({
   size = "default",
   wrapperClassName,
   error,
+  id,
   ...props
 }: ULThemeFloatingLabelFieldProps) {
   // Get the form field context for proper ID association
@@ -104,7 +105,7 @@ function ULThemeFloatingLabelField({
   return (
     <div className={cn("w-full", wrapperClassName)}>
       <BaseFloatingLabelField
-        id={formItemId}
+        id={id || formItemId}
         className={cn(className, themeOverrides)}
         variant={effectiveVariant}
         size={size}

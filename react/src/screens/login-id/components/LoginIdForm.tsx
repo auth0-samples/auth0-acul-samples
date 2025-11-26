@@ -38,6 +38,7 @@ function LoginIdForm() {
     resetPasswordLink,
     isCaptchaAvailable,
     isPasskeyEnabled,
+    showPasskeyAutofill,
     handleLoginId,
     handlePickCountryCode,
   } = useLoginIdManager();
@@ -77,7 +78,8 @@ function LoginIdForm() {
   );
 
   // Enable passkey autofill for identifier field if supported
-  if (isPasskeyEnabled) {
+  // Only register autofill when showPasskeyAutofill is true
+  if (isPasskeyEnabled && showPasskeyAutofill) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     usePasskeyAutofill();
   }

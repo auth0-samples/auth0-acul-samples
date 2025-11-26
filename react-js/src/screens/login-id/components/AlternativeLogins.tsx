@@ -14,7 +14,8 @@ const AlternativeLogins = () => {
     locales,
   } = useLoginIdManager();
   const { texts } = screen;
-  const { isPasskeyEnabled, alternateConnections } = transaction;
+  const { isPasskeyEnabled, showPasskeyAutofill, alternateConnections } =
+    transaction;
 
   const connections = alternateConnections as SocialConnection[] | undefined;
 
@@ -22,10 +23,14 @@ const AlternativeLogins = () => {
   const passkeyButtonText =
     texts?.passkeyButtonText || locales.form.passkeyButton;
 
+  // Only show passkey button if passkeys are enabled AND autofill is NOT active
+  // When showPasskeyAutofill is true, passkey selection happens via input autocomplete
+  const showPasskeyButton = isPasskeyEnabled && !showPasskeyAutofill;
+
   return (
     <>
       <div className="space-y-3 mt-2">
-        {isPasskeyEnabled && (
+        {showPasskeyButton && (
           <ULThemeSocialProviderButton
             key="passkey"
             displayName="Passkey"

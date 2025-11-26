@@ -10,6 +10,7 @@ const AlternativeLogins = () => {
     texts,
     locales,
     isPasskeyEnabled,
+    showPasskeyAutofill,
     alternateConnections,
     handleFederatedLogin,
     handlePasskeyLogin,
@@ -28,10 +29,14 @@ const AlternativeLogins = () => {
     handleFederatedLogin(federatedLoginOptions);
   };
 
+  // Only show passkey button if passkeys are enabled AND autofill is NOT active
+  // When showPasskeyAutofill is true, passkey selection happens via input autocomplete
+  const showPasskeyButton = isPasskeyEnabled && !showPasskeyAutofill;
+
   return (
     <>
       <div className="space-y-3 mt-2">
-        {isPasskeyEnabled && (
+        {showPasskeyButton && (
           <ULThemeSocialProviderButton
             key="passkey"
             displayName={locales?.alternativeLogins?.passkeyLabel}
