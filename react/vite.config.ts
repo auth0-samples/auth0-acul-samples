@@ -88,35 +88,31 @@ export default defineConfig({
           return "assets/shared/[name].[hash][extname]";
         },
 
-        // Simplified manual chunks strategy with forced common chunk
         manualChunks: (id) => {
-          // React, React-DOM, and Base UI in a separate chunk (Base UI depends on React)
+          if (!id.includes("node_modules")) {
+            const absoluteId = resolve(id);
+            const absoluteSrcScreensDir = resolve(__dirname, "src/screens");
+
+            if (
+              absoluteId.includes(resolve(__dirname, "src/")) &&
+              !absoluteId.startsWith(absoluteSrcScreensDir + "/")
+            ) {
+              return "common";
+            }
+            return undefined;
+          }
+
+          // React core packages (no external dependencies) go to react-vendor
           if (
-            id.includes("node_modules") &&
-            (id.includes("react") ||
-              id.includes("react-dom") ||
-              id.includes("@base-ui-components"))
+            id.includes("/node_modules/react/") ||
+            id.includes("/node_modules/react-dom/") ||
+            id.includes("/node_modules/scheduler/")  // Keep React's internals together
           ) {
             return "react-vendor";
           }
 
-          if (id.includes("node_modules")) {
-            return "vendor";
-          }
-
-          // Everything in src/ but NOT in src/screens/ goes to common
-          const absoluteId = resolve(id);
-          const absoluteSrcScreensDir = resolve(__dirname, "src/screens");
-
-          if (
-            absoluteId.includes(resolve(__dirname, "src/")) &&
-            !absoluteId.startsWith(absoluteSrcScreensDir + "/")
-          ) {
-            return "common";
-          }
-
-          // For screen-specific code or other cases, let Rollup decide
-          return undefined;
+          // All other node_modules go to vendor
+          return "vendor";
         },
       },
     },
