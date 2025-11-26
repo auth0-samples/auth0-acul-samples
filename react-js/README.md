@@ -146,15 +146,15 @@ dist/
     ├── main.[hash].js                   # Main application bundle
     ├── shared/
     │   ├── style.[hash].css             # Global styles (Tailwind + Auth0 theme)
-    │   ├── react-vendor.[hash].js       # React + ReactDOM (~324 kB)
-    │   ├── vendor.[hash].js             # Third-party dependencies (~196 kB)
-    │   └── common.[hash].js             # Shared app code (~87 kB)
+    │   ├── react-vendor.[hash].js       # React core (~194 kB)
+    │   ├── vendor.[hash].js             # Third-party dependencies (~249 kB)
+    │   └── common.[hash].js             # Shared app code (~49 kB)
     └── [screen-name]/
         └── index.[hash].js              # Screen-specific code (0.9-6 kB)
 ```
 
 **Bundle Strategy:**
-- **react-vendor**: React and ReactDOM for optimal caching
+- **react-vendor**: React + ReactDOM for optimal caching
 - **vendor**: Third-party packages (captcha providers, utilities)
 - **common**: Shared components and utilities from src/
 - **Screen bundles**: Minimal screen-specific logic for fast loading

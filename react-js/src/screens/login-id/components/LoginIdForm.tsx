@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import type { Error, LoginOptions } from "@auth0/auth0-acul-js/types";
@@ -83,10 +84,24 @@ function LoginIdForm() {
   const shouldShowCountryPicker = isPhoneNumberSupported(loginIdentifiers);
   const selectedCountry = transformAuth0CountryCode(countryCode, countryPrefix);
 
-  // Enable passkey autofill for identifier field if supported
-  if (transaction?.isPasskeyEnabled) {
-    loginIdInstance.registerPasskeyAutofill("username");
-  }
+  // Track if passkey autofill has been registered to prevent duplicate calls
+  const passkeyRegistered = useRef(false);
+
+  // Enable passkey autofill for identifier field if supported (run once on mount)
+  useEffect(() => {
+    if (
+      transaction?.isPasskeyEnabled &&
+      transaction?.showPasskeyAutofill &&
+      !passkeyRegistered.current
+    ) {
+      passkeyRegistered.current = true;
+      loginIdInstance.registerPasskeyAutofill("username");
+    }
+  }, [
+    transaction?.isPasskeyEnabled,
+    transaction?.showPasskeyAutofill,
+    loginIdInstance,
+  ]);
 
   // Proper submit handler with form data
   const onSubmit = async (data: LoginOptions): Promise<void> => {
@@ -130,6 +145,7 @@ function LoginIdForm() {
             <FormItem>
               <ULThemeFloatingLabelField
                 {...field}
+                id="username"
                 value={String(field.value || "")}
                 label={identifierLabel}
                 type={identifierType}

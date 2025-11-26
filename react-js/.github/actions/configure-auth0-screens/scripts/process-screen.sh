@@ -43,7 +43,7 @@ for css_file in "${SHARED_CSS_FILES[@]}" "${SCREEN_CSS_FILES[@]}"; do
   fi
 done
 
-# Add JS files in correct dependency order: main → react-vendor (React + React-DOM + Base UI) → vendor → common → screen-specific
+# Add JS files in correct dependency order: react-vendor → vendor → common → screen-specific → main
 # First collect files by type
 MAIN_JS_FILE=""
 REACT_VENDOR_JS_FILE=""
@@ -71,8 +71,8 @@ for js_file in "${SHARED_JS_FILES[@]}"; do
   fi
 done
 
-# Add scripts in dependency order: main → react-vendor (React + Base UI) → vendor → common → screen entry
-for js_file in "$MAIN_JS_FILE" "$REACT_VENDOR_JS_FILE" "$VENDOR_JS_FILE" "$COMMON_JS_FILE" "$SCREEN_ENTRY_FILE"; do
+# Add scripts in dependency order: react-vendor → vendor → common → screen entry → main
+for js_file in "$REACT_VENDOR_JS_FILE" "$VENDOR_JS_FILE" "$COMMON_JS_FILE" "$SCREEN_ENTRY_FILE" "$MAIN_JS_FILE"; do
   if [ -z "$js_file" ]; then continue; fi
   js_basename=$(basename "$js_file")
   if [[ ! "$js_basename" =~ ^[^a-zA-Z0-9] ]]; then 
