@@ -14,8 +14,14 @@ import { ULThemeAlert, ULThemeAlertTitle } from "@/components/ULThemeError";
 import { useMfaPushEnrollmentQRManager } from "../hooks/useMfaPushEnrollmentQRManager";
 
 function MfaPushEnrollmentQRForm() {
-  const { data, texts, locales, enrolledFactors, handlePickAuthenticator } =
-    useMfaPushEnrollmentQRManager();
+  const {
+    data,
+    texts,
+    locales,
+    enrolledFactors,
+    handlePickAuthenticator,
+    handleContinueMfaPushEnrollmentQR,
+  } = useMfaPushEnrollmentQRManager();
 
   // Initialize the form using react-hook-form
   const form = useForm<CustomOptions>({});
@@ -40,6 +46,9 @@ function MfaPushEnrollmentQRForm() {
   // Automatically start polling when the page loads
   const { startPolling, stopPolling } = useMfaPolling({
     intervalMs: 3000,
+    onCompleted: () => {
+      handleContinueMfaPushEnrollmentQR();
+    },
     onError: (error: unknown) =>
       console.error("Push Enrollment Polling error:", error),
   });
