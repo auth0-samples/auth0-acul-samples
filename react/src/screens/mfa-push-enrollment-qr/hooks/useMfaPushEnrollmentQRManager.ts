@@ -6,6 +6,7 @@ import {
 import {
   CustomOptions,
   MfaPushEnrollmentQrMembers,
+  MfaPushEnrollmentQrWithRememberOptions,
   ScreenMembersOnMfaPushEnrollmentQr,
   UserMembers,
 } from "@auth0/auth0-acul-react/types";
@@ -22,6 +23,15 @@ export const useMfaPushEnrollmentQRManager = () => {
   const { texts, data } = screen;
   const { enrolledFactors } = userInfo || {};
 
+  const handleContinueMfaPushEnrollmentQR = async (
+    payload?: MfaPushEnrollmentQrWithRememberOptions
+  ): Promise<void> => {
+    await executeSafely(
+      `Continue MFA Push Enrollment QR with options: ${JSON.stringify(payload)}`,
+      () => mfaPushEnrollmentQR.continue(payload)
+    );
+  };
+
   const handlePickAuthenticator = async (
     payload?: CustomOptions
   ): Promise<void> => {
@@ -37,6 +47,7 @@ export const useMfaPushEnrollmentQRManager = () => {
     enrolledFactors,
     mfaPushEnrollmentQR,
     handlePickAuthenticator,
+    handleContinueMfaPushEnrollmentQR,
     texts: (texts || {}) as ScreenMembersOnMfaPushEnrollmentQr["texts"],
   };
 };

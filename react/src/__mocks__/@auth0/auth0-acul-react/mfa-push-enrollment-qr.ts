@@ -11,6 +11,7 @@ import type {
  * This provides a single, type-safe object to control in our tests.
  */
 export interface MockMfaPushEnrollmentQRInstance {
+  continue: jest.Mock;
   pickAuthenticator: jest.Mock;
   screen: ScreenMembersOnMfaPushEnrollmentQr;
   transaction: TransactionMembers;
@@ -24,6 +25,7 @@ export interface MockMfaPushEnrollmentQRInstance {
  */
 export const createMockMfaPushEnrollmentQRInstance =
   (): MockMfaPushEnrollmentQRInstance => ({
+    continue: jest.fn(),
     pickAuthenticator: jest.fn(),
     screen: {
       name: "mfa-push-enrollment-qr",
@@ -98,6 +100,7 @@ export const pickAuthenticator =
 
 export const useMfaPushEnrollmentQr = jest.fn(() => ({
   screen: mockMfaPushEnrollmentQRInstance.screen,
+  continue: mockMfaPushEnrollmentQRInstance.continue,
   pickAuthenticator: mockMfaPushEnrollmentQRInstance.pickAuthenticator,
 }));
 
