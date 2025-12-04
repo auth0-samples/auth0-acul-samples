@@ -17,8 +17,8 @@ exports[`ULThemeFloatingLabelField Component matches snapshot with email identif
           <label
             class="pointer-events-none absolute left-4 text-sm transition-all duration-150 ease-in-out origin-left scale-80 -translate-y-[1.18rem] top-2 z-10 bg-input px-1 text-primary"
             data-focused=""
-            for="_r_0_-form-item"
-            id="base-ui-_r_3_"
+            for="«r0»-form-item"
+            id="base-ui-«r3»"
           >
             Email
           </label>
@@ -26,11 +26,11 @@ exports[`ULThemeFloatingLabelField Component matches snapshot with email identif
             class="relative flex-1"
           >
             <input
-              aria-labelledby="base-ui-_r_3_"
+              aria-labelledby="base-ui-«r3»"
               autocomplete="email"
               class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
               data-focused=""
-              id="_r_0_-form-item"
+              id="«r0»-form-item"
               name="identifier"
               type="email"
               value=""
@@ -58,8 +58,8 @@ exports[`ULThemeFloatingLabelField Component matches snapshot with error state 1
         >
           <label
             class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-destructive-foreground"
-            for="_r_5_-form-item"
-            id="base-ui-_r_8_"
+            for="«r5»-form-item"
+            id="base-ui-«r8»"
           >
             Email
           </label>
@@ -67,9 +67,9 @@ exports[`ULThemeFloatingLabelField Component matches snapshot with error state 1
             class="relative flex-1"
           >
             <input
-              aria-labelledby="base-ui-_r_8_"
+              aria-labelledby="base-ui-«r8»"
               class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
-              id="_r_5_-form-item"
+              id="«r5»-form-item"
               name="identifier"
               type="email"
               value=""
@@ -97,8 +97,8 @@ exports[`ULThemeFloatingLabelField Component matches snapshot with phone number 
         >
           <label
             class="pointer-events-none absolute top-1/2 left-4 z-[10] -translate-y-1/2 text-sm transition-all duration-150 ease-in-out origin-left text-muted-foreground"
-            for="_r_a_-form-item"
-            id="base-ui-_r_d_"
+            for="«ra»-form-item"
+            id="base-ui-«rd»"
           >
             Phone Number
           </label>
@@ -106,10 +106,10 @@ exports[`ULThemeFloatingLabelField Component matches snapshot with phone number 
             class="relative flex-1"
           >
             <input
-              aria-labelledby="base-ui-_r_d_"
+              aria-labelledby="base-ui-«rd»"
               autocomplete="tel"
               class="h-14 w-full flex-1 rounded-2xl bg-transparent px-3 py-4 outline-none file:border-0 file:bg-transparent file:text-sm file:font-medium autofill:bg-transparent autofill:[-webkit-text-fill-color:inherit] autofill:[transition:background-color_9999s_ease-in-out_0s] pl-3 pr-3"
-              id="_r_a_-form-item"
+              id="«ra»-form-item"
               name="identifier"
               type="tel"
               value=""
