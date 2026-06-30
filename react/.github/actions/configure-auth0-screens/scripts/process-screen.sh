@@ -95,7 +95,7 @@ fi
 AUTH0_OUTPUT="" 
 AUTH0_EXIT_CODE=0
 set +e 
-AUTH0_OUTPUT=$(auth0 acul config set "$SCREEN_NAME" --settings-file "$SETTINGS_FILE" 2>&1)
+AUTH0_OUTPUT=$(auth0 acul config set "$SCREEN_NAME" --file "$SETTINGS_FILE" 2>&1)
 AUTH0_EXIT_CODE=$?
 set -e 
 
