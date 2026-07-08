@@ -10,9 +10,6 @@ source ".github/actions/configure-auth0-screens/scripts/utils.sh"
 # LOAD CONFIGURATIONS
 #############################################
 
-SCREEN_TO_PROMPT_MAP=$(load_js_module ".github/config/screen-to-prompt-mapping.js" "screenToPromptMap")
-export SCREEN_TO_PROMPT_MAP
-
 CONTEXT_CONFIG=$(load_js_module ".github/config/context-configuration.js" "contextConfig")
 export CONTEXT_CONFIG
 

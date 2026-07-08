@@ -7,15 +7,7 @@ set -euo pipefail
 
 SCREEN_NAME="$1"
 
-# Look up the prompt name for this screen
-PROMPT_NAME=$(echo "$SCREEN_TO_PROMPT_MAP" | jq -r --arg screen "$SCREEN_NAME" '.[$screen] // $screen')
-
-if [ "$PROMPT_NAME" == "null" ] || [ -z "$PROMPT_NAME" ]; then
-  echo "::warning::No prompt mapping found for screen '$SCREEN_NAME', using screen name as prompt"
-  PROMPT_NAME="$SCREEN_NAME"
-fi
-
-echo "Processing $SCREEN_NAME → $PROMPT_NAME"
+echo "Processing $SCREEN_NAME"
 
 # Discover assets using dedicated script
 source ".github/actions/configure-auth0-screens/scripts/discover-assets.sh" "$SCREEN_NAME"
@@ -103,7 +95,7 @@ fi
 AUTH0_OUTPUT="" 
 AUTH0_EXIT_CODE=0
 set +e 
-AUTH0_OUTPUT=$(auth0 ul customize --rendering-mode advanced --prompt "$PROMPT_NAME" --screen "$SCREEN_NAME" --settings-file "$SETTINGS_FILE" 2>&1)
+AUTH0_OUTPUT=$(auth0 acul config set "$SCREEN_NAME" --file "$SETTINGS_FILE" 2>&1)
 AUTH0_EXIT_CODE=$?
 set -e 
 
@@ -112,7 +104,7 @@ if [ $AUTH0_EXIT_CODE -eq 0 ]; then
   rm -f "$SETTINGS_FILE"; trap - ERR
   exit 0
 else
-  echo "::error::Failed to configure $PROMPT_NAME for screen $SCREEN_NAME (Exit Code: $AUTH0_EXIT_CODE)"
+  echo "::error::Failed to configure screen $SCREEN_NAME (Exit Code: $AUTH0_EXIT_CODE)"
   echo "$AUTH0_OUTPUT"
   rm -f "$SETTINGS_FILE"; trap - ERR
   exit 1

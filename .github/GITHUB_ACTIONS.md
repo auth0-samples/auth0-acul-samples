@@ -28,18 +28,6 @@ default_screen_deployment_status:
 
 **💡 Pro Tip**: Setting all screens to `false` will skip the entire build and upload process, making the pipeline complete quickly without using resources.
 
-### `config/screen-to-prompt-mapping.js`
-
-Maps custom screen names (directory names) to Auth0 prompt names. Example:
-
-```javascript
-export const screenToPromptMap = {
-  "login-id": "login-id", // Screen 'login-id' maps to Auth0 prompt 'login-id'
-  "mfa-sms-challenge": "mfa-sms", // Screen 'mfa-sms-challenge' maps to 'mfa-sms'
-  "passkey-enrollment": "passkeys",
-};
-```
-
 ### `config/context-configuration.js`
 
 Defines which Auth0 context data (e.g., branding settings, client info) is available to custom screens. Example:
@@ -108,7 +96,6 @@ To use this deployment system in your own project:
 
 1.  Add your new screen's implementation (e.g., HTML, JS, CSS built by Vite) into a subdirectory within `src/screens/` (e.g., `src/screens/my-new-screen/`). Ensure your build process outputs these to `dist/assets/my-new-screen/`.
 2.  Update `config/deploy_config.yml` to include your new screen and set its deployment status (e.g., `my-new-screen: true`).
-3.  If your screen name doesn't directly map to an Auth0 prompt, add an entry to `config/screen-to-prompt-mapping.js`.
-4.  Deployment typically happens automatically on push to the configured branches (e.g., `main`) if the workflow is enabled.
+3.  Deployment typically happens automatically on push to the configured branches (e.g., `main`) if the workflow is enabled.
 
 For detailed deployment instructions, refer to the `DEPLOYMENT.md` document (not included in this `.github` folder example).
