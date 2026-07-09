@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: react
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Lint check
         working-directory: react
